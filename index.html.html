@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA English — Omar</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080c14; --bg2:#0f1624; --surface:#141e30; --surface2:#1a2640;
+  --border:#1f2f48; --border2:#2a3f60;
+  --accent:#00d4aa; --accent2:#0080ff; --purple:#a855f7; --gold:#f5c518; --red:#ff4060;
+  --text:#ddeeff; --muted:#6a85a8;
+  --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(0,212,170,.07) 0%,transparent 55%),
+             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(0,128,255,.06) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(168,85,247,.04) 0%,transparent 60%);}
+.shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
+
+/* ── HEADER ── */
+header{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;border-bottom:1px solid var(--border);
+  background:rgba(8,12,20,.92);backdrop-filter:blur(8px);
+  position:sticky;top:0;z-index:100;}
+.logo-name{font-size:1.1rem;font-weight:800;letter-spacing:-.5px;}
+.logo-name em{color:var(--accent);font-style:normal;}
+.logo-sub{font-family:var(--mono);font-size:.5rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;}
+.hd-stats{display:flex;gap:8px;}
+.hd-stat{display:flex;flex-direction:column;align-items:center;background:var(--surface);
+  border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-family:var(--mono);min-width:48px;}
+.hd-stat .n{font-size:.9rem;font-weight:500;color:var(--accent);line-height:1;}
+.hd-stat .l{font-size:.44rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+
+/* ── NAV ── */
+nav{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;}
+.nav-item{flex:1;min-width:80px;display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:12px 6px;font-size:.72rem;font-weight:700;letter-spacing:.1px;
+  cursor:pointer;border:none;background:none;color:var(--muted);
+  border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.02);}
+.nav-item.active{color:var(--text);}
+.nav-item.vocab-tab.active {border-bottom-color:var(--accent);}
+.nav-item.expr-tab.active  {border-bottom-color:var(--accent2);}
+.nav-item.prep-tab.active  {border-bottom-color:var(--purple);}
+.nav-item.review-tab.active{border-bottom-color:var(--gold);}
+.nav-badge{font-family:var(--mono);font-size:.5rem;padding:2px 5px;
+  border-radius:99px;background:var(--surface);border:1px solid var(--border2);color:var(--muted);}
+.vocab-tab.active  .nav-badge{background:rgba(0,212,170,.15);border-color:rgba(0,212,170,.4);color:var(--accent);}
+.expr-tab.active   .nav-badge{background:rgba(0,128,255,.15);border-color:rgba(0,128,255,.4);color:var(--accent2);}
+.prep-tab.active   .nav-badge{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.4);color:var(--purple);}
+.review-tab.active .nav-badge{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--gold);}
+
+main{flex:1;display:flex;flex-direction:column;}
+
+/* ── SHARED WRAPPER ── */
+.page{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+
+/* ── FLASHCARD ── */
+.fc-progress-strip{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.fc-prog-bar{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;}
+.fc-prog-fill{height:100%;border-radius:2px;transition:width .4s ease;}
+.vocab-fill{background:linear-gradient(90deg,var(--accent),#00ffcc);}
+.expr-fill {background:linear-gradient(90deg,var(--accent2),#66b3ff);}
+.prep-fill {background:linear-gradient(90deg,var(--purple),#d89cff);}
+.fc-prog-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap;}
+
+.flashcard{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;
+  min-height:300px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+  margin-bottom:16px;transition:border-color .3s;}
+.flashcard.is-ok {border-color:rgba(0,212,170,.45);}
+.flashcard.is-rev{border-color:rgba(245,197,24,.45);}
+.card-stripe{height:4px;width:100%;}
+.flashcard:not(.is-ok):not(.is-rev) .card-stripe{background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.flashcard.is-ok  .card-stripe{background:linear-gradient(90deg,var(--accent),#00ff88);}
+.flashcard.is-rev .card-stripe{background:linear-gradient(90deg,var(--gold),#ffaa00);}
+.flashcard.prep-card:not(.is-ok):not(.is-rev) .card-stripe{background:linear-gradient(90deg,var(--purple),var(--accent2));}
+
+.card-badge{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:.5rem;
+  letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:6px;border:1px solid;}
+.badge-ok {color:var(--accent);background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.35);}
+.badge-rev{color:var(--gold);background:rgba(245,197,24,.12);border-color:rgba(245,197,24,.35);}
+.badge-new{color:var(--muted);background:rgba(100,120,160,.08);border-color:var(--border2);}
+
+.card-body{flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:28px 24px 20px;text-align:center;}
+.card-num {font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.card-word{font-size:clamp(1.3rem,4vw,2rem);font-weight:800;line-height:1.2;margin-bottom:8px;color:var(--text);}
+.card-trad{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:8px;line-height:1.4;}
+.card-extra{font-size:.78rem;color:var(--accent2);font-family:var(--mono);margin-bottom:16px;line-height:1.5;font-style:normal;}
+.card-example{font-size:.8rem;color:rgba(221,238,255,.7);margin-bottom:4px;line-height:1.5;}
+.card-example-trad{font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:16px;}
+
+.card-audio-row{display:flex;gap:8px;justify-content:center;}
+.btn-audio{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.6rem;
+  padding:5px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;
+  cursor:pointer;color:var(--muted);transition:all .18s;}
+.btn-audio:hover{background:rgba(0,128,255,.1);border-color:var(--accent2);color:var(--accent2);}
+.btn-audio svg{width:11px;height:11px;flex-shrink:0;}
+
+.card-footer{display:flex;gap:8px;padding:0 20px 20px;flex-wrap:wrap;justify-content:center;}
+.btn-act{flex:1;min-width:120px;max-width:210px;font-family:var(--sans);font-size:.72rem;font-weight:700;
+  padding:9px 12px;border-radius:10px;cursor:pointer;border:1.5px solid;transition:all .18s;letter-spacing:.1px;}
+.btn-ok {background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35);color:var(--accent);}
+.btn-ok:hover{background:rgba(0,212,170,.18);transform:translateY(-1px);}
+.btn-ok.on{background:var(--accent);color:var(--bg);border-color:var(--accent);}
+.btn-rev{background:rgba(245,197,24,.07);border-color:rgba(245,197,24,.3);color:var(--gold);}
+.btn-rev:hover{background:rgba(245,197,24,.16);transform:translateY(-1px);}
+.btn-rev.on{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+
+.fc-nav{display:flex;align-items:center;gap:12px;justify-content:center;}
+.btn-nav{width:44px;height:44px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border2);
+  cursor:pointer;color:var(--text);font-size:1rem;transition:all .18s;
+  display:flex;align-items:center;justify-content:center;}
+.btn-nav:hover:not(:disabled){background:var(--surface2);border-color:var(--accent);color:var(--accent);transform:scale(1.05);}
+.btn-nav:disabled{opacity:.25;cursor:not-allowed;}
+.nav-center{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:120px;}
+.nav-pos {font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--text);}
+.nav-hint{font-family:var(--mono);font-size:.5rem;color:var(--muted);letter-spacing:1px;}
+
+.fc-review-cta{margin-top:16px;text-align:center;}
+.btn-goto-rev{font-family:var(--sans);font-size:.71rem;font-weight:700;padding:8px 20px;border-radius:99px;
+  background:rgba(245,197,24,.08);border:1.5px solid rgba(245,197,24,.3);color:var(--gold);
+  cursor:pointer;transition:all .2s;letter-spacing:.2px;}
+.btn-goto-rev:hover:not(:disabled){background:rgba(245,197,24,.18);transform:scale(1.02);}
+.btn-goto-rev:disabled{opacity:.3;cursor:default;}
+.rev-chip{display:inline-block;font-family:var(--mono);font-size:.56rem;background:var(--gold);
+  color:var(--bg);border-radius:99px;padding:1px 7px;margin-left:5px;font-weight:700;}
+
+/* ── PREP SUB-NAV ── */
+.prep-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;}
+.prep-subbtn{font-family:var(--mono);font-size:.62rem;padding:6px 14px;
+  border:1.5px solid var(--border2);border-radius:8px;background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .18s;letter-spacing:.5px;}
+.prep-subbtn:hover{border-color:var(--purple);color:var(--text);}
+.prep-subbtn.active{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple);}
+
+/* ── COURS VIEW ── */
+.cours-view{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.cours-title{font-size:1rem;font-weight:800;color:var(--purple);font-family:var(--mono);
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.cours-subtitle{font-size:.75rem;color:var(--muted);margin-bottom:22px;}
+
+.cours-table{width:100%;border-collapse:collapse;margin-bottom:28px;border-radius:12px;overflow:hidden;}
+.cours-table th{background:var(--surface2);font-family:var(--mono);font-size:.6rem;
+  color:var(--purple);text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border2);}
+.cours-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:top;}
+.cours-table tr:last-child td{border-bottom:none;}
+.cours-table tr:hover td{background:rgba(168,85,247,.04);}
+.td-prep{font-weight:800;font-size:.95rem;color:var(--text);}
+.td-prep-audio{display:flex;align-items:center;gap:6px;}
+.td-type{color:var(--purple);font-family:var(--mono);font-size:.7rem;}
+.td-ex{color:var(--text);font-size:.82rem;}
+.td-ex-audio{display:flex;align-items:center;gap:6px;}
+.td-trad{color:var(--muted);font-style:italic;font-size:.78rem;}
+.btn-tbl-audio{display:flex;align-items:center;background:none;border:none;cursor:pointer;
+  color:var(--purple);opacity:.7;transition:opacity .15s;padding:0;flex-shrink:0;}
+.btn-tbl-audio:hover{opacity:1;}
+.btn-tbl-audio svg{width:13px;height:13px;}
+
+.cours-section-tag{display:inline-block;font-family:var(--mono);font-size:.58rem;
+  background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.35);color:var(--purple);
+  border-radius:6px;padding:3px 9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+
+/* ── REVIEW LAUNCHER ── */
+.review-section{flex:1;display:flex;flex-direction:column;max-width:580px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.rl-title{font-family:var(--mono);font-size:.64rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.rl-list{display:flex;flex-direction:column;gap:10px;}
+.rl-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;
+  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.rl-info h3{font-size:.9rem;font-weight:700;margin-bottom:4px;}
+.rl-info p{font-size:.65rem;color:var(--muted);font-family:var(--mono);}
+.btn-launch{font-family:var(--sans);font-weight:700;font-size:.7rem;padding:8px 16px;
+  border-radius:10px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-launch:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px);}
+.btn-launch:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed;transform:none;filter:none;}
+.bg-green{background:var(--accent);color:var(--bg);}
+.bg-blue {background:var(--accent2);color:#fff;}
+.bg-purple{background:var(--purple);color:#fff;}
+.bg-gold {background:var(--gold);color:var(--bg);}
+.bg-muted{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
+
+/* ── QUIZ ── */
+.quiz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.quiz-ctr{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.btn-quit{font-family:var(--mono);font-size:.6rem;color:var(--muted);background:none;
+  border:1px solid var(--border2);border-radius:6px;padding:4px 10px;cursor:pointer;transition:all .15s;}
+.btn-quit:hover{color:var(--red);border-color:var(--red);}
+.quiz-dots{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border2);transition:all .25s;}
+.dot.ok  {background:var(--accent);}
+.dot.fail{background:var(--red);}
+.dot.curr{background:var(--gold);box-shadow:0 0 7px var(--gold);transform:scale(1.2);}
+.quiz-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:18px;padding:28px 24px 24px;text-align:center;}
+.quiz-lbl {font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.quiz-word{font-size:clamp(1.2rem,5vw,1.8rem);font-weight:800;margin-bottom:6px;line-height:1.2;}
+.quiz-cat {font-family:var(--mono);font-size:.58rem;color:var(--accent2);margin-bottom:16px;letter-spacing:1px;}
+.quiz-audio-row{display:flex;gap:8px;justify-content:center;margin-bottom:18px;}
+.quiz-input{width:100%;font-family:var(--mono);font-size:.92rem;font-weight:500;
+  padding:12px 14px;background:var(--bg2);border:2px solid var(--border2);border-radius:10px;
+  color:var(--text);outline:none;text-align:center;transition:border-color .2s;margin-bottom:10px;}
+.quiz-input:focus{border-color:var(--accent2);}
+.quiz-input.ok  {border-color:var(--accent)!important;background:rgba(0,212,170,.07);}
+.quiz-input.fail{border-color:var(--red)!important;background:rgba(255,64,96,.07);}
+.quiz-feedback{min-height:26px;display:flex;align-items:center;justify-content:center;
+  gap:7px;font-size:.84rem;margin-bottom:14px;}
+.fb-ok  {color:var(--accent);font-weight:700;}
+.fb-fail{color:var(--red);}
+.fb-ans {color:var(--gold);font-family:var(--mono);font-weight:600;}
+.quiz-hint{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:10px;}
+.quiz-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.btn-q{font-family:var(--sans);font-weight:700;font-size:.78rem;padding:10px 24px;
+  border-radius:10px;cursor:pointer;border:none;transition:all .18s;}
+.btn-q.prim{background:var(--accent);color:var(--bg);}
+.btn-q.prim:hover{background:#00f2c0;transform:translateY(-1px);}
+.btn-q.sec{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
+.btn-q.sec:hover{border-color:var(--accent);}
+.btn-skip{font-family:var(--mono);font-size:.56rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;margin-top:8px;}
+.btn-skip:hover{color:var(--text);}
+
+/* RESULTS */
+.quiz-results{text-align:center;padding:16px 8px;}
+.res-emoji{font-size:3rem;margin-bottom:10px;}
+.res-title{font-size:1.4rem;font-weight:800;margin-bottom:6px;}
+.res-sub{font-size:.78rem;color:var(--muted);margin-bottom:24px;}
+.res-scores{display:flex;gap:10px;justify-content:center;margin-bottom:26px;flex-wrap:wrap;}
+.res-score{background:var(--surface);border:1.5px solid var(--border2);border-radius:12px;padding:12px 18px;min-width:80px;text-align:center;}
+.res-score .n{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1;}
+.res-score .l{font-size:.52rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.res-score.ok   .n{color:var(--accent);}
+.res-score.fail .n{color:var(--red);}
+.res-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.btn-res{font-family:var(--sans);font-weight:700;font-size:.78rem;padding:10px 20px;border-radius:10px;cursor:pointer;transition:all .2s;border:none;}
+.btn-res.prim{background:var(--accent);color:var(--bg);}
+.btn-res.prim:hover{background:#00f2c0;}
+.btn-res.sec{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
+.btn-res.sec:hover{border-color:var(--accent);}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--surface2);border:1px solid var(--accent);color:var(--text);
+  font-family:var(--mono);font-size:.7rem;padding:8px 18px;border-radius:10px;
+  z-index:999;opacity:0;transition:all .28s ease;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .24s ease forwards;}
+
+/* MOBILE */
+@media(max-width:480px){
+  header{padding:10px 12px;}
+  .hd-stats{display:none;}
+  .nav-item{font-size:.64rem;padding:10px 4px;gap:3px;}
+  .page,.cours-view,.review-section{padding:16px 10px 40px;}
+  .card-body{padding:20px 14px 16px;}
+  .card-footer{padding:0 10px 16px;}
+  .rl-card{flex-direction:column;align-items:flex-start;gap:8px;}
+  .quiz-card{padding:20px 12px 18px;}
+  .cours-table th,.cours-table td{padding:8px;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-name">QA <em>English</em></div>
+    <div class="logo-sub">Omar · Lacoste QA Engineer</div>
+  </div>
+  <div class="hd-stats">
+    <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
+    <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">À revoir</span></div>
+    <div class="hd-stat"><span class="n" id="statStreak">0</span><span class="l">Streak🔥</span></div>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-item vocab-tab active" id="tab-vocab" onclick="switchTab('vocab')">
+    📚 Vocab IT <span class="nav-badge" id="nb-vocab">51</span>
+  </button>
+  <button class="nav-item expr-tab" id="tab-expr" onclick="switchTab('expr')">
+    💬 Expressions <span class="nav-badge" id="nb-expr">34</span>
+  </button>
+  <button class="nav-item prep-tab" id="tab-prep" onclick="switchTab('prep')">
+    📐 Prépositions <span class="nav-badge" id="nb-prep">NEW</span>
+  </button>
+  <button class="nav-item review-tab" id="tab-review" onclick="switchTab('review')">
+    🎯 Révision <span class="nav-badge" id="nb-review">0</span>
+  </button>
+</nav>
+
+<main id="main"></main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA — Vocabulaire IT
+// ═══════════════════════════════════════════════════════════
+const DATA = {
+  vocab: [
+    {en:"Requirement",fr:"Exigence"},
+    {en:"Business requirement",fr:"Besoin métier"},
+    {en:"Functional specification",fr:"Spécification fonctionnelle"},
+    {en:"Technical specification",fr:"Spécification technique"},
+    {en:"User story",fr:"User story"},
+    {en:"Acceptance criteria",fr:"Critères d'acceptation"},
+    {en:"Test case",fr:"Cas de test"},
+    {en:"Test scenario",fr:"Scénario de test"},
+    {en:"Test plan",fr:"Plan de test"},
+    {en:"Test suite",fr:"Suite de tests"},
+    {en:"Test execution",fr:"Exécution des tests"},
+    {en:"Test coverage",fr:"Couverture de test"},
+    {en:"Regression testing",fr:"Test de non-régression"},
+    {en:"Smoke test",fr:"Test de fumée"},
+    {en:"Sanity test",fr:"Test de validation rapide"},
+    {en:"End-to-end (E2E) test",fr:"Test de bout en bout"},
+    {en:"Integration testing",fr:"Test d'intégration"},
+    {en:"Unit testing",fr:"Test unitaire"},
+    {en:"Bug / defect",fr:"Anomalie"},
+    {en:"Issue",fr:"Ticket / problème"},
+    {en:"Severity",fr:"Sévérité"},
+    {en:"Priority",fr:"Priorité"},
+    {en:"Bug report",fr:"Rapport de bug"},
+    {en:"Reproduce (a bug)",fr:"Reproduire un bug"},
+    {en:"Fix",fr:"Correction"},
+    {en:"Patch",fr:"Correctif"},
+    {en:"Deployment",fr:"Déploiement"},
+    {en:"Release",fr:"Mise en production"},
+    {en:"Environment",fr:"Environnement"},
+    {en:"Production (prod)",fr:"Production"},
+    {en:"Staging",fr:"Pré-production"},
+    {en:"QA environment",fr:"Environnement QA"},
+    {en:"API",fr:"API"},
+    {en:"Endpoint",fr:"Point d'accès API"},
+    {en:"Payload",fr:"Données envoyées"},
+    {en:"Response",fr:"Réponse"},
+    {en:"Database",fr:"Base de données"},
+    {en:"Query",fr:"Requête"},
+    {en:"Log",fr:"Log / journal"},
+    {en:"Debug",fr:"Déboguer"},
+    {en:"Automation",fr:"Automatisation"},
+    {en:"Test script",fr:"Script de test"},
+    {en:"Framework",fr:"Framework"},
+    {en:"CI/CD",fr:"Intégration / déploiement continu"},
+    {en:"Pipeline",fr:"Pipeline"},
+    {en:"Version control",fr:"Gestion de version"},
+    {en:"Branch",fr:"Branche"},
+    {en:"Merge",fr:"Fusion"},
+    {en:"Conflict",fr:"Conflit"},
+    {en:"Rollback",fr:"Retour arrière"},
+    {en:"Monitoring",fr:"Supervision"},
+  ],
+  expr: [
+    {en:"I found a bug",fr:"J'ai trouvé un bug"},
+    {en:"The issue is reproducible",fr:"Le bug est reproductible"},
+    {en:"I can't reproduce the issue",fr:"Je n'arrive pas à reproduire"},
+    {en:"It works as expected",fr:"Ça fonctionne comme prévu"},
+    {en:"It doesn't meet the requirements",fr:"Ça ne respecte pas les exigences"},
+    {en:"We need more details",fr:"On a besoin de plus d'infos"},
+    {en:"Can you clarify this point?",fr:"Peux-tu clarifier ?"},
+    {en:"This is a blocker",fr:"C'est bloquant"},
+    {en:"This is a minor issue",fr:"C'est un problème mineur"},
+    {en:"The fix is in progress",fr:"Le correctif est en cours"},
+    {en:"The issue has been fixed",fr:"Le bug est corrigé"},
+    {en:"Ready for testing",fr:"Prêt à être testé"},
+    {en:"Tested and validated",fr:"Testé et validé"},
+    {en:"Failed test case",fr:"Cas de test échoué"},
+    {en:"Passed test case",fr:"Cas de test validé"},
+    {en:"Let's prioritize this",fr:"Priorisons ça"},
+    {en:"What's the impact?",fr:"Quel est l'impact ?"},
+    {en:"Do we have a workaround?",fr:"Y a-t-il une solution de contournement ?"},
+    {en:"It's a regression",fr:"C'est une régression"},
+    {en:"Can you deploy on staging?",fr:"Tu peux déployer en staging ?"},
+    {en:"I'll retest after the fix",fr:"Je retesterai après correction"},
+    {en:"We need to investigate",fr:"On doit investiguer"},
+    {en:"The data looks incorrect",fr:"Les données semblent incorrectes"},
+    {en:"The API returns an error",fr:"L'API renvoie une erreur"},
+    {en:"Timeout error",fr:"Erreur de timeout"},
+    {en:"Access denied",fr:"Accès refusé"},
+    {en:"Invalid input",fr:"Entrée invalide"},
+    {en:"Expected vs actual result",fr:"Résultat attendu vs réel"},
+    {en:"Let's sync quickly",fr:"Faisons un point rapide"},
+    {en:"I'll follow up",fr:"Je reviens vers toi"},
+    {en:"Any update on this?",fr:"Des nouvelles ?"},
+    {en:"It's on my side",fr:"C'est de mon côté"},
+    {en:"It's coming from backend",fr:"Ça vient du backend"},
+    {en:"Frontend issue",fr:"Problème frontend"},
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════
+// DATA — Prépositions (cours structuré en sections)
+// ═══════════════════════════════════════════════════════════
+const PREP_SECTIONS = [
+  {
+    id:'sur',
+    label:'🔵 SUR',
+    title:'Traductions de « SUR »',
+    subtitle:'Comment dire "sur" selon le contexte',
+    cols:['Préposition','Type / Explication','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'On',   type:'Position & Contact',  ex:'The keys are on the counter.',    trad:'Les clés sont sur le comptoir.'},
+      {prep:'Over', type:'Supériorité & Couverture', ex:'Put a blanket over the baby.', trad:'Mets une couverture sur le bébé.'},
+      {prep:'Above',type:'Niveau / Hauteur',    ex:'The sun is above the clouds.',     trad:'Le soleil est au-dessus des nuages.'},
+      {prep:'Onto', type:'Mouvement (vers une surface)', ex:'He stepped onto the balcony.', trad:'Il a marché sur le balcon.'},
+      {prep:'About',type:'Sujet / Thème',       ex:"I'm reading a book about art.",    trad:"Je lis un livre sur l'art."},
+      {prep:'Upon', type:'Formel (= On soutenu)',ex:'It depends upon your choice.',    trad:'Cela dépend de votre choix.'},
+      {prep:'To',   type:'Direction / Vue',     ex:'The window looks to the park.',    trad:'La fenêtre donne sur le parc.'},
+    ]
+  },
+  {
+    id:'lieu',
+    label:'📍 LIEU',
+    title:'Prépositions de Lieu (Espace)',
+    subtitle:'Indiquer où se trouve quelque chose',
+    cols:['Préposition','Traduction','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'In',     type:'Dans',           ex:'The book is in the bag.',        trad:'Le livre est dans le sac.'},
+      {prep:'On',     type:'Sur',            ex:'The book is on the table.',      trad:'Le livre est sur la table.'},
+      {prep:'Under',  type:'Sous',           ex:'The cat is under the chair.',    trad:'Le chat est sous la chaise.'},
+      {prep:'Next to',type:'À côté de',      ex:'The car is next to the house.',  trad:'La voiture est à côté de la maison.'},
+    ]
+  },
+  {
+    id:'temps',
+    label:'⏰ TEMPS',
+    title:'Prépositions de Temps',
+    subtitle:'AT · ON · IN — selon la précision temporelle',
+    cols:['Préposition','Usage','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'At',type:"Heure précise",       ex:'Meet at 5 o\'clock.',            trad:'Se retrouver à 5 heures.'},
+      {prep:'On',type:'Jours et dates',       ex:'The party is on Monday.',        trad:'La fête est lundi.'},
+      {prep:'In',type:'Mois, années, périodes',ex:"I was born in April.",          trad:"Je suis né en avril."},
+    ]
+  },
+  {
+    id:'mouvement',
+    label:'🚀 MOUVEMENT',
+    title:'Prépositions de Direction / Mouvement',
+    subtitle:'Indiquer un déplacement ou une provenance',
+    cols:['Préposition','Mouvement','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'To',   type:'Vers / À',                  ex:'She goes to school.',               trad:'Elle va à l\'école.'},
+      {prep:'Into', type:'Vers l\'intérieur',          ex:'He goes into the room.',            trad:'Il entre dans la pièce.'},
+      {prep:'Onto', type:'Vers le dessus',             ex:'The cat jumps onto the table.',     trad:'Le chat saute sur la table.'},
+      {prep:'From', type:'Provenance (de/depuis)',     ex:'She comes from Spain.',             trad:'Elle vient d\'Espagne.'},
+    ]
+  },
+  {
+    id:'groupe',
+    label:'👥 GROUPE',
+    title:'Between vs Among',
+    subtitle:'Deux éléments ou un groupe',
+    cols:['Préposition','Contexte','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'Between',type:'Deux éléments séparés',  ex:'Between you and me.',    trad:'Entre toi et moi.'},
+      {prep:'Among',  type:'Un groupe / une foule',  ex:'Among the crowd.',       trad:'Dans la foule.'},
+    ]
+  },
+  {
+    id:'verbes',
+    label:'🔗 VERBES + PREP',
+    title:'Verbe + Préposition',
+    subtitle:'Collocations indispensables à mémoriser',
+    cols:['Expression','Traduction','Exemple EN','—'],
+    rows:[
+      {prep:'Listen to',   type:'Écouter',                   ex:"I'm listening to music.",         trad:'Je suis en train d\'écouter de la musique.'},
+      {prep:'Wait for',    type:'Attendre',                   ex:'She is waiting for the bus.',     trad:'Elle attend le bus.'},
+      {prep:'Look at',     type:'Regarder',                   ex:'Look at the whiteboard.',         trad:'Regarde le tableau.'},
+      {prep:'Look for',    type:'Chercher',                   ex:"I am looking for my keys.",       trad:'Je cherche mes clés.'},
+      {prep:'Talk to/with',type:'Parler à / avec',            ex:'I need to talk to you.',          trad:'J\'ai besoin de te parler.'},
+      {prep:'Think about', type:'Penser à (réfléchir)',       ex:"I'm thinking about my future.",   trad:'Je pense à mon avenir.'},
+      {prep:'Depends on',  type:'Dépendre de',                ex:'It depends on the weather.',      trad:'Cela dépend du temps.'},
+      {prep:'Belong to',   type:'Appartenir à',               ex:'This book belongs to me.',        trad:'Ce livre m\'appartient.'},
+      {prep:'Agree with',  type:'Être d\'accord avec',        ex:'I agree with your idea.',         trad:'Je suis d\'accord avec ton idée.'},
+      {prep:'Laugh at',    type:'Se moquer de',               ex:"Don't laugh at him!",             trad:'Ne te moque pas de lui !'},
+    ]
+  },
+  {
+    id:'by',
+    label:'🔑 BY',
+    title:'Tableau récapitulatif — BY',
+    subtitle:'Toutes les nuances de "BY"',
+    cols:['Catégorie','Explication','Exemple EN','Traduction FR'],
+    rows:[
+      {prep:'Agent / auteur',   type:'Indique qui fait l\'action',     ex:'The book was written by John.',      trad:'Le livre a été écrit par John.'},
+      {prep:'Moyen / méthode',  type:'Indique comment on fait',        ex:'We travel by car.',                  trad:'Nous voyageons en voiture.'},
+      {prep:'Proximité',        type:'Position proche',                 ex:'The house is by the river.',         trad:'La maison est près de la rivière.'},
+      {prep:'Deadline',         type:'Date limite',                     ex:'Finish this by Monday.',             trad:'Termine ceci avant lundi.'},
+      {prep:'Mesure / écart',   type:'Quantité ou différence',         ex:'Prices increased by 10%.',           trad:'Les prix ont augmenté de 10 %.'},
+      {prep:'Moyen (email etc)',type:'Via un canal',                    ex:'The letter was sent by email.',      trad:'La lettre a été envoyée par email.'},
+    ]
+  },
+];
+
+// Flashcards for prepositions: one card per row across all sections
+function buildPrepCards() {
+  const cards = [];
+  PREP_SECTIONS.forEach(sec => {
+    sec.rows.forEach(row => {
+      cards.push({
+        en: row.prep,
+        fr: row.type,
+        example: row.ex,
+        exampleTrad: row.trad,
+        section: sec.label,
+        _sec: 'prep',
+      });
+    });
+  });
+  return cards;
+}
+const PREP_CARDS = buildPrepCards();
+DATA.prep = PREP_CARDS;
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let S = {
+  tab: 'vocab',
+  cursor: {vocab:0, expr:0, prep:0},
+  prepView: 'cours',   // 'cours' | 'cards'
+  prepSection: 'sur',
+  status: {},
+  streak: 0,
+  quiz: null,
+};
+
+function load() {
+  try {
+    const r = localStorage.getItem('qae_v5');
+    if (!r) return;
+    const p = JSON.parse(r);
+    S.status = p.status || {};
+    S.streak = p.streak || 0;
+    S.cursor = p.cursor || {vocab:0,expr:0,prep:0};
+  } catch(e){}
+}
+function save() {
+  localStorage.setItem('qae_v5', JSON.stringify({status:S.status,streak:S.streak,cursor:S.cursor}));
+}
+const k = (sec,i) => `${sec}_${i}`;
+const getS = (sec,i) => S.status[k(sec,i)] || null;
+function setS(sec,i,v) { S.status[k(sec,i)]=v; save(); refreshBadges(); }
+
+// ═══════════════════════════════════════════════════════════
+// COMPUTED
+// ═══════════════════════════════════════════════════════════
+const cntOk  = () => Object.values(S.status).filter(v=>v==='ok').length;
+const cntRev = () => Object.values(S.status).filter(v=>v==='review').length;
+function revQueue(source) {
+  let out=[];
+  const secs = source==='all'?['vocab','expr','prep']:
+               source==='prep-only'?['prep']:[source];
+  secs.forEach(sec=>{
+    DATA[sec].forEach((it,i)=>{
+      if(getS(sec,i)==='review') out.push({...it,_sec:sec,_idx:i});
+    });
+  });
+  return shuffle(out);
+}
+function fullQueue(source) {
+  let out=[];
+  const secs = source==='all'?['vocab','expr','prep']:
+               source==='prep-only'?['prep']:[source];
+  secs.forEach(sec=>{
+    DATA[sec].forEach((it,i)=>out.push({...it,_sec:sec,_idx:i}));
+  });
+  return shuffle(out);
+}
+
+// ═══════════════════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════════════════
+function speak(txt,lang) {
+  if(!window.speechSynthesis){toast('Audio non supporté');return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang=lang==='fr'?'fr-FR':'en-US'; u.rate=0.87;
+  speechSynthesis.speak(u);
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════
+let _tt;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════════
+function switchTab(tab) {
+  S.tab=tab;
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  render();
+}
+
+function refreshBadges() {
+  document.getElementById('nb-vocab').textContent=DATA.vocab.length;
+  document.getElementById('nb-expr').textContent=DATA.expr.length;
+  document.getElementById('nb-prep').textContent=PREP_CARDS.length;
+  const rv=cntRev();
+  document.getElementById('nb-review').textContent=rv||'0';
+  document.getElementById('statOk').textContent=cntOk();
+  document.getElementById('statRev').textContent=rv;
+  document.getElementById('statStreak').textContent=S.streak;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER DISPATCHER
+// ═══════════════════════════════════════════════════════════
+let _keyHandler=null;
+function render() {
+  if(_keyHandler){document.removeEventListener('keydown',_keyHandler);_keyHandler=null;}
+  refreshBadges();
+  const el=document.getElementById('main');
+  el.innerHTML='';
+  if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
+  else if(S.tab==='prep')             el.appendChild(buildPrepSection());
+  else if(S.quiz)                     el.appendChild(buildQuiz());
+  else                                el.appendChild(buildLauncher());
+}
+
+// ═══════════════════════════════════════════════════════════
+// FLASHCARD (vocab / expr)
+// ═══════════════════════════════════════════════════════════
+function buildFlashcard(sec) {
+  const data=DATA[sec], idx=S.cursor[sec], item=data[idx], st=getS(sec,idx);
+  const total=data.length, pct=Math.round(((idx+1)/total)*100);
+  const nOk =data.filter((_,i)=>getS(sec,i)==='ok').length;
+  const nRev=data.filter((_,i)=>getS(sec,i)==='review').length;
+  const fillCls=sec==='vocab'?'vocab-fill':'expr-fill';
+  const badge=st==='ok'?`<div class="card-badge badge-ok">✓ Maîtrisé</div>`
+              :st==='review'?`<div class="card-badge badge-rev">🔄 À revoir</div>`
+              :`<div class="card-badge badge-new">Nouveau</div>`;
+  const wrap=document.createElement('div');
+  wrap.className='page fade-up';
+  wrap.innerHTML=`
+    <div class="fc-progress-strip">
+      <div class="fc-prog-bar"><div class="fc-prog-fill ${fillCls}" style="width:${pct}%"></div></div>
+      <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+    </div>
+    <div class="flashcard ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
+      <div class="card-stripe"></div>
+      ${badge}
+      <div class="card-body">
+        <div class="card-num">${sec==='vocab'?'Vocabulaire IT/QA':'Expression clé'} · #${idx+1}</div>
+        <div class="card-word">${item.en}</div>
+        <div class="card-trad">${item.fr}</div>
+        <div class="card-audio-row">
+          <button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} EN</button>
+          <button class="btn-audio" onclick="speak('${esc(item.fr)}','fr')">${spkSvg()} FR</button>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="mark('${sec}',${idx},'ok')">
+          ${st==='ok'?'✓ Maîtrisé':'✓ Marquer maîtrisé'}
+        </button>
+        <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="mark('${sec}',${idx},'review')">
+          ${st==='review'?'🔄 En révision':'🔄 Mettre en révision'}
+        </button>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="btn-nav" onclick="nav('${sec}',-1)" ${idx===0?'disabled':''}>◀</button>
+      <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
+      <button class="btn-nav" onclick="nav('${sec}',1)" ${idx===total-1?'disabled':''}>▶</button>
+    </div>
+    <div class="fc-review-cta">
+      <button class="btn-goto-rev" onclick="switchTab('review')" ${nRev===0?'disabled':''}>
+        🎯 Lancer la révision ${nRev>0?`<span class="rev-chip">${nRev}</span>`:''}
+      </button>
+    </div>`;
+  _keyHandler=(e)=>{
+    if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight') nav(sec,1);
+    if(e.key==='ArrowLeft')  nav(sec,-1);
+  };
+  document.addEventListener('keydown',_keyHandler);
+  return wrap;
+}
+
+function nav(sec,dir){
+  const max=DATA[sec].length-1;
+  S.cursor[sec]=Math.max(0,Math.min(max,S.cursor[sec]+dir));
+  save(); render();
+}
+function mark(sec,idx,val){
+  const cur=getS(sec,idx);
+  const nv=cur===val?null:val;
+  setS(sec,idx,nv);
+  if(nv==='ok'){S.streak++;save();toast('✓ Maîtrisé !');}
+  else if(nv==='review') toast('🔄 Remis en révision');
+  else toast('Statut retiré');
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════
+// PREPOSITIONS SECTION
+// ═══════════════════════════════════════════════════════════
+function buildPrepSection() {
+  const wrap=document.createElement('div');
+  wrap.className='page fade-up';
+
+  // Sub-nav: Cours | Flashcards
+  const nRevPrep=PREP_CARDS.filter((_,i)=>getS('prep',i)==='review').length;
+  wrap.innerHTML=`
+    <div class="prep-subnav">
+      <button class="prep-subbtn ${S.prepView==='cours'?'active':''}" onclick="setPrepView('cours')">📖 Cours</button>
+      <button class="prep-subbtn ${S.prepView==='cards'?'active':''}" onclick="setPrepView('cards')">🃏 Flashcards (${PREP_CARDS.length})</button>
+      ${nRevPrep>0?`<button class="prep-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="startQuiz('prep-only')">🎯 Réviser (${nRevPrep})</button>`:''}
+    </div>
+  `;
+
+  if(S.prepView==='cours') {
+    // Section selector
+    const sectionNav=document.createElement('div');
+    sectionNav.className='prep-subnav';
+    PREP_SECTIONS.forEach(sec=>{
+      const btn=document.createElement('button');
+      btn.className='prep-subbtn'+(S.prepSection===sec.id?' active':'');
+      btn.textContent=sec.label;
+      btn.onclick=()=>{S.prepSection=sec.id;render();};
+      sectionNav.appendChild(btn);
+    });
+    wrap.appendChild(sectionNav);
+
+    // Display selected section table
+    const sec=PREP_SECTIONS.find(s=>s.id===S.prepSection);
+    const tableWrap=document.createElement('div');
+    tableWrap.innerHTML=`
+      <div class="cours-section-tag">${sec.label}</div>
+      <div class="cours-title">${sec.title}</div>
+      <div class="cours-subtitle">${sec.subtitle}</div>
+      <table class="cours-table">
+        <thead><tr>${sec.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+        <tbody>
+          ${sec.rows.map(row=>`
+            <tr>
+              <td>
+                <div class="td-prep-audio">
+                  <span class="td-prep">${row.prep}</span>
+                  <button class="btn-tbl-audio" onclick="speak('${esc(row.prep)}','en')" title="Écouter">${spkSvg()}</button>
+                </div>
+              </td>
+              <td><span class="td-type">${row.type}</span></td>
+              <td>
+                <div class="td-ex-audio">
+                  <span class="td-ex">${row.ex}</span>
+                  <button class="btn-tbl-audio" onclick="speak('${esc(row.ex)}','en')" title="Écouter">${spkSvg()}</button>
+                </div>
+              </td>
+              <td><span class="td-trad">${row.trad}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    wrap.appendChild(tableWrap);
+
+  } else {
+    // Flashcards mode for prepositions
+    const idx=S.cursor.prep, item=PREP_CARDS[idx], st=getS('prep',idx);
+    const total=PREP_CARDS.length, pct=Math.round(((idx+1)/total)*100);
+    const nOk =PREP_CARDS.filter((_,i)=>getS('prep',i)==='ok').length;
+    const nRev=PREP_CARDS.filter((_,i)=>getS('prep',i)==='review').length;
+    const badge=st==='ok'?`<div class="card-badge badge-ok">✓ Maîtrisé</div>`
+                :st==='review'?`<div class="card-badge badge-rev">🔄 À revoir</div>`
+                :`<div class="card-badge badge-new">Nouveau</div>`;
+    const fcWrap=document.createElement('div');
+    fcWrap.innerHTML=`
+      <div class="fc-progress-strip">
+        <div class="fc-prog-bar"><div class="fc-prog-fill prep-fill" style="width:${pct}%"></div></div>
+        <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+      </div>
+      <div class="flashcard prep-card ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
+        <div class="card-stripe"></div>
+        ${badge}
+        <div class="card-body">
+          <div class="card-num">${item.section} · #${idx+1}</div>
+          <div class="card-word">${item.en}</div>
+          <div class="card-extra">${item.fr}</div>
+          <div class="card-example">"${item.example}"</div>
+          <div class="card-example-trad">${item.exampleTrad}</div>
+          <div class="card-audio-row">
+            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} Préposition</button>
+            <button class="btn-audio" onclick="speak('${esc(item.example)}','en')">${spkSvg()} Exemple</button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="mark('prep',${idx},'ok')">
+            ${st==='ok'?'✓ Maîtrisé':'✓ Marquer maîtrisé'}
+          </button>
+          <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="mark('prep',${idx},'review')">
+            ${st==='review'?'🔄 En révision':'🔄 Mettre en révision'}
+          </button>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="btn-nav" onclick="nav('prep',-1)" ${idx===0?'disabled':''}>◀</button>
+        <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
+        <button class="btn-nav" onclick="nav('prep',1)" ${idx===total-1?'disabled':''}>▶</button>
+      </div>
+    `;
+    wrap.appendChild(fcWrap);
+    _keyHandler=(e)=>{
+      if(e.target.tagName==='INPUT') return;
+      if(e.key==='ArrowRight') nav('prep',1);
+      if(e.key==='ArrowLeft')  nav('prep',-1);
+    };
+    document.addEventListener('keydown',_keyHandler);
+  }
+
+  return wrap;
+}
+
+function setPrepView(v){S.prepView=v;render();}
+
+// ═══════════════════════════════════════════════════════════
+// REVIEW LAUNCHER
+// ═══════════════════════════════════════════════════════════
+function buildLauncher() {
+  const rvV=DATA.vocab.filter((_,i)=>getS('vocab',i)==='review').length;
+  const rvE=DATA.expr.filter((_,i) =>getS('expr',i) ==='review').length;
+  const rvP=PREP_CARDS.filter((_,i)=>getS('prep',i) ==='review').length;
+  const rvA=rvV+rvE+rvP;
+  const wrap=document.createElement('div');
+  wrap.className='review-section fade-up';
+  wrap.innerHTML=`
+    <div class="rl-title">🎯 Choisir une session de révision</div>
+    <div class="rl-list">
+      <div class="rl-card">
+        <div class="rl-info"><h3>📚 Vocabulaire IT/QA</h3><p>${rvV} mot${rvV!==1?'s':''} à revoir · ${DATA.vocab.length} total</p></div>
+        <button class="btn-launch bg-green" onclick="startQuiz('vocab')" ${rvV===0?'disabled':''}>
+          ${rvV===0?'Rien à revoir':`Réviser (${rvV})`}</button>
+      </div>
+      <div class="rl-card">
+        <div class="rl-info"><h3>💬 Expressions clés</h3><p>${rvE} expression${rvE!==1?'s':''} à revoir · ${DATA.expr.length} total</p></div>
+        <button class="btn-launch bg-blue" onclick="startQuiz('expr')" ${rvE===0?'disabled':''}>
+          ${rvE===0?'Rien à revoir':`Réviser (${rvE})`}</button>
+      </div>
+      <div class="rl-card">
+        <div class="rl-info"><h3>📐 Prépositions</h3><p>${rvP} préposition${rvP!==1?'s':''} à revoir · ${PREP_CARDS.length} total</p></div>
+        <button class="btn-launch bg-purple" onclick="startQuiz('prep-only')" ${rvP===0?'disabled':''}>
+          ${rvP===0?'Rien à revoir':`Réviser (${rvP})`}</button>
+      </div>
+      <div class="rl-card">
+        <div class="rl-info"><h3>🔀 Tout réviser ensemble</h3><p>${rvA} élément${rvA!==1?'s':''} en révision</p></div>
+        <button class="btn-launch bg-gold" onclick="startQuiz('all')" ${rvA===0?'disabled':''}>
+          ${rvA===0?'Rien à revoir':`Tout (${rvA})`}</button>
+      </div>
+      <div class="rl-card">
+        <div class="rl-info"><h3>🏋️ Entraînement complet</h3><p>Tous les mots — maîtrisés ou non (${DATA.vocab.length+DATA.expr.length+PREP_CARDS.length})</p></div>
+        <button class="btn-launch bg-muted" onclick="startFull()">Tout tester</button>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════════════════
+function startQuiz(source){
+  const q=revQueue(source);
+  if(!q.length){toast('Rien à réviser !');return;}
+  S.quiz={queue:q,idx:0,results:[],answered:false,input:'',source};
+  render();
+}
+function startFull(){
+  S.quiz={queue:fullQueue('all'),idx:0,results:[],answered:false,input:'',source:'full'};
+  render();
+}
+
+function buildQuiz(){
+  const q=S.quiz;
+  if(q.idx>=q.queue.length) return buildResults();
+  const item=q.queue[q.idx];
+  const ans=q.answered, isOk=ans&&q.results[q.idx];
+  const isPrep=item._sec==='prep';
+  const dots=q.queue.map((_,i)=>{
+    let c='dot';
+    if(i<q.idx) c+=q.results[i]?' ok':' fail';
+    if(i===q.idx) c+=' curr';
+    return `<div class="${c}"></div>`;
+  }).join('');
+
+  // For preps: show FR usage type → write EN preposition
+  // For vocab/expr: show FR → write EN
+  const promptLabel = isPrep ? 'Écris la préposition anglaise →' : 'Traduis en anglais →';
+  const promptWord  = isPrep ? `${item.fr}<br><span style="font-size:.75rem;color:var(--muted);font-style:italic;font-weight:400">${item.exampleTrad||''}</span>` : item.fr;
+  const catLabel    = isPrep ? `📐 ${item.section}` : item._sec==='vocab'?'📚 Vocabulaire':'💬 Expression';
+  const hint        = isPrep ? `<div class="quiz-hint">Exemple : <em>${item.example||''}</em></div>` : '';
+
+  const wrap=document.createElement('div');
+  wrap.className='review-section fade-up';
+  wrap.innerHTML=`
+    <div class="quiz-top">
+      <div class="quiz-ctr">Question ${q.idx+1} / ${q.queue.length}</div>
+      <button class="btn-quit" onclick="quitQuiz()">✕ Quitter</button>
+    </div>
+    <div class="quiz-dots">${dots}</div>
+    <div class="quiz-card">
+      <div class="quiz-lbl">${promptLabel}</div>
+      <div class="quiz-word">${promptWord}</div>
+      <div class="quiz-cat">${catLabel}</div>
+      <div class="quiz-audio-row">
+        <button class="btn-audio" onclick="speak('${esc(item.fr)}','fr')">${spkSvg()} FR</button>
+        ${ans?`<button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} EN</button>`:''}
+      </div>
+      ${ans?'':hint}
+      <input class="quiz-input ${ans?(isOk?'ok':'fail'):''}"
+        id="qinput" type="text"
+        placeholder="Ta réponse en anglais..."
+        value="${esc(q.input)}"
+        ${ans?'readonly':''}
+        oninput="S.quiz.input=this.value"
+        onkeydown="if(event.key==='Enter'&&!S.quiz.answered)submitQ()"
+      />
+      <div class="quiz-feedback">
+        ${ans?(isOk
+          ?`<span class="fb-ok">✓ Correct !</span>`
+          :`<span class="fb-fail">✗ Incorrect —</span><span class="fb-ans">&nbsp;${item.en}</span>`):''}
+      </div>
+      <div class="quiz-btns">
+        ${!ans
+          ?`<button class="btn-q prim" onclick="submitQ()">Valider ↵</button>`
+          :`<button class="btn-q prim" onclick="nextQ()">${q.idx+1>=q.queue.length?'Voir les résultats 🏆':'Suivant →'}</button>`
+        }
+      </div>
+      ${!ans?`<button class="btn-skip" onclick="skipQ()">Passer ce mot →</button>`:''}
+    </div>`;
+  setTimeout(()=>{const i=document.getElementById('qinput');if(i&&!ans)i.focus();},40);
+  return wrap;
+}
+
+function buildResults(){
+  const q=S.quiz;
+  const total=q.results.length, ok=q.results.filter(Boolean).length, fail=total-ok;
+  const pct=total?Math.round((ok/total)*100):0;
+  let em='😅',ti='Continue !',su='Quelques erreurs — retente !';
+  if(pct>=90){em='🏆';ti='Excellent !';su='Quasi parfait, bravo !';}
+  else if(pct>=70){em='💪';ti='Bien joué !';su='Encore quelques à consolider.';}
+  else if(pct>=50){em='📈';ti='En progrès !';su='La moitié réussie — continue !';}
+  const wrap=document.createElement('div');
+  wrap.className='review-section fade-up';
+  wrap.innerHTML=`
+    <div class="quiz-results">
+      <div class="res-emoji">${em}</div>
+      <div class="res-title">${ti}</div>
+      <div class="res-sub">${su}</div>
+      <div class="res-scores">
+        <div class="res-score ok"><div class="n">${ok}</div><div class="l">Corrects</div></div>
+        <div class="res-score fail"><div class="n">${fail}</div><div class="l">Erreurs</div></div>
+        <div class="res-score"><div class="n">${pct}%</div><div class="l">Score</div></div>
+      </div>
+      <div class="res-btns">
+        <button class="btn-res prim" onclick="retryFail()">🔄 Refaire les erreurs</button>
+        <button class="btn-res sec" onclick="quitQuiz()">← Retour</button>
+      </div>
+    </div>`;
+  return wrap;
+}
+
+function submitQ(){
+  const q=S.quiz; if(q.answered)return;
+  const inp=document.getElementById('qinput');
+  const val=(inp?inp.value:q.input).trim();
+  if(!val){toast('Entre une réponse !');return;}
+  const item=q.queue[q.idx];
+  const isOk=checkAns(val,item.en);
+  q.results[q.idx]=isOk; q.answered=true;
+  if(isOk){S.streak++;setS(item._sec,item._idx,'ok');toast('✓ Bravo !');}
+  else{S.streak=0;setS(item._sec,item._idx,'review');}
+  save(); render();
+}
+function skipQ(){const q=S.quiz;q.results[q.idx]=false;q.answered=true;q.input='';render();}
+function nextQ(){S.quiz.idx++;S.quiz.answered=false;S.quiz.input='';render();}
+function retryFail(){
+  const q=S.quiz;
+  const failed=q.queue.filter((_,i)=>!q.results[i]);
+  if(!failed.length){quitQuiz();return;}
+  S.quiz={queue:shuffle(failed),idx:0,results:[],answered:false,input:'',source:q.source};
+  render();
+}
+function quitQuiz(){S.quiz=null;render();}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+function spkSvg(){return`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>`;}
+function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+function norm(s){return s.toLowerCase().replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/[ç]/g,'c').replace(/[''`]/g,"'").replace(/\s+/g,' ').trim();}
+function checkAns(inp,exp){
+  const a=norm(inp),b=norm(exp);
+  if(a===b)return true;
+  // allow (verb) suffix in parens
+  const bClean=b.replace(/\s*\(.*?\)/g,'').trim();
+  if(a===bClean)return true;
+  const wb=b.split(' '),wa=a.split(' ');
+  if(wb.length>=3){const h=wb.filter(w=>wa.includes(w)).length;return h/wb.length>=0.75;}
+  return false;
+}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+load(); render();
+</script>
+</body>
+</html>
