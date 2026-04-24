@@ -7,19 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#080c14; --bg2:#0f1624; --surface:#141e30; --surface2:#1a2640;
-  --border:#1f2f48; --border2:#2a3f60;
-  --accent:#00d4aa; --accent2:#0080ff; --purple:#a855f7; --gold:#f5c518; --red:#ff4060;
-  --text:#ddeeff; --muted:#6a85a8;
+  --bg:#0d0403; --bg2:#160806; --surface:#1f0d08; --surface2:#2a1209;
+  --border:#3d1a10; --border2:#5c2818;
+  --accent:#c1121f; --accent2:#2d6a4f; --purple:#a855f7; --orange:#f97316; --gold:#f5c518; --red:#ff2233;
+  --text:#fdf0ec; --muted:#a07060;
   --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(0,212,170,.07) 0%,transparent 55%),
-             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(0,128,255,.06) 0%,transparent 55%),
-             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(168,85,247,.04) 0%,transparent 60%);}
+  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(193,18,31,.10) 0%,transparent 55%),
+             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(45,106,79,.08) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(193,18,31,.04) 0%,transparent 60%);}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
 
 /* ── HEADER ── */
@@ -44,16 +44,20 @@ nav{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);ove
   border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;}
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,.02);}
 .nav-item.active{color:var(--text);}
-.nav-item.vocab-tab.active {border-bottom-color:var(--accent);}
-.nav-item.expr-tab.active  {border-bottom-color:var(--accent2);}
-.nav-item.prep-tab.active  {border-bottom-color:var(--purple);}
-.nav-item.review-tab.active{border-bottom-color:var(--gold);}
+.nav-item.vocab-tab.active  {border-bottom-color:var(--accent);}
+.nav-item.expr-tab.active   {border-bottom-color:var(--accent2);}
+.nav-item.prep-tab.active   {border-bottom-color:var(--purple);}
+.nav-item.phrasal-tab.active{border-bottom-color:var(--orange);}
+.nav-item.grammar-tab.active{border-bottom-color:var(--gold);}
+.nav-item.review-tab.active {border-bottom-color:#e8c97a;}
 .nav-badge{font-family:var(--mono);font-size:.5rem;padding:2px 5px;
   border-radius:99px;background:var(--surface);border:1px solid var(--border2);color:var(--muted);}
-.vocab-tab.active  .nav-badge{background:rgba(0,212,170,.15);border-color:rgba(0,212,170,.4);color:var(--accent);}
-.expr-tab.active   .nav-badge{background:rgba(0,128,255,.15);border-color:rgba(0,128,255,.4);color:var(--accent2);}
-.prep-tab.active   .nav-badge{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.4);color:var(--purple);}
-.review-tab.active .nav-badge{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--gold);}
+.vocab-tab.active   .nav-badge{background:rgba(193,18,31,.2);border-color:rgba(193,18,31,.5);color:var(--accent);}
+.expr-tab.active    .nav-badge{background:rgba(45,106,79,.2);border-color:rgba(45,106,79,.5);color:var(--accent2);}
+.prep-tab.active    .nav-badge{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.4);color:var(--purple);}
+.phrasal-tab.active .nav-badge{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4);color:var(--orange);}
+.grammar-tab.active .nav-badge{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--gold);}
+.review-tab.active  .nav-badge{background:rgba(232,201,122,.15);border-color:rgba(232,201,122,.4);color:#e8c97a;}
 
 main{flex:1;display:flex;flex-direction:column;}
 
@@ -64,9 +68,11 @@ main{flex:1;display:flex;flex-direction:column;}
 .fc-progress-strip{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
 .fc-prog-bar{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;}
 .fc-prog-fill{height:100%;border-radius:2px;transition:width .4s ease;}
-.vocab-fill{background:linear-gradient(90deg,var(--accent),#00ffcc);}
-.expr-fill {background:linear-gradient(90deg,var(--accent2),#66b3ff);}
-.prep-fill {background:linear-gradient(90deg,var(--purple),#d89cff);}
+.vocab-fill  {background:linear-gradient(90deg,#c1121f,#ff4d5e);}
+.expr-fill   {background:linear-gradient(90deg,#2d6a4f,#52b788);}
+.prep-fill   {background:linear-gradient(90deg,var(--purple),#d89cff);}
+.phrasal-fill{background:linear-gradient(90deg,var(--orange),#fbbf24);}
+.grammar-fill{background:linear-gradient(90deg,var(--gold),#ffe066);}
 .fc-prog-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap;}
 
 .flashcard{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;
@@ -76,15 +82,15 @@ main{flex:1;display:flex;flex-direction:column;}
 .flashcard.is-rev{border-color:rgba(245,197,24,.45);}
 .card-stripe{height:4px;width:100%;}
 .flashcard:not(.is-ok):not(.is-rev) .card-stripe{background:linear-gradient(90deg,var(--accent),var(--accent2));}
-.flashcard.is-ok  .card-stripe{background:linear-gradient(90deg,var(--accent),#00ff88);}
+.flashcard.is-ok  .card-stripe{background:linear-gradient(90deg,#2d6a4f,#52b788);}
 .flashcard.is-rev .card-stripe{background:linear-gradient(90deg,var(--gold),#ffaa00);}
 .flashcard.prep-card:not(.is-ok):not(.is-rev) .card-stripe{background:linear-gradient(90deg,var(--purple),var(--accent2));}
 
 .card-badge{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:.5rem;
   letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:6px;border:1px solid;}
-.badge-ok {color:var(--accent);background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.35);}
+.badge-ok {color:#52b788;background:rgba(45,106,79,.18);border-color:rgba(45,106,79,.45);}
 .badge-rev{color:var(--gold);background:rgba(245,197,24,.12);border-color:rgba(245,197,24,.35);}
-.badge-new{color:var(--muted);background:rgba(100,120,160,.08);border-color:var(--border2);}
+.badge-new{color:var(--muted);background:rgba(160,112,96,.08);border-color:var(--border2);}
 
 .card-body{flex:1;display:flex;flex-direction:column;align-items:center;
   justify-content:center;padding:28px 24px 20px;text-align:center;}
@@ -99,7 +105,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .btn-audio{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.6rem;
   padding:5px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;
   cursor:pointer;color:var(--muted);transition:all .18s;}
-.btn-audio:hover{background:rgba(0,128,255,.1);border-color:var(--accent2);color:var(--accent2);}
+.btn-audio:hover{background:rgba(193,18,31,.12);border-color:var(--accent);color:var(--accent);}
 .btn-audio svg{width:11px;height:11px;flex-shrink:0;}
 
 .card-footer{display:flex;gap:8px;padding:0 20px 20px;flex-wrap:wrap;justify-content:center;}
@@ -124,12 +130,12 @@ main{flex:1;display:flex;flex-direction:column;}
 
 .fc-review-cta{margin-top:16px;text-align:center;}
 .btn-goto-rev{font-family:var(--sans);font-size:.71rem;font-weight:700;padding:8px 20px;border-radius:99px;
-  background:rgba(245,197,24,.08);border:1.5px solid rgba(245,197,24,.3);color:var(--gold);
+  background:rgba(193,18,31,.1);border:1.5px solid rgba(193,18,31,.35);color:var(--accent);
   cursor:pointer;transition:all .2s;letter-spacing:.2px;}
-.btn-goto-rev:hover:not(:disabled){background:rgba(245,197,24,.18);transform:scale(1.02);}
+.btn-goto-rev:hover:not(:disabled){background:rgba(193,18,31,.2);transform:scale(1.02);}
 .btn-goto-rev:disabled{opacity:.3;cursor:default;}
-.rev-chip{display:inline-block;font-family:var(--mono);font-size:.56rem;background:var(--gold);
-  color:var(--bg);border-radius:99px;padding:1px 7px;margin-left:5px;font-weight:700;}
+.rev-chip{display:inline-block;font-family:var(--mono);font-size:.56rem;background:var(--accent);
+  color:#fff;border-radius:99px;padding:1px 7px;margin-left:5px;font-weight:700;}
 
 /* ── PREP SUB-NAV ── */
 .prep-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;}
@@ -138,6 +144,11 @@ main{flex:1;display:flex;flex-direction:column;}
   color:var(--muted);cursor:pointer;transition:all .18s;letter-spacing:.5px;}
 .prep-subbtn:hover{border-color:var(--purple);color:var(--text);}
 .prep-subbtn.active{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple);}
+.phrasal-subbtn{font-family:var(--mono);font-size:.62rem;padding:6px 14px;
+  border:1.5px solid var(--border2);border-radius:8px;background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .18s;letter-spacing:.5px;}
+.phrasal-subbtn:hover{border-color:var(--orange);color:var(--text);}
+.phrasal-subbtn.active{background:rgba(249,115,22,.15);border-color:var(--orange);color:var(--orange);}
 
 /* ── COURS VIEW ── */
 .cours-view{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 60px;}
@@ -147,24 +158,60 @@ main{flex:1;display:flex;flex-direction:column;}
 
 .cours-table{width:100%;border-collapse:collapse;margin-bottom:28px;border-radius:12px;overflow:hidden;}
 .cours-table th{background:var(--surface2);font-family:var(--mono);font-size:.6rem;
-  color:var(--purple);text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border2);}
+  color:var(--accent);text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border2);}
 .cours-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:top;}
 .cours-table tr:last-child td{border-bottom:none;}
-.cours-table tr:hover td{background:rgba(168,85,247,.04);}
+.cours-table tr:hover td{background:rgba(193,18,31,.04);}
 .td-prep{font-weight:800;font-size:.95rem;color:var(--text);}
 .td-prep-audio{display:flex;align-items:center;gap:6px;}
-.td-type{color:var(--purple);font-family:var(--mono);font-size:.7rem;}
+.td-type{color:var(--accent);font-family:var(--mono);font-size:.7rem;}
 .td-ex{color:var(--text);font-size:.82rem;}
 .td-ex-audio{display:flex;align-items:center;gap:6px;}
 .td-trad{color:var(--muted);font-style:italic;font-size:.78rem;}
 .btn-tbl-audio{display:flex;align-items:center;background:none;border:none;cursor:pointer;
-  color:var(--purple);opacity:.7;transition:opacity .15s;padding:0;flex-shrink:0;}
+  color:var(--accent);opacity:.7;transition:opacity .15s;padding:0;flex-shrink:0;}
 .btn-tbl-audio:hover{opacity:1;}
 .btn-tbl-audio svg{width:13px;height:13px;}
 
 .cours-section-tag{display:inline-block;font-family:var(--mono);font-size:.58rem;
-  background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.35);color:var(--purple);
+  background:rgba(193,18,31,.15);border:1px solid rgba(193,18,31,.4);color:var(--accent);
   border-radius:6px;padding:3px 9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.cours-section-tag.orange{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.35);color:var(--orange);}
+.cours-section-tag.gold{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.35);color:var(--gold);}
+.cours-title{font-size:1rem;font-weight:800;color:var(--accent);font-family:var(--mono);
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.cours-title.orange{color:var(--orange);}
+.cours-title.gold{color:var(--gold);}
+.cours-subtitle{font-size:.75rem;color:var(--muted);margin-bottom:22px;}
+
+/* Grammar MCQ */
+.grammar-tab.active{border-bottom-color:var(--gold);}
+.mcq-section{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+.mcq-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:20px;}
+.mcq-q{font-size:.88rem;font-weight:700;margin-bottom:14px;line-height:1.4;color:var(--text);}
+.mcq-q em{font-style:italic;color:var(--gold);font-size:.82rem;}
+.mcq-opts{display:flex;flex-direction:column;gap:7px;}
+.mcq-opt{font-family:var(--sans);font-size:.8rem;padding:9px 14px;border-radius:8px;
+  background:var(--surface2);border:1.5px solid var(--border2);color:var(--text);
+  cursor:pointer;text-align:left;transition:all .18s;font-weight:600;}
+.mcq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(193,18,31,.1);}
+.mcq-opt.correct{background:rgba(45,106,79,.2);border-color:#52b788;color:#52b788;}
+.mcq-opt.wrong{background:rgba(193,18,31,.15);border-color:var(--accent);color:var(--accent);}
+.mcq-opt:disabled{cursor:default;}
+.mcq-feedback{font-family:var(--mono);font-size:.7rem;margin-top:10px;padding:8px 12px;
+  border-radius:8px;line-height:1.4;}
+.mcq-feedback.ok  {background:rgba(45,106,79,.15);color:#52b788;}
+.mcq-feedback.fail{background:rgba(193,18,31,.12);color:#ff8888;}
+.mcq-score-bar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);border:1.5px solid var(--border2);border-radius:12px;
+  padding:14px 18px;margin-bottom:18px;}
+.mcq-score-info h3{font-size:.9rem;font-weight:700;margin-bottom:2px;}
+.mcq-score-info p{font-size:.65rem;color:var(--muted);font-family:var(--mono);}
+.mcq-score-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--gold);}
+.btn-mcq-reset{font-family:var(--sans);font-size:.7rem;font-weight:700;padding:7px 16px;
+  border-radius:8px;background:var(--surface2);border:1.5px solid var(--border2);
+  color:var(--text);cursor:pointer;transition:all .18s;}
+.btn-mcq-reset:hover{border-color:var(--accent);}
 
 /* ── REVIEW LAUNCHER ── */
 .review-section{flex:1;display:flex;flex-direction:column;max-width:580px;width:100%;margin:0 auto;padding:24px 16px 60px;}
@@ -181,6 +228,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .bg-green{background:var(--accent);color:var(--bg);}
 .bg-blue {background:var(--accent2);color:#fff;}
 .bg-purple{background:var(--purple);color:#fff;}
+.bg-orange{background:var(--orange);color:#fff;}
 .bg-gold {background:var(--gold);color:var(--bg);}
 .bg-muted{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
 
@@ -289,6 +337,12 @@ main{flex:1;display:flex;flex-direction:column;}
   </button>
   <button class="nav-item prep-tab" id="tab-prep" onclick="switchTab('prep')">
     📐 Prépositions <span class="nav-badge" id="nb-prep">NEW</span>
+  </button>
+  <button class="nav-item phrasal-tab" id="tab-phrasal" onclick="switchTab('phrasal')">
+    🔗 Phrasal Verbs <span class="nav-badge" id="nb-phrasal">11</span>
+  </button>
+  <button class="nav-item grammar-tab" id="tab-grammar" onclick="switchTab('grammar')">
+    📝 Grammaire <span class="nav-badge" id="nb-grammar">QCM</span>
   </button>
   <button class="nav-item review-tab" id="tab-review" onclick="switchTab('review')">
     🎯 Révision <span class="nav-badge" id="nb-review">0</span>
@@ -500,6 +554,153 @@ const PREP_SECTIONS = [
   },
 ];
 
+// ═══════════════════════════════════════════════════════════
+// DATA — Phrasal Verbs
+// ═══════════════════════════════════════════════════════════
+const PHRASAL_VERBS = [
+  {en:"Get up",    fr:"Se lever",                    ex:"I get up at 7 AM every day.",      exTrad:"Je me lève à 7h tous les jours."},
+  {en:"Get in",    fr:"Entrer (voiture/taxi)",        ex:"Get in the car, we're late!",       exTrad:"Monte dans la voiture, on est en retard !"},
+  {en:"Get out",   fr:"Sortir (voiture/bâtiment)",   ex:"He got out of the taxi.",           exTrad:"Il est sorti du taxi."},
+  {en:"Get on",    fr:"Monter (bus/train/vélo)",      ex:"I get on the bus at this stop.",    exTrad:"Je monte dans le bus à cet arrêt."},
+  {en:"Get off",   fr:"Descendre (bus/train)",        ex:"Don't get off the train yet.",      exTrad:"Ne descends pas encore du train."},
+  {en:"Get on with",fr:"Bien s'entendre avec",       ex:"I get on well with my boss.",       exTrad:"Je m'entends bien avec mon chef."},
+  {en:"Get back",  fr:"Revenir / Rentrer",            ex:"What time do you get back?",        exTrad:"À quelle heure rentres-tu ?"},
+  {en:"Get over",  fr:"Surmonter / Se remettre de",  ex:"She got over her break-up.",        exTrad:"Elle s'est remise de sa rupture."},
+  {en:"Get away",  fr:"S'échapper / S'évader",       ex:"I need to get away for a bit.",     exTrad:"J'ai besoin de m'évader un peu."},
+  {en:"Get by",    fr:"S'en sortir / Se débrouiller",ex:"I can get by in English.",          exTrad:"Je peux me débrouiller en anglais."},
+  {en:"Get together",fr:"Se réunir / Se voir",       ex:"Let's get together soon!",          exTrad:"Voyons-nous bientôt !"},
+];
+DATA.phrasal = PHRASAL_VERBS.map((item,i)=>({...item, _sec:'phrasal', _idx:i}));
+
+// ═══════════════════════════════════════════════════════════
+// DATA — Grammaire (cours + QCM)
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR_COURS = [
+  {
+    id:'noun', icon:'🏷️', label:'Nom (Noun)',
+    def:'Mot qui désigne une personne, un endroit, un objet ou une idée.',
+    tip:'Souvent précédé d\'un article (a, an, the) ou d\'un possessif (my, your…).',
+    examples:[
+      {en:'dog',         fr:'chien'},
+      {en:'happiness',   fr:'bonheur'},
+      {en:'school',      fr:'école'},
+      {en:'a cat',       fr:'un chat'},
+      {en:'my house',    fr:'ma maison'},
+    ]
+  },
+  {
+    id:'adj', icon:'🎨', label:'Adjectif (Adjective)',
+    def:'Mot qui donne une qualité ou une caractéristique à un nom.',
+    tip:'En anglais, l\'adjectif se place toujours AVANT le nom (a red car — jamais a car red).',
+    examples:[
+      {en:'a beautiful girl', fr:'une belle fille'},
+      {en:'a big house',      fr:'une grande maison'},
+      {en:'a happy child',    fr:'un enfant heureux'},
+    ]
+  },
+  {
+    id:'adv', icon:'⚡', label:'Adverbe (Adverb)',
+    def:'Mot qui modifie un verbe, un adjectif ou un autre adverbe. Indique comment, quand, où ou à quelle fréquence.',
+    tip:'Formation classique : ajouter -ly (quick → quickly, happy → happily).',
+    examples:[
+      {en:'She runs quickly',         fr:'Elle court rapidement (modifie le verbe)'},
+      {en:'He is very tall',          fr:'Il est très grand (modifie l\'adjectif)'},
+      {en:'She speaks extremely softly', fr:'Elle parle extrêmement doucement (modifie un adverbe)'},
+    ]
+  },
+  {
+    id:'pron', icon:'👤', label:'Pronom (Pronoun)',
+    def:'Mot qui remplace un nom pour éviter les répétitions.',
+    tip:'Sujets : I, you, he, she, it, we, they. Compléments : me, him, her, us, them.',
+    examples:[
+      {en:'I, you, he, she, it, we, they', fr:'pronoms sujets'},
+      {en:'me, him, her, us, them',        fr:'pronoms compléments'},
+      {en:'mine, yours, hers',             fr:'pronoms possessifs'},
+    ]
+  },
+  {
+    id:'prep2', icon:'📍', label:'Préposition (Preposition)',
+    def:'Mot qui relie un nom/pronom à un autre mot dans la phrase.',
+    tip:'Exemples : on, in, at, under, over, between, with.',
+    examples:[
+      {en:'The book is on the table.',  fr:'Le livre est sur la table.'},
+      {en:'She is talking to him.',     fr:'Elle lui parle.'},
+    ]
+  },
+  {
+    id:'conj', icon:'🔗', label:'Conjonction (Conjunction)',
+    def:'Mot qui unit deux mots, phrases ou propositions.',
+    tip:'Exemples : and, but, or, because, although.',
+    examples:[
+      {en:'I like tea and coffee.',          fr:'J\'aime le thé et le café.'},
+      {en:'I went out because it was sunny.',fr:'Je suis sorti parce qu\'il faisait soleil.'},
+    ]
+  },
+];
+
+const GRAMMAR_QCM = [
+  {
+    q:'Quel est le rôle d\'un adjectif en anglais ?',
+    opts:['Remplacer un nom','Décrire/qualifier un nom','Relier deux propositions','Modifier un verbe'],
+    ans:1, expl:'L\'adjectif décrit un nom : "a big house", "a happy child".'
+  },
+  {
+    q:'Où se place l\'adjectif en anglais ?',
+    opts:['Après le nom','Avant le verbe','Avant le nom','N\'importe où'],
+    ans:2, expl:'En anglais, l\'adjectif se place AVANT le nom : "a red car", jamais "a car red".'
+  },
+  {
+    q:'Comment forme-t-on généralement un adverbe à partir d\'un adjectif ?',
+    opts:['On ajoute -ing','On ajoute -ly','On ajoute -ed','On ajoute -er'],
+    ans:1, expl:'"quick → quickly", "happy → happily". Le suffixe classique est -ly.'
+  },
+  {
+    q:'Dans la phrase "She runs quickly", quel est le rôle de "quickly" ?',
+    opts:['Nom','Adjectif','Adverbe','Pronom'],
+    ans:2, expl:'"Quickly" modifie le verbe "runs" — c\'est un adverbe de manière.'
+  },
+  {
+    q:'Laquelle de ces phrases utilise l\'adjectif correctement ?',
+    opts:['A car red is fast.','A fast car red.','A red car is fast.','Red is a car fast.'],
+    ans:2, expl:'L\'adjectif "red" se place avant le nom "car" : "a red car".'
+  },
+  {
+    q:'Quel mot est un NOM (Noun) ?',
+    opts:['Quickly','Beautiful','Happiness','Because'],
+    ans:2, expl:'"Happiness" (bonheur) est un nom. "Quickly" est un adverbe, "Beautiful" est un adjectif.'
+  },
+  {
+    q:'Quelle question pose-t-on pour identifier un adverbe ?',
+    opts:['Qui ? Quoi ?','Comment est le nom ?','Comment ? Quand ? Où ?','Quel article ?'],
+    ans:2, expl:'L\'adverbe répond aux questions : Comment ? Quand ? Où ? À quelle fréquence ?'
+  },
+  {
+    q:'Dans "He is very tall", quel est le rôle de "very" ?',
+    opts:['Nom','Pronom','Conjonction','Adverbe (modifie l\'adjectif tall)'],
+    ans:3, expl:'"Very" est un adverbe qui intensifie l\'adjectif "tall".'
+  },
+  {
+    q:'Lequel de ces mots est un PRONOM ?',
+    opts:['Dog','Beautiful','Them','Quickly'],
+    ans:2, expl:'"Them" est un pronom complément (eux/les). Les autres sont nom, adjectif, adverbe.'
+  },
+  {
+    q:'Quel est le rôle d\'une CONJONCTION ?',
+    opts:['Qualifier un nom','Unir deux mots ou propositions','Remplacer un nom','Indiquer la position'],
+    ans:1, expl:'La conjonction (and, but, because…) unit deux mots ou propositions.'
+  },
+  {
+    q:'Quelle phrase contient une PRÉPOSITION ?',
+    opts:['She runs quickly.','The book is on the table.','He is very tall.','I like tea and coffee.'],
+    ans:1, expl:'"On" est une préposition qui indique la position du livre sur la table.'
+  },
+  {
+    q:'Dans "I get on well with my boss", quel type de mot est "with" ?',
+    opts:['Conjonction','Adverbe','Préposition','Adjectif'],
+    ans:2, expl:'"With" est une préposition qui relie "get on" à "my boss".'
+  },
+];
+
 // Flashcards for prepositions: one card per row across all sections
 function buildPrepCards() {
   const cards = [];
@@ -525,9 +726,12 @@ DATA.prep = PREP_CARDS;
 // ═══════════════════════════════════════════════════════════
 let S = {
   tab: 'vocab',
-  cursor: {vocab:0, expr:0, prep:0},
-  prepView: 'cours',   // 'cours' | 'cards'
+  cursor: {vocab:0, expr:0, prep:0, phrasal:0},
+  prepView: 'cours',
   prepSection: 'sur',
+  phrasalView: 'cours',
+  grammarView: 'cours',
+  mcqAnswers: {},
   status: {},
   streak: 0,
   quiz: null,
@@ -540,7 +744,7 @@ function load() {
     const p = JSON.parse(r);
     S.status = p.status || {};
     S.streak = p.streak || 0;
-    S.cursor = p.cursor || {vocab:0,expr:0,prep:0};
+    S.cursor = p.cursor || {vocab:0,expr:0,prep:0,phrasal:0};
   } catch(e){}
 }
 function save() {
@@ -557,8 +761,9 @@ const cntOk  = () => Object.values(S.status).filter(v=>v==='ok').length;
 const cntRev = () => Object.values(S.status).filter(v=>v==='review').length;
 function revQueue(source) {
   let out=[];
-  const secs = source==='all'?['vocab','expr','prep']:
-               source==='prep-only'?['prep']:[source];
+  const secs = source==='all'?['vocab','expr','prep','phrasal']:
+               source==='prep-only'?['prep']:
+               source==='phrasal-only'?['phrasal']:[source];
   secs.forEach(sec=>{
     DATA[sec].forEach((it,i)=>{
       if(getS(sec,i)==='review') out.push({...it,_sec:sec,_idx:i});
@@ -568,8 +773,9 @@ function revQueue(source) {
 }
 function fullQueue(source) {
   let out=[];
-  const secs = source==='all'?['vocab','expr','prep']:
-               source==='prep-only'?['prep']:[source];
+  const secs = source==='all'?['vocab','expr','prep','phrasal']:
+               source==='prep-only'?['prep']:
+               source==='phrasal-only'?['phrasal']:[source];
   secs.forEach(sec=>{
     DATA[sec].forEach((it,i)=>out.push({...it,_sec:sec,_idx:i}));
   });
@@ -611,6 +817,8 @@ function refreshBadges() {
   document.getElementById('nb-vocab').textContent=DATA.vocab.length;
   document.getElementById('nb-expr').textContent=DATA.expr.length;
   document.getElementById('nb-prep').textContent=PREP_CARDS.length;
+  document.getElementById('nb-phrasal').textContent=PHRASAL_VERBS.length;
+  document.getElementById('nb-grammar').textContent=GRAMMAR_QCM.length+' Q';
   const rv=cntRev();
   document.getElementById('nb-review').textContent=rv||'0';
   document.getElementById('statOk').textContent=cntOk();
@@ -629,6 +837,8 @@ function render() {
   el.innerHTML='';
   if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
   else if(S.tab==='prep')             el.appendChild(buildPrepSection());
+  else if(S.tab==='phrasal')          el.appendChild(buildPhrasalSection());
+  else if(S.tab==='grammar')          el.appendChild(buildGrammarSection());
   else if(S.quiz)                     el.appendChild(buildQuiz());
   else                                el.appendChild(buildLauncher());
 }
@@ -642,19 +852,15 @@ function buildFlashcard(sec) {
   const nOk =data.filter((_,i)=>getS(sec,i)==='ok').length;
   const nRev=data.filter((_,i)=>getS(sec,i)==='review').length;
   const fillCls=sec==='vocab'?'vocab-fill':'expr-fill';
-  const badge=st==='ok'?`<div class="card-badge badge-ok">✓ Maîtrisé</div>`
-              :st==='review'?`<div class="card-badge badge-rev">🔄 À revoir</div>`
-              :`<div class="card-badge badge-new">Nouveau</div>`;
   const wrap=document.createElement('div');
   wrap.className='page fade-up';
   wrap.innerHTML=`
     <div class="fc-progress-strip">
       <div class="fc-prog-bar"><div class="fc-prog-fill ${fillCls}" style="width:${pct}%"></div></div>
-      <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+      <div class="fc-prog-txt">${idx+1} / ${total}</div>
     </div>
-    <div class="flashcard ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
+    <div class="flashcard">
       <div class="card-stripe"></div>
-      ${badge}
       <div class="card-body">
         <div class="card-num">${sec==='vocab'?'Vocabulaire IT/QA':'Expression clé'} · #${idx+1}</div>
         <div class="card-word">${item.en}</div>
@@ -664,14 +870,6 @@ function buildFlashcard(sec) {
           <button class="btn-audio" onclick="speak('${esc(item.fr)}','fr')">${spkSvg()} FR</button>
         </div>
       </div>
-      <div class="card-footer">
-        <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="mark('${sec}',${idx},'ok')">
-          ${st==='ok'?'✓ Maîtrisé':'✓ Marquer maîtrisé'}
-        </button>
-        <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="mark('${sec}',${idx},'review')">
-          ${st==='review'?'🔄 En révision':'🔄 Mettre en révision'}
-        </button>
-      </div>
     </div>
     <div class="fc-nav">
       <button class="btn-nav" onclick="nav('${sec}',-1)" ${idx===0?'disabled':''}>◀</button>
@@ -679,8 +877,8 @@ function buildFlashcard(sec) {
       <button class="btn-nav" onclick="nav('${sec}',1)" ${idx===total-1?'disabled':''}>▶</button>
     </div>
     <div class="fc-review-cta">
-      <button class="btn-goto-rev" onclick="switchTab('review')" ${nRev===0?'disabled':''}>
-        🎯 Lancer la révision ${nRev>0?`<span class="rev-chip">${nRev}</span>`:''}
+      <button class="btn-goto-rev" onclick="switchTab('review')">
+        🎯 Aller à la Révision
       </button>
     </div>`;
   _keyHandler=(e)=>{
@@ -783,11 +981,10 @@ function buildPrepSection() {
     fcWrap.innerHTML=`
       <div class="fc-progress-strip">
         <div class="fc-prog-bar"><div class="fc-prog-fill prep-fill" style="width:${pct}%"></div></div>
-        <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+        <div class="fc-prog-txt">${idx+1} / ${total}</div>
       </div>
-      <div class="flashcard prep-card ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
+      <div class="flashcard prep-card">
         <div class="card-stripe"></div>
-        ${badge}
         <div class="card-body">
           <div class="card-num">${item.section} · #${idx+1}</div>
           <div class="card-word">${item.en}</div>
@@ -798,14 +995,6 @@ function buildPrepSection() {
             <button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} Préposition</button>
             <button class="btn-audio" onclick="speak('${esc(item.example)}','en')">${spkSvg()} Exemple</button>
           </div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="mark('prep',${idx},'ok')">
-            ${st==='ok'?'✓ Maîtrisé':'✓ Marquer maîtrisé'}
-          </button>
-          <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="mark('prep',${idx},'review')">
-            ${st==='review'?'🔄 En révision':'🔄 Mettre en révision'}
-          </button>
         </div>
       </div>
       <div class="fc-nav">
@@ -827,6 +1016,128 @@ function buildPrepSection() {
 }
 
 function setPrepView(v){S.prepView=v;render();}
+
+// ═══════════════════════════════════════════════════════════
+// PHRASAL VERBS SECTION
+// ═══════════════════════════════════════════════════════════
+function buildPhrasalSection() {
+  const sec='phrasal';
+  const data=PHRASAL_VERBS;
+  const idx=S.cursor.phrasal, item=data[idx], st=getS(sec,idx);
+  const total=data.length, pct=Math.round(((idx+1)/total)*100);
+  const nOk =data.filter((_,i)=>getS(sec,i)==='ok').length;
+  const nRev=data.filter((_,i)=>getS(sec,i)==='review').length;
+
+  const wrap=document.createElement('div');
+  wrap.className='page fade-up';
+
+  // sub-nav: Cours | Flashcards
+  const phView=S.phrasalView||'cours';
+  wrap.innerHTML=`
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${phView==='cours'?'active':''}" onclick="setPhrasalView('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${phView==='cards'?'active':''}" onclick="setPhrasalView('cards')">🃏 Flashcards (${total})</button>
+      ${nRev>0?`<button class="phrasal-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="startQuiz('phrasal-only')">🎯 Réviser (${nRev})</button>`:''}
+    </div>
+  `;
+
+  if(phView==='cours') {
+    // Full course table
+    const tableWrap=document.createElement('div');
+    tableWrap.innerHTML=`
+      <div class="cours-section-tag orange">🔗 PHRASAL VERBS</div>
+      <div class="cours-title orange" style="font-size:1rem;font-weight:800;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Phrasal Verbs avec GET</div>
+      <div class="cours-subtitle" style="font-size:.75rem;color:var(--muted);margin-bottom:20px;">Verbes à particule les plus utilisés — comprendre le sens selon la particule</div>
+      <table class="cours-table">
+        <thead>
+          <tr>
+            <th>Phrasal Verb</th>
+            <th>Sens principal</th>
+            <th>Exemple EN</th>
+            <th>Traduction FR</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.map((row,i)=>`
+            <tr>
+              <td>
+                <div class="td-prep-audio">
+                  <span class="td-prep" style="color:var(--orange)">${row.en}</span>
+                  <button class="btn-tbl-audio" style="color:var(--orange)" onclick="speak('${esc(row.en)}','en')" title="Écouter">${spkSvg()}</button>
+                </div>
+              </td>
+              <td><span class="td-type" style="color:var(--orange)">${row.fr}</span></td>
+              <td>
+                <div class="td-ex-audio">
+                  <span class="td-ex">${row.ex}</span>
+                  <button class="btn-tbl-audio" style="color:var(--orange)" onclick="speak('${esc(row.ex)}','en')" title="Écouter">${spkSvg()}</button>
+                </div>
+              </td>
+              <td><span class="td-trad">${row.exTrad}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    wrap.appendChild(tableWrap);
+
+  } else {
+    // Flashcard mode
+    const badge=st==='ok'?`<div class="card-badge badge-ok">✓ Maîtrisé</div>`
+                :st==='review'?`<div class="card-badge badge-rev">🔄 À revoir</div>`
+                :`<div class="card-badge badge-new">Nouveau</div>`;
+    const fcWrap=document.createElement('div');
+    fcWrap.innerHTML=`
+      <div class="fc-progress-strip">
+        <div class="fc-prog-bar"><div class="fc-prog-fill phrasal-fill" style="width:${pct}%"></div></div>
+        <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+      </div>
+      <div class="flashcard ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}" style="${(!st)?'--card-color:var(--orange)':''}">
+        <div class="card-stripe" style="${!st&&!st?'background:linear-gradient(90deg,var(--orange),#fbbf24)':''}"></div>
+        ${badge}
+        <div class="card-body">
+          <div class="card-num" style="color:var(--orange)">🔗 Phrasal Verb · #${idx+1}</div>
+          <div class="card-word" style="color:var(--orange)">${item.en}</div>
+          <div class="card-extra">${item.fr}</div>
+          <div class="card-example">"${item.ex}"</div>
+          <div class="card-example-trad">${item.exTrad}</div>
+          <div class="card-audio-row">
+            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')" style="border-color:rgba(249,115,22,.3);color:var(--orange)">${spkSvg()} Phrasal Verb</button>
+            <button class="btn-audio" onclick="speak('${esc(item.ex)}','en')">${spkSvg()} Exemple</button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="mark('phrasal',${idx},'ok')">
+            ${st==='ok'?'✓ Maîtrisé':'✓ Marquer maîtrisé'}
+          </button>
+          <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="mark('phrasal',${idx},'review')">
+            ${st==='review'?'🔄 En révision':'🔄 Mettre en révision'}
+          </button>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="btn-nav" onclick="navPhrasal(-1)" ${idx===0?'disabled':''}>◀</button>
+        <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
+        <button class="btn-nav" onclick="navPhrasal(1)" ${idx===total-1?'disabled':''}>▶</button>
+      </div>
+    `;
+    wrap.appendChild(fcWrap);
+    _keyHandler=(e)=>{
+      if(e.target.tagName==='INPUT') return;
+      if(e.key==='ArrowRight') navPhrasal(1);
+      if(e.key==='ArrowLeft')  navPhrasal(-1);
+    };
+    document.addEventListener('keydown',_keyHandler);
+  }
+  return wrap;
+}
+
+function setPhrasalView(v){S.phrasalView=v;render();}
+function navPhrasal(dir){
+  const max=PHRASAL_VERBS.length-1;
+  S.cursor.phrasal=Math.max(0,Math.min(max,S.cursor.phrasal+dir));
+  save(); render();
+}
 
 // ═══════════════════════════════════════════════════════════
 // REVIEW LAUNCHER
@@ -996,6 +1307,147 @@ function retryFail(){
   render();
 }
 function quitQuiz(){S.quiz=null;render();}
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR SECTION
+// ═══════════════════════════════════════════════════════════
+function buildGrammarSection() {
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+  const gv = S.grammarView;
+  const answered = Object.keys(S.mcqAnswers).length;
+  const correct  = Object.entries(S.mcqAnswers).filter(([i,v])=>parseInt(v)===GRAMMAR_QCM[i].ans).length;
+
+  // Sub-nav
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${gv==='cours'?'active':''}" style="${gv==='cours'?'background:rgba(245,197,24,.15);border-color:var(--gold);color:var(--gold)':''}" onclick="setGrammarView('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${gv==='mcq'?'active':''}" style="${gv==='mcq'?'background:rgba(245,197,24,.15);border-color:var(--gold);color:var(--gold)':''}" onclick="setGrammarView('mcq')">✅ QCM (${GRAMMAR_QCM.length} questions)</button>
+      ${answered>0?`<button class="phrasal-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="resetMcq()">🔄 Reset QCM</button>`:''}
+    </div>
+  `;
+
+  if (gv === 'cours') {
+    const coursDiv = document.createElement('div');
+    coursDiv.innerHTML = `
+      <div class="cours-section-tag gold">📝 GRAMMAIRE</div>
+      <div class="cours-title gold">Nom · Adjectif · Adverbe · et autres</div>
+      <div class="cours-subtitle">Les 6 classes de mots essentielles en anglais</div>
+    `;
+
+    // Cards for each grammar class
+    GRAMMAR_COURS.forEach(item => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:20px;margin-bottom:14px;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:1.4rem;">${item.icon}</span>
+          <span style="font-size:.95rem;font-weight:800;color:var(--gold);">${item.label}</span>
+          <button class="btn-tbl-audio" style="color:var(--gold);margin-left:auto" onclick="speak('${esc(item.label.replace(/[^\w\s]/gi,''))}','en')">${spkSvg()}</button>
+        </div>
+        <div style="font-size:.78rem;color:var(--text);margin-bottom:8px;line-height:1.5;"><strong>Définition :</strong> ${item.def}</div>
+        <div style="font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:12px;padding:8px 10px;background:rgba(245,197,24,.06);border-left:2px solid var(--gold);border-radius:4px;">💡 ${item.tip}</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          ${item.examples.map(ex=>`
+            <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;">
+              <button class="btn-tbl-audio" style="color:var(--accent)" onclick="speak('${esc(ex.en)}','en')">${spkSvg()}</button>
+              <span style="color:var(--text);font-weight:600;">${ex.en}</span>
+              <span style="color:var(--muted);">→ ${ex.fr}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      coursDiv.appendChild(card);
+    });
+
+    // Summary table
+    coursDiv.innerHTML += `
+      <div style="margin-top:20px;">
+        <div class="cours-section-tag gold">📊 TABLEAU RÉCAPITULATIF</div>
+        <table class="cours-table">
+          <thead><tr><th>Classe</th><th>Question clé</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--gold)">Nom</strong></td><td style="color:var(--muted);font-style:italic">Qui ? Quoi ?</td><td>dog, happiness</td></tr>
+            <tr><td><strong style="color:var(--gold)">Adjectif</strong></td><td style="color:var(--muted);font-style:italic">Comment est le nom ?</td><td>a big house</td></tr>
+            <tr><td><strong style="color:var(--gold)">Adverbe</strong></td><td style="color:var(--muted);font-style:italic">Comment ? Quand ? Où ?</td><td>She runs quickly</td></tr>
+            <tr><td><strong style="color:var(--gold)">Pronom</strong></td><td style="color:var(--muted);font-style:italic">Qui remplace le nom ?</td><td>I, me, them, mine</td></tr>
+            <tr><td><strong style="color:var(--gold)">Préposition</strong></td><td style="color:var(--muted);font-style:italic">Quelle relation ?</td><td>on, in, at, with</td></tr>
+            <tr><td><strong style="color:var(--gold)">Conjonction</strong></td><td style="color:var(--muted);font-style:italic">Quel lien ?</td><td>and, but, because</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-goto-rev" style="background:rgba(245,197,24,.12);border-color:rgba(245,197,24,.4);color:var(--gold)" onclick="setGrammarView('mcq')">
+          ✅ Passer au QCM →
+        </button>
+      </div>
+    `;
+    wrap.appendChild(coursDiv);
+
+  } else {
+    // MCQ view
+    const mcqDiv = document.createElement('div');
+
+    // Score bar
+    mcqDiv.innerHTML = `
+      <div class="mcq-score-bar">
+        <div class="mcq-score-info">
+          <h3>✅ QCM — Grammaire</h3>
+          <p>${answered} / ${GRAMMAR_QCM.length} répondues · ${GRAMMAR_QCM.length - answered} restantes</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="mcq-score-num">${answered>0?correct+'/'+answered:'—'}</div>
+          ${answered>0?`<button class="btn-mcq-reset" onclick="resetMcq()">🔄 Reset</button>`:''}
+        </div>
+      </div>
+    `;
+
+    const mcqList = document.createElement('div');
+    mcqList.className = 'mcq-section';
+
+    GRAMMAR_QCM.forEach((q, qi) => {
+      const chosen = S.mcqAnswers.hasOwnProperty(qi) ? parseInt(S.mcqAnswers[qi]) : null;
+      const isAnswered = chosen !== null;
+      const isCorrect = chosen === q.ans;
+
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.innerHTML = `
+        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+        <div class="mcq-opts">
+          ${q.opts.map((opt,oi)=>{
+            let cls = 'mcq-opt';
+            if(isAnswered) {
+              if(oi===q.ans) cls+=' correct';
+              else if(oi===chosen && !isCorrect) cls+=' wrong';
+            }
+            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq(${qi},${oi})">
+              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
+            </button>`;
+          }).join('')}
+        </div>
+        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
+          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
+        </div>`:''}
+      `;
+      mcqList.appendChild(card);
+    });
+
+    mcqDiv.appendChild(mcqList);
+    wrap.appendChild(mcqDiv);
+  }
+
+  return wrap;
+}
+
+function setGrammarView(v) { S.grammarView=v; render(); }
+function answerMcq(qi, oi) {
+  S.mcqAnswers[qi] = oi;
+  if(oi === GRAMMAR_QCM[qi].ans) { S.streak++; save(); toast('✓ Correct !'); }
+  else { toast('✗ Incorrect — lis l\'explication'); }
+  render();
+}
+function resetMcq() { S.mcqAnswers={}; render(); toast('QCM réinitialisé'); }
 
 // ═══════════════════════════════════════════════════════════
 // HELPERS
