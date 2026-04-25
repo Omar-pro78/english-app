@@ -37,12 +37,28 @@ header{display:flex;align-items:center;justify-content:space-between;
 .hd-stat .l{font-size:.44rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
 
 /* ── NAV ── */
-nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:var(--bg2);}
-.nav-item{display:flex;align-items:center;justify-content:center;gap:5px;
-  padding:11px 6px;font-size:.7rem;font-weight:700;letter-spacing:.1px;
-  cursor:pointer;border:none;background:none;color:var(--muted);
-  border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;
-  flex-direction:column;gap:3px;}
+nav{display:none;} /* nav remplacé par home screen */
+
+/* ── HOME SCREEN ── */
+.home-screen{flex:1;display:flex;flex-direction:column;max-width:760px;width:100%;margin:0 auto;padding:28px 16px 60px;}
+.home-title{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;text-align:center;}
+.home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:600px){.home-grid{grid-template-columns:repeat(2,1fr);}}
+.home-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
+  padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
+.home-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;border-radius:14px;}
+.home-card:hover{transform:translateY(-3px);border-color:var(--card-color,var(--accent));}
+.home-card:hover::before{opacity:1;background:radial-gradient(ellipse at 50% 0%,rgba(var(--card-rgb,193,18,31),.12) 0%,transparent 70%);}
+.home-card-icon{font-size:1.8rem;margin-bottom:2px;}
+.home-card-label{font-size:.78rem;font-weight:800;color:var(--text);line-height:1.2;}
+.home-card-badge{font-family:var(--mono);font-size:.52rem;padding:2px 8px;
+  border-radius:99px;border:1px solid;margin-top:2px;}
+.home-back{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.65rem;
+  color:var(--muted);cursor:pointer;padding:12px 16px;border-bottom:1px solid var(--border);
+  background:var(--bg2);transition:color .18s;}
+.home-back:hover{color:var(--text);}
+.home-back svg{width:14px;height:14px;}
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,.02);}
 .nav-item.active{color:var(--text);}
 .nav-item.vocab-tab.active  {border-bottom-color:var(--accent);}
@@ -335,32 +351,10 @@ main{flex:1;display:flex;flex-direction:column;}
   </div>
 </header>
 
-<nav>
-  <button class="nav-item vocab-tab active" id="tab-vocab" onclick="switchTab('vocab')">
-    📚 Vocab IT <span class="nav-badge" id="nb-vocab">51</span>
-  </button>
-  <button class="nav-item expr-tab" id="tab-expr" onclick="switchTab('expr')">
-    💬 Expressions <span class="nav-badge" id="nb-expr">34</span>
-  </button>
-  <button class="nav-item prep-tab" id="tab-prep" onclick="switchTab('prep')">
-    📐 Prépositions <span class="nav-badge" id="nb-prep">—</span>
-  </button>
-  <button class="nav-item phrasal-tab" id="tab-phrasal" onclick="switchTab('phrasal')">
-    🔗 GET Verbs <span class="nav-badge" id="nb-phrasal">11</span>
-  </button>
-  <button class="nav-item take-tab" id="tab-take" onclick="switchTab('take')">
-    ✈️ TAKE Verbs <span class="nav-badge" id="nb-take">9</span>
-  </button>
-  <button class="nav-item grammar-tab" id="tab-grammar" onclick="switchTab('grammar')">
-    📝 Grammaire <span class="nav-badge" id="nb-grammar">—</span>
-  </button>
-  <button class="nav-item grammar2-tab" id="tab-grammar2" onclick="switchTab('grammar2')">
-    🧩 Gram. avancée <span class="nav-badge" id="nb-grammar2">—</span>
-  </button>
-  <button class="nav-item review-tab" id="tab-review" onclick="switchTab('review')">
-    🎯 Révision <span class="nav-badge" id="nb-review">0</span>
-  </button>
-</nav>
+<div id="backBar" style="display:none" class="home-back" onclick="goHome()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Retour à l'accueil
+</div>
 
 <main id="main"></main>
 </div>
@@ -823,7 +817,7 @@ DATA.prep = PREP_CARDS;
 // STATE
 // ═══════════════════════════════════════════════════════════
 let S = {
-  tab: 'vocab',
+  tab: 'home',
   cursor: {vocab:0, expr:0, prep:0, phrasal:0, take:0},
   prepView: 'cours',
   prepSection: 'sur',
@@ -908,27 +902,19 @@ function toast(msg){
 // ═══════════════════════════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════════════════════════
-function switchTab(tab) {
-  S.tab=tab;
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
+function goHome() {
+  S.tab = 'home';
+  document.getElementById('backBar').style.display = 'none';
   render();
 }
 
-function refreshBadges() {
-  document.getElementById('nb-vocab').textContent=DATA.vocab.length;
-  document.getElementById('nb-expr').textContent=DATA.expr.length;
-  document.getElementById('nb-prep').textContent=PREP_CARDS.length;
-  document.getElementById('nb-phrasal').textContent=PHRASAL_VERBS.length;
-  document.getElementById('nb-take').textContent=TAKE_VERBS.length;
-  document.getElementById('nb-grammar').textContent=GRAMMAR_QCM.length+' Q';
-  document.getElementById('nb-grammar2').textContent=GRAMMAR2_QCM.length+' Q';
-  const rv=cntRev();
-  document.getElementById('nb-review').textContent=rv||'0';
-  document.getElementById('statOk').textContent=cntOk();
-  document.getElementById('statRev').textContent=rv;
-  document.getElementById('statStreak').textContent=S.streak;
+function switchTab(tab) {
+  S.tab = tab;
+  document.getElementById('backBar').style.display = 'flex';
+  render();
 }
+
+function refreshBadges() { /* badges now in home cards, updated on render */ }
 
 // ═══════════════════════════════════════════════════════════
 // RENDER DISPATCHER
@@ -936,17 +922,85 @@ function refreshBadges() {
 let _keyHandler=null;
 function render() {
   if(_keyHandler){document.removeEventListener('keydown',_keyHandler);_keyHandler=null;}
-  refreshBadges();
   const el=document.getElementById('main');
   el.innerHTML='';
-  if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
-  else if(S.tab==='prep')             el.appendChild(buildPrepSection());
-  else if(S.tab==='phrasal')          el.appendChild(buildPhrasalSection());
-  else if(S.tab==='take')             el.appendChild(buildTakeSection());
-  else if(S.tab==='grammar')          el.appendChild(buildGrammarSection());
-  else if(S.tab==='grammar2')         el.appendChild(buildGrammar2Section());
-  else if(S.quiz)                     el.appendChild(buildQuiz());
-  else                                el.appendChild(buildLauncher());
+
+  // Update header stats
+  document.getElementById('statOk').textContent=cntOk();
+  document.getElementById('statRev').textContent=cntRev();
+  document.getElementById('statStreak').textContent=S.streak;
+
+  if(S.tab==='home')              el.appendChild(buildHome());
+  else if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
+  else if(S.tab==='prep')         el.appendChild(buildPrepSection());
+  else if(S.tab==='phrasal')      el.appendChild(buildPhrasalSection());
+  else if(S.tab==='take')         el.appendChild(buildTakeSection());
+  else if(S.tab==='grammar')      el.appendChild(buildGrammarSection());
+  else if(S.tab==='grammar2')     el.appendChild(buildGrammar2Section());
+  else if(S.tab==='review') {
+    if(S.quiz)                    el.appendChild(buildQuiz());
+    else                          el.appendChild(buildLauncher());
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOME SCREEN
+// ═══════════════════════════════════════════════════════════
+function buildHome() {
+  const rv = cntRev();
+  const MODULES = [
+    { tab:'vocab',    icon:'📚', label:'Vocab IT/QA',   color:'#c1121f', count: DATA.vocab.length+' mots' },
+    { tab:'expr',     icon:'💬', label:'Expressions',   color:'#2d6a4f', count: DATA.expr.length+' phrases' },
+    { tab:'prep',     icon:'📐', label:'Prépositions',  color:'#a855f7', count: PREP_CARDS.length+' cartes' },
+    { tab:'phrasal',  icon:'🔗', label:'GET Verbs',     color:'#f97316', count: PHRASAL_VERBS.length+' verbes' },
+    { tab:'take',     icon:'✈️', label:'TAKE Verbs',    color:'#38bdf8', count: TAKE_VERBS.length+' verbes' },
+    { tab:'grammar',  icon:'📝', label:'Grammaire',     color:'#f5c518', count: GRAMMAR_QCM.length+' Q' },
+    { tab:'grammar2', icon:'🧩', label:'Gram. avancée', color:'#e879f9', count: GRAMMAR2_QCM.length+' Q' },
+    { tab:'review',   icon:'🎯', label:'Révision',      color:'#e8c97a', count: rv>0?rv+' à revoir':'Quiz' },
+  ];
+
+  const wrap = document.createElement('div');
+  wrap.className = 'home-screen fade-up';
+
+  const title = document.createElement('div');
+  title.className = 'home-title';
+  title.textContent = 'Choisis un module pour commencer';
+  wrap.appendChild(title);
+
+  const grid = document.createElement('div');
+  grid.className = 'home-grid';
+  MODULES.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'home-card';
+    card.style.cssText = `--card-color:${m.color}`;
+    card.innerHTML = `
+      <div class="home-card-icon">${m.icon}</div>
+      <div class="home-card-label">${m.label}</div>
+      <div class="home-card-badge" style="color:${m.color};border-color:${m.color}55;background:${m.color}20">${m.count}</div>
+    `;
+    card.onclick = () => switchTab(m.tab);
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+
+  // Stats bar
+  const total = DATA.vocab.length + DATA.expr.length + PREP_CARDS.length + PHRASAL_VERBS.length + TAKE_VERBS.length;
+  const stats = document.createElement('div');
+  stats.style.cssText = 'display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap;';
+  [
+    { val: cntOk(),   lbl: 'Maîtrisés', color: '#c1121f' },
+    { val: rv,        lbl: 'À revoir',  color: '#f5c518' },
+    { val: total,     lbl: 'Total mots',color: '#2d6a4f' },
+    { val: S.streak,  lbl: 'Streak 🔥', color: '#f97316' },
+  ].forEach(s => {
+    const b = document.createElement('div');
+    b.style.cssText = 'background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px 20px;text-align:center;font-family:var(--mono);';
+    b.innerHTML = `<div style="font-size:1.2rem;font-weight:700;color:${s.color}">${s.val}</div>
+                   <div style="font-size:.52rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px">${s.lbl}</div>`;
+    stats.appendChild(b);
+  });
+  wrap.appendChild(stats);
+  return wrap;
 }
 
 // ═══════════════════════════════════════════════════════════
