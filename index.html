@@ -906,6 +906,288 @@ const GRAMMAR_QCM = [
   },
 ];
 
+// ═══════════════════════════════════════════════════════════
+// DATA — Need to / Want to / Have to / Must
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR3_COURS = [
+  {
+    icon: '💧',
+    tag: 'Usage 1',
+    color: '#2d6a4f',
+    label: 'Exprimer une nécessité (Besoin de)',
+    desc: "C'est l'usage le plus courant. On l'utilise quand quelque chose est nécessaire pour atteindre un but ou pour son propre bien-être.",
+    examples: [
+      { en: 'I need to drink some water.', fr: "J'ai besoin de boire de l'eau." },
+      { en: 'We need to talk.', fr: 'Nous avons besoin de parler.' },
+    ]
+  },
+  {
+    icon: '📋',
+    tag: 'Usage 2',
+    color: '#7c3aed',
+    label: 'Exprimer une obligation légère (Devoir)',
+    desc: '"Need to" est une alternative plus douce et moins autoritaire que "must" ou "have to". On l\'utilise souvent pour donner un conseil appuyé ou pour parler d\'une tâche à accomplir.',
+    examples: [
+      { en: 'You need to finish this report by 5 PM.', fr: 'Tu dois finir ce rapport avant 17h.' },
+      { en: "I need to go now, I'm late.", fr: 'Je dois y aller maintenant, je suis en retard.' },
+    ]
+  },
+];
+
+const GRAMMAR3_TABLE = [
+  { expr: 'Want to',  sens: 'Envie de',              force: '⬜ Faible (Désir)' },
+  { expr: 'Need to',  sens: 'Besoin / Nécessité',    force: '🟨 Moyenne (Logique)' },
+  { expr: 'Have to',  sens: 'Devoir / Obligation',   force: '🟧 Forte (Contrainte extérieure)' },
+  { expr: 'Must',     sens: 'Devoir impératif',      force: '🟥 Très forte (Ordre ou règle)' },
+];
+
+const GRAMMAR3_QCM = [
+  {
+    q: 'Quelle phrase exprime un BESOIN physique ou logique ?',
+    opts: ['I must finish this now!', 'I want to eat pizza.', 'I need to drink some water.', 'I have to obey the rules.'],
+    ans: 2,
+    expl: '"Need to" exprime une nécessité logique ou physique : boire de l\'eau est un besoin vital.'
+  },
+  {
+    q: '"You need to finish this report by 5 PM." — Quel est le sens de "need to" ici ?',
+    opts: ['Envie / désir', 'Obligation impérative (ordre)', 'Obligation légère / conseil appuyé', 'Habitude passée'],
+    ans: 2,
+    expl: '"Need to" pour une tâche à accomplir = obligation légère ou conseil fort, plus doux que "must".'
+  },
+  {
+    q: 'Quelle expression est la PLUS forte (sens le plus impératif) ?',
+    opts: ['Want to', 'Need to', 'Have to', 'Must'],
+    ans: 3,
+    expl: 'L\'ordre de force croissante est : Want to < Need to < Have to < Must.'
+  },
+  {
+    q: 'Quelle expression est la PLUS faible (simple désir) ?',
+    opts: ['Must', 'Have to', 'Need to', 'Want to'],
+    ans: 3,
+    expl: '"Want to" exprime un simple désir ou une envie, sans notion d\'obligation ou de nécessité.'
+  },
+  {
+    q: '"We need to talk." — Comment traduire cette phrase ?',
+    opts: ['On veut parler.', 'On doit parler.', 'On a besoin de parler.', 'On devrait peut-être parler.'],
+    ans: 2,
+    expl: '"Need to" + sens de nécessité → "avoir besoin de". "We need to talk" est une nécessité, pas un simple désir.'
+  },
+  {
+    q: 'Quelle phrase utilise "need to" pour exprimer une tâche / obligation légère ?',
+    opts: ['I need to eat something, I\'m starving.', 'I need to submit the test report before the meeting.', 'I need to breathe.', 'We need some water.'],
+    ans: 1,
+    expl: 'Soumettre un rapport avant une réunion est une tâche professionnelle — obligation légère, parfaitement exprimée avec "need to".'
+  },
+  {
+    q: '"Have to" vs "Need to" — Quelle est la principale différence ?',
+    opts: [
+      '"Have to" = désir, "Need to" = ordre',
+      '"Have to" = contrainte extérieure forte, "Need to" = nécessité logique ou tâche',
+      'Ils sont totalement synonymes',
+      '"Need to" = règle absolue, "Have to" = envie'
+    ],
+    ans: 1,
+    expl: '"Have to" = contrainte venant de l\'extérieur (règle, loi, patron). "Need to" = nécessité logique ou besoin personnel.'
+  },
+  {
+    q: 'Dans quel contexte utilise-t-on "need to" traduit par "avoir besoin de" ?',
+    opts: [
+      'Quand on parle d\'une règle officielle',
+      'Quand quelque chose est nécessaire physiquement ou logiquement',
+      'Quand on exprime une habitude passée',
+      'Quand on donne un ordre très fort'
+    ],
+    ans: 1,
+    expl: '"Besoin de" = nécessité physique ou logique. Exemple : I need to sleep (j\'ai besoin de dormir).'
+  },
+];
+
+// ═══════════════════════════════════════════════════════════
+// DATA — MODALS (Can, Could, Will, Would, May, Might, Must, Shall, Should, Ought to, Have to)
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR4_MODALS = [
+  {
+    modal: 'CAN',
+    icon: '💪',
+    color: '#2d6a4f',
+    usages: [
+      { label: 'Capacité / Savoir-faire', ex: 'I can drive.', fr: 'Je sais conduire.' },
+      { label: 'Possibilité', ex: 'He can be here.', fr: 'Il peut être ici.' },
+    ],
+    negative: { label: "CAN'T = impossibilité logique ou surprise", ex: "It can't be true! / He can't be in his office (I know he left).", fr: "Ce n'est pas possible ! / Il ne peut pas être au bureau." },
+  },
+  {
+    modal: 'COULD',
+    icon: '⏪',
+    color: '#1d6fa4',
+    usages: [
+      { label: 'Passé de CAN (capacité révolue)', ex: 'I could run very fast when I was younger.', fr: 'Je pouvais courir très vite quand j\'étais jeune.' },
+      { label: 'Hypothèse ou suggestion', ex: 'You could do better.', fr: 'Tu pourrais faire mieux.' },
+      { label: 'Politesse (plus douce que CAN)', ex: 'Could you help me?', fr: 'Pourriez-vous m\'aider ?' },
+    ],
+    tip: 'Can you help me? → Je pense que tu peux. Could you help me? → Je ne sais pas si tu peux, mais je demande poliment.',
+  },
+  {
+    modal: 'WILL',
+    icon: '➡️',
+    color: '#c1121f',
+    usages: [
+      { label: 'Forte probabilité', ex: 'He will arrive at 10 am.', fr: 'Il arrivera à 10h.' },
+      { label: 'Volonté / intention', ex: 'Will you marry me?', fr: 'Veux-tu m\'épouser ?' },
+    ],
+  },
+  {
+    modal: 'WOULD',
+    icon: '🔀',
+    color: '#ea6c00',
+    usages: [
+      { label: 'Futur dans le passé', ex: 'He said he would come.', fr: 'Il a dit qu\'il viendrait.' },
+      { label: 'Conditionnel / politesse', ex: 'I would like to go.', fr: 'J\'aimerais y aller.' },
+    ],
+  },
+  {
+    modal: 'MAY / MIGHT',
+    icon: '🎲',
+    color: '#7c3aed',
+    usages: [
+      { label: 'Probabilité moyenne (~50%)', ex: 'He may be late. / He might be late.', fr: 'Il est peut-être en retard.' },
+    ],
+    tip: 'MIGHT est souvent perçu comme légèrement plus incertain que MAY.',
+  },
+  {
+    modal: 'MUST',
+    icon: '🔴',
+    color: '#dc2626',
+    usages: [
+      { label: 'Obligation forte (imposée par celui qui parle)', ex: 'You must finish your meal!', fr: 'Tu dois finir ton repas !' },
+      { label: 'Forte probabilité basée sur des faits', ex: 'He must be in his office.', fr: 'Il doit être dans son bureau (c\'est logique).' },
+    ],
+    negative: { label: "MUSTN'T = interdiction formelle", ex: "You mustn't talk while eating.", fr: "Tu ne dois pas parler en mangeant." },
+  },
+  {
+    modal: 'SHALL',
+    icon: '🎩',
+    color: '#6b6355',
+    usages: [
+      { label: 'Proposition / offre polie (avec I / We)', ex: 'Shall we go? / Shall I close the window?', fr: 'On y va ? / Je ferme la fenêtre ?' },
+    ],
+    tip: 'Formel et rare. Surtout utilisé avec I et We en anglais britannique.',
+  },
+  {
+    modal: 'SHOULD',
+    icon: '💡',
+    color: '#b45309',
+    usages: [
+      { label: 'Conseil poli (moins fort que MUST)', ex: 'You should sleep early.', fr: 'Tu devrais te coucher tôt.' },
+      { label: 'Probabilité moyenne (~60–70%)', ex: 'He should be here soon.', fr: 'Il devrait être là bientôt.' },
+    ],
+  },
+  {
+    modal: 'OUGHT TO',
+    icon: '⚖️',
+    color: '#b45309',
+    usages: [
+      { label: 'Conseil fondé sur la morale ou la norme sociale', ex: 'You ought to eat more vegetables.', fr: 'Tu devrais manger plus de légumes.' },
+      { label: 'Version négative : conseil de ne pas faire', ex: "You oughtn't to insult people.", fr: 'Tu ne devrais pas insulter les gens.' },
+    ],
+    tip: 'SHOULD = conseil poli personnel. OUGHT TO = conseil fondé sur la morale ou une norme sociale.',
+  },
+  {
+    modal: 'HAVE TO',
+    icon: '📌',
+    color: '#1d6fa4',
+    usages: [
+      { label: 'Obligation factuelle, extérieure (loi, règle, situation)', ex: 'John has to go to Paris.', fr: 'John doit aller à Paris (obligation imposée).' },
+      { label: "DON'T HAVE TO = absence d'obligation (≠ interdiction)", ex: "You don't have to come pick me up.", fr: 'Tu n\'es pas obligé de venir me chercher.' },
+    ],
+    tip: 'MUST = je me l\'impose moi-même. HAVE TO = une contrainte extérieure m\'y oblige.',
+  },
+];
+
+const GRAMMAR4_TABLE = [
+  { modal: 'MUST',         type: 'Obligation personnelle / forte probabilité', ex: 'I must go now. / He must be tired.' },
+  { modal: 'HAVE TO',      type: 'Obligation extérieure (règle, loi)',          ex: 'I have to pay my taxes.' },
+  { modal: 'SHOULD',       type: 'Conseil poli',                                ex: 'You should be more careful.' },
+  { modal: 'OUGHT TO',     type: 'Conseil moral / selon les normes',            ex: 'You ought to respect your elders.' },
+  { modal: "MUSTN'T",      type: 'Interdiction formelle',                       ex: "You mustn't smoke here." },
+  { modal: "CAN'T",        type: 'Impossibilité logique / interdiction',        ex: "He can't be here. / You can't do that." },
+  { modal: "NEEDN'T",      type: 'Pas nécessaire',                              ex: "You needn't worry." },
+  { modal: "DON'T HAVE TO",type: 'Pas obligé de le faire',                      ex: "You don't have to come." },
+];
+
+const GRAMMAR4_QCM = [
+  {
+    q: 'Quelle phrase exprime une CAPACITÉ ou un savoir-faire ?',
+    opts: ['He must drive.', 'I can drive.', 'You should drive.', 'She might drive.'],
+    ans: 1,
+    expl: '"Can" exprime la capacité ou le savoir-faire. "I can drive" = je sais conduire.'
+  },
+  {
+    q: '"It can\'t be true!" — Que signifie "can\'t" ici ?',
+    opts: ['Absence d\'obligation', 'Interdiction', 'Impossibilité logique / surprise', 'Conseil'],
+    ans: 2,
+    expl: '"Can\'t" peut exprimer une impossibilité logique ou une surprise : c\'est impossible selon mes connaissances.'
+  },
+  {
+    q: 'Quelle est la différence entre "Can you help me?" et "Could you help me?" ?',
+    opts: [
+      'Aucune différence',
+      '"Can" = passé, "Could" = présent',
+      '"Can" = je pense que tu peux, "Could" = demande plus polie et incertaine',
+      '"Could" = obligation, "Can" = possibilité'
+    ],
+    ans: 2,
+    expl: '"Could you" est plus poli et exprime une incertitude : je ne suis pas sûr que tu puisses, mais je demande quand même.'
+  },
+  {
+    q: 'Comment exprimer une INTERDICTION FORMELLE ?',
+    opts: ["You don't have to smoke here.", "You needn't smoke here.", "You mustn't smoke here.", "You shouldn't smoke here."],
+    ans: 2,
+    expl: '"Mustn\'t" = interdiction formelle et absolue. "Don\'t have to" = pas obligatoire (mais autorisé).'
+  },
+  {
+    q: '"You don\'t have to come pick me up." — Que signifie cette phrase ?',
+    opts: ['Tu n\'as pas le droit de venir.', 'Tu ne peux pas venir.', 'Ce n\'est pas obligatoire de venir.', 'Tu dois absolument venir.'],
+    ans: 2,
+    expl: '"Don\'t have to" = absence d\'obligation. Ce n\'est pas nécessaire, mais ce n\'est pas interdit non plus.'
+  },
+  {
+    q: 'Quelle phrase exprime un conseil fondé sur une NORME SOCIALE ou morale ?',
+    opts: ['You must respect your elders.', 'You ought to respect your elders.', 'You can respect your elders.', 'You will respect your elders.'],
+    ans: 1,
+    expl: '"Ought to" exprime un conseil fondé sur la morale ou une norme sociale. "Should" est plus personnel et poli.'
+  },
+  {
+    q: '"He must be in his office." — Quel sens a "must" ici ?',
+    opts: ['Obligation imposée par quelqu\'un', 'Forte probabilité basée sur des faits', 'Conseil', 'Capacité'],
+    ans: 1,
+    expl: '"Must" peut exprimer une forte probabilité logique : c\'est la déduction la plus logique selon ce qu\'on sait.'
+  },
+  {
+    q: 'Sir, you ________ be sitting in this waiting room. It is for women and children only.',
+    opts: ['oughtn\'t to', 'needn\'t', 'won\'t', 'can\'t'],
+    ans: 3,
+    expl: '"Can\'t" exprime une interdiction dans ce contexte : vous n\'avez pas le droit d\'être ici. "Oughtn\'t to" serait trop doux pour une règle ferme.'
+  },
+  {
+    q: 'Quelle est la différence principale entre MUST et HAVE TO ?',
+    opts: [
+      'Ils sont identiques',
+      '"Must" = obligation extérieure, "Have to" = obligation personnelle',
+      '"Must" = obligation que je m\'impose, "Have to" = contrainte extérieure',
+      '"Have to" est plus fort que "Must"'
+    ],
+    ans: 2,
+    expl: 'I must go = c\'est moi qui me l\'impose. I have to go = une contrainte extérieure (rendez-vous, règle) m\'y oblige.'
+  },
+  {
+    q: '"Shall we go?" — Quel est le sens de cette phrase ?',
+    opts: ['Nous allons partir (futur certain)', 'Proposition ou suggestion polie', 'Obligation de partir', 'Impossibilité de partir'],
+    ans: 1,
+    expl: '"Shall" avec We ou I exprime une proposition ou une offre polie. C\'est formel et surtout utilisé en anglais britannique.'
+  },
+];
+
 // Flashcards for prepositions: one card per row across all sections
 function buildPrepCards() {
   const cards = [];
@@ -938,8 +1220,12 @@ let S = {
   takeView: 'cours',
   grammarView: 'cours',
   grammar2View: 'cours',
+  grammar3View: 'cours',
+  grammar4View: 'cours',
   mcqAnswers: {},
   mcqAnswers2: {},
+  mcqAnswers3: {},
+  mcqAnswers4: {},
   mcqAnswersTake: {},
   status: {},
   streak: 0,
@@ -1020,7 +1306,7 @@ function toast(msg){
 const TAB_PARENT = {
   vocab: 'foundations', expr: 'foundations', prep: 'foundations',
   phrasal: 'phrasalhub', take: 'phrasalhub',
-  grammar: 'grammarhub', grammar2: 'grammarhub',
+  grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub', grammar4: 'grammarhub',
 };
 const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
 
@@ -1080,6 +1366,8 @@ function render() {
   else if(S.tab==='take')         el.appendChild(buildTakeSection());
   else if(S.tab==='grammar')      el.appendChild(buildGrammarSection());
   else if(S.tab==='grammar2')     el.appendChild(buildGrammar2Section());
+  else if(S.tab==='grammar3')     el.appendChild(buildGrammar3Section());
+  else if(S.tab==='grammar4')     el.appendChild(buildGrammar4Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='review') {
     if(S.quiz)                    el.appendChild(buildQuiz());
@@ -1106,8 +1394,10 @@ function buildHome() {
   const okPh = okG + okT;
   const doneG  = Object.keys(S.mcqAnswers).length;
   const doneG2 = Object.keys(S.mcqAnswers2).length;
-  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length;
-  const doneGr = doneG + doneG2;
+  const doneG3 = Object.keys(S.mcqAnswers3).length;
+  const doneG4 = Object.keys(S.mcqAnswers4).length;
+  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length;
+  const doneGr = doneG + doneG2 + doneG3 + doneG4;
 
   // 3 semantic colors: rouge = contenu, violet = grammaire, vert = action
   const COL_CONTENT  = '#c1121f';  // Foundations + Phrasal (learning content)
@@ -1310,6 +1600,8 @@ function buildGrammarHub() {
   wrap.className = 'hub-page fade-up';
   const doneG  = Object.keys(S.mcqAnswers).length;
   const doneG2 = Object.keys(S.mcqAnswers2).length;
+  const doneG3 = Object.keys(S.mcqAnswers3).length;
+  const doneG4 = Object.keys(S.mcqAnswers4).length;
   const COLOR  = '#7c3aed';
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR}">🧠 GRAMMAR</div>
@@ -1331,6 +1623,24 @@ function buildGrammarHub() {
           <div class="hub-card-label">Advanced Grammar</div>
           <div class="hub-card-desc">${GRAMMAR2_QCM.length} questions — context, suffixes, traps</div>
           ${hubProgBar(doneG2, GRAMMAR2_QCM.length, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar3')">
+        <div class="hub-card-icon">⚡</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Need to · Want to · Have to · Must</div>
+          <div class="hub-card-desc">${GRAMMAR3_QCM.length} questions — modaux & niveaux d'obligation</div>
+          ${hubProgBar(doneG3, GRAMMAR3_QCM.length, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar4')">
+        <div class="hub-card-icon">🔮</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Modaux — Can · Will · Must · Should…</div>
+          <div class="hub-card-desc">${GRAMMAR4_QCM.length} questions — tous les modaux & leurs nuances</div>
+          ${hubProgBar(doneG4, GRAMMAR4_QCM.length, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -1946,8 +2256,411 @@ function answerMcq(qi, oi) {
 function resetMcq() { S.mcqAnswers={}; render(); toast('QCM réinitialisé'); }
 
 // ═══════════════════════════════════════════════════════════
-// TAKE SECTION
+// GRAMMAR 3 — Need to / Want to / Have to / Must
 // ═══════════════════════════════════════════════════════════
+function buildGrammar3Section() {
+  const COLOR = '#7c3aed';
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+  const gv = S.grammar3View || 'cours';
+  const answered = Object.keys(S.mcqAnswers3 || {}).length;
+
+  // Sub-nav
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${gv==='cours'?'active':''}"
+        style="${gv==='cours'?'background:rgba(124,58,237,.15);border-color:'+COLOR+';color:'+COLOR:''}"
+        onclick="setGrammar3View('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${gv==='mcq'?'active':''}"
+        style="${gv==='mcq'?'background:rgba(124,58,237,.15);border-color:'+COLOR+';color:'+COLOR:''}"
+        onclick="setGrammar3View('mcq')">✅ QCM (${GRAMMAR3_QCM.length} questions)</button>
+      ${answered>0?`<button class="phrasal-subbtn" style="color:${COLOR};border-color:rgba(124,58,237,.3)" onclick="resetMcq3()">🔄 Reset QCM</button>`:''}
+    </div>
+  `;
+
+  if (gv === 'cours') {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.35);color:${COLOR}">⚡ MODAUX</div>
+      <div class="cours-title" style="color:${COLOR}">Need to · Want to · Have to · Must</div>
+      <div class="cours-subtitle">Comprendre les niveaux d'obligation et de nécessité en anglais</div>
+    `;
+
+    // Usage cards
+    GRAMMAR3_COURS.forEach(item => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:20px;margin-bottom:14px;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:1.4rem;">${item.icon}</span>
+          <span style="font-family:var(--mono);font-size:.55rem;padding:3px 9px;border-radius:6px;border:1px solid;letter-spacing:1px;text-transform:uppercase;background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:${COLOR}">${item.tag}</span>
+          <span style="font-size:.9rem;font-weight:800;color:${item.color};">${item.label}</span>
+        </div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.55;margin-bottom:14px;padding:10px 12px;background:rgba(124,58,237,.05);border-left:2px solid ${COLOR};border-radius:4px;">${item.desc}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${item.examples.map(ex=>`
+            <div style="display:flex;align-items:flex-start;gap:10px;font-size:.8rem;padding:8px 10px;background:var(--bg2);border-radius:8px;">
+              <button class="btn-tbl-audio" style="color:${COLOR};flex-shrink:0;margin-top:1px" onclick="speak('${esc(ex.en)}','en')">${spkSvg()}</button>
+              <div>
+                <div style="font-weight:700;color:var(--text);">${ex.en}</div>
+                <div style="color:var(--muted);font-style:italic;font-size:.75rem;margin-top:2px;">${ex.fr}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      div.appendChild(card);
+    });
+
+    // Comparison table
+    div.innerHTML += `
+      <div style="margin-top:24px;">
+        <div class="cours-section-tag" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.35);color:${COLOR}">📊 COMPARAISON RAPIDE</div>
+        <table class="cours-table">
+          <thead>
+            <tr>
+              <th style="color:${COLOR}">Expression</th>
+              <th style="color:${COLOR}">Sens</th>
+              <th style="color:${COLOR}">Force</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${GRAMMAR3_TABLE.map(row=>`
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <strong style="color:${COLOR};font-size:.95rem;">${row.expr}</strong>
+                    <button class="btn-tbl-audio" style="color:${COLOR}" onclick="speak('${esc(row.expr)}','en')">${spkSvg()}</button>
+                  </div>
+                </td>
+                <td style="color:var(--text);font-size:.82rem;">${row.sens}</td>
+                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted);">${row.force}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);border-radius:12px;padding:16px;margin-top:20px;">
+        <div style="font-weight:800;font-size:.85rem;color:${COLOR};margin-bottom:10px;">💡 En résumé</div>
+        <div style="font-size:.8rem;color:var(--text);line-height:1.6;">
+          <div style="margin-bottom:6px;">• Si tu parles d'une <strong>nécessité physique ou logique</strong> → traduis par <em style="color:${COLOR}">"avoir besoin de"</em></div>
+          <div>• Si tu parles d'une <strong>tâche ou d'un conseil important</strong> → traduis par <em style="color:${COLOR}">"devoir"</em> ou <em style="color:${COLOR}">"il faut"</em></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:22px;">
+        <button class="btn-goto-rev" style="background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.35);color:${COLOR}" onclick="setGrammar3View('mcq')">
+          ✅ Passer au QCM →
+        </button>
+      </div>
+    `;
+    wrap.appendChild(div);
+
+  } else {
+    // MCQ view
+    const answered = Object.keys(S.mcqAnswers3 || {}).length;
+    const correct  = Object.entries(S.mcqAnswers3 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR3_QCM[i].ans).length;
+
+    const mcqDiv = document.createElement('div');
+    mcqDiv.innerHTML = `
+      <div class="mcq-score-bar">
+        <div class="mcq-score-info">
+          <h3>✅ QCM — Need to / Have to / Must</h3>
+          <p>${answered} / ${GRAMMAR3_QCM.length} répondues · ${GRAMMAR3_QCM.length - answered} restantes</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="mcq-score-num" style="color:${COLOR}">${answered>0?correct+'/'+answered:'—'}</div>
+          ${answered>0?`<button class="btn-mcq-reset" onclick="resetMcq3()">🔄 Reset</button>`:''}
+        </div>
+      </div>
+    `;
+
+    const mcqList = document.createElement('div');
+    mcqList.className = 'mcq-section';
+
+    GRAMMAR3_QCM.forEach((q, qi) => {
+      const chosen = (S.mcqAnswers3||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers3[qi]) : null;
+      const isAnswered = chosen !== null;
+      const isCorrect = chosen === q.ans;
+
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.innerHTML = `
+        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+        <div class="mcq-opts">
+          ${q.opts.map((opt,oi)=>{
+            let cls = 'mcq-opt';
+            if(isAnswered) {
+              if(oi===q.ans) cls+=' correct';
+              else if(oi===chosen && !isCorrect) cls+=' wrong';
+            }
+            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq3(${qi},${oi})">
+              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
+            </button>`;
+          }).join('')}
+        </div>
+        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
+          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
+        </div>`:''}
+      `;
+      mcqList.appendChild(card);
+    });
+
+    mcqDiv.appendChild(mcqList);
+    wrap.appendChild(mcqDiv);
+  }
+
+  return wrap;
+}
+
+function setGrammar3View(v) { S.grammar3View = v; render(); }
+function answerMcq3(qi, oi) {
+  if (!S.mcqAnswers3) S.mcqAnswers3 = {};
+  S.mcqAnswers3[qi] = oi;
+  if (oi === GRAMMAR3_QCM[qi].ans) { S.streak++; save(); toast('✓ Correct !'); }
+  else { toast('✗ Incorrect — lis l\'explication'); }
+  render();
+}
+function resetMcq3() { S.mcqAnswers3 = {}; render(); toast('QCM réinitialisé'); }
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR 4 — MODAUX (Can, Could, Will, Would, May, Might, Must, Shall, Should, Ought to, Have to)
+// ═══════════════════════════════════════════════════════════
+function buildGrammar4Section() {
+  const COLOR = '#7c3aed';
+  const ACCENT = '#a855f7';
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+  const gv = S.grammar4View || 'cours';
+  const answered = Object.keys(S.mcqAnswers4 || {}).length;
+
+  // Sub-nav
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${gv==='cours'?'active':''}"
+        style="${gv==='cours'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar4View('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${gv==='table'?'active':''}"
+        style="${gv==='table'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar4View('table')">📊 Tableau</button>
+      <button class="phrasal-subbtn ${gv==='mcq'?'active':''}"
+        style="${gv==='mcq'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar4View('mcq')">✅ QCM (${GRAMMAR4_QCM.length} questions)</button>
+      ${answered>0?`<button class="phrasal-subbtn" style="color:${ACCENT};border-color:rgba(168,85,247,.3)" onclick="resetMcq4()">🔄 Reset</button>`:''}
+    </div>
+  `;
+
+  if (gv === 'cours') {
+    const div = document.createElement('div');
+
+    // Header
+    div.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35);color:${ACCENT}">🔮 MODAUX</div>
+      <div class="cours-title" style="color:${ACCENT}">Les Auxiliaires Modaux</div>
+      <div class="cours-subtitle">Can · Could · Will · Would · May · Might · Must · Shall · Should · Ought to · Have to</div>
+
+      <div style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:14px 16px;margin-bottom:22px;">
+        <div style="font-weight:800;font-size:.82rem;color:${ACCENT};margin-bottom:8px;">📌 Structure de base</div>
+        <div style="font-family:var(--mono);font-size:.8rem;color:var(--text);background:var(--bg2);padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+          Sujet + <strong style="color:${ACCENT}">modal</strong> + verbe (base verbale)
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.78rem;">
+          ${[
+            ['He <b>can</b> play football.','Il sait jouer au football.'],
+            ['They <b>will</b> arrive.','Ils vont arriver.'],
+            ['We <b>must</b> finish.','Nous devons terminer.'],
+            ['He <b>will</b> be playing → action en cours dans le futur',''],
+            ['He <b>will</b> have finished → action accomplie dans le futur',''],
+          ].map(([en,fr])=>`
+            <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 8px;background:var(--bg2);border-radius:6px;">
+              <button class="btn-tbl-audio" style="color:${ACCENT};flex-shrink:0" onclick="speak('${en.replace(/<[^>]+>/g,'')}','en')">${spkSvg()}</button>
+              <span style="color:var(--text);">${en}${fr?` <span style="color:var(--muted);font-style:italic;">→ ${fr}</span>`:''}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // One card per modal
+    GRAMMAR4_MODALS.forEach(item => {
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:18px 20px;margin-bottom:12px;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:1.3rem;">${item.icon}</span>
+          <span style="font-size:1.05rem;font-weight:800;color:${item.color};font-family:var(--mono);letter-spacing:1px;">${item.modal}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:${item.negative||item.tip?'10px':'0'};">
+          ${item.usages.map(u=>`
+            <div style="border-left:2px solid ${item.color};padding:6px 10px;border-radius:0 6px 6px 0;background:rgba(0,0,0,.02);">
+              <div style="font-family:var(--mono);font-size:.58rem;color:${item.color};text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">${u.label}</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button class="btn-tbl-audio" style="color:${item.color}" onclick="speak('${esc(u.ex)}','en')">${spkSvg()}</button>
+                <div>
+                  <div style="font-weight:700;font-size:.82rem;color:var(--text);">${u.ex}</div>
+                  <div style="font-style:italic;font-size:.74rem;color:var(--muted);">${u.fr}</div>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        ${item.negative ? `
+          <div style="background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+            <div style="font-family:var(--mono);font-size:.58rem;color:#dc2626;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">${item.negative.label}</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button class="btn-tbl-audio" style="color:#dc2626" onclick="speak('${esc(item.negative.ex)}','en')">${spkSvg()}</button>
+              <div>
+                <div style="font-weight:600;font-size:.8rem;color:var(--text);">${item.negative.ex}</div>
+                <div style="font-style:italic;font-size:.73rem;color:var(--muted);">${item.negative.fr}</div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+        ${item.tip ? `
+          <div style="font-size:.75rem;color:var(--muted);padding:7px 10px;background:rgba(180,83,9,.05);border-left:2px solid var(--gold);border-radius:0 6px 6px 0;">
+            💡 ${item.tip}
+          </div>
+        ` : ''}
+      `;
+      div.appendChild(card);
+    });
+
+    div.innerHTML += `
+      <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar4View('table')">
+          📊 Voir le tableau récapitulatif →
+        </button>
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar4View('mcq')">
+          ✅ Passer au QCM →
+        </button>
+      </div>
+    `;
+    wrap.appendChild(div);
+
+  } else if (gv === 'table') {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35);color:${ACCENT}">📊 COMPARATIF</div>
+      <div class="cours-title" style="color:${ACCENT}">Tableau récapitulatif</div>
+      <div class="cours-subtitle">Obligation · Interdiction · Conseil · Possibilité</div>
+      <table class="cours-table">
+        <thead>
+          <tr>
+            <th style="color:${ACCENT}">Modal</th>
+            <th style="color:${ACCENT}">Type</th>
+            <th style="color:${ACCENT}">Exemple</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${GRAMMAR4_TABLE.map(row=>`
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:7px;">
+                  <strong style="color:${ACCENT};font-size:.9rem;font-family:var(--mono);">${row.modal}</strong>
+                  <button class="btn-tbl-audio" style="color:${ACCENT}" onclick="speak('${esc(row.modal)}','en')">${spkSvg()}</button>
+                </div>
+              </td>
+              <td style="font-size:.78rem;color:var(--text);">${row.type}</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <button class="btn-tbl-audio" style="color:${ACCENT}" onclick="speak('${esc(row.ex)}','en')">${spkSvg()}</button>
+                  <span style="font-size:.78rem;color:var(--muted);font-style:italic;">${row.ex}</span>
+                </div>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:16px;margin-top:16px;">
+        <div style="font-weight:800;font-size:.82rem;color:${ACCENT};margin-bottom:10px;">🧠 Remember vs Remind</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.8rem;">
+          <div style="padding:8px 10px;background:var(--bg2);border-radius:8px;">
+            <strong style="color:var(--text)">Remember</strong> → se rappeler soi-même
+            <div style="color:var(--muted);font-style:italic;margin-top:2px;">I remember my childhood.</div>
+          </div>
+          <div style="padding:8px 10px;background:var(--bg2);border-radius:8px;">
+            <strong style="color:var(--text)">Remind</strong> → rappeler à quelqu'un d'autre
+            <div style="color:var(--muted);font-style:italic;margin-top:2px;">Please remind me of my appointment.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar4View('mcq')">
+          ✅ Passer au QCM →
+        </button>
+      </div>
+    `;
+    wrap.appendChild(div);
+
+  } else {
+    // MCQ view
+    const answeredNow = Object.keys(S.mcqAnswers4 || {}).length;
+    const correct = Object.entries(S.mcqAnswers4 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR4_QCM[i].ans).length;
+
+    const mcqDiv = document.createElement('div');
+    mcqDiv.innerHTML = `
+      <div class="mcq-score-bar">
+        <div class="mcq-score-info">
+          <h3>✅ QCM — Modaux</h3>
+          <p>${answeredNow} / ${GRAMMAR4_QCM.length} répondues · ${GRAMMAR4_QCM.length - answeredNow} restantes</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="mcq-score-num" style="color:${ACCENT}">${answeredNow>0?correct+'/'+answeredNow:'—'}</div>
+          ${answeredNow>0?`<button class="btn-mcq-reset" onclick="resetMcq4()">🔄 Reset</button>`:''}
+        </div>
+      </div>
+    `;
+
+    const mcqList = document.createElement('div');
+    mcqList.className = 'mcq-section';
+
+    GRAMMAR4_QCM.forEach((q, qi) => {
+      const chosen = (S.mcqAnswers4||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers4[qi]) : null;
+      const isAnswered = chosen !== null;
+      const isCorrect = chosen === q.ans;
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.innerHTML = `
+        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+        <div class="mcq-opts">
+          ${q.opts.map((opt,oi)=>{
+            let cls = 'mcq-opt';
+            if(isAnswered){if(oi===q.ans)cls+=' correct';else if(oi===chosen&&!isCorrect)cls+=' wrong';}
+            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq4(${qi},${oi})">
+              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
+            </button>`;
+          }).join('')}
+        </div>
+        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
+          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
+        </div>`:''}
+      `;
+      mcqList.appendChild(card);
+    });
+
+    mcqDiv.appendChild(mcqList);
+    wrap.appendChild(mcqDiv);
+  }
+
+  return wrap;
+}
+
+function setGrammar4View(v) { S.grammar4View = v; render(); }
+function answerMcq4(qi, oi) {
+  if (!S.mcqAnswers4) S.mcqAnswers4 = {};
+  S.mcqAnswers4[qi] = oi;
+  if (oi === GRAMMAR4_QCM[qi].ans) { S.streak++; save(); toast('✓ Correct !'); }
+  else { toast('✗ Incorrect — lis l\'explication'); }
+  render();
+}
+function resetMcq4() { S.mcqAnswers4 = {}; render(); toast('QCM réinitialisé'); }
+
+
+
+
 function buildMcqBlock(qcmData, answersKey, resetFn, answerFn, title, color) {
   const answers = S[answersKey] || {};
   const answered = Object.keys(answers).length;
