@@ -42,8 +42,40 @@ nav{display:none;} /* nav remplacé par home screen */
 /* ── HOME SCREEN ── */
 .home-screen{flex:1;display:flex;flex-direction:column;max-width:760px;width:100%;margin:0 auto;padding:28px 16px 60px;}
 .home-title{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;text-align:center;}
-.home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-@media(max-width:600px){.home-grid{grid-template-columns:repeat(2,1fr);}}
+.home-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+@media(min-width:500px){.home-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:700px){.home-grid{grid-template-columns:repeat(5,1fr);}}
+
+/* Main hub cards */
+.home-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:18px;
+  padding:22px 14px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;transition:all .22s;text-align:center;position:relative;overflow:hidden;}
+.home-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;border-radius:16px;}
+.home-card:hover{transform:translateY(-3px);border-color:var(--card-color,var(--accent));}
+.home-card:hover::before{opacity:1;background:radial-gradient(ellipse at 50% 0%,rgba(var(--card-rgb,193,18,31),.10) 0%,transparent 70%);}
+.home-card-icon{font-size:2rem;margin-bottom:2px;}
+.home-card-label{font-size:.8rem;font-weight:800;color:var(--text);line-height:1.2;}
+.home-card-badge{font-family:var(--mono);font-size:.52rem;padding:2px 8px;
+  border-radius:99px;border:1px solid;margin-top:2px;}
+.home-card-sub{font-family:var(--mono);font-size:.5rem;color:var(--muted);margin-top:1px;letter-spacing:.5px;}
+
+/* Hub page (sub-module selector) */
+.hub-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.hub-tag{display:inline-block;font-family:var(--mono);font-size:.58rem;
+  border:1px solid;border-radius:6px;padding:3px 9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.hub-title{font-size:1.1rem;font-weight:800;font-family:var(--mono);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
+.hub-subtitle{font-size:.75rem;color:var(--muted);margin-bottom:28px;}
+.hub-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+.hub-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;
+  padding:18px 20px;display:flex;align-items:center;gap:16px;
+  cursor:pointer;transition:all .2s;}
+.hub-card:hover{transform:translateX(4px);border-color:var(--hc-color,var(--accent2));}
+.hub-card-icon{font-size:1.6rem;flex-shrink:0;}
+.hub-card-info{flex:1;}
+.hub-card-label{font-size:.92rem;font-weight:800;color:var(--text);margin-bottom:3px;}
+.hub-card-desc{font-size:.72rem;color:var(--muted);font-family:var(--mono);}
+.hub-card-arrow{font-size:1rem;color:var(--border2);transition:color .18s;}
+.hub-card:hover .hub-card-arrow{color:var(--hc-color,var(--accent2));}
 .home-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
   padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;
   cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
@@ -423,7 +455,7 @@ main{flex:1;display:flex;flex-direction:column;}
   </div>
 </header>
 
-<div id="backBar" style="display:none" class="home-back" onclick="goHome()">
+<div id="backBar" style="display:none" class="home-back" onclick="goBack()">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
   Retour à l'accueil
 </div>
@@ -975,15 +1007,41 @@ function toast(msg){
 // ═══════════════════════════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════════════════════════
+// Map each sub-tab to its parent hub (for smart back navigation)
+const TAB_PARENT = {
+  vocab: 'foundations', expr: 'foundations', prep: 'foundations',
+  phrasal: 'phrasalhub', take: 'phrasalhub',
+  grammar: 'grammarhub', grammar2: 'grammarhub',
+};
+const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
+
+function goBack() {
+  const parent = TAB_PARENT[S.tab];
+  if (parent) {
+    switchTab(parent);
+  } else {
+    goHome();
+  }
+}
+
 function goHome() {
   S.tab = 'home';
   document.getElementById('backBar').style.display = 'none';
+  document.getElementById('backBar').onclick = goHome;
   render();
 }
 
 function switchTab(tab) {
   S.tab = tab;
-  document.getElementById('backBar').style.display = 'flex';
+  const bar = document.getElementById('backBar');
+  bar.style.display = 'flex';
+  // Hub pages go back to home; sub-pages go back to their hub
+  if (HUB_TABS.has(tab)) {
+    bar.onclick = goHome;
+    bar.querySelector ? null : null;
+  } else {
+    bar.onclick = goBack;
+  }
   render();
 }
 
@@ -1004,6 +1062,9 @@ function render() {
   document.getElementById('statStreak').textContent=S.streak;
 
   if(S.tab==='home')              el.appendChild(buildHome());
+  else if(S.tab==='foundations')  el.appendChild(buildFoundationsHub());
+  else if(S.tab==='phrasalhub')   el.appendChild(buildPhrasalHub());
+  else if(S.tab==='grammarhub')   el.appendChild(buildGrammarHub());
   else if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
   else if(S.tab==='prep')         el.appendChild(buildPrepSection());
   else if(S.tab==='phrasal')      el.appendChild(buildPhrasalSection());
@@ -1022,16 +1083,34 @@ function render() {
 // ═══════════════════════════════════════════════════════════
 function buildHome() {
   const rv = cntRev();
+  const total = DATA.vocab.length + DATA.expr.length + PREP_CARDS.length + PHRASAL_VERBS.length + TAKE_VERBS.length;
+
   const MODULES = [
-    { tab:'vocab',    icon:'📚', label:'Vocab IT/QA',   color:'#c1121f', count: DATA.vocab.length+' mots' },
-    { tab:'expr',     icon:'💬', label:'Expressions',   color:'#2d6a4f', count: DATA.expr.length+' phrases' },
-    { tab:'prep',     icon:'📐', label:'Prépositions',  color:'#a855f7', count: PREP_CARDS.length+' cartes' },
-    { tab:'phrasal',  icon:'🔗', label:'GET Verbs',     color:'#f97316', count: PHRASAL_VERBS.length+' verbes' },
-    { tab:'take',     icon:'✈️', label:'TAKE Verbs',    color:'#38bdf8', count: TAKE_VERBS.length+' verbes' },
-    { tab:'grammar',  icon:'📝', label:'Grammaire',     color:'#f5c518', count: GRAMMAR_QCM.length+' Q' },
-    { tab:'grammar2', icon:'🧩', label:'Gram. avancée', color:'#e879f9', count: GRAMMAR2_QCM.length+' Q' },
-    { tab:'speak',    icon:'🎤', label:'Speak & Improve', color:'#2d6a4f', count: 'AI feedback' },
-    { tab:'review',   icon:'🎯', label:'Révision',      color:'#e8c97a', count: rv>0?rv+' à revoir':'Quiz' },
+    {
+      tab: 'foundations', icon: '📚', label: 'Foundations', color: '#c1121f',
+      badge: (DATA.vocab.length + DATA.expr.length + PREP_CARDS.length) + ' items',
+      sub: 'Vocab · Expressions · Prépositions'
+    },
+    {
+      tab: 'phrasalhub', icon: '🔗', label: 'Phrasal Verbs', color: '#ea6c00',
+      badge: (PHRASAL_VERBS.length + TAKE_VERBS.length) + ' verbes',
+      sub: 'GET · TAKE'
+    },
+    {
+      tab: 'grammarhub', icon: '🧠', label: 'Grammar', color: '#7c3aed',
+      badge: (GRAMMAR_QCM.length + GRAMMAR2_QCM.length) + ' Q',
+      sub: 'Basics · Advanced'
+    },
+    {
+      tab: 'speak', icon: '🎤', label: 'Speak & Improve', color: '#2d6a4f',
+      badge: 'Oral',
+      sub: 'Correction en temps réel'
+    },
+    {
+      tab: 'review', icon: '🎯', label: 'Review', color: '#b45309',
+      badge: rv > 0 ? rv + ' à revoir' : 'Quiz',
+      sub: rv > 0 ? 'Révision prioritaire' : 'Entraînement'
+    },
   ];
 
   const wrap = document.createElement('div');
@@ -1039,11 +1118,12 @@ function buildHome() {
 
   const title = document.createElement('div');
   title.className = 'home-title';
-  title.textContent = 'Choisis un module pour commencer';
+  title.textContent = 'Choisis un module';
   wrap.appendChild(title);
 
   const grid = document.createElement('div');
   grid.className = 'home-grid';
+
   MODULES.forEach(m => {
     const card = document.createElement('div');
     card.className = 'home-card';
@@ -1051,7 +1131,8 @@ function buildHome() {
     card.innerHTML = `
       <div class="home-card-icon">${m.icon}</div>
       <div class="home-card-label">${m.label}</div>
-      <div class="home-card-badge" style="color:${m.color};border-color:${m.color}55;background:${m.color}20">${m.count}</div>
+      <div class="home-card-badge" style="color:${m.color};border-color:${m.color}55;background:${m.color}18">${m.badge}</div>
+      <div class="home-card-sub">${m.sub}</div>
     `;
     card.onclick = () => switchTab(m.tab);
     grid.appendChild(card);
@@ -1059,14 +1140,13 @@ function buildHome() {
   wrap.appendChild(grid);
 
   // Stats bar
-  const total = DATA.vocab.length + DATA.expr.length + PREP_CARDS.length + PHRASAL_VERBS.length + TAKE_VERBS.length;
   const stats = document.createElement('div');
-  stats.style.cssText = 'display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap;';
+  stats.style.cssText = 'display:flex;gap:10px;justify-content:center;flex-wrap:wrap;';
   [
-    { val: cntOk(),   lbl: 'Maîtrisés', color: '#c1121f' },
-    { val: rv,        lbl: 'À revoir',  color: '#f5c518' },
-    { val: total,     lbl: 'Total mots',color: '#2d6a4f' },
-    { val: S.streak,  lbl: 'Streak 🔥', color: '#f97316' },
+    { val: cntOk(),  lbl: 'Maîtrisés', color: '#c1121f' },
+    { val: rv,       lbl: 'À revoir',  color: '#b45309' },
+    { val: total,    lbl: 'Total',     color: '#2d6a4f' },
+    { val: S.streak, lbl: 'Streak 🔥', color: '#ea6c00' },
   ].forEach(s => {
     const b = document.createElement('div');
     b.style.cssText = 'background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:12px 20px;text-align:center;font-family:var(--mono);';
@@ -1075,6 +1155,109 @@ function buildHome() {
     stats.appendChild(b);
   });
   wrap.appendChild(stats);
+  return wrap;
+}
+
+// ── HUB PAGES ───────────────────────────────────────────────
+function buildFoundationsHub() {
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+  const okV = DATA.vocab.filter((_,i)=>getS('vocab',i)==='ok').length;
+  const okE = DATA.expr.filter((_,i)=>getS('expr',i)==='ok').length;
+  const okP = PREP_CARDS.filter((_,i)=>getS('prep',i)==='ok').length;
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(193,18,31,.1);border-color:rgba(193,18,31,.3);color:#c1121f">📚 FOUNDATIONS</div>
+    <div class="hub-title" style="color:#c1121f">Fondamentaux</div>
+    <div class="hub-subtitle">Vocabulaire, expressions et prépositions essentiels</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:#c1121f" onclick="switchTab('vocab')">
+        <div class="hub-card-icon">📚</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Vocab IT/QA</div>
+          <div class="hub-card-desc">${DATA.vocab.length} mots · ${okV} maîtrisés</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:#2d6a4f" onclick="switchTab('expr')">
+        <div class="hub-card-icon">💬</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Expressions</div>
+          <div class="hub-card-desc">${DATA.expr.length} phrases · ${okE} maîtrisées</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:#7c3aed" onclick="switchTab('prep')">
+        <div class="hub-card-icon">📐</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Prépositions</div>
+          <div class="hub-card-desc">${PREP_CARDS.length} cartes · ${okP} maîtrisées</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+function buildPhrasalHub() {
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+  const okG = PHRASAL_VERBS.filter((_,i)=>getS('phrasal',i)==='ok').length;
+  const okT = TAKE_VERBS.filter((_,i)=>getS('take',i)==='ok').length;
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(234,108,0,.1);border-color:rgba(234,108,0,.3);color:#ea6c00">🔗 PHRASAL VERBS</div>
+    <div class="hub-title" style="color:#ea6c00">Phrasal Verbs</div>
+    <div class="hub-subtitle">Verbes à particule les plus utilisés en contexte professionnel</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:#ea6c00" onclick="switchTab('phrasal')">
+        <div class="hub-card-icon">🔗</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">GET Verbs</div>
+          <div class="hub-card-desc">${PHRASAL_VERBS.length} verbes · ${okG} maîtrisés</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:#38bdf8" onclick="switchTab('take')">
+        <div class="hub-card-icon">✈️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">TAKE Verbs</div>
+          <div class="hub-card-desc">${TAKE_VERBS.length} verbes · ${okT} maîtrisés</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+function buildGrammarHub() {
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+  const doneG  = Object.keys(S.mcqAnswers).length;
+  const doneG2 = Object.keys(S.mcqAnswers2).length;
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:#7c3aed">🧠 GRAMMAR</div>
+    <div class="hub-title" style="color:#7c3aed">Grammaire</div>
+    <div class="hub-subtitle">Cours et QCM pour maîtriser les bases et aller plus loin</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:#b45309" onclick="switchTab('grammar')">
+        <div class="hub-card-icon">📝</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Basics</div>
+          <div class="hub-card-desc">${GRAMMAR_QCM.length} questions · ${doneG} répondues</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:#7c3aed" onclick="switchTab('grammar2')">
+        <div class="hub-card-icon">🧩</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Advanced</div>
+          <div class="hub-card-desc">${GRAMMAR2_QCM.length} questions · ${doneG2} répondues</div>
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
   return wrap;
 }
 
