@@ -1188,6 +1188,177 @@ const GRAMMAR4_QCM = [
   },
 ];
 
+// ═══════════════════════════════════════════════════════════
+// DATA — PRONOMS (Subject · Object · Possessive Adj · Possessive Pro · Reflexive)
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR5_CHAPTERS = [
+  {
+    id: 'subject',
+    icon: '🟦',
+    label: 'Pronoms Sujets',
+    subtitle: 'Font l\'action — toujours avant le verbe',
+    color: '#2d6a4f',
+    tip: 'En anglais, il faut TOUJOURS un sujet dans la phrase. "I" est toujours suivi d\'un verbe.',
+    rows: [
+      { pro: 'I',        pron: 'aï',    ex: 'I eat.',         fr: 'Je mange.' },
+      { pro: 'You',      pron: 'you',   ex: 'You run.',        fr: 'Tu cours.' },
+      { pro: 'He',       pron: 'hi',    ex: 'He sleeps.',      fr: 'Il dort.' },
+      { pro: 'She',      pron: 'chii',  ex: 'She drives well.',fr: 'Elle conduit bien.' },
+      { pro: 'It',       pron: 'ite',   ex: 'It is raining.',  fr: 'Il pleut (neutre).' },
+      { pro: 'We',       pron: 'oui',   ex: 'We work.',        fr: 'Nous travaillons.' },
+      { pro: 'They',     pron: 'zéï',   ex: 'They play.',      fr: 'Ils jouent.' },
+    ]
+  },
+  {
+    id: 'object',
+    icon: '🟧',
+    label: 'Pronoms Compléments',
+    subtitle: 'Reçoivent l\'action — après un verbe ou une préposition',
+    color: '#ea6c00',
+    tip: 'Si le pronom est après un verbe ou une préposition → c\'est un complément. Ex : "Are you talking about me?"',
+    rows: [
+      { pro: 'Me',   pron: 'mii',  ex: 'Call me.',             fr: 'Appelle-moi.' },
+      { pro: 'You',  pron: 'you',  ex: 'I see you.',            fr: 'Je te vois.' },
+      { pro: 'Him',  pron: 'him',  ex: 'They are writing to him.', fr: 'Ils lui écrivent.' },
+      { pro: 'Her',  pron: 'heur', ex: 'She is talking to her.',fr: 'Elle lui parle (à elle).' },
+      { pro: 'It',   pron: 'ite',  ex: 'They don\'t like it.',  fr: 'Ils ne l\'aiment pas.' },
+      { pro: 'Us',   pron: 'euss', ex: 'Help us.',              fr: 'Aide-nous.' },
+      { pro: 'Them', pron: 'zèm',  ex: 'Look at them.',         fr: 'Regarde-les.' },
+    ]
+  },
+  {
+    id: 'possadj',
+    icon: '🟩',
+    label: 'Adjectifs Possessifs',
+    subtitle: 'Montrent la possession — toujours suivis d\'un nom',
+    color: '#2d6a4f',
+    tip: 'Toujours suivis d\'un nom : My car ✓ / Mine car ✗',
+    rows: [
+      { pro: 'My',    pron: 'maï',    ex: 'My car',        fr: 'Ma voiture' },
+      { pro: 'Your',  pron: 'yor',    ex: 'Your bag',      fr: 'Ton sac' },
+      { pro: 'His',   pron: 'hiz',    ex: 'His phone',     fr: 'Son téléphone (à lui)' },
+      { pro: 'Her',   pron: 'heur',   ex: 'Her dress',     fr: 'Sa robe (à elle)' },
+      { pro: 'Its',   pron: 'its',    ex: 'Its tail',      fr: 'Sa queue (animal/objet)' },
+      { pro: 'Our',   pron: 'aoueur', ex: 'Our house',     fr: 'Notre maison' },
+      { pro: 'Their', pron: 'zèr',    ex: 'Their dog',     fr: 'Leur chien' },
+    ]
+  },
+  {
+    id: 'posspro',
+    icon: '🟣',
+    label: 'Pronoms Possessifs',
+    subtitle: 'Remplacent le nom possédé — sans nom après',
+    color: '#7c3aed',
+    tip: 'My car → avec un nom (adjectif). Mine → remplace le nom (pronom). Ex : This car is mine.',
+    rows: [
+      { pro: 'Mine',   pron: '—', ex: 'This is mine.',        fr: 'C\'est le mien.' },
+      { pro: 'Yours',  pron: '—', ex: 'That book is yours.',   fr: 'Ce livre est le tien.' },
+      { pro: 'His',    pron: '—', ex: 'This phone is his.',    fr: 'Ce téléphone est à lui.' },
+      { pro: 'Hers',   pron: '—', ex: 'It\'s hers.',           fr: 'C\'est le sien (à elle).' },
+      { pro: 'Ours',   pron: '—', ex: 'The car is ours.',      fr: 'La voiture est à nous.' },
+      { pro: 'Theirs', pron: '—', ex: 'The house is theirs.',  fr: 'La maison est à eux.' },
+    ]
+  },
+  {
+    id: 'reflexive',
+    icon: '🔁',
+    label: 'Pronoms Réfléchis',
+    subtitle: 'Le sujet fait l\'action sur lui-même',
+    color: '#c1121f',
+    tip: '"He talks to him" ≠ "He talks to himself" → "à lui" ≠ "à lui-même"',
+    rows: [
+      { pro: 'Myself',     pron: '—', ex: 'I hurt myself.',              fr: 'Je me suis blessé.' },
+      { pro: 'Yourself',   pron: '—', ex: 'You see yourself.',           fr: 'Tu te vois.' },
+      { pro: 'Himself',    pron: '—', ex: 'He talks to himself.',        fr: 'Il parle à lui-même.' },
+      { pro: 'Herself',    pron: '—', ex: 'She helped herself.',         fr: 'Elle s\'est servie.' },
+      { pro: 'Itself',     pron: '—', ex: 'The cat cleaned itself.',     fr: 'Le chat s\'est nettoyé.' },
+      { pro: 'Ourselves',  pron: '—', ex: 'We prepared ourselves.',      fr: 'Nous nous sommes préparés.' },
+      { pro: 'Themselves', pron: '—', ex: 'They introduced themselves.', fr: 'Ils se sont présentés.' },
+    ]
+  },
+];
+
+const GRAMMAR5_MEMO = [
+  { situation: 'Au début de la phrase',           type: 'Sujet',                   ex: 'I work / She runs' },
+  { situation: 'Après un verbe ou préposition',   type: 'Complément',              ex: 'He sees me / Talk to her' },
+  { situation: 'Devant un nom',                   type: 'Possessif adjectival',    ex: 'My house / Their car' },
+  { situation: 'Sans nom derrière',               type: 'Possessif (indépendant)', ex: "It's mine / This is hers" },
+  { situation: 'Sujet = complément (sur soi)',    type: 'Réfléchi',                ex: 'I hurt myself / She sees herself' },
+];
+
+const GRAMMAR5_QCM = [
+  {
+    q: 'Quel pronom sujet traduit "Nous" ?',
+    opts: ['They', 'We', 'Us', 'Our'],
+    ans: 1,
+    expl: '"We" est le pronom sujet pour "nous". "Us" est le complément (Help us = Aide-nous).'
+  },
+  {
+    q: 'Dans "John is talking to me", quel type de pronom est "me" ?',
+    opts: ['Pronom sujet', 'Pronom complément', 'Adjectif possessif', 'Pronom réfléchi'],
+    ans: 1,
+    expl: '"Me" est un pronom complément : il reçoit l\'action et est placé après la préposition "to".'
+  },
+  {
+    q: 'Laquelle de ces phrases utilise correctement un ADJECTIF POSSESSIF ?',
+    opts: ['This bag is my.', 'Mine bag is here.', 'My bag is here.', 'I bag is here.'],
+    ans: 2,
+    expl: 'L\'adjectif possessif "my" doit être suivi d\'un nom : "My bag". "Mine" s\'utilise sans nom après.'
+  },
+  {
+    q: '"That book is yours." — Quel type de pronom est "yours" ?',
+    opts: ['Adjectif possessif', 'Pronom sujet', 'Pronom possessif (indépendant)', 'Pronom réfléchi'],
+    ans: 2,
+    expl: '"Yours" est un pronom possessif indépendant : il remplace le nom (on ne dit pas "your book" ici, on remplace "book" par "yours").'
+  },
+  {
+    q: 'Quelle phrase contient un PRONOM RÉFLÉCHI ?',
+    opts: ['She talks to her.', 'She talks to herself.', 'She talks to hers.', 'She talks to she.'],
+    ans: 1,
+    expl: '"Herself" est un pronom réfléchi : le sujet (she) fait l\'action sur elle-même. "Her" serait un complément renvoyant à une autre personne.'
+  },
+  {
+    q: 'Comment dit-on "Leur chien" en anglais ?',
+    opts: ['Them dog', 'They dog', 'Theirs dog', 'Their dog'],
+    ans: 3,
+    expl: '"Their" est l\'adjectif possessif pour "leur/leurs". Il est toujours suivi d\'un nom. "Theirs" s\'utilise sans nom (The dog is theirs).'
+  },
+  {
+    q: 'Quelle est la prononciation correcte de "They" ?',
+    opts: ['zii', 'zèm', 'zéï', 'zèr'],
+    ans: 2,
+    expl: '"They" se prononce "zéï". "Them" = zèm, "Their" = zèr.'
+  },
+  {
+    q: '"Are you talking about me?" — Pourquoi "me" et pas "I" ?',
+    opts: [
+      'Parce que "me" est plus court',
+      'Parce que "me" est un pronom sujet',
+      'Parce que "me" est un pronom complément, placé après la préposition "about"',
+      'Parce que "I" ne s\'utilise jamais après "about"'
+    ],
+    ans: 2,
+    expl: 'Après une préposition (about, to, with, for...), on utilise toujours le pronom complément : me, him, her, us, them.'
+  },
+  {
+    q: 'Quelle est la différence entre "my" et "mine" ?',
+    opts: [
+      '"My" est pluriel, "mine" est singulier',
+      '"My" + nom (adjectif possessif), "mine" sans nom (pronom possessif)',
+      'Aucune différence',
+      '"Mine" est plus formel que "my"'
+    ],
+    ans: 1,
+    expl: '"My car" = adjectif possessif (avec nom). "This car is mine" = pronom possessif (remplace le nom).'
+  },
+  {
+    q: 'Complète : "I built it ________ !" (j\'ai construit ça tout seul)',
+    opts: ['me', 'my', 'myself', 'mine'],
+    ans: 2,
+    expl: '"Myself" est le pronom réfléchi de "I". "I built it myself" = je l\'ai construit moi-même / tout seul.'
+  },
+];
+
 // Flashcards for prepositions: one card per row across all sections
 function buildPrepCards() {
   const cards = [];
@@ -1222,10 +1393,12 @@ let S = {
   grammar2View: 'cours',
   grammar3View: 'cours',
   grammar4View: 'cours',
+  grammar5View: 'cours',
   mcqAnswers: {},
   mcqAnswers2: {},
   mcqAnswers3: {},
   mcqAnswers4: {},
+  mcqAnswers5: {},
   mcqAnswersTake: {},
   status: {},
   streak: 0,
@@ -1306,7 +1479,7 @@ function toast(msg){
 const TAB_PARENT = {
   vocab: 'foundations', expr: 'foundations', prep: 'foundations',
   phrasal: 'phrasalhub', take: 'phrasalhub',
-  grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub', grammar4: 'grammarhub',
+  grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub', grammar4: 'grammarhub', grammar5: 'grammarhub',
 };
 const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
 
@@ -1368,6 +1541,7 @@ function render() {
   else if(S.tab==='grammar2')     el.appendChild(buildGrammar2Section());
   else if(S.tab==='grammar3')     el.appendChild(buildGrammar3Section());
   else if(S.tab==='grammar4')     el.appendChild(buildGrammar4Section());
+  else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='review') {
     if(S.quiz)                    el.appendChild(buildQuiz());
@@ -1396,8 +1570,9 @@ function buildHome() {
   const doneG2 = Object.keys(S.mcqAnswers2).length;
   const doneG3 = Object.keys(S.mcqAnswers3).length;
   const doneG4 = Object.keys(S.mcqAnswers4).length;
-  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length;
-  const doneGr = doneG + doneG2 + doneG3 + doneG4;
+  const doneG5 = Object.keys(S.mcqAnswers5).length;
+  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length + GRAMMAR5_QCM.length;
+  const doneGr = doneG + doneG2 + doneG3 + doneG4 + doneG5;
 
   // 3 semantic colors: rouge = contenu, violet = grammaire, vert = action
   const COL_CONTENT  = '#c1121f';  // Foundations + Phrasal (learning content)
@@ -1602,6 +1777,7 @@ function buildGrammarHub() {
   const doneG2 = Object.keys(S.mcqAnswers2).length;
   const doneG3 = Object.keys(S.mcqAnswers3).length;
   const doneG4 = Object.keys(S.mcqAnswers4).length;
+  const doneG5 = Object.keys(S.mcqAnswers5).length;
   const COLOR  = '#7c3aed';
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR}">🧠 GRAMMAR</div>
@@ -1641,6 +1817,15 @@ function buildGrammarHub() {
           <div class="hub-card-label">Modaux — Can · Will · Must · Should…</div>
           <div class="hub-card-desc">${GRAMMAR4_QCM.length} questions — tous les modaux & leurs nuances</div>
           ${hubProgBar(doneG4, GRAMMAR4_QCM.length, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar5')">
+        <div class="hub-card-icon">👤</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Les Pronoms — Subject · Object · Possessive…</div>
+          <div class="hub-card-desc">${GRAMMAR5_QCM.length} questions — 5 types de pronoms & prononciation</div>
+          ${hubProgBar(doneG5, GRAMMAR5_QCM.length, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -2657,6 +2842,233 @@ function answerMcq4(qi, oi) {
   render();
 }
 function resetMcq4() { S.mcqAnswers4 = {}; render(); toast('QCM réinitialisé'); }
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR 5 — PRONOMS (Subject · Object · Possessive · Reflexive)
+// ═══════════════════════════════════════════════════════════
+function buildGrammar5Section() {
+  const COLOR  = '#7c3aed';
+  const ACCENT = '#a855f7';
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+  const gv = S.grammar5View || 'cours';
+  const answered = Object.keys(S.mcqAnswers5 || {}).length;
+
+  // Sub-nav
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${gv==='cours'?'active':''}"
+        style="${gv==='cours'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar5View('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${gv==='memo'?'active':''}"
+        style="${gv==='memo'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar5View('memo')">🧠 Mémo</button>
+      <button class="phrasal-subbtn ${gv==='mcq'?'active':''}"
+        style="${gv==='mcq'?'background:rgba(168,85,247,.15);border-color:'+ACCENT+';color:'+ACCENT:''}"
+        onclick="setGrammar5View('mcq')">✅ QCM (${GRAMMAR5_QCM.length} questions)</button>
+      ${answered>0?`<button class="phrasal-subbtn" style="color:${ACCENT};border-color:rgba(168,85,247,.3)" onclick="resetMcq5()">🔄 Reset</button>`:''}
+    </div>
+  `;
+
+  if (gv === 'cours') {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35);color:${ACCENT}">👤 PRONOMS</div>
+      <div class="cours-title" style="color:${ACCENT}">Les Pronoms en Anglais</div>
+      <div class="cours-subtitle">Ch.1 Sujets · Ch.2 Compléments · Ch.3 Possessifs Adj · Ch.4 Possessifs Pro · Ch.5 Réfléchis</div>
+    `;
+
+    GRAMMAR5_CHAPTERS.forEach((ch, ci) => {
+      const hasPron = ch.rows.some(r => r.pron && r.pron !== '—');
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:18px 20px;margin-bottom:14px;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="font-size:1.2rem;">${ch.icon}</span>
+          <div>
+            <div style="font-size:.95rem;font-weight:800;color:${ch.color};">Ch.${ci+1} — ${ch.label}</div>
+            <div style="font-size:.7rem;color:var(--muted);font-family:var(--mono);">${ch.subtitle}</div>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
+          <thead>
+            <tr style="background:var(--surface2);">
+              <th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:.55rem;color:${ch.color};text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border2);">Pronom</th>
+              ${hasPron?`<th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:.55rem;color:${ch.color};text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border2);">Prononciation</th>`:''}
+              <th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:.55rem;color:${ch.color};text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border2);">Exemple EN</th>
+              <th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:.55rem;color:${ch.color};text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border2);">Traduction FR</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${ch.rows.map(row=>`
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:9px 10px;font-weight:800;font-size:.9rem;color:${ch.color};">${row.pro}</td>
+                ${hasPron?`<td style="padding:9px 10px;font-family:var(--mono);font-size:.72rem;color:var(--muted);">${row.pron}</td>`:''}
+                <td style="padding:9px 10px;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <button class="btn-tbl-audio" style="color:${ch.color}" onclick="speak('${esc(row.ex)}','en')">${spkSvg()}</button>
+                    <span style="font-size:.8rem;color:var(--text);">${row.ex}</span>
+                  </div>
+                </td>
+                <td style="padding:9px 10px;font-size:.78rem;color:var(--muted);font-style:italic;">${row.fr}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <div style="font-size:.75rem;color:var(--muted);padding:8px 10px;background:rgba(180,83,9,.05);border-left:2px solid var(--gold);border-radius:0 6px 6px 0;">
+          💡 ${ch.tip}
+        </div>
+      `;
+      div.appendChild(card);
+    });
+
+    // Mini dialogue
+    div.innerHTML += `
+      <div style="background:rgba(45,106,79,.06);border:1px solid rgba(45,106,79,.2);border-radius:12px;padding:16px;margin-top:4px;">
+        <div style="font-weight:800;font-size:.82rem;color:#2d6a4f;margin-bottom:12px;">💬 Mini Dialogue</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.82rem;">
+          ${[
+            ['— Who is he talking to?', '→ He is talking to me.'],
+            ['— Is this your book?', '→ No, it\'s hers.'],
+            ['— Did you do this yourself?', '→ Yes, I built it myself!'],
+          ].map(([q,a])=>`
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;color:var(--text);font-weight:600;">
+                <button class="btn-tbl-audio" style="color:#2d6a4f" onclick="speak('${esc(q)}','en')">${spkSvg()}</button>${q}
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;color:#2d6a4f;margin-top:3px;">
+                <button class="btn-tbl-audio" style="color:#2d6a4f" onclick="speak('${esc(a)}','en')">${spkSvg()}</button>${a}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar5View('memo')">🧠 Voir le mémo →</button>
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar5View('mcq')">✅ Passer au QCM →</button>
+      </div>
+    `;
+    wrap.appendChild(div);
+
+  } else if (gv === 'memo') {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35);color:${ACCENT}">🧠 MÉMO</div>
+      <div class="cours-title" style="color:${ACCENT}">Mémo Technique</div>
+      <div class="cours-subtitle">Quand utiliser quel pronom ?</div>
+      <table class="cours-table">
+        <thead>
+          <tr>
+            <th style="color:${ACCENT}">Situation</th>
+            <th style="color:${ACCENT}">Type de pronom</th>
+            <th style="color:${ACCENT}">Exemple</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${GRAMMAR5_MEMO.map(row=>`
+            <tr>
+              <td style="font-size:.8rem;color:var(--text);">${row.situation}</td>
+              <td><strong style="color:${ACCENT};font-size:.82rem;">${row.type}</strong></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <button class="btn-tbl-audio" style="color:${ACCENT}" onclick="speak('${esc(row.ex)}','en')">${spkSvg()}</button>
+                  <span style="font-size:.78rem;color:var(--muted);font-style:italic;">${row.ex}</span>
+                </div>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:16px;margin-top:16px;">
+        <div style="font-weight:800;font-size:.82rem;color:${ACCENT};margin-bottom:10px;">🧠 Petits conseils pour retenir</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.8rem;">
+          ${[
+            ['Sujet = avant le verbe','I eat, You work, They play...','#2d6a4f'],
+            ['Complément = après le verbe ou une préposition','She is talking to me.','#ea6c00'],
+            ['Possession = "à qui"','My car / This car is mine.','#7c3aed'],
+            ['Réfléchi = action sur soi-même','I hurt myself.','#c1121f'],
+          ].map(([titre,ex,col])=>`
+            <div style="padding:10px 12px;background:var(--bg2);border-radius:8px;border-left:3px solid ${col};">
+              <div style="font-weight:700;color:${col};margin-bottom:3px;">${titre}</div>
+              <div style="display:flex;align-items:center;gap:6px;color:var(--muted);font-style:italic;">
+                <button class="btn-tbl-audio" style="color:${col}" onclick="speak('${esc(ex)}','en')">${spkSvg()}</button>${ex}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-goto-rev" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:${ACCENT}" onclick="setGrammar5View('mcq')">✅ Passer au QCM →</button>
+      </div>
+    `;
+    wrap.appendChild(div);
+
+  } else {
+    // MCQ view
+    const answeredNow = Object.keys(S.mcqAnswers5 || {}).length;
+    const correct = Object.entries(S.mcqAnswers5 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR5_QCM[i].ans).length;
+
+    const mcqDiv = document.createElement('div');
+    mcqDiv.innerHTML = `
+      <div class="mcq-score-bar">
+        <div class="mcq-score-info">
+          <h3>✅ QCM — Les Pronoms</h3>
+          <p>${answeredNow} / ${GRAMMAR5_QCM.length} répondues · ${GRAMMAR5_QCM.length - answeredNow} restantes</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="mcq-score-num" style="color:${ACCENT}">${answeredNow>0?correct+'/'+answeredNow:'—'}</div>
+          ${answeredNow>0?`<button class="btn-mcq-reset" onclick="resetMcq5()">🔄 Reset</button>`:''}
+        </div>
+      </div>
+    `;
+
+    const mcqList = document.createElement('div');
+    mcqList.className = 'mcq-section';
+
+    GRAMMAR5_QCM.forEach((q, qi) => {
+      const chosen = (S.mcqAnswers5||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers5[qi]) : null;
+      const isAnswered = chosen !== null;
+      const isCorrect = chosen === q.ans;
+      const card = document.createElement('div');
+      card.className = 'mcq-card';
+      card.innerHTML = `
+        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+        <div class="mcq-opts">
+          ${q.opts.map((opt,oi)=>{
+            let cls = 'mcq-opt';
+            if(isAnswered){if(oi===q.ans)cls+=' correct';else if(oi===chosen&&!isCorrect)cls+=' wrong';}
+            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq5(${qi},${oi})">
+              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
+            </button>`;
+          }).join('')}
+        </div>
+        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
+          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
+        </div>`:''}
+      `;
+      mcqList.appendChild(card);
+    });
+
+    mcqDiv.appendChild(mcqList);
+    wrap.appendChild(mcqDiv);
+  }
+
+  return wrap;
+}
+
+function setGrammar5View(v) { S.grammar5View = v; render(); }
+function answerMcq5(qi, oi) {
+  if (!S.mcqAnswers5) S.mcqAnswers5 = {};
+  S.mcqAnswers5[qi] = oi;
+  if (oi === GRAMMAR5_QCM[qi].ans) { S.streak++; save(); toast('✓ Correct !'); }
+  else { toast('✗ Incorrect — lis l\'explication'); }
+  render();
+}
+function resetMcq5() { S.mcqAnswers5 = {}; render(); toast('QCM réinitialisé'); }
+
+
 
 
 
