@@ -37,18 +37,21 @@ header{display:flex;align-items:center;justify-content:space-between;
 .hd-stat .l{font-size:.44rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
 
 /* ── NAV ── */
-nav{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;}
-.nav-item{flex:1;min-width:80px;display:flex;align-items:center;justify-content:center;gap:5px;
-  padding:12px 6px;font-size:.72rem;font-weight:700;letter-spacing:.1px;
+nav{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:var(--bg2);}
+.nav-item{display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:11px 6px;font-size:.7rem;font-weight:700;letter-spacing:.1px;
   cursor:pointer;border:none;background:none;color:var(--muted);
-  border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;}
+  border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;
+  flex-direction:column;gap:3px;}
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,.02);}
 .nav-item.active{color:var(--text);}
 .nav-item.vocab-tab.active  {border-bottom-color:var(--accent);}
 .nav-item.expr-tab.active   {border-bottom-color:var(--accent2);}
 .nav-item.prep-tab.active   {border-bottom-color:var(--purple);}
 .nav-item.phrasal-tab.active{border-bottom-color:var(--orange);}
+.nav-item.take-tab.active   {border-bottom-color:#38bdf8;}
 .nav-item.grammar-tab.active{border-bottom-color:var(--gold);}
+.nav-item.grammar2-tab.active{border-bottom-color:#e879f9;}
 .nav-item.review-tab.active {border-bottom-color:#e8c97a;}
 .nav-badge{font-family:var(--mono);font-size:.5rem;padding:2px 5px;
   border-radius:99px;background:var(--surface);border:1px solid var(--border2);color:var(--muted);}
@@ -56,7 +59,9 @@ nav{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);ove
 .expr-tab.active    .nav-badge{background:rgba(45,106,79,.2);border-color:rgba(45,106,79,.5);color:var(--accent2);}
 .prep-tab.active    .nav-badge{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.4);color:var(--purple);}
 .phrasal-tab.active .nav-badge{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4);color:var(--orange);}
+.take-tab.active    .nav-badge{background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.4);color:#38bdf8;}
 .grammar-tab.active .nav-badge{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.4);color:var(--gold);}
+.grammar2-tab.active .nav-badge{background:rgba(232,121,249,.15);border-color:rgba(232,121,249,.4);color:#e879f9;}
 .review-tab.active  .nav-badge{background:rgba(232,201,122,.15);border-color:rgba(232,201,122,.4);color:#e8c97a;}
 
 main{flex:1;display:flex;flex-direction:column;}
@@ -72,7 +77,9 @@ main{flex:1;display:flex;flex-direction:column;}
 .expr-fill   {background:linear-gradient(90deg,#2d6a4f,#52b788);}
 .prep-fill   {background:linear-gradient(90deg,var(--purple),#d89cff);}
 .phrasal-fill{background:linear-gradient(90deg,var(--orange),#fbbf24);}
+.take-fill   {background:linear-gradient(90deg,#38bdf8,#818cf8);}
 .grammar-fill{background:linear-gradient(90deg,var(--gold),#ffe066);}
+.grammar2-fill{background:linear-gradient(90deg,#e879f9,#a855f7);}
 .fc-prog-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap;}
 
 .flashcard{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;
@@ -336,13 +343,19 @@ main{flex:1;display:flex;flex-direction:column;}
     💬 Expressions <span class="nav-badge" id="nb-expr">34</span>
   </button>
   <button class="nav-item prep-tab" id="tab-prep" onclick="switchTab('prep')">
-    📐 Prépositions <span class="nav-badge" id="nb-prep">NEW</span>
+    📐 Prépositions <span class="nav-badge" id="nb-prep">—</span>
   </button>
   <button class="nav-item phrasal-tab" id="tab-phrasal" onclick="switchTab('phrasal')">
-    🔗 Phrasal Verbs <span class="nav-badge" id="nb-phrasal">11</span>
+    🔗 GET Verbs <span class="nav-badge" id="nb-phrasal">11</span>
+  </button>
+  <button class="nav-item take-tab" id="tab-take" onclick="switchTab('take')">
+    ✈️ TAKE Verbs <span class="nav-badge" id="nb-take">9</span>
   </button>
   <button class="nav-item grammar-tab" id="tab-grammar" onclick="switchTab('grammar')">
-    📝 Grammaire <span class="nav-badge" id="nb-grammar">QCM</span>
+    📝 Grammaire <span class="nav-badge" id="nb-grammar">—</span>
+  </button>
+  <button class="nav-item grammar2-tab" id="tab-grammar2" onclick="switchTab('grammar2')">
+    🧩 Gram. avancée <span class="nav-badge" id="nb-grammar2">—</span>
   </button>
   <button class="nav-item review-tab" id="tab-review" onclick="switchTab('review')">
     🎯 Révision <span class="nav-badge" id="nb-review">0</span>
@@ -573,6 +586,91 @@ const PHRASAL_VERBS = [
 DATA.phrasal = PHRASAL_VERBS.map((item,i)=>({...item, _sec:'phrasal', _idx:i}));
 
 // ═══════════════════════════════════════════════════════════
+// DATA — TAKE Phrasal Verbs
+// ═══════════════════════════════════════════════════════════
+const TAKE_VERBS = [
+  {en:'Take off',   fr:'Décoller (avion) / Enlever (vêtement)', ex:'The plane takes off at 8 PM.',          exTrad:"L'avion décolle à 20h."},
+  {en:'Take out',   fr:'Sortir quelque chose / Emmener qqn',    ex:'I need to take out the trash.',         exTrad:'Je dois sortir les poubelles.'},
+  {en:'Take up',    fr:'Commencer une activité / hobby',        ex:'I want to take up yoga.',               exTrad:'Je veux me mettre au yoga.'},
+  {en:'Take in',    fr:'Assimiler / Comprendre / Absorber',     ex:'It was a lot of info to take in.',      exTrad:"C'était beaucoup d'infos à assimiler."},
+  {en:'Take back',  fr:'Rapporter / Retirer ses paroles',       ex:'I need to take this book back.',        exTrad:'Je dois rapporter ce livre.'},
+  {en:'Take over',  fr:'Prendre le contrôle / le relais',       ex:'He will take over the company.',        exTrad:"Il va reprendre l'entreprise."},
+  {en:'Take after', fr:'Ressembler à (un parent)',              ex:'He takes after his father.',            exTrad:'Il ressemble à son père.'},
+  {en:'Take on',    fr:'Accepter un défi / une responsabilité', ex:"Don't take on too much work.",          exTrad:"N'accepte pas trop de travail."},
+  {en:'Take away',  fr:'Emporter (nourriture)',                 ex:'Two coffees to take away, please.',     exTrad:'Deux cafés à emporter, s\'il vous plaît.'},
+];
+DATA.take = TAKE_VERBS.map((item,i)=>({...item,_sec:'take',_idx:i}));
+
+const TAKE_QCM = [
+  {q:'Que signifie "take off" dans un contexte aéronautique ?',
+   opts:['Décoller','Atterrir','Rater son vol','Enregistrer'],ans:0,
+   expl:'"The plane takes off" = l\'avion décolle. Aussi utilisé pour enlever un vêtement.'},
+  {q:'Quelle phrase utilise "take out" correctement ?',
+   opts:['I take out early.','I need to take out the trash.','She took out the sky.','He take out work.'],ans:1,
+   expl:'"Take out" = sortir quelque chose. "Take out the trash" = sortir les poubelles.'},
+  {q:'"I want to take up yoga" signifie :',
+   opts:["Je veux arrêter le yoga","Je déteste le yoga","Je veux commencer le yoga","Je pratique le yoga depuis longtemps"],ans:2,
+   expl:'"Take up" = commencer une nouvelle activité ou un hobby.'},
+  {q:'Quelle est la différence entre GET et TAKE ?',
+   opts:['Aucune différence','GET = recevoir/arriver, TAKE = prendre activement/déplacer','TAKE = recevoir, GET = prendre','Ils sont synonymes parfaits'],ans:1,
+   expl:'GET = recevoir ou arriver quelque part. TAKE = prendre activement, déplacer quelque chose.'},
+  {q:'"He takes after his father" veut dire :',
+   opts:['Il suit son père','Il ressemble à son père','Il travaille pour son père','Il remplace son père'],ans:1,
+   expl:'"Take after" = ressembler à un membre de la famille.'},
+  {q:'Comment dit-on "prendre le contrôle d\'une entreprise" ?',
+   opts:['Take off the company','Take up the company','Take over the company','Take in the company'],ans:2,
+   expl:'"Take over" = prendre le contrôle, reprendre les rênes.'},
+  {q:'"It was a lot of info to take in" — que signifie "take in" ici ?',
+   opts:['Acheter','Photographier','Assimiler / comprendre','Imprimer'],ans:2,
+   expl:'"Take in" = absorber, assimiler une information ou une situation.'},
+  {q:'Quelle phrase signifie "n\'accepte pas trop de travail" ?',
+   opts:["Don't take off too much work.","Don't take on too much work.","Don't take up too much work.","Don't take over too much work."],ans:1,
+   expl:'"Take on" = accepter une responsabilité, un défi ou une charge de travail.'},
+];
+
+// ═══════════════════════════════════════════════════════════
+// DATA — Grammaire Avancée (suffixes, contexte, pièges, to+-ing)
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR2_QCM = [
+  {q:'Quelle classe de mots suit généralement un déterminant (the, a, my, this…) ?',
+   opts:['Adjectif','Verbe','Nom','Adverbe'],ans:2,
+   expl:'"The, a, an, my, this" appellent toujours un NOM : "The agreement", "A report".'},
+  {q:'Après une préposition (before, after, without, by…), on utilise :',
+   opts:['Un infinitif (to + verbe)','Un gérondif (-ing)','Un adjectif','Un adverbe'],ans:1,
+   expl:'After/before/without/by + verbe-ING. Ex : "Before sealing", "By improving".'},
+  {q:'Dans "___ + Nom", quelle classe de mots remplit le blanc ?',
+   opts:['Verbe','Adverbe','Conjonction','Adjectif'],ans:3,
+   expl:'Un adjectif qualifie le nom qui suit : "A reliable supplier", "A financial report".'},
+  {q:'Quelle terminaison indique souvent un NOM ?',
+   opts:['-ly','-tion / -ment / -ness','-able / -ive','-ate / -ize'],ans:1,
+   expl:'Les suffixes nominaux : -tion (information), -ment (agreement), -ness (happiness), -ity (reality).'},
+  {q:'Quelle terminaison indique souvent un ADJECTIF ?',
+   opts:['-ly','-tion','-able / -ive / -ous / -ful','-ate / -ify'],ans:2,
+   expl:'Suffixes adjectivaux : -able (reliable), -ive (active), -ous (dangerous), -ful (skillful).'},
+  {q:'Quelle terminaison indique presque toujours un ADVERBE ?',
+   opts:['-tion','-ly','-ment','-ship'],ans:1,
+   expl:'90% des adverbes se terminent en -ly : quickly, skillfully, extremely, badly.'},
+  {q:'Après un verbe d\'état (be, seem, look, feel, taste…), on utilise :',
+   opts:['Un adverbe','Un autre verbe','Un adjectif','Un gérondif'],ans:2,
+   expl:'"The cake tastes good" (adjectif), pas "well". Be/seem/look/feel/taste + ADJECTIF.'},
+  {q:'"Look forward to" est suivi de :',
+   opts:['Un infinitif (to + verbe base)','Un gérondif (-ing)','Un adjectif','Un nom uniquement'],ans:1,
+   expl:'"Look forward to + -ING". Ex : "I look forward to working with you."'},
+  {q:'"Be used to" est suivi de :',
+   opts:['Un infinitif','Un adjectif','Un gérondif (-ing)','Un adverbe'],ans:2,
+   expl:'"I am used to waking up early." Be used to + -ING (habitué à faire qqch).'},
+  {q:'Dans "A customer service" ou "A business plan", le premier nom joue le rôle de :',
+   opts:['Verbe','Adverbe','Adjectif (nom-adjectif)','Pronom'],ans:2,
+   expl:'Un nom peut qualifier un autre nom et jouer le rôle d\'adjectif : "business plan", "customer service".'},
+  {q:'"They object to changing the plan" — après "object to", on utilise :',
+   opts:['Un infinitif','Un adjectif','Un gérondif (-ing)','Un adverbe'],ans:2,
+   expl:'Object to / be committed to / in addition to + -ING. Ces expressions piègent car "to" semble demander un infinitif.'},
+  {q:'Quel mot est un ADVERBE dans : "She skillfully combines data and design" ?',
+   opts:['She','combines','skillfully','data'],ans:2,
+   expl:'"Skillfully" (-ly) est un adverbe qui modifie le verbe "combines".'},
+];
+
+// ═══════════════════════════════════════════════════════════
 // DATA — Grammaire (cours + QCM)
 // ═══════════════════════════════════════════════════════════
 const GRAMMAR_COURS = [
@@ -726,12 +824,16 @@ DATA.prep = PREP_CARDS;
 // ═══════════════════════════════════════════════════════════
 let S = {
   tab: 'vocab',
-  cursor: {vocab:0, expr:0, prep:0, phrasal:0},
+  cursor: {vocab:0, expr:0, prep:0, phrasal:0, take:0},
   prepView: 'cours',
   prepSection: 'sur',
   phrasalView: 'cours',
+  takeView: 'cours',
   grammarView: 'cours',
+  grammar2View: 'cours',
   mcqAnswers: {},
+  mcqAnswers2: {},
+  mcqAnswersTake: {},
   status: {},
   streak: 0,
   quiz: null,
@@ -744,7 +846,7 @@ function load() {
     const p = JSON.parse(r);
     S.status = p.status || {};
     S.streak = p.streak || 0;
-    S.cursor = p.cursor || {vocab:0,expr:0,prep:0,phrasal:0};
+    S.cursor = p.cursor || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
   } catch(e){}
 }
 function save() {
@@ -818,7 +920,9 @@ function refreshBadges() {
   document.getElementById('nb-expr').textContent=DATA.expr.length;
   document.getElementById('nb-prep').textContent=PREP_CARDS.length;
   document.getElementById('nb-phrasal').textContent=PHRASAL_VERBS.length;
+  document.getElementById('nb-take').textContent=TAKE_VERBS.length;
   document.getElementById('nb-grammar').textContent=GRAMMAR_QCM.length+' Q';
+  document.getElementById('nb-grammar2').textContent=GRAMMAR2_QCM.length+' Q';
   const rv=cntRev();
   document.getElementById('nb-review').textContent=rv||'0';
   document.getElementById('statOk').textContent=cntOk();
@@ -838,7 +942,9 @@ function render() {
   if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
   else if(S.tab==='prep')             el.appendChild(buildPrepSection());
   else if(S.tab==='phrasal')          el.appendChild(buildPhrasalSection());
+  else if(S.tab==='take')             el.appendChild(buildTakeSection());
   else if(S.tab==='grammar')          el.appendChild(buildGrammarSection());
+  else if(S.tab==='grammar2')         el.appendChild(buildGrammar2Section());
   else if(S.quiz)                     el.appendChild(buildQuiz());
   else                                el.appendChild(buildLauncher());
 }
@@ -1448,6 +1554,250 @@ function answerMcq(qi, oi) {
   render();
 }
 function resetMcq() { S.mcqAnswers={}; render(); toast('QCM réinitialisé'); }
+
+// ═══════════════════════════════════════════════════════════
+// TAKE SECTION
+// ═══════════════════════════════════════════════════════════
+function buildMcqBlock(qcmData, answersKey, resetFn, answerFn, title, color) {
+  const answers = S[answersKey] || {};
+  const answered = Object.keys(answers).length;
+  const correct  = Object.entries(answers).filter(([i,v])=>parseInt(v)===qcmData[i].ans).length;
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div class="mcq-score-bar">
+      <div class="mcq-score-info">
+        <h3>✅ QCM — ${title}</h3>
+        <p>${answered} / ${qcmData.length} répondues · ${qcmData.length-answered} restantes</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="mcq-score-num" style="color:${color}">${answered>0?correct+'/'+answered:'—'}</div>
+        ${answered>0?`<button class="btn-mcq-reset" onclick="${resetFn}()">🔄 Reset</button>`:''}
+      </div>
+    </div>
+  `;
+  const list = document.createElement('div');
+  list.className = 'mcq-section';
+  qcmData.forEach((q,qi) => {
+    const chosen = answers.hasOwnProperty(qi) ? parseInt(answers[qi]) : null;
+    const isAnswered = chosen !== null;
+    const isCorrect  = chosen === q.ans;
+    const card = document.createElement('div');
+    card.className = 'mcq-card';
+    card.innerHTML = `
+      <div class="mcq-q">Q${qi+1}. ${q.q}</div>
+      <div class="mcq-opts">
+        ${q.opts.map((opt,oi)=>{
+          let cls='mcq-opt';
+          if(isAnswered){if(oi===q.ans)cls+=' correct';else if(oi===chosen&&!isCorrect)cls+=' wrong';}
+          return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="${answerFn}(${qi},${oi})">
+            ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':''):''}${opt}
+          </button>`;
+        }).join('')}
+      </div>
+      ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
+        ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
+      </div>`:''}
+    `;
+    list.appendChild(card);
+  });
+  div.appendChild(list);
+  return div;
+}
+
+function buildTakeSection() {
+  const tv = S.takeView;
+  const data = TAKE_VERBS;
+  const idx  = S.cursor.take||0;
+  const item = data[idx];
+  const total= data.length;
+  const pct  = Math.round(((idx+1)/total)*100);
+  const nRev = data.filter((_,i)=>getS('take',i)==='review').length;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${tv==='cours'?'active':''}" style="${tv==='cours'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${tv==='cards'?'active':''}" style="${tv==='cards'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('cards')">🃏 Flashcards (${total})</button>
+      <button class="phrasal-subbtn ${tv==='mcq'?'active':''}" style="${tv==='mcq'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('mcq')">✅ QCM (${TAKE_QCM.length} Q)</button>
+    </div>
+  `;
+
+  if (tv === 'cours') {
+    const d = document.createElement('div');
+    d.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.4);color:#38bdf8">✈️ TAKE VERBS</div>
+      <div class="cours-title" style="color:#38bdf8">Phrasal Verbs avec TAKE</div>
+      <div class="cours-subtitle">Prendre le contrôle, décoller, ressembler — les nuances de TAKE</div>
+
+      <div style="background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25);border-radius:12px;padding:16px;margin-bottom:20px;">
+        <div style="font-weight:800;font-size:.85rem;margin-bottom:10px;color:#38bdf8">💡 GET vs TAKE — la différence clé</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.8rem;">
+          <div style="background:rgba(45,106,79,.15);border-radius:8px;padding:10px;"><strong style="color:#52b788">GET</strong><br><span style="color:var(--muted)">Recevoir / Arriver quelque part</span></div>
+          <div style="background:rgba(56,189,248,.1);border-radius:8px;padding:10px;"><strong style="color:#38bdf8">TAKE</strong><br><span style="color:var(--muted)">Prendre activement / Déplacer qqch</span></div>
+        </div>
+      </div>
+
+      <table class="cours-table">
+        <thead><tr><th>Phrasal Verb</th><th>Sens</th><th>Exemple EN</th><th>Traduction FR</th></tr></thead>
+        <tbody>
+          ${data.map(row=>`
+            <tr>
+              <td><div class="td-prep-audio"><span class="td-prep" style="color:#38bdf8">${row.en}</span>
+                <button class="btn-tbl-audio" style="color:#38bdf8" onclick="speak('${esc(row.en)}','en')">${spkSvg()}</button></div></td>
+              <td><span class="td-type" style="color:#38bdf8">${row.fr}</span></td>
+              <td><div class="td-ex-audio"><span class="td-ex">${row.ex}</span>
+                <button class="btn-tbl-audio" style="color:#38bdf8" onclick="speak('${esc(row.ex)}','en')">${spkSvg()}</button></div></td>
+              <td><span class="td-trad">${row.exTrad}</span></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    `;
+    wrap.appendChild(d);
+
+  } else if (tv === 'cards') {
+    const fc = document.createElement('div');
+    fc.innerHTML = `
+      <div class="fc-progress-strip">
+        <div class="fc-prog-bar"><div class="fc-prog-fill take-fill" style="width:${pct}%"></div></div>
+        <div class="fc-prog-txt">${idx+1} / ${total}</div>
+      </div>
+      <div class="flashcard">
+        <div class="card-stripe" style="background:linear-gradient(90deg,#38bdf8,#818cf8)"></div>
+        <div class="card-body">
+          <div class="card-num" style="color:#38bdf8">✈️ TAKE Verb · #${idx+1}</div>
+          <div class="card-word" style="color:#38bdf8">${item.en}</div>
+          <div class="card-extra">${item.fr}</div>
+          <div class="card-example">"${item.ex}"</div>
+          <div class="card-example-trad">${item.exTrad}</div>
+          <div class="card-audio-row">
+            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')" style="border-color:rgba(56,189,248,.3);color:#38bdf8">${spkSvg()} Phrasal Verb</button>
+            <button class="btn-audio" onclick="speak('${esc(item.ex)}','en')">${spkSvg()} Exemple</button>
+          </div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="btn-nav" onclick="navTake(-1)" ${idx===0?'disabled':''}>◀</button>
+        <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
+        <button class="btn-nav" onclick="navTake(1)" ${idx===total-1?'disabled':''}>▶</button>
+      </div>
+    `;
+    wrap.appendChild(fc);
+    _keyHandler=(e)=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowRight')navTake(1);if(e.key==='ArrowLeft')navTake(-1);};
+    document.addEventListener('keydown',_keyHandler);
+
+  } else {
+    wrap.appendChild(buildMcqBlock(TAKE_QCM,'mcqAnswersTake','resetMcqTake','answerMcqTake','TAKE Verbs','#38bdf8'));
+  }
+  return wrap;
+}
+
+function setTakeView(v){S.takeView=v;render();}
+function navTake(dir){S.cursor.take=Math.max(0,Math.min(TAKE_VERBS.length-1,(S.cursor.take||0)+dir));save();render();}
+function answerMcqTake(qi,oi){
+  S.mcqAnswersTake[qi]=oi;
+  if(oi===TAKE_QCM[qi].ans){S.streak++;save();toast('✓ Correct !');}else toast('✗ Incorrect — lis l\'explication');
+  render();
+}
+function resetMcqTake(){S.mcqAnswersTake={};render();toast('QCM TAKE réinitialisé');}
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR2 SECTION — Grammaire Avancée
+// ═══════════════════════════════════════════════════════════
+function buildGrammar2Section() {
+  const gv = S.grammar2View;
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${gv==='cours'?'active':''}" style="${gv==='cours'?'background:rgba(232,121,249,.15);border-color:#e879f9;color:#e879f9':''}" onclick="setGrammar2View('cours')">📖 Cours</button>
+      <button class="phrasal-subbtn ${gv==='mcq'?'active':''}" style="${gv==='mcq'?'background:rgba(232,121,249,.15);border-color:#e879f9;color:#e879f9':''}" onclick="setGrammar2View('mcq')">✅ QCM (${GRAMMAR2_QCM.length} Q)</button>
+    </div>
+  `;
+
+  if (gv === 'cours') {
+    const d = document.createElement('div');
+    d.innerHTML = `
+      <div class="cours-section-tag" style="background:rgba(232,121,249,.15);border-color:rgba(232,121,249,.35);color:#e879f9">🧩 GRAMMAIRE AVANCÉE</div>
+      <div class="cours-title" style="color:#e879f9">Reconnaître les classes de mots en contexte</div>
+      <div class="cours-subtitle">Indices visuels, suffixes, pièges et expressions figées</div>
+
+      <div class="cours-section-tag" style="margin-top:4px;background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.3);color:#e879f9">1. Indices de position</div>
+      <table class="cours-table">
+        <thead><tr><th>Si tu vois…</th><th>Catégorie</th><th>Règle</th><th>Exemple</th></tr></thead>
+        <tbody>
+          <tr><td>___ + Nom</td><td style="color:#e879f9">Adjectif</td><td>Qualifie le nom</td><td><em>A reliable supplier</em></td></tr>
+          <tr><td>Déterminant + ___</td><td style="color:#e879f9">Nom</td><td>The/a/my/this appellent un nom</td><td><em>An agreement was signed</em></td></tr>
+          <tr><td>Préposition + ___</td><td style="color:#e879f9">Gérondif (-ing)</td><td>Before/after/without/by + -ing</td><td><em>Before sealing the envelope</em></td></tr>
+          <tr><td>Verbe + ___</td><td style="color:#e879f9">Adverbe</td><td>Décrit comment l'action est faite</td><td><em>He speaks clearly</em></td></tr>
+          <tr><td>Adjectif + ___</td><td style="color:#e879f9">Nom</td><td>L'adjectif a besoin d'un support</td><td><em>A great performance</em></td></tr>
+          <tr><td>Sujet + ___</td><td style="color:#e879f9">Verbe</td><td>Action principale de la phrase</td><td><em>They issue a statement</em></td></tr>
+        </tbody>
+      </table>
+
+      <div class="cours-section-tag" style="margin-top:16px;background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.3);color:#e879f9">2. Terminaisons (suffixes)</div>
+      <table class="cours-table">
+        <thead><tr><th>Catégorie</th><th>Terminaisons</th><th>Exemples</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:#e879f9">NOM</strong></td><td style="font-family:var(--mono);font-size:.72rem">-tion, -ment, -ness, -ity, -ance, -ship</td><td>information, agreement, happiness, reality, friendship</td></tr>
+          <tr><td><strong style="color:#e879f9">ADJECTIF</strong></td><td style="font-family:var(--mono);font-size:.72rem">-able, -ive, -ous, -ful, -al, -ic, -ent</td><td>reliable, active, dangerous, skillful, financial</td></tr>
+          <tr><td><strong style="color:#e879f9">ADVERBE</strong></td><td style="font-family:var(--mono);font-size:.72rem">-ly (90%)</td><td>skillfully, quickly, badly, extremely</td></tr>
+          <tr><td><strong style="color:#e879f9">VERBE</strong></td><td style="font-family:var(--mono);font-size:.72rem">-ate, -ise/-ize, -ify, -en</td><td>facilitate, organize, clarify, sharpen</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cours-section-tag" style="margin-top:16px;background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.3);color:#e879f9">3. Pièges courants</div>
+      <table class="cours-table">
+        <thead><tr><th>Situation</th><th>Piège</th><th>Exemple correct</th></tr></thead>
+        <tbody>
+          <tr><td>Verbe d'état</td><td style="color:var(--red);font-size:.75rem">Après be/seem/look/feel → ADJECTIF (pas adverbe !)</td><td><em>The cake tastes <strong>good</strong></em> (pas well)</td></tr>
+          <tr><td>Nom + Nom</td><td style="color:var(--muted);font-size:.75rem">Un nom peut servir d'adjectif</td><td><em>A business plan, a customer service</em></td></tr>
+          <tr><td>Adverbe avant verbe</td><td style="color:var(--muted);font-size:.75rem">Adverbe peut se placer avant le verbe/adjectif</td><td><em>She <strong>skillfully</strong> combines / An <strong>extremely</strong> fast car</em></td></tr>
+        </tbody>
+      </table>
+
+      <div class="cours-section-tag" style="margin-top:16px;background:rgba(232,121,249,.1);border-color:rgba(232,121,249,.3);color:#e879f9">4. Expressions figées + -ing (pièges de "to")</div>
+      <table class="cours-table">
+        <thead><tr><th>Expression</th><th>Traduction</th><th>Exemple</th></tr></thead>
+        <tbody>
+          ${[
+            ['Look forward to','Avoir hâte de','I look forward to working with you.'],
+            ['Be used to','Être habitué à','I am used to waking up early.'],
+            ['Object to','S\'opposer à','They object to changing the plan.'],
+            ['Be committed to','S\'engager à','We are committed to improving quality.'],
+            ['In addition to','En plus de','In addition to buying the car, he bought insurance.'],
+          ].map(([expr,trad,ex])=>`
+            <tr>
+              <td><div class="td-prep-audio"><strong style="color:#e879f9">${expr}</strong>
+                <button class="btn-tbl-audio" style="color:#e879f9" onclick="speak('${esc(expr)}','en')">${spkSvg()}</button></div></td>
+              <td style="color:var(--muted);font-style:italic">${trad}</td>
+              <td><div class="td-ex-audio"><em>${ex}</em>
+                <button class="btn-tbl-audio" style="color:#e879f9" onclick="speak('${esc(ex)}','en')">${spkSvg()}</button></div></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-goto-rev" style="background:rgba(232,121,249,.12);border-color:rgba(232,121,249,.4);color:#e879f9" onclick="setGrammar2View('mcq')">
+          ✅ Passer au QCM →
+        </button>
+      </div>
+    `;
+    wrap.appendChild(d);
+  } else {
+    wrap.appendChild(buildMcqBlock(GRAMMAR2_QCM,'mcqAnswers2','resetMcq2','answerMcq2','Grammaire Avancée','#e879f9'));
+  }
+  return wrap;
+}
+
+function setGrammar2View(v){S.grammar2View=v;render();}
+function answerMcq2(qi,oi){
+  S.mcqAnswers2[qi]=oi;
+  if(oi===GRAMMAR2_QCM[qi].ans){S.streak++;save();toast('✓ Correct !');}else toast('✗ Incorrect — lis l\'explication');
+  render();
+}
+function resetMcq2(){S.mcqAnswers2={};render();toast('QCM réinitialisé');}
 
 // ═══════════════════════════════════════════════════════════
 // HELPERS
