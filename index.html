@@ -7,25 +7,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0d0403; --bg2:#160806; --surface:#1f0d08; --surface2:#2a1209;
-  --border:#3d1a10; --border2:#5c2818;
-  --accent:#c1121f; --accent2:#2d6a4f; --purple:#a855f7; --orange:#f97316; --gold:#f5c518; --red:#ff2233;
-  --text:#fdf0ec; --muted:#a07060;
+  --bg:#f5f0e8; --bg2:#ede8de; --surface:#ffffff; --surface2:#ede8de;
+  --border:#ddd6c8; --border2:#c8c0b0;
+  --accent:#c1121f; --accent2:#2d6a4f; --purple:#7c3aed; --orange:#ea6c00; --gold:#b45309; --red:#dc2626;
+  --text:#1a1a18; --muted:#6b6355;
   --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(193,18,31,.10) 0%,transparent 55%),
-             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(45,106,79,.08) 0%,transparent 55%),
-             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(193,18,31,.04) 0%,transparent 60%);}
+  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(45,106,79,.06) 0%,transparent 55%),
+             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(193,18,31,.04) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(200,192,176,.3) 0%,transparent 60%);}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh;}
 
 /* ── HEADER ── */
 header{display:flex;align-items:center;justify-content:space-between;
   padding:14px 22px;border-bottom:1px solid var(--border);
-  background:rgba(8,12,20,.92);backdrop-filter:blur(8px);
+  background:rgba(245,240,232,.96);backdrop-filter:blur(8px);
   position:sticky;top:0;z-index:100;}
 .logo-name{font-size:1.1rem;font-weight:800;letter-spacing:-.5px;}
 .logo-name em{color:var(--accent);font-style:normal;}
@@ -121,7 +121,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .card-word{font-size:clamp(1.3rem,4vw,2rem);font-weight:800;line-height:1.2;margin-bottom:8px;color:var(--text);}
 .card-trad{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:8px;line-height:1.4;}
 .card-extra{font-size:.78rem;color:var(--accent2);font-family:var(--mono);margin-bottom:16px;line-height:1.5;font-style:normal;}
-.card-example{font-size:.8rem;color:rgba(221,238,255,.7);margin-bottom:4px;line-height:1.5;}
+.card-example{font-size:.8rem;color:rgba(26,26,24,.65);margin-bottom:4px;line-height:1.5;}
 .card-example-trad{font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:16px;}
 
 .card-audio-row{display:flex;gap:8px;justify-content:center;}
@@ -248,8 +248,8 @@ main{flex:1;display:flex;flex-direction:column;}
   border-radius:10px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .btn-launch:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px);}
 .btn-launch:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed;transform:none;filter:none;}
-.bg-green{background:var(--accent);color:var(--bg);}
-.bg-blue {background:var(--accent2);color:#fff;}
+.bg-green{background:var(--accent2);color:#fff;}
+.bg-blue {background:#1d6fa4;color:#fff;}
 .bg-purple{background:var(--purple);color:#fff;}
 .bg-orange{background:var(--orange);color:#fff;}
 .bg-gold {background:var(--gold);color:var(--bg);}
@@ -272,7 +272,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .quiz-cat {font-family:var(--mono);font-size:.58rem;color:var(--accent2);margin-bottom:16px;letter-spacing:1px;}
 .quiz-audio-row{display:flex;gap:8px;justify-content:center;margin-bottom:18px;}
 .quiz-input{width:100%;font-family:var(--mono);font-size:.92rem;font-weight:500;
-  padding:12px 14px;background:var(--bg2);border:2px solid var(--border2);border-radius:10px;
+  padding:12px 14px;background:var(--surface);border:2px solid var(--border2);border-radius:10px;
   color:var(--text);outline:none;text-align:center;transition:border-color .2s;margin-bottom:10px;}
 .quiz-input:focus{border-color:var(--accent2);}
 .quiz-input.ok  {border-color:var(--accent)!important;background:rgba(0,212,170,.07);}
