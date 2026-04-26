@@ -447,6 +447,99 @@ main{flex:1;display:flex;flex-direction:column;}
   .quiz-card{padding:20px 12px 18px;}
   .cours-table th,.cours-table td{padding:8px;}
 }
+
+/* ── SESSION SYSTEM ── */
+.session-page{flex:1;display:flex;flex-direction:column;max-width:660px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+
+/* Launch screen */
+.sess-launch{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;padding:28px 24px;margin-bottom:16px;}
+.sess-launch-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.sess-launch-icon{font-size:2rem;flex-shrink:0;}
+.sess-launch-title{font-size:1rem;font-weight:800;font-family:var(--mono);letter-spacing:.5px;text-transform:uppercase;}
+.sess-launch-sub{font-size:.72rem;color:var(--muted);margin-top:3px;}
+.sess-info-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.sess-info-chip{display:flex;flex-direction:column;align-items:center;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 16px;min-width:80px;font-family:var(--mono);}
+.sess-info-chip .n{font-size:1.1rem;font-weight:700;line-height:1;}
+.sess-info-chip .l{font-size:.48rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:3px;}
+.sess-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-sess-start{font-family:var(--sans);font-size:.82rem;font-weight:800;padding:13px 20px;border-radius:12px;border:none;cursor:pointer;transition:all .2s;letter-spacing:.2px;}
+.btn-sess-start.prim{color:#fff;}
+.btn-sess-start.prim:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.btn-sess-start.sec{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
+.btn-sess-start.sec:hover{border-color:var(--accent);}
+.btn-sess-start:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
+.sess-resume-tag{font-family:var(--mono);font-size:.58rem;color:var(--accent2);background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.3);border-radius:6px;padding:2px 8px;margin-left:8px;display:inline-block;vertical-align:middle;}
+
+/* Session card (flashcard in session mode) */
+.sess-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sess-batch-info{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:1px;}
+.sess-batch-info strong{color:var(--text);}
+.sess-prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.sess-prog-bar{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.sess-prog-fill{height:100%;border-radius:3px;transition:width .35s ease;}
+.sess-prog-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap;}
+
+/* MCQ session card */
+.sess-mcq-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:18px;padding:24px 22px;margin-bottom:16px;}
+.sess-mcq-q{font-size:.92rem;font-weight:700;line-height:1.45;margin-bottom:18px;color:var(--text);}
+.sess-mcq-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.sess-mcq-opt{font-family:var(--sans);font-size:.82rem;padding:11px 16px;border-radius:10px;
+  background:var(--surface2);border:1.5px solid var(--border2);color:var(--text);
+  cursor:pointer;text-align:left;transition:all .18s;font-weight:600;line-height:1.3;}
+.sess-mcq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(193,18,31,.08);}
+.sess-mcq-opt.correct{background:rgba(45,106,79,.18);border-color:#52b788;color:#1a4a30;}
+.sess-mcq-opt.wrong{background:rgba(193,18,31,.12);border-color:var(--accent);color:#8b0000;}
+.sess-mcq-opt:disabled{cursor:default;}
+.sess-mcq-expl{font-family:var(--mono);font-size:.72rem;margin-top:4px;padding:10px 14px;
+  border-radius:9px;line-height:1.5;}
+.sess-mcq-expl.ok{background:rgba(45,106,79,.12);color:#2d6a4f;border-left:3px solid #52b788;}
+.sess-mcq-expl.fail{background:rgba(193,18,31,.08);color:var(--accent);border-left:3px solid var(--accent);}
+
+/* FC session card extra buttons */
+.sess-fc-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.btn-sess-ok{flex:1;min-width:130px;font-family:var(--sans);font-size:.74rem;font-weight:700;
+  padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid;transition:all .18s;}
+.btn-sess-ok.idle{background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.35);color:var(--accent2);}
+.btn-sess-ok.idle:hover{background:rgba(45,106,79,.18);}
+.btn-sess-ok.on{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+.btn-sess-rev.idle{flex:1;min-width:130px;font-family:var(--sans);font-size:.74rem;font-weight:700;
+  padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid;transition:all .18s;
+  background:rgba(180,83,9,.07);border-color:rgba(180,83,9,.3);color:var(--gold);}
+.btn-sess-rev.idle:hover{background:rgba(180,83,9,.16);}
+.btn-sess-rev.on{flex:1;min-width:130px;font-family:var(--sans);font-size:.74rem;font-weight:700;
+  padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid;transition:all .18s;
+  background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.btn-sess-next{font-family:var(--sans);font-size:.78rem;font-weight:800;padding:12px 26px;
+  border-radius:12px;border:none;background:var(--accent);color:#fff;cursor:pointer;
+  transition:all .2s;margin-top:14px;width:100%;}
+.btn-sess-next:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.btn-sess-next:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
+
+/* Recap screen */
+.sess-recap{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;padding:28px 24px;margin-bottom:16px;}
+.sess-recap-scores{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0;}
+.sess-score-chip{display:flex;flex-direction:column;align-items:center;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:12px 20px;min-width:80px;font-family:var(--mono);}
+.sess-score-chip .n{font-size:1.4rem;font-weight:700;line-height:1;}
+.sess-score-chip .l{font-size:.48rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+.sess-score-chip.ok .n{color:var(--accent2);}
+.sess-score-chip.fail .n{color:var(--accent);}
+.sess-score-chip.pct .n{color:var(--purple);}
+.sess-errors-toggle{font-family:var(--mono);font-size:.66rem;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:8px;padding:6px 14px;cursor:pointer;transition:all .18s;margin-bottom:12px;}
+.sess-errors-toggle:hover{border-color:var(--accent);color:var(--text);}
+.sess-errors-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.sess-error-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;}
+.sess-error-card .ec-en{font-size:.88rem;font-weight:800;color:var(--accent);margin-bottom:3px;}
+.sess-error-card .ec-fr{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:6px;}
+.sess-error-card .ec-expl{font-family:var(--mono);font-size:.68rem;color:var(--text);line-height:1.4;padding:6px 10px;background:rgba(193,18,31,.06);border-radius:6px;border-left:2px solid var(--accent);}
+.sess-recap-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-recap{font-family:var(--sans);font-size:.8rem;font-weight:700;padding:12px 20px;border-radius:12px;cursor:pointer;transition:all .2s;border:none;text-align:center;}
+.btn-recap.prim{background:var(--accent2);color:#fff;}
+.btn-recap.prim:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.btn-recap.prim:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
+.btn-recap.sec{background:var(--surface2);color:var(--text);border:1.5px solid var(--border2);}
+.btn-recap.sec:hover{border-color:var(--accent);}
+.btn-recap.restart{background:transparent;color:var(--muted);border:1.5px solid var(--border2);font-size:.72rem;}
+.btn-recap.restart:hover{color:var(--text);border-color:var(--border2);}
 </style>
 </head>
 <body>
@@ -1404,6 +1497,9 @@ let S = {
   streak: 0,
   quiz: null,
   speak: { transcript: '', feedback: null, loading: false, promptIdx: 0 },
+  // ── Session system ──
+  session: null,          // active session state (null = no active session)
+  sessProgress: {},       // { [moduleKey]: { pos, total } } – saved resume position
 };
 
 function load() {
@@ -1411,13 +1507,16 @@ function load() {
     const r = localStorage.getItem('qae_v5');
     if (!r) return;
     const p = JSON.parse(r);
-    S.status = p.status || {};
-    S.streak = p.streak || 0;
-    S.cursor = p.cursor || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
+    S.status       = p.status      || {};
+    S.streak       = p.streak      || 0;
+    S.cursor       = p.cursor      || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
+    S.sessProgress = p.sessProgress || {};
   } catch(e){}
 }
 function save() {
-  localStorage.setItem('qae_v5', JSON.stringify({status:S.status,streak:S.streak,cursor:S.cursor}));
+  localStorage.setItem('qae_v5', JSON.stringify({
+    status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress
+  }));
 }
 const k = (sec,i) => `${sec}_${i}`;
 const getS = (sec,i) => S.status[k(sec,i)] || null;
@@ -1533,7 +1632,7 @@ function render() {
   else if(S.tab==='foundations')  el.appendChild(buildFoundationsHub());
   else if(S.tab==='phrasalhub')   el.appendChild(buildPhrasalHub());
   else if(S.tab==='grammarhub')   el.appendChild(buildGrammarHub());
-  else if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildFlashcard(S.tab));
+  else if(S.tab==='vocab'||S.tab==='expr') el.appendChild(buildSessionLauncher(S.tab));
   else if(S.tab==='prep')         el.appendChild(buildPrepSection());
   else if(S.tab==='phrasal')      el.appendChild(buildPhrasalSection());
   else if(S.tab==='take')         el.appendChild(buildTakeSection());
@@ -1543,6 +1642,7 @@ function render() {
   else if(S.tab==='grammar4')     el.appendChild(buildGrammar4Section());
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
+  else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
     if(S.quiz)                    el.appendChild(buildQuiz());
     else                          el.appendChild(buildLauncher());
@@ -1835,50 +1935,11 @@ function buildGrammarHub() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// FLASHCARD (vocab / expr)
+// FLASHCARD (vocab / expr) → now redirects to session launcher
 // ═══════════════════════════════════════════════════════════
 function buildFlashcard(sec) {
-  const data=DATA[sec], idx=S.cursor[sec], item=data[idx], st=getS(sec,idx);
-  const total=data.length, pct=Math.round(((idx+1)/total)*100);
-  const nOk =data.filter((_,i)=>getS(sec,i)==='ok').length;
-  const nRev=data.filter((_,i)=>getS(sec,i)==='review').length;
-  const fillCls=sec==='vocab'?'vocab-fill':'expr-fill';
-  const wrap=document.createElement('div');
-  wrap.className='page fade-up';
-  wrap.innerHTML=`
-    <div class="fc-progress-strip">
-      <div class="fc-prog-bar"><div class="fc-prog-fill ${fillCls}" style="width:${pct}%"></div></div>
-      <div class="fc-prog-txt">${idx+1} / ${total}</div>
-    </div>
-    <div class="flashcard">
-      <div class="card-stripe"></div>
-      <div class="card-body">
-        <div class="card-num">${sec==='vocab'?'Vocabulaire IT/QA':'Expression clé'} · #${idx+1}</div>
-        <div class="card-word">${item.en}</div>
-        <div class="card-trad">${item.fr}</div>
-        <div class="card-audio-row">
-          <button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} EN</button>
-          <button class="btn-audio" onclick="speak('${esc(item.fr)}','fr')">${spkSvg()} FR</button>
-        </div>
-      </div>
-    </div>
-    <div class="fc-nav">
-      <button class="btn-nav" onclick="nav('${sec}',-1)" ${idx===0?'disabled':''}>◀</button>
-      <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
-      <button class="btn-nav" onclick="nav('${sec}',1)" ${idx===total-1?'disabled':''}>▶</button>
-    </div>
-    <div class="fc-review-cta">
-      <button class="btn-goto-rev" onclick="switchTab('review')">
-        🎯 Aller à la Révision
-      </button>
-    </div>`;
-  _keyHandler=(e)=>{
-    if(e.target.tagName==='INPUT') return;
-    if(e.key==='ArrowRight') nav(sec,1);
-    if(e.key==='ArrowLeft')  nav(sec,-1);
-  };
-  document.addEventListener('keydown',_keyHandler);
-  return wrap;
+  // Legacy: redirect to session launcher
+  return buildSessionLauncher(sec);
 }
 
 function nav(sec,dir){
@@ -1960,47 +2021,9 @@ function buildPrepSection() {
     wrap.appendChild(tableWrap);
 
   } else {
-    // Flashcards mode for prepositions
-    const idx=S.cursor.prep, item=PREP_CARDS[idx], st=getS('prep',idx);
-    const total=PREP_CARDS.length, pct=Math.round(((idx+1)/total)*100);
-    const nOk =PREP_CARDS.filter((_,i)=>getS('prep',i)==='ok').length;
-    const nRev=PREP_CARDS.filter((_,i)=>getS('prep',i)==='review').length;
-    const badge=st==='ok'?`<div class="card-badge badge-ok">✓ Maîtrisé</div>`
-                :st==='review'?`<div class="card-badge badge-rev">🔄 À revoir</div>`
-                :`<div class="card-badge badge-new">Nouveau</div>`;
-    const fcWrap=document.createElement('div');
-    fcWrap.innerHTML=`
-      <div class="fc-progress-strip">
-        <div class="fc-prog-bar"><div class="fc-prog-fill prep-fill" style="width:${pct}%"></div></div>
-        <div class="fc-prog-txt">${idx+1} / ${total}</div>
-      </div>
-      <div class="flashcard prep-card">
-        <div class="card-stripe"></div>
-        <div class="card-body">
-          <div class="card-num">${item.section} · #${idx+1}</div>
-          <div class="card-word">${item.en}</div>
-          <div class="card-extra">${item.fr}</div>
-          <div class="card-example">"${item.example}"</div>
-          <div class="card-example-trad">${item.exampleTrad}</div>
-          <div class="card-audio-row">
-            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')">${spkSvg()} Préposition</button>
-            <button class="btn-audio" onclick="speak('${esc(item.example)}','en')">${spkSvg()} Exemple</button>
-          </div>
-        </div>
-      </div>
-      <div class="fc-nav">
-        <button class="btn-nav" onclick="nav('prep',-1)" ${idx===0?'disabled':''}>◀</button>
-        <div class="nav-center"><div class="nav-pos">${idx+1} / ${total}</div><div class="nav-hint">← → clavier</div></div>
-        <button class="btn-nav" onclick="nav('prep',1)" ${idx===total-1?'disabled':''}>▶</button>
-      </div>
-    `;
-    wrap.appendChild(fcWrap);
-    _keyHandler=(e)=>{
-      if(e.target.tagName==='INPUT') return;
-      if(e.key==='ArrowRight') nav('prep',1);
-      if(e.key==='ArrowLeft')  nav('prep',-1);
-    };
-    document.addEventListener('keydown',_keyHandler);
+    // Flashcards mode for prepositions → session launcher
+    const launcher = buildSessionLauncher('prep');
+    wrap.appendChild(launcher);
   }
 
   return wrap;
@@ -2376,56 +2399,8 @@ function buildGrammarSection() {
     wrap.appendChild(coursDiv);
 
   } else {
-    // MCQ view
-    const mcqDiv = document.createElement('div');
-
-    // Score bar
-    mcqDiv.innerHTML = `
-      <div class="mcq-score-bar">
-        <div class="mcq-score-info">
-          <h3>✅ QCM — Grammaire</h3>
-          <p>${answered} / ${GRAMMAR_QCM.length} répondues · ${GRAMMAR_QCM.length - answered} restantes</p>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div class="mcq-score-num">${answered>0?correct+'/'+answered:'—'}</div>
-          ${answered>0?`<button class="btn-mcq-reset" onclick="resetMcq()">🔄 Reset</button>`:''}
-        </div>
-      </div>
-    `;
-
-    const mcqList = document.createElement('div');
-    mcqList.className = 'mcq-section';
-
-    GRAMMAR_QCM.forEach((q, qi) => {
-      const chosen = S.mcqAnswers.hasOwnProperty(qi) ? parseInt(S.mcqAnswers[qi]) : null;
-      const isAnswered = chosen !== null;
-      const isCorrect = chosen === q.ans;
-
-      const card = document.createElement('div');
-      card.className = 'mcq-card';
-      card.innerHTML = `
-        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
-        <div class="mcq-opts">
-          ${q.opts.map((opt,oi)=>{
-            let cls = 'mcq-opt';
-            if(isAnswered) {
-              if(oi===q.ans) cls+=' correct';
-              else if(oi===chosen && !isCorrect) cls+=' wrong';
-            }
-            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq(${qi},${oi})">
-              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
-            </button>`;
-          }).join('')}
-        </div>
-        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
-          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
-        </div>`:''}
-      `;
-      mcqList.appendChild(card);
-    });
-
-    mcqDiv.appendChild(mcqList);
-    wrap.appendChild(mcqDiv);
+    // MCQ view → session launcher
+    wrap.appendChild(buildSessionLauncher('grammar'));
   }
 
   return wrap;
@@ -2543,57 +2518,8 @@ function buildGrammar3Section() {
     wrap.appendChild(div);
 
   } else {
-    // MCQ view
-    const answered = Object.keys(S.mcqAnswers3 || {}).length;
-    const correct  = Object.entries(S.mcqAnswers3 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR3_QCM[i].ans).length;
-
-    const mcqDiv = document.createElement('div');
-    mcqDiv.innerHTML = `
-      <div class="mcq-score-bar">
-        <div class="mcq-score-info">
-          <h3>✅ QCM — Need to / Have to / Must</h3>
-          <p>${answered} / ${GRAMMAR3_QCM.length} répondues · ${GRAMMAR3_QCM.length - answered} restantes</p>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div class="mcq-score-num" style="color:${COLOR}">${answered>0?correct+'/'+answered:'—'}</div>
-          ${answered>0?`<button class="btn-mcq-reset" onclick="resetMcq3()">🔄 Reset</button>`:''}
-        </div>
-      </div>
-    `;
-
-    const mcqList = document.createElement('div');
-    mcqList.className = 'mcq-section';
-
-    GRAMMAR3_QCM.forEach((q, qi) => {
-      const chosen = (S.mcqAnswers3||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers3[qi]) : null;
-      const isAnswered = chosen !== null;
-      const isCorrect = chosen === q.ans;
-
-      const card = document.createElement('div');
-      card.className = 'mcq-card';
-      card.innerHTML = `
-        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
-        <div class="mcq-opts">
-          ${q.opts.map((opt,oi)=>{
-            let cls = 'mcq-opt';
-            if(isAnswered) {
-              if(oi===q.ans) cls+=' correct';
-              else if(oi===chosen && !isCorrect) cls+=' wrong';
-            }
-            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq3(${qi},${oi})">
-              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
-            </button>`;
-          }).join('')}
-        </div>
-        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
-          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
-        </div>`:''}
-      `;
-      mcqList.appendChild(card);
-    });
-
-    mcqDiv.appendChild(mcqList);
-    wrap.appendChild(mcqDiv);
+    // MCQ view → session launcher
+    wrap.appendChild(buildSessionLauncher('grammar3'));
   }
 
   return wrap;
@@ -2781,53 +2707,8 @@ function buildGrammar4Section() {
     wrap.appendChild(div);
 
   } else {
-    // MCQ view
-    const answeredNow = Object.keys(S.mcqAnswers4 || {}).length;
-    const correct = Object.entries(S.mcqAnswers4 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR4_QCM[i].ans).length;
-
-    const mcqDiv = document.createElement('div');
-    mcqDiv.innerHTML = `
-      <div class="mcq-score-bar">
-        <div class="mcq-score-info">
-          <h3>✅ QCM — Modaux</h3>
-          <p>${answeredNow} / ${GRAMMAR4_QCM.length} répondues · ${GRAMMAR4_QCM.length - answeredNow} restantes</p>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div class="mcq-score-num" style="color:${ACCENT}">${answeredNow>0?correct+'/'+answeredNow:'—'}</div>
-          ${answeredNow>0?`<button class="btn-mcq-reset" onclick="resetMcq4()">🔄 Reset</button>`:''}
-        </div>
-      </div>
-    `;
-
-    const mcqList = document.createElement('div');
-    mcqList.className = 'mcq-section';
-
-    GRAMMAR4_QCM.forEach((q, qi) => {
-      const chosen = (S.mcqAnswers4||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers4[qi]) : null;
-      const isAnswered = chosen !== null;
-      const isCorrect = chosen === q.ans;
-      const card = document.createElement('div');
-      card.className = 'mcq-card';
-      card.innerHTML = `
-        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
-        <div class="mcq-opts">
-          ${q.opts.map((opt,oi)=>{
-            let cls = 'mcq-opt';
-            if(isAnswered){if(oi===q.ans)cls+=' correct';else if(oi===chosen&&!isCorrect)cls+=' wrong';}
-            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq4(${qi},${oi})">
-              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
-            </button>`;
-          }).join('')}
-        </div>
-        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
-          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
-        </div>`:''}
-      `;
-      mcqList.appendChild(card);
-    });
-
-    mcqDiv.appendChild(mcqList);
-    wrap.appendChild(mcqDiv);
+    // MCQ view → session launcher
+    wrap.appendChild(buildSessionLauncher('grammar4'));
   }
 
   return wrap;
@@ -3006,53 +2887,8 @@ function buildGrammar5Section() {
     wrap.appendChild(div);
 
   } else {
-    // MCQ view
-    const answeredNow = Object.keys(S.mcqAnswers5 || {}).length;
-    const correct = Object.entries(S.mcqAnswers5 || {}).filter(([i,v])=>parseInt(v)===GRAMMAR5_QCM[i].ans).length;
-
-    const mcqDiv = document.createElement('div');
-    mcqDiv.innerHTML = `
-      <div class="mcq-score-bar">
-        <div class="mcq-score-info">
-          <h3>✅ QCM — Les Pronoms</h3>
-          <p>${answeredNow} / ${GRAMMAR5_QCM.length} répondues · ${GRAMMAR5_QCM.length - answeredNow} restantes</p>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div class="mcq-score-num" style="color:${ACCENT}">${answeredNow>0?correct+'/'+answeredNow:'—'}</div>
-          ${answeredNow>0?`<button class="btn-mcq-reset" onclick="resetMcq5()">🔄 Reset</button>`:''}
-        </div>
-      </div>
-    `;
-
-    const mcqList = document.createElement('div');
-    mcqList.className = 'mcq-section';
-
-    GRAMMAR5_QCM.forEach((q, qi) => {
-      const chosen = (S.mcqAnswers5||{}).hasOwnProperty(qi) ? parseInt(S.mcqAnswers5[qi]) : null;
-      const isAnswered = chosen !== null;
-      const isCorrect = chosen === q.ans;
-      const card = document.createElement('div');
-      card.className = 'mcq-card';
-      card.innerHTML = `
-        <div class="mcq-q">Q${qi+1}. ${q.q}</div>
-        <div class="mcq-opts">
-          ${q.opts.map((opt,oi)=>{
-            let cls = 'mcq-opt';
-            if(isAnswered){if(oi===q.ans)cls+=' correct';else if(oi===chosen&&!isCorrect)cls+=' wrong';}
-            return `<button class="${cls}" ${isAnswered?'disabled':''} onclick="answerMcq5(${qi},${oi})">
-              ${isAnswered?(oi===q.ans?'✓ ':oi===chosen&&!isCorrect?'✗ ':'  '):''}${opt}
-            </button>`;
-          }).join('')}
-        </div>
-        ${isAnswered?`<div class="mcq-feedback ${isCorrect?'ok':'fail'}">
-          ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${q.expl}
-        </div>`:''}
-      `;
-      mcqList.appendChild(card);
-    });
-
-    mcqDiv.appendChild(mcqList);
-    wrap.appendChild(mcqDiv);
+    // MCQ view → session launcher
+    wrap.appendChild(buildSessionLauncher('grammar5'));
   }
 
   return wrap;
@@ -3301,7 +3137,7 @@ function buildGrammar2Section() {
     `;
     wrap.appendChild(d);
   } else {
-    wrap.appendChild(buildMcqBlock(GRAMMAR2_QCM,'mcqAnswers2','resetMcq2','answerMcq2','Grammaire Avancée','#e879f9'));
+    wrap.appendChild(buildSessionLauncher('grammar2'));
   }
   return wrap;
 }
@@ -3624,6 +3460,458 @@ function resetSpeak() {
 function nextSpeakPrompt() {
   S.speak.promptIdx = (S.speak.promptIdx + 1) % SPEAK_PROMPTS.length;
   resetSpeak();
+}
+
+// ═══════════════════════════════════════════════════════════
+// SESSION ENGINE
+// ═══════════════════════════════════════════════════════════
+
+const BATCH_SIZE = 10;
+
+// Config per module key
+const SESS_CFG = {
+  vocab:    { type:'fc',  label:'📚 Vocabulaire IT/QA', color:'#c1121f', fillCls:'vocab-fill',   getData:()=>DATA.vocab,     answersKey:null,         qcmData:null },
+  expr:     { type:'fc',  label:'💬 Expressions clés',  color:'#2d6a4f', fillCls:'expr-fill',    getData:()=>DATA.expr,      answersKey:null,         qcmData:null },
+  prep:     { type:'fc',  label:'📐 Prépositions',       color:'#7c3aed', fillCls:'prep-fill',    getData:()=>PREP_CARDS,     answersKey:null,         qcmData:null },
+  grammar:  { type:'mcq', label:'📝 Grammaire',          color:'#b45309', fillCls:'grammar-fill', getData:()=>GRAMMAR_QCM,    answersKey:'mcqAnswers',  qcmData:()=>GRAMMAR_QCM },
+  grammar2: { type:'mcq', label:'🧩 Grammaire Avancée',  color:'#e879f9', fillCls:null,           getData:()=>GRAMMAR2_QCM,   answersKey:'mcqAnswers2', qcmData:()=>GRAMMAR2_QCM },
+  grammar3: { type:'mcq', label:'⚡ Need/Want/Have/Must', color:'#7c3aed', fillCls:null,           getData:()=>GRAMMAR3_QCM,   answersKey:'mcqAnswers3', qcmData:()=>GRAMMAR3_QCM },
+  grammar4: { type:'mcq', label:'🔮 Modaux',             color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR4_QCM,   answersKey:'mcqAnswers4', qcmData:()=>GRAMMAR4_QCM },
+  grammar5: { type:'mcq', label:'👤 Pronoms',             color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR5_QCM,   answersKey:'mcqAnswers5', qcmData:()=>GRAMMAR5_QCM },
+};
+
+// ── Build the launch screen ────────────────────────────────
+function buildSessionLauncher(moduleKey) {
+  const cfg  = SESS_CFG[moduleKey];
+  const data = cfg.getData();
+  const total = data.length;
+  const prog = S.sessProgress[moduleKey] || null;
+  const resumePos = prog ? prog.pos : 0;
+  const batchesLeft = Math.ceil((total - resumePos) / BATCH_SIZE);
+  const batchesTotal = Math.ceil(total / BATCH_SIZE);
+  const color = cfg.color;
+
+  // Progress stats
+  let doneCount = 0;
+  if (cfg.type === 'fc') {
+    doneCount = data.filter((_,i) => getS(moduleKey, i) === 'ok').length;
+  } else {
+    const ans = S[cfg.answersKey] || {};
+    doneCount = Object.keys(ans).length;
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'session-page fade-up';
+
+  const hasResume = prog && prog.pos > 0 && prog.pos < total;
+  const allDone   = resumePos >= total;
+
+  wrap.innerHTML = `
+    <div class="sess-launch">
+      <div class="sess-launch-header">
+        <div class="sess-launch-icon">${cfg.type==='fc'?'🃏':'✅'}</div>
+        <div>
+          <div class="sess-launch-title" style="color:${color}">${cfg.label}</div>
+          <div class="sess-launch-sub">Mode session · ${BATCH_SIZE} items par lot</div>
+        </div>
+      </div>
+
+      <div class="sess-info-row">
+        <div class="sess-info-chip">
+          <span class="n" style="color:${color}">${total}</span>
+          <span class="l">Total</span>
+        </div>
+        <div class="sess-info-chip">
+          <span class="n" style="color:#2d6a4f">${doneCount}</span>
+          <span class="l">${cfg.type==='fc'?'Maîtrisés':'Répondues'}</span>
+        </div>
+        <div class="sess-info-chip">
+          <span class="n" style="color:${color}">${batchesTotal}</span>
+          <span class="l">Lots</span>
+        </div>
+        <div class="sess-info-chip">
+          <span class="n" style="color:var(--gold)">${hasResume ? Math.ceil(resumePos/BATCH_SIZE) : 0}/${batchesTotal}</span>
+          <span class="l">Complétés</span>
+        </div>
+      </div>
+
+      <div class="sess-btns">
+        ${hasResume ? `
+          <button class="btn-sess-start prim" style="background:${color}" onclick="startSession('${moduleKey}', ${resumePos})">
+            ▶ Reprendre — Lot ${Math.floor(resumePos/BATCH_SIZE)+1}
+            <span class="sess-resume-tag">position ${resumePos}/${total}</span>
+          </button>` : ''}
+        <button class="btn-sess-start prim" style="background:${color};${hasResume?'opacity:.75;':''}${allDone?'':'font-size:.78rem;'}" onclick="startSession('${moduleKey}', 0)">
+          ${hasResume ? '↺ Recommencer depuis le début' : (allDone ? '🏆 Tout revu — Refaire depuis le début' : '▶ Commencer le 1er lot')}
+        </button>
+        ${hasResume && resumePos < total ? `
+          <button class="btn-sess-start sec" onclick="startSession('${moduleKey}', ${resumePos}, true)">
+            ⏭ Sauter au lot suivant (${Math.floor(resumePos/BATCH_SIZE)+1}/${batchesTotal})
+          </button>` : ''}
+      </div>
+    </div>
+
+    <!-- Progression globale -->
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:16px 20px;">
+      <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Progression globale</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;border-radius:3px;background:${color};width:${total>0?Math.round((doneCount/total)*100):0}%;transition:width .4s ease;"></div>
+        </div>
+        <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted);white-space:nowrap;">${doneCount}/${total} · ${total>0?Math.round((doneCount/total)*100):0}%</span>
+      </div>
+      ${cfg.type==='mcq' && doneCount > 0 ? `
+        <div style="margin-top:8px;font-family:var(--mono);font-size:.62rem;color:var(--muted);">
+          ${(()=>{const ans=S[cfg.answersKey]||{};const correct=Object.entries(ans).filter(([i,v])=>parseInt(v)===cfg.qcmData()[i].ans).length;return `${correct}/${doneCount} correctes · ${doneCount>0?Math.round((correct/doneCount)*100):0}% de réussite`;})()}
+        </div>` : ''}
+      ${cfg.type==='fc' ? `
+        <div style="margin-top:8px;font-family:var(--mono);font-size:.62rem;color:var(--muted);">
+          ${data.filter((_,i)=>getS(moduleKey,i)==='review').length} cartes à revoir
+        </div>` : ''}
+    </div>
+  `;
+  return wrap;
+}
+
+// ── Start a session ────────────────────────────────────────
+function startSession(moduleKey, startPos, skipBatch) {
+  const cfg  = SESS_CFG[moduleKey];
+  const data = cfg.getData();
+  const total = data.length;
+
+  if (startPos >= total) startPos = 0;
+
+  const batchEnd = Math.min(startPos + BATCH_SIZE, total);
+  const batch = [];
+  for (let i = startPos; i < batchEnd; i++) {
+    batch.push({ ...data[i], _sec: moduleKey, _idx: i });
+  }
+
+  S.session = {
+    moduleKey,
+    type: cfg.type,
+    color: cfg.color,
+    label: cfg.label,
+    batch,
+    batchStart: startPos,
+    batchEnd,
+    totalItems: total,
+    cardIdx: 0,            // position in current batch
+    answers: {},           // idx→ {chosen, correct} for MCQ / {val} for FC
+    showRecap: false,
+    showErrors: false,
+  };
+
+  // Save resume position (will be updated as we go)
+  S.sessProgress[moduleKey] = { pos: startPos };
+  save();
+
+  S.tab = 'session';
+  const bar = document.getElementById('backBar');
+  bar.style.display = 'flex';
+  bar.onclick = () => { S.tab = moduleKey; S.session = null; render(); };
+  render();
+}
+
+// ── Main session screen dispatcher ────────────────────────
+function buildSessionScreen() {
+  const sess = S.session;
+  if (!sess) { goHome(); return document.createElement('div'); }
+  if (sess.showRecap) return buildSessionRecap();
+  return buildSessionCard();
+}
+
+// ── Session card (FC or MCQ) ───────────────────────────────
+function buildSessionCard() {
+  const sess = S.session;
+  const { batch, cardIdx, color, type } = sess;
+  const item   = batch[cardIdx];
+  const pct    = Math.round(((cardIdx + 1) / batch.length) * 100);
+  const answered = sess.answers.hasOwnProperty(cardIdx);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'session-page fade-up';
+
+  // Header
+  const batchNum   = Math.floor(sess.batchStart / BATCH_SIZE) + 1;
+  const batchTotal = Math.ceil(sess.totalItems / BATCH_SIZE);
+
+  wrap.innerHTML = `
+    <div class="sess-header">
+      <div class="sess-batch-info">Lot <strong>${batchNum}/${batchTotal}</strong> · ${sess.label}</div>
+      <button class="btn-quit" onclick="sessionPause()">✕ Pause</button>
+    </div>
+    <div class="sess-prog-wrap">
+      <div class="sess-prog-bar">
+        <div class="sess-prog-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div class="sess-prog-txt">${cardIdx+1}/${batch.length}</div>
+    </div>
+  `;
+
+  if (type === 'fc') {
+    wrap.appendChild(buildFcCard(item, cardIdx, answered, color));
+  } else {
+    wrap.appendChild(buildMcqCard(item, cardIdx, answered, color));
+  }
+
+  return wrap;
+}
+
+// ── Flashcard card ─────────────────────────────────────────
+function buildFcCard(item, cardIdx, answered, color) {
+  const sess = S.session;
+  const ans = sess.answers[cardIdx];
+  const val = ans ? ans.val : null;
+
+  const isPrep   = item._sec === 'prep';
+  const word     = item.en;
+  const trad     = item.fr;
+  const extra    = item.extra  || item.fr;
+  const example  = item.example || item.ex || '';
+  const exTrad   = item.exampleTrad || item.exTrad || '';
+
+  const div = document.createElement('div');
+
+  div.innerHTML = `
+    <div class="flashcard ${val==='ok'?'is-ok':''} ${val==='review'?'is-rev':''}">
+      <div class="card-stripe" style="background:linear-gradient(90deg,${color},${color}88)"></div>
+      <div class="card-body">
+        <div class="card-num" style="color:${color}">${item._sec.toUpperCase()} · #${item._idx+1}</div>
+        <div class="card-word" style="color:${color}">${word}</div>
+        ${isPrep
+          ? `<div class="card-extra">${extra}</div>
+             <div class="card-example">"${example}"</div>
+             <div class="card-example-trad">${exTrad}</div>`
+          : `<div class="card-trad">${trad}</div>`}
+        <div class="card-audio-row">
+          <button class="btn-audio" onclick="speak('${esc(word)}','en')" style="border-color:${color}33;color:${color}">${spkSvg()} EN</button>
+          ${example ? `<button class="btn-audio" onclick="speak('${esc(example)}','en')">${spkSvg()} Exemple</button>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="sess-fc-actions">
+      <button class="btn-sess-ok ${val==='ok'?'on':'idle'}" onclick="sessMarkFc(${cardIdx},'ok')">
+        ${val==='ok' ? '✓ Maîtrisé' : '✓ Je sais'}
+      </button>
+      <button class="btn-sess-rev ${val==='review'?'on':'idle'}" onclick="sessMarkFc(${cardIdx},'review')">
+        ${val==='review' ? '🔄 À revoir' : '🔄 À revoir'}
+      </button>
+    </div>
+
+    <button class="btn-sess-next" ${answered?'':'disabled'} onclick="sessNext()">
+      ${cardIdx+1 >= sess.batch.length ? '🏁 Voir le récap →' : 'Suivant →'}
+    </button>
+  `;
+
+  return div;
+}
+
+function sessMarkFc(cardIdx, val) {
+  const sess = S.session;
+  const item = sess.batch[cardIdx];
+  const prev = sess.answers[cardIdx];
+  // Toggle: click same = unmark
+  const newVal = (prev && prev.val === val) ? null : val;
+  if (newVal) {
+    sess.answers[cardIdx] = { val: newVal, correct: newVal === 'ok' };
+    setS(item._sec, item._idx, newVal);
+    if (newVal === 'ok') { S.streak++; save(); }
+  } else {
+    delete sess.answers[cardIdx];
+    setS(item._sec, item._idx, null);
+  }
+  render();
+}
+
+// ── MCQ card ───────────────────────────────────────────────
+function buildMcqCard(item, cardIdx, answered, color) {
+  const sess   = S.session;
+  const ans    = sess.answers[cardIdx];
+  const chosen = ans ? ans.chosen : null;
+  const isCorrect = ans ? ans.correct : false;
+
+  const div = document.createElement('div');
+  div.className = 'sess-mcq-card';
+
+  div.innerHTML = `
+    <div class="sess-mcq-q">Q${item._idx+1}. ${item.q}</div>
+    <div class="sess-mcq-opts">
+      ${item.opts.map((opt, oi) => {
+        let cls = 'sess-mcq-opt';
+        if (answered) {
+          if (oi === item.ans) cls += ' correct';
+          else if (oi === chosen && !isCorrect) cls += ' wrong';
+        }
+        return `<button class="${cls}" ${answered?'disabled':''} onclick="sessMcqAnswer(${cardIdx},${oi},${item.ans})">
+          ${answered ? (oi===item.ans ? '✓ ' : oi===chosen&&!isCorrect ? '✗ ' : '  ') : ''}${opt}
+        </button>`;
+      }).join('')}
+    </div>
+    ${answered ? `
+      <div class="sess-mcq-expl ${isCorrect?'ok':'fail'}">
+        ${isCorrect?'✓ Correct !':'✗ Incorrect.'} ${item.expl}
+      </div>` : ''}
+
+    <button class="btn-sess-next" ${answered?'':'disabled'} onclick="sessNext()">
+      ${cardIdx+1 >= sess.batch.length ? '🏁 Voir le récap →' : 'Suivant →'}
+    </button>
+  `;
+
+  return div;
+}
+
+function sessMcqAnswer(cardIdx, chosen, correctAns) {
+  const sess = S.session;
+  if (sess.answers.hasOwnProperty(cardIdx)) return; // already answered
+  const isCorrect = chosen === correctAns;
+  sess.answers[cardIdx] = { chosen, correct: isCorrect };
+
+  // Persist into the right mcqAnswers key
+  const cfg = SESS_CFG[sess.moduleKey];
+  const item = sess.batch[cardIdx];
+  if (cfg.answersKey) {
+    if (!S[cfg.answersKey]) S[cfg.answersKey] = {};
+    S[cfg.answersKey][item._idx] = chosen;
+  }
+
+  if (isCorrect) { S.streak++; save(); }
+  render();
+}
+
+// ── Navigate between cards ─────────────────────────────────
+function sessNext() {
+  const sess = S.session;
+  if (sess.cardIdx + 1 >= sess.batch.length) {
+    // End of batch → show recap
+    // Save progress: next position after this batch
+    const nextPos = sess.batchEnd;
+    S.sessProgress[sess.moduleKey] = { pos: nextPos };
+    save();
+    sess.showRecap = true;
+    render();
+  } else {
+    sess.cardIdx++;
+    render();
+  }
+}
+
+function sessionPause() {
+  // Save current position and go back to launcher
+  const sess = S.session;
+  if (sess) {
+    S.sessProgress[sess.moduleKey] = { pos: sess.batchStart + sess.cardIdx };
+    save();
+  }
+  S.tab = sess ? sess.moduleKey : 'home';
+  S.session = null;
+  render();
+}
+
+// ── Recap screen ───────────────────────────────────────────
+function buildSessionRecap() {
+  const sess = S.session;
+  const { batch, answers, color, label, moduleKey, batchStart, batchEnd, totalItems, type } = sess;
+
+  const total = batch.length;
+  const correct = Object.values(answers).filter(a => a.correct).length;
+  const wrong   = total - correct;
+  const pct     = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  let em='😅', ti='Continue !', sub='Quelques erreurs — bon effort !';
+  if (pct >= 90) { em='🏆'; ti='Excellent !'; sub='Quasi parfait !'; }
+  else if (pct >= 70) { em='💪'; ti='Bien joué !'; sub='Encore quelques à consolider.'; }
+  else if (pct >= 50) { em='📈'; ti='En progrès !'; sub='La moitié réussie — continue !'; }
+
+  // Collect errors
+  const errors = batch.map((item, i) => {
+    const a = answers[i];
+    if (!a || a.correct) return null;
+    return { item, i, ans: a };
+  }).filter(Boolean);
+
+  const nextPos = batchEnd;
+  const hasMore = nextPos < totalItems;
+  const batchNum   = Math.floor(batchStart / BATCH_SIZE) + 1;
+  const batchTotal = Math.ceil(totalItems / BATCH_SIZE);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'session-page fade-up';
+
+  wrap.innerHTML = `
+    <div class="sess-recap">
+      <div style="text-align:center;margin-bottom:16px;">
+        <div style="font-size:2.8rem;margin-bottom:8px;">${em}</div>
+        <div style="font-size:1.1rem;font-weight:800;color:${color};font-family:var(--mono);text-transform:uppercase;">${ti}</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:4px;">${sub}</div>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:8px;letter-spacing:1px;">Lot ${batchNum}/${batchTotal} — ${label}</div>
+      </div>
+
+      <div class="sess-recap-scores">
+        <div class="sess-score-chip ok"><span class="n">${correct}</span><span class="l">${type==='fc'?'Maîtrisés':'Corrects'}</span></div>
+        <div class="sess-score-chip fail"><span class="n">${wrong}</span><span class="l">Erreurs</span></div>
+        <div class="sess-score-chip pct"><span class="n">${pct}%</span><span class="l">Score</span></div>
+      </div>
+
+      ${errors.length > 0 ? `
+        <button class="sess-errors-toggle" id="errToggle" onclick="sessToggleErrors()">
+          👁 Voir les ${errors.length} erreur${errors.length>1?'s':''} du lot
+        </button>
+        <div id="sessErrorList" style="display:none;">
+          <div class="sess-errors-list">
+            ${errors.map(({item, i, ans}) => {
+              const isFC = type === 'fc';
+              const wrongLabel = isFC
+                ? (ans.val === 'review' ? '🔄 Mis en révision' : '— pas marqué')
+                : `✗ Tu as choisi : "${item.opts[ans.chosen]}"`;
+              const correctLabel = isFC
+                ? `✓ Bonne réponse : mémoriser`
+                : `✓ Correct : "${item.opts[item.ans]}"`;
+              return `
+                <div class="sess-error-card">
+                  <div class="ec-en">${item.en || item.q}</div>
+                  <div class="ec-fr">${item.fr || ''}</div>
+                  <div class="ec-expl">
+                    <div>${wrongLabel}</div>
+                    <div style="margin-top:4px;color:var(--accent2);">${correctLabel}</div>
+                    ${item.expl ? `<div style="margin-top:4px;color:var(--muted);">💡 ${item.expl}</div>` : ''}
+                    ${item.example ? `<div style="margin-top:4px;font-style:italic;">Ex : "${item.example}"</div>` : ''}
+                  </div>
+                </div>`;
+            }).join('')}
+          </div>
+        </div>` : `
+        <div style="text-align:center;padding:12px;font-family:var(--mono);font-size:.72rem;color:var(--accent2);background:rgba(45,106,79,.08);border-radius:10px;margin-bottom:8px;">
+          🎉 Lot parfait — aucune erreur !
+        </div>`}
+
+      <div class="sess-recap-btns">
+        ${hasMore ? `
+          <button class="btn-recap prim" style="background:${color}" onclick="startSession('${moduleKey}', ${nextPos})">
+            ▶ Lot suivant (${batchNum+1}/${batchTotal}) →
+          </button>` : `
+          <button class="btn-recap prim" style="background:${color}" disabled>
+            🏆 Module terminé !
+          </button>`}
+        <button class="btn-recap sec" onclick="goHome()">🏠 Accueil</button>
+        <button class="btn-recap restart" onclick="startSession('${moduleKey}', 0)">↺ Recommencer depuis le début</button>
+      </div>
+    </div>
+  `;
+
+  return wrap;
+}
+
+function sessToggleErrors() {
+  const list = document.getElementById('sessErrorList');
+  const btn  = document.getElementById('errToggle');
+  if (!list) return;
+  const shown = list.style.display !== 'none';
+  list.style.display = shown ? 'none' : 'block';
+  btn.textContent = shown
+    ? `👁 Voir les erreurs du lot`
+    : `🙈 Masquer les erreurs`;
 }
 
 // ═══════════════════════════════════════════════════════════
