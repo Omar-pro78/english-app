@@ -3220,8 +3220,8 @@ const GRAMMAR6_QCM = [
   {
     q: "Portland, ______, is located primarily on two hilly peninsulas overlooking Casco Bay and its many islands.",
     blank: "______",
-    opts: ["which Maine's largest city", "Maine's largest city", "is Maine's largest city", "Maine's largest city, where"],
-    ans: 1,
+    opts: ["which Maine's largest city", "Maine's largest city, where", "is Maine's largest city", "Maine's largest city"],
+    ans: 3,
     exp: "\"Maine's largest city\" est une appositive (explication entre virgules). Pas besoin de \"which\" ni de verbe ici car c'est une incise nominale."
   },
   {
@@ -3414,7 +3414,9 @@ function buildGrammar6Section() {
         ? `<button class="g6-btn-nav primary" onclick="g6Nav(1)">Suivant →</button>`
         : answered === total
           ? `<button class="g6-btn-nav primary" onclick="showG6Results()">Voir les résultats →</button>`
-          : `<button class="g6-btn-nav" onclick="g6Nav(1)" ${!done ? 'disabled' : ''}>Suivant →</button>`
+          : done
+            ? `<button class="g6-btn-nav primary" onclick="showG6Results()">Voir les résultats →</button>`
+            : `<button class="g6-btn-nav" onclick="goHome()">🏠 Accueil</button>`
       }
     </div>
 
