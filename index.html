@@ -1487,11 +1487,13 @@ let S = {
   grammar3View: 'cours',
   grammar4View: 'cours',
   grammar5View: 'cours',
+  grammar6View: 'mcq',
   mcqAnswers: {},
   mcqAnswers2: {},
   mcqAnswers3: {},
   mcqAnswers4: {},
   mcqAnswers5: {},
+  mcqAnswers6: {},
   mcqAnswersTake: {},
   status: {},
   streak: 0,
@@ -1578,7 +1580,7 @@ function toast(msg){
 const TAB_PARENT = {
   vocab: 'foundations', expr: 'foundations', prep: 'foundations',
   phrasal: 'phrasalhub', take: 'phrasalhub',
-  grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub', grammar4: 'grammarhub', grammar5: 'grammarhub',
+  grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub', grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
 };
 const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
 
@@ -1641,6 +1643,7 @@ function render() {
   else if(S.tab==='grammar3')     el.appendChild(buildGrammar3Section());
   else if(S.tab==='grammar4')     el.appendChild(buildGrammar4Section());
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
+  else if(S.tab==='grammar6')     el.appendChild(buildGrammar6Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -1671,7 +1674,8 @@ function buildHome() {
   const doneG3 = Object.keys(S.mcqAnswers3).length;
   const doneG4 = Object.keys(S.mcqAnswers4).length;
   const doneG5 = Object.keys(S.mcqAnswers5).length;
-  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length + GRAMMAR5_QCM.length;
+  const doneG6 = Object.keys(S.mcqAnswers6 || {}).length;
+  const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length + GRAMMAR5_QCM.length + GRAMMAR6_QCM.length;
   const doneGr = doneG + doneG2 + doneG3 + doneG4 + doneG5;
 
   // 3 semantic colors: rouge = contenu, violet = grammaire, vert = action
@@ -1878,6 +1882,7 @@ function buildGrammarHub() {
   const doneG3 = Object.keys(S.mcqAnswers3).length;
   const doneG4 = Object.keys(S.mcqAnswers4).length;
   const doneG5 = Object.keys(S.mcqAnswers5).length;
+  const doneG6 = Object.keys(S.mcqAnswers6 || {}).length;
   const COLOR  = '#7c3aed';
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR}">🧠 GRAMMAR</div>
@@ -1926,6 +1931,15 @@ function buildGrammarHub() {
           <div class="hub-card-label">Les Pronoms — Subject · Object · Possessive…</div>
           <div class="hub-card-desc">${GRAMMAR5_QCM.length} questions — 5 types de pronoms & prononciation</div>
           ${hubProgBar(doneG5, GRAMMAR5_QCM.length, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar6')">
+        <div class="hub-card-icon">✏️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Sentence Completion</div>
+          <div class="hub-card-desc">${GRAMMAR6_QCM.length} questions — fill-in-the-blank · structure de phrase</div>
+          ${hubProgBar(doneG6, GRAMMAR6_QCM.length, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -3149,6 +3163,345 @@ function answerMcq2(qi,oi){
   render();
 }
 function resetMcq2(){S.mcqAnswers2={};render();toast('QCM réinitialisé');}
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR 6 — SENTENCE COMPLETION (fill-in-the-blank)
+// ═══════════════════════════════════════════════════════════
+const GRAMMAR6_QCM = [
+  {
+    q: "______ of classical ballet in the United States began around 1830.",
+    blank: "______",
+    opts: ["To teach", "Is teaching", "It was taught", "The teaching"],
+    ans: 3,
+    exp: "On a besoin d'un sujet nominal pour cette phrase. \"The teaching\" (gérondif nominalisé) fonctionne comme sujet de \"began\"."
+  },
+  {
+    q: "Mason bees are solitary bees, which means ______ in colonies like honeybees or bumblebees.",
+    blank: "______",
+    opts: ["do not live", "when they do not live", "that they do not live", "that do not live"],
+    ans: 2,
+    exp: "\"Which means\" introduit une proposition complétive avec \"that\" + sujet (they) + verbe. \"That they do not live\" est la seule option grammaticalement complète."
+  },
+  {
+    q: "Long before the advent of written literature, ______ their myths and stories in oral poems told by successive generations.",
+    blank: "______",
+    opts: ["people recorded", "recording people", "people's recordings", "people who recorded"],
+    ans: 0,
+    exp: "La phrase principale a besoin d'un sujet + verbe conjugué. \"People recorded\" (sujet + verbe au passé) complète la phrase correctement."
+  },
+  {
+    q: "Comparative anatomy is ______ classification of both plants and animals.",
+    blank: "______",
+    opts: ["the basis for", "for basics", "the basis that", "the basically"],
+    ans: 0,
+    exp: "\"The basis for\" est l'expression correcte : \"the basis for + nom\". Les autres options sont agrammaticales ou incorrectes dans ce contexte."
+  },
+  {
+    q: "Although legend has it that the Pilgrims first set foot in America on Plymouth Rock in 1620, ______ documentary evidence confirming this.",
+    blank: "______",
+    opts: ["no", "still is no", "there is no", "but no"],
+    ans: 2,
+    exp: "\"There is no\" introduit une structure existentielle négative correcte. \"No\" seul ou \"but no\" sont incorrects après la virgule car il faut un sujet + verbe."
+  },
+  {
+    q: "Despite its fishlike form, the whale is ______ and will drown if submerged too long.",
+    blank: "______",
+    opts: ["an animal breathes air", "an animal that breathes air", "an animal breathes air", "that an animal breathes air"],
+    ans: 1,
+    exp: "\"An animal that breathes air\" utilise une proposition relative correcte (that + verbe) pour qualifier \"animal\"."
+  },
+  {
+    q: "Clouds ______ in warm air rises, cools, and condenses.",
+    blank: "______",
+    opts: ["when form water vapor", "form when water vapor", "form vapor water when", "vapor form when water"],
+    ans: 1,
+    exp: "\"Clouds form when water vapor [rises...]\" : \"form\" est le verbe principal, \"when\" introduit la subordonnée de temps avec \"water vapor\" comme sujet."
+  },
+  {
+    q: "Portland, ______, is located primarily on two hilly peninsulas overlooking Casco Bay and its many islands.",
+    blank: "______",
+    opts: ["which Maine's largest city", "Maine's largest city", "is Maine's largest city", "Maine's largest city"],
+    ans: 1,
+    exp: "\"Maine's largest city\" est une appositive (explication entre virgules). Pas besoin de \"which\" ni de verbe ici car c'est une incise nominale."
+  },
+  {
+    q: "Mars, the so-called red planet, is actually colored red by iron oxide and other impurities ______ the whole surface.",
+    blank: "______",
+    opts: ["that cover", "in which are covered", "that they cover", "and covered"],
+    ans: 0,
+    exp: "\"That cover\" est une proposition relative correcte : \"impurities that cover the whole surface\". \"That they cover\" est redondant (double sujet)."
+  },
+  {
+    q: "The 1903 film The Great Train Robbery was the first significant film in which the classic western story's formula of crime and retribution ______.",
+    blank: "______",
+    opts: ["was used", "to be used", "used", "had used"],
+    ans: 0,
+    exp: "\"Was used\" (passif passé) est correct car la formule est utilisée (passive), et le contexte est passé. \"Used\" actif changerait le sens : ce n'est pas la formule qui utilise quelque chose."
+  },
+  {
+    q: "When played in certain ways, the bassoon can produce comical sounds, ______ it sometimes referred to as the clown of the orchestra.",
+    blank: "______",
+    opts: ["or", "that", "so", "whether"],
+    ans: 2,
+    exp: "\"So\" exprime la conséquence : les sons comiques ont pour conséquence qu'on le surnomme \"le clown de l'orchestre\". C'est un \"so\" de résultat."
+  },
+  {
+    q: "In modern societies, ______ authorized body such as a legislature or a court makes the law.",
+    blank: "______",
+    opts: ["some", "some of", "some the", "for some"],
+    ans: 0,
+    exp: "\"Some authorized body\" = un certain organe. \"Some\" devant un nom singulier signifie \"un certain\". \"Some of\" nécessiterait un article après (some of the)."
+  },
+  {
+    q: "The sense of smell functions chemically, ______ the sense of taste, but it is 10,000 times more sensitive.",
+    blank: "______",
+    opts: ["as does", "so have", "which as", "by which"],
+    ans: 0,
+    exp: "\"As does the sense of taste\" est une structure comparative inversée (comme le fait le sens du goût). C'est une ellipse élégante : \"as the sense of taste does\"."
+  },
+  {
+    q: "______ primarily from plant oils, perfumes were used in ancient times as incense in religious rites, in medicines, and later for adornment.",
+    blank: "______",
+    opts: ["Made them", "They made", "Made", "By making"],
+    ans: 2,
+    exp: "\"Made\" est un participe passé utilisé en appositive participiale (= Being made / Having been made). Le sujet implicite est \"perfumes\". \"Made them\" ou \"They made\" créeraient un dangling modifier."
+  },
+  {
+    q: "Boise became ______ of the state of Idaho in 1864.",
+    blank: "______",
+    opts: ["as the capital", "the capital", "to be the capital", "the capital was"],
+    ans: 1,
+    exp: "\"Became the capital\" : après \"become\", on utilise directement le groupe nominal sans \"as\", \"to be\", ou verbe supplémentaire."
+  },
+];
+
+// CSS for fill-in-the-blank UI (injected once)
+(function injectGrammar6CSS() {
+  if (document.getElementById('g6css')) return;
+  const s = document.createElement('style');
+  s.id = 'g6css';
+  s.textContent = `
+.g6-page{flex:1;display:flex;flex-direction:column;max-width:680px;width:100%;margin:0 auto;padding:20px 16px 60px;}
+.g6-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px;}
+.g6-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:6px;border:1px solid rgba(124,58,237,.3);
+  background:rgba(124,58,237,.08);color:#7c3aed;}
+.g6-progress-wrap{display:flex;align-items:center;gap:8px;}
+.g6-progress-bar{width:100px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.g6-progress-fill{height:100%;background:#7c3aed;border-radius:2px;transition:width .4s ease;}
+.g6-progress-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
+
+.g6-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:18px;padding:24px 22px;margin-bottom:16px;}
+.g6-qnum{font-family:var(--mono);font-size:.58rem;color:#7c3aed;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.g6-sentence{font-size:1rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:20px;}
+.g6-blank{display:inline-block;min-width:120px;border-bottom:2.5px solid #7c3aed;
+  color:#7c3aed;font-weight:800;text-align:center;padding:0 4px;
+  transition:all .3s;vertical-align:bottom;}
+.g6-blank.correct{color:#2d6a4f;border-color:#2d6a4f;background:rgba(45,106,79,.08);border-radius:4px;padding:0 6px;}
+.g6-blank.wrong{color:#c1121f;border-color:#c1121f;background:rgba(193,18,31,.06);border-radius:4px;padding:0 6px;}
+
+.g6-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:460px){.g6-opts{grid-template-columns:1fr;}}
+.g6-opt{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  background:var(--bg2);border:1.5px solid var(--border2);border-radius:12px;
+  cursor:pointer;transition:all .18s;text-align:left;}
+.g6-opt:hover:not(.disabled){background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.4);}
+.g6-opt.disabled{cursor:default;pointer-events:none;}
+.g6-opt.selected-correct{background:rgba(45,106,79,.1);border-color:#2d6a4f;}
+.g6-opt.selected-wrong{background:rgba(193,18,31,.08);border-color:#c1121f;}
+.g6-opt.reveal-correct{background:rgba(45,106,79,.06);border-color:rgba(45,106,79,.4);}
+.g6-opt-letter{width:24px;height:24px;border-radius:6px;border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.65rem;font-weight:700;flex-shrink:0;
+  transition:all .18s;}
+.g6-opt.selected-correct .g6-opt-letter{background:#2d6a4f;border-color:#2d6a4f;color:#fff;}
+.g6-opt.selected-wrong .g6-opt-letter{background:#c1121f;border-color:#c1121f;color:#fff;}
+.g6-opt.reveal-correct .g6-opt-letter{background:rgba(45,106,79,.2);border-color:#2d6a4f;color:#2d6a4f;}
+.g6-opt-text{font-size:.84rem;color:var(--text);font-weight:500;}
+
+.g6-explanation{margin-top:14px;padding:12px 16px;border-radius:10px;
+  background:rgba(124,58,237,.06);border-left:3px solid #7c3aed;
+  font-size:.8rem;color:var(--text);line-height:1.6;display:none;}
+.g6-explanation.visible{display:block;}
+.g6-exp-label{font-family:var(--mono);font-size:.52rem;color:#7c3aed;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+
+.g6-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+.g6-btn-nav{font-family:var(--sans);font-size:.78rem;font-weight:700;padding:10px 20px;
+  border-radius:10px;border:1.5px solid var(--border2);background:var(--surface);
+  color:var(--text);cursor:pointer;transition:all .18s;}
+.g6-btn-nav:hover{border-color:#7c3aed;color:#7c3aed;}
+.g6-btn-nav.primary{background:#7c3aed;border-color:#7c3aed;color:#fff;}
+.g6-btn-nav.primary:hover{background:#6d28d9;}
+.g6-btn-nav:disabled{opacity:.35;cursor:default;pointer-events:none;}
+
+.g6-score-card{background:var(--surface);border:1.5px solid rgba(124,58,237,.3);border-radius:18px;
+  padding:32px 24px;text-align:center;margin-bottom:16px;}
+.g6-score-big{font-size:3rem;font-weight:900;font-family:var(--mono);color:#7c3aed;line-height:1;}
+.g6-score-sub{font-size:.8rem;color:var(--muted);margin-top:6px;margin-bottom:20px;}
+.g6-score-bar-wrap{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:20px;}
+.g6-score-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#a855f7);transition:width .8s ease;}
+  `;
+  document.head.appendChild(s);
+})();
+
+function buildGrammar6Section() {
+  injectGrammar6CSS && injectGrammar6CSS();
+  const answers = S.mcqAnswers6 || {};
+  const answered = Object.keys(answers).length;
+  const total = GRAMMAR6_QCM.length;
+  const qi = S.grammar6cursor !== undefined ? S.grammar6cursor : 0;
+  const done = answers[qi] !== undefined;
+  const q = GRAMMAR6_QCM[qi];
+  const userAns = answers[qi];
+  const isCorrect = done && userAns === q.ans;
+  const pct = Math.round((answered / total) * 100);
+
+  // Check if all answered → show results
+  if (answered === total && S.grammar6View === 'results') {
+    return buildGrammar6Results();
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'g6-page fade-up';
+
+  // Header
+  const letters = ['A','B','C','D'];
+
+  // Build sentence with highlighted blank
+  const displayQ = q.q.replace('______', `<span class="g6-blank ${done ? (isCorrect ? 'correct' : 'wrong') : ''}" id="g6blank">${done ? q.opts[q.ans] : '______'}</span>`);
+
+  wrap.innerHTML = `
+    <div class="g6-header">
+      <div class="g6-tag">✏️ Sentence Completion</div>
+      <div class="g6-progress-wrap">
+        <div class="g6-progress-bar"><div class="g6-progress-fill" style="width:${pct}%"></div></div>
+        <div class="g6-progress-label">${answered}/${total}</div>
+      </div>
+    </div>
+
+    <div class="g6-card">
+      <div class="g6-qnum">Question ${qi + 1} sur ${total}</div>
+      <div class="g6-sentence">${displayQ}</div>
+
+      <div class="g6-opts">
+        ${q.opts.map((opt, oi) => {
+          let cls = '';
+          if (done) {
+            cls = 'disabled ';
+            if (oi === q.ans) cls += 'reveal-correct';
+            if (oi === userAns && userAns !== q.ans) cls += 'selected-wrong';
+            if (oi === userAns && userAns === q.ans) cls += 'selected-correct';
+          }
+          return `
+            <div class="g6-opt ${cls}" onclick="${done ? '' : `answerG6(${qi},${oi})`}">
+              <div class="g6-opt-letter">${letters[oi]}</div>
+              <div class="g6-opt-text">${opt}</div>
+            </div>`;
+        }).join('')}
+      </div>
+
+      <div class="g6-explanation ${done ? 'visible' : ''}">
+        <div class="g6-exp-label">💡 Explication</div>
+        ${q.exp}
+      </div>
+    </div>
+
+    <div class="g6-nav">
+      <button class="g6-btn-nav" onclick="g6Nav(-1)" ${qi === 0 ? 'disabled' : ''}>← Précédent</button>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">${qi+1} / ${total}</span>
+      ${qi < total - 1
+        ? `<button class="g6-btn-nav primary" onclick="g6Nav(1)">Suivant →</button>`
+        : answered === total
+          ? `<button class="g6-btn-nav primary" onclick="showG6Results()">Voir les résultats →</button>`
+          : `<button class="g6-btn-nav" onclick="g6Nav(1)" ${!done ? 'disabled' : ''}>Suivant →</button>`
+      }
+    </div>
+
+    ${answered > 0 && answered < total && qi === total - 1 && answered < total ? '' : ''}
+    ${answered > 0 ? `
+      <div style="text-align:center;margin-top:16px;">
+        <button onclick="resetG6()" style="font-family:var(--mono);font-size:.6rem;color:var(--muted);
+          background:none;border:none;cursor:pointer;text-decoration:underline;">
+          Recommencer depuis le début
+        </button>
+      </div>` : ''}
+  `;
+  return wrap;
+}
+
+function buildGrammar6Results() {
+  const answers = S.mcqAnswers6 || {};
+  const total = GRAMMAR6_QCM.length;
+  const correct = GRAMMAR6_QCM.filter((q, i) => answers[i] === q.ans).length;
+  const pct = Math.round((correct / total) * 100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '💪' : '📖';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'g6-page fade-up';
+  wrap.innerHTML = `
+    <div class="g6-header">
+      <div class="g6-tag">✏️ Sentence Completion</div>
+      <div class="g6-tag" style="background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.3);color:#2d6a4f">Résultats</div>
+    </div>
+    <div class="g6-score-card">
+      <div style="font-size:2.5rem;margin-bottom:8px">${emoji}</div>
+      <div class="g6-score-big">${correct} / ${total}</div>
+      <div class="g6-score-sub">${pct}% de bonnes réponses</div>
+      <div class="g6-score-bar-wrap">
+        <div class="g6-score-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <button class="g6-btn-nav primary" onclick="resetG6()" style="margin:0 auto">🔄 Recommencer</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      ${GRAMMAR6_QCM.map((q, i) => {
+        const ua = answers[i];
+        const ok = ua === q.ans;
+        return `
+          <div style="background:var(--surface);border:1.5px solid ${ok?'rgba(45,106,79,.3)':'rgba(193,18,31,.25)'};
+            border-radius:12px;padding:14px 16px;">
+            <div style="font-family:var(--mono);font-size:.55rem;color:${ok?'#2d6a4f':'#c1121f'};
+              text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">
+              Q${i+1} — ${ok?'✓ Correct':'✗ Incorrect'}
+            </div>
+            <div style="font-size:.8rem;color:var(--text);margin-bottom:6px;font-weight:600">
+              ${q.q.replace('______', `<strong style="color:${ok?'#2d6a4f':'#c1121f'}">${q.opts[q.ans]}</strong>`)}
+            </div>
+            ${!ok ? `<div style="font-size:.75rem;color:var(--muted)">Ta réponse : <em>${q.opts[ua]??'—'}</em></div>` : ''}
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+  return wrap;
+}
+
+function answerG6(qi, oi) {
+  if (!S.mcqAnswers6) S.mcqAnswers6 = {};
+  S.mcqAnswers6[qi] = oi;
+  if (oi === GRAMMAR6_QCM[qi].ans) { S.streak++; save(); toast('✓ Correct !'); }
+  else toast('✗ — Lis l\'explication');
+  render();
+}
+function g6Nav(dir) {
+  const max = GRAMMAR6_QCM.length - 1;
+  S.grammar6cursor = Math.max(0, Math.min(max, (S.grammar6cursor || 0) + dir));
+  render();
+}
+function showG6Results() { S.grammar6View = 'results'; render(); }
+function resetG6() {
+  S.mcqAnswers6 = {};
+  S.grammar6cursor = 0;
+  S.grammar6View = 'mcq';
+  render();
+  toast('Exercice réinitialisé');
+}
+
+function injectGrammar6CSS() {
+  if (document.getElementById('g6css')) return;
+  const s = document.createElement('style');
+  s.id = 'g6css';
+  // already injected via IIFE above
+}
 
 // ═══════════════════════════════════════════════════════════
 // SPEAK & IMPROVE SECTION
