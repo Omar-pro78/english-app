@@ -901,7 +901,7 @@ async function loadAllData() {
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
   } catch(e) {
     console.error('loadAllData failed:', e);
-    document.getElementById('app').innerHTML = '<div style="padding:40px;text-align:center;color:red">⚠ Erreur de chargement des données. Assure-toi d'ouvrir l'app via un serveur web (GitHub Pages ou localhost).</div>';
+    document.getElementById('app').innerHTML = "<div style="padding:40px;text-align:center;color:red">⚠ Erreur de chargement des données. Assure-toi d'ouvrir l'app via un serveur web (GitHub Pages ou localhost).</div>";
   }
 }
 
