@@ -606,6 +606,28 @@ main{flex:1;display:flex;flex-direction:column;}
 .btn-sess-rev.on{flex:1;min-width:130px;font-family:var(--sans);font-size:.74rem;font-weight:700;
   padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid;transition:all .18s;
   background:var(--gold);color:var(--bg);border-color:var(--gold);}
+
+/* SR 3-button grades */
+.sess-sr-actions{display:flex;gap:7px;margin-top:14px;}
+.btn-sr{flex:1;font-family:var(--sans);font-size:.7rem;font-weight:700;
+  padding:10px 8px;border-radius:10px;cursor:pointer;border:1.5px solid;
+  transition:all .18s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.btn-sr .sr-lbl{font-size:.7rem;font-weight:700;line-height:1;}
+.btn-sr .sr-due{font-family:var(--mono);font-size:.52rem;opacity:.75;line-height:1;}
+.btn-sr-hard{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.35);color:var(--accent);}
+.btn-sr-hard:hover{background:rgba(193,18,31,.18);}
+.btn-sr-hard.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btn-sr-ok{background:rgba(180,83,9,.07);border-color:rgba(180,83,9,.3);color:var(--gold);}
+.btn-sr-ok:hover{background:rgba(180,83,9,.16);}
+.btn-sr-ok.on{background:var(--gold);color:#fff;border-color:var(--gold);}
+.btn-sr-easy{background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.35);color:var(--accent2);}
+.btn-sr-easy:hover{background:rgba(45,106,79,.18);}
+.btn-sr-easy.on{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+/* SR due badge (home card + CTA) */
+.sr-due-badge{display:inline-block;background:var(--accent);color:#fff;font-family:var(--mono);
+  font-size:.52rem;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle;}
+.sr-due-badge.gold{background:var(--gold);}
+.sr-due-badge.green{background:var(--accent2);}
 .btn-sess-next{font-family:var(--sans);font-size:.78rem;font-weight:800;padding:12px 26px;
   border-radius:12px;border:none;background:var(--accent);color:#fff;cursor:pointer;
   transition:all .2s;margin-top:14px;width:100%;}
@@ -659,7 +681,7 @@ main{flex:1;display:flex;flex-direction:column;}
   </div>
   <div class="hd-stats">
     <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
-    <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">À revoir</span></div>
+    <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">SR dues🧠</span></div>
     <div class="hd-stat"><span class="n" id="statStreak">0</span><span class="l">Streak🔥</span></div>
   </div>
 </header>
@@ -1615,6 +1637,9 @@ let S = {
   lastSession: null, // { moduleKey, pos, ts } — ts = Date.now()
   // ── Milestones (triggered once each) ──
   milestones: {}, // e.g. { firstLot: true, module_vocab: true, streak5: true, streak10: true, streak20: true }
+  // ── Spaced Repetition (SM-2) ──
+  // sr[key] = { interval, easeFactor, due, reps }  where key = "sec_idx"
+  sr: {},
 };
 
 function load() {
@@ -1629,6 +1654,7 @@ function load() {
     S.daily        = p.daily       || { date: '', actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
     S.lastSession  = p.lastSession  || null;
     S.milestones   = p.milestones   || {};
+    S.sr           = p.sr          || {};
   } catch(e){}
   // Reset daily counter if it's a new day
   const today = new Date().toISOString().slice(0,10);
@@ -1640,8 +1666,95 @@ function load() {
 function save() {
   localStorage.setItem('qae_v5', JSON.stringify({
     status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress,
-    daily:S.daily, lastSession:S.lastSession, milestones:S.milestones
+    daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
   }));
+}
+
+// ═══════════════════════════════════════════════════════════
+// SPACED REPETITION — SM-2 Algorithm
+// grade: 0 = Hard (< 4 in SM-2), 1 = Correct (4), 2 = Easy (5)
+// ═══════════════════════════════════════════════════════════
+function srKey(sec, idx) { return `${sec}_${idx}`; }
+
+function srGetCard(sec, idx) {
+  const key = srKey(sec, idx);
+  return S.sr[key] || { interval: 0, easeFactor: 2.5, due: 0, reps: 0 };
+}
+
+function srRate(sec, idx, grade) {
+  const key = srKey(sec, idx);
+  const card = srGetCard(sec, idx);
+  const today = Math.floor(Date.now() / 86400000); // days since epoch
+
+  let { interval, easeFactor, reps } = card;
+  // SM-2 quality: Hard=2, Correct=4, Easy=5
+  const q = grade === 0 ? 2 : grade === 1 ? 4 : 5;
+
+  if (q < 3) {
+    // Failed — reset
+    reps = 0;
+    interval = 1;
+  } else {
+    if (reps === 0)      interval = 1;
+    else if (reps === 1) interval = 6;
+    else                 interval = Math.round(interval * easeFactor);
+    reps++;
+  }
+
+  // Update ease factor
+  easeFactor = Math.max(1.3, easeFactor + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+
+  const due = today + interval;
+  S.sr[key] = { interval, easeFactor, due, reps };
+
+  // Sync legacy status: reps > 0 → ok, else → review
+  if (!S.status) S.status = {};
+  S.status[key] = reps > 0 ? 'ok' : 'review';
+  save();
+  return { interval, due };
+}
+
+function srIsDue(sec, idx) {
+  const card = srGetCard(sec, idx);
+  if (card.reps === 0 && card.due === 0) return true; // never seen = due
+  const today = Math.floor(Date.now() / 86400000);
+  return card.due <= today;
+}
+
+function srDueCount() {
+  const fcSecs = ['vocab','expr','prep','phrasal','take'];
+  let count = 0;
+  fcSecs.forEach(sec => {
+    (DATA[sec] || []).forEach((_, i) => {
+      const card = srGetCard(sec, i);
+      if (card.reps > 0 && srIsDue(sec, i)) count++;
+    });
+  });
+  return count;
+}
+
+function srDueLabel(interval) {
+  if (interval <= 1)  return '1j';
+  if (interval <= 6)  return `${interval}j`;
+  if (interval <= 30) return `${Math.round(interval/7)}sem`;
+  return `${Math.round(interval/30)}mois`;
+}
+
+// Build queue: items due today (seen before) + all new items
+function srDueQueue() {
+  const fcSecs = ['vocab','expr','prep','phrasal','take'];
+  const due = [], newItems = [];
+  const today = Math.floor(Date.now() / 86400000);
+  fcSecs.forEach(sec => {
+    (DATA[sec] || []).forEach((item, i) => {
+      const card = srGetCard(sec, i);
+      const entry = { ...item, _sec: sec, _idx: i };
+      if (card.reps === 0) newItems.push(entry);
+      else if (card.due <= today) due.push(entry);
+    });
+  });
+  // Due items first (shuffled), then new items (shuffled)
+  return [...shuffle(due), ...shuffle(newItems)];
 }
 
 // ── Daily tracking ─────────────────────────────────────────
@@ -1773,7 +1886,7 @@ function render() {
 
   // Update header stats
   document.getElementById('statOk').textContent=cntOk();
-  document.getElementById('statRev').textContent=cntRev();
+  document.getElementById('statRev').textContent=srDueCount();
   document.getElementById('statStreak').textContent=S.streak;
 
   if(S.tab==='home')              el.appendChild(buildHome());
@@ -1836,7 +1949,20 @@ function computeNextStep() {
     }
   }
 
-  // ── PRIORITÉ 2 : cartes en erreur (review) ────────────────
+  // ── PRIORITÉ 2 : cartes SR dues aujourd'hui ───────────────
+  const srDue = srDueCount();
+  if (srDue > 0) {
+    return {
+      tab: 'review',
+      icon: '🧠',
+      eyebrow: 'Révision espacée',
+      label: `${srDue} carte${srDue>1?'s':''} à revoir aujourd'hui`,
+      sub: `SM-2 — renforce ta mémoire long terme`,
+      action: () => { S.tab = 'review'; render(); },
+    };
+  }
+
+  // ── PRIORITÉ 3 : cartes en erreur (review) ────────────────
   const rv = cntRev();
   if (rv > 0) {
     // Trouver quel module concentre le plus d'erreurs
@@ -1923,9 +2049,22 @@ function computeNextStep() {
 function computeDailyMission() {
   // Retourne 1 mission principale claire + contexte
   const rv      = cntRev();
+  const srDue   = srDueCount();
   const lots    = S.daily.lotsCompleted;
   const actions = S.daily.actions;
   const goal    = S.daily.goal;
+
+  // Cas 0 : cartes SR dues (priorité absolue)
+  if (srDue > 0) {
+    return {
+      icon: '🧠',
+      title: `${srDue} carte${srDue>1?'s':''} SR à revoir`,
+      detail: 'La répétition espacée renforce la mémoire long terme',
+      progress: null,
+      cta: () => { S.tab = 'review'; render(); },
+      ctaLabel: 'Lancer la révision SR',
+    };
+  }
 
   // Cas 1 : erreurs urgentes (priorité absolue si > 3)
   if (rv >= 3) {
@@ -1977,6 +2116,7 @@ function computeDailyMission() {
 
 function buildDailyMissions() {
   const rv      = cntRev();
+  const srDue   = srDueCount();
   const lots    = S.daily.lotsCompleted;
   const actions = S.daily.actions;
   const goal    = S.daily.goal;
@@ -1990,9 +2130,9 @@ function buildDailyMissions() {
       icon: lots >= 1 ? '✓' : '○',
     },
     {
-      label: rv === 0 ? 'Aucune erreur en attente' : `${rv} erreur${rv>1?'s':''} à réviser`,
-      done: rv === 0,
-      icon: rv === 0 ? '✓' : '○',
+      label: srDue === 0 ? 'SR à jour ✓' : `${srDue} carte${srDue>1?'s':''} SR dues`,
+      done: srDue === 0,
+      icon: srDue === 0 ? '✓' : '🧠',
     },
     {
       label: actions >= goal ? `Objectif ${goal} actions atteint` : `${actions}/${goal} actions`,
@@ -2188,8 +2328,8 @@ function buildHome() {
 
   grid.appendChild(makeCard({
     tab:'review', icon:'🎯', label:'Quiz & Review', color: COL_ACTION,
-    sub: rv > 0 ? rv + ' cards to review' : 'Flashcard quiz mode',
-    countLabel: rv > 0 ? rv + ' pending' : 'Ready',
+    sub: srDueCount() > 0 ? `🧠 ${srDueCount()} cartes SR dues · ${rv > 0 ? rv + ' en révision' : 'Flashcard quiz mode'}` : rv > 0 ? rv + ' cards to review' : 'Flashcard quiz mode',
+    countLabel: srDueCount() > 0 ? srDueCount() + ' dues' : rv > 0 ? rv + ' pending' : 'Ready',
     progDone: null, progTotal: 0,
   }));
 
@@ -2601,6 +2741,7 @@ function navPhrasal(dir){
 // REVIEW LAUNCHER
 // ═══════════════════════════════════════════════════════════
 function buildLauncher() {
+  const srDue = srDueCount();
   const rvV=DATA.vocab.filter((_,i)=>getS('vocab',i)==='review').length;
   const rvE=DATA.expr.filter((_,i) =>getS('expr',i) ==='review').length;
   const rvP=PREP_CARDS.filter((_,i)=>getS('prep',i) ==='review').length;
@@ -2610,6 +2751,14 @@ function buildLauncher() {
   wrap.innerHTML=`
     <div class="rl-title">🎯 Choisir une session de révision</div>
     <div class="rl-list">
+      <div class="rl-card" style="${srDue>0?'border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.04)':''}">
+        <div class="rl-info">
+          <h3>🧠 Révision espacée (SM-2) ${srDue>0?`<span class="sr-due-badge">${srDue} dues</span>`:''}</h3>
+          <p>Cartes dues aujourd'hui — algo SM-2 · intervalles optimaux</p>
+        </div>
+        <button class="btn-launch ${srDue>0?'bg-purple':'bg-muted'}" onclick="startSRSession()">
+          ${srDue>0?`Réviser (${srDue})`:'Tout revoir'}</button>
+      </div>
       <div class="rl-card">
         <div class="rl-info"><h3>📚 Vocabulaire IT/QA</h3><p>${rvV} mot${rvV!==1?'s':''} à revoir · ${DATA.vocab.length} total</p></div>
         <button class="btn-launch bg-green" onclick="startQuiz('vocab')" ${rvV===0?'disabled':''}>
@@ -2637,6 +2786,14 @@ function buildLauncher() {
     </div>
   `;
   return wrap;
+}
+
+function startSRSession() {
+  // Launch a mini-quiz over SR-due items (write-the-English format)
+  const q = srDueQueue();
+  if (!q.length) { toast('Aucune carte due pour l\'instant !'); return; }
+  S.quiz = { queue: q, idx: 0, results: [], answered: false, input: '', source: 'sr' };
+  render();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2703,6 +2860,11 @@ function buildQuiz(){
           ?`<span class="fb-ok">✓ Correct !</span>`
           :`<span class="fb-fail">✗ Incorrect —</span><span class="fb-ans">&nbsp;${item.en}</span>`):''}
       </div>
+      ${ans && isOk && q.source === 'sr' ? `
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="btn-sr btn-sr-ok" style="flex:1" onclick="srUpgradeGrade(1)"><span class="sr-lbl">🤔 Correct</span><span class="sr-due">${srDueLabel(srGetCard(item._sec,item._idx).interval||1)}</span></button>
+        <button class="btn-sr btn-sr-easy" style="flex:1" onclick="srUpgradeGrade(2)"><span class="sr-lbl">😎 Facile</span><span class="sr-due">${srDueLabel(Math.round((srGetCard(item._sec,item._idx).interval||1)*srGetCard(item._sec,item._idx).easeFactor))}</span></button>
+      </div>` : ''}
       <div class="quiz-btns">
         ${!ans
           ?`<button class="btn-q prim" onclick="submitQ()">Valider ↵</button>`
@@ -2713,6 +2875,14 @@ function buildQuiz(){
     </div>`;
   setTimeout(()=>{const i=document.getElementById('qinput');if(i&&!ans)i.focus();},40);
   return wrap;
+}
+
+function srUpgradeGrade(grade) {
+  const q = S.quiz;
+  const item = q.queue[q.idx];
+  srRate(item._sec, item._idx, grade);
+  toast(grade === 2 ? '😎 Facile — prochain intervalle allongé !' : '✓ Noté Correct');
+  render();
 }
 
 function buildResults(){
@@ -2751,8 +2921,23 @@ function submitQ(){
   const item=q.queue[q.idx];
   const isOk=checkAns(val,item.en);
   q.results[q.idx]=isOk; q.answered=true;
-  if(isOk){S.streak++;setS(item._sec,item._idx,'ok');toast('✓ Bravo !');}
-  else{S.streak=0;setS(item._sec,item._idx,'review');}
+  if(isOk){
+    S.streak++;
+    // For SR quiz: grade=1 (Correct); for normal quiz: use setS
+    if (q.source === 'sr') {
+      srRate(item._sec, item._idx, 1); // Correct
+    } else {
+      setS(item._sec,item._idx,'ok');
+    }
+    toast('✓ Bravo !');}
+  else{
+    S.streak=0;
+    if (q.source === 'sr') {
+      srRate(item._sec, item._idx, 0); // Hard
+    } else {
+      setS(item._sec,item._idx,'review');
+    }
+  }
   save(); render();
 }
 function skipQ(){const q=S.quiz;q.results[q.idx]=false;q.answered=true;q.input='';render();}
@@ -4447,7 +4632,7 @@ function buildSessionCard() {
 function buildFcCard(item, cardIdx, answered, color) {
   const sess = S.session;
   const ans = sess.answers[cardIdx];
-  const val = ans ? ans.val : null;
+  const val = ans ? ans.val : null;  // 0=Hard, 1=Correct, 2=Easy
 
   const isPrep   = item._sec === 'prep';
   const word     = item.en;
@@ -4456,10 +4641,26 @@ function buildFcCard(item, cardIdx, answered, color) {
   const example  = item.example || item.ex || '';
   const exTrad   = item.exampleTrad || item.exTrad || '';
 
+  // SR interval preview for each button
+  const srPreview = (grade) => {
+    const card = srGetCard(item._sec, item._idx);
+    let { interval, easeFactor, reps } = card;
+    const q = grade === 0 ? 2 : grade === 1 ? 4 : 5;
+    if (q < 3) { interval = 1; }
+    else {
+      if (reps === 0)      interval = 1;
+      else if (reps === 1) interval = 6;
+      else                 interval = Math.round(interval * easeFactor);
+    }
+    return srDueLabel(interval);
+  };
+
   const div = document.createElement('div');
 
+  const cardCls = val === 2 ? 'is-ok' : val === 1 ? 'is-ok' : val === 0 ? 'is-rev' : '';
+
   div.innerHTML = `
-    <div class="flashcard ${val==='ok'?'is-ok':''} ${val==='review'?'is-rev':''}">
+    <div class="flashcard ${cardCls}">
       <div class="card-stripe" style="background:linear-gradient(90deg,${color},${color}88)"></div>
       <div class="card-body">
         <div class="card-num" style="color:${color}">${item._sec.toUpperCase()} · #${item._idx+1}</div>
@@ -4476,12 +4677,18 @@ function buildFcCard(item, cardIdx, answered, color) {
       </div>
     </div>
 
-    <div class="sess-fc-actions">
-      <button class="btn-sess-ok ${val==='ok'?'on':'idle'}" onclick="sessMarkFc(${cardIdx},'ok')">
-        ${val==='ok' ? '✓ Maîtrisé' : '✓ Je sais'}
+    <div class="sess-sr-actions">
+      <button class="btn-sr btn-sr-hard ${val===0?'on':''}" onclick="sessMarkSR(${cardIdx},0)">
+        <span class="sr-lbl">😓 Difficile</span>
+        <span class="sr-due">${srPreview(0)}</span>
       </button>
-      <button class="btn-sess-rev ${val==='review'?'on':'idle'}" onclick="sessMarkFc(${cardIdx},'review')">
-        ${val==='review' ? '🔄 À revoir' : '🔄 À revoir'}
+      <button class="btn-sr btn-sr-ok ${val===1?'on':''}" onclick="sessMarkSR(${cardIdx},1)">
+        <span class="sr-lbl">🤔 Correct</span>
+        <span class="sr-due">${srPreview(1)}</span>
+      </button>
+      <button class="btn-sr btn-sr-easy ${val===2?'on':''}" onclick="sessMarkSR(${cardIdx},2)">
+        <span class="sr-lbl">😎 Facile</span>
+        <span class="sr-due">${srPreview(2)}</span>
       </button>
     </div>
 
@@ -4493,20 +4700,24 @@ function buildFcCard(item, cardIdx, answered, color) {
   return div;
 }
 
-function sessMarkFc(cardIdx, val) {
+function sessMarkSR(cardIdx, grade) {
   const sess = S.session;
   const item = sess.batch[cardIdx];
   const prev = sess.answers[cardIdx];
-  // Toggle: click same = unmark
-  const newVal = (prev && prev.val === val) ? null : val;
-  if (newVal) {
-    sess.answers[cardIdx] = { val: newVal, correct: newVal === 'ok' };
-    setS(item._sec, item._idx, newVal);
-    if (newVal === 'ok') { S.streak++; save(); checkMilestones(null); }
+  // Toggle: click same grade = unmark
+  const newVal = (prev && prev.val === grade) ? null : grade;
+  if (newVal !== null) {
+    const { interval } = srRate(item._sec, item._idx, grade);
+    sess.answers[cardIdx] = { val: grade, correct: grade > 0 };
+    if (grade > 0) { S.streak++; save(); checkMilestones(null); }
+    else { S.streak = 0; save(); }
     trackAction();
   } else {
     delete sess.answers[cardIdx];
-    setS(item._sec, item._idx, null);
+    // Undo: remove SR data and status
+    delete S.sr[srKey(item._sec, item._idx)];
+    S.status[srKey(item._sec, item._idx)] = null;
+    save();
   }
   render();
 }
@@ -4612,8 +4823,6 @@ function buildSessionRecap() {
   const correct = Object.values(answers).filter(a => a.correct).length;
   const wrong   = total - correct;
   const pct     = total > 0 ? Math.round((correct / total) * 100) : 0;
-
-  let em='😅', ti='Continue !', sub='Quelques erreurs — bon effort !';
   if (pct >= 90) { em='🏆'; ti='Excellent !'; sub='Quasi parfait !'; }
   else if (pct >= 70) { em='💪'; ti='Bien joué !'; sub='Encore quelques à consolider.'; }
   else if (pct >= 50) { em='📈'; ti='En progrès !'; sub='La moitié réussie — continue !'; }
@@ -4664,10 +4873,10 @@ function buildSessionRecap() {
             ${errors.map(({item, i, ans}) => {
               const isFC = type === 'fc';
               const wrongLabel = isFC
-                ? (ans.val === 'review' ? '🔄 Mis en révision' : '— pas marqué')
+                ? (ans.val === 0 ? '😓 Marqué Difficile' : '— pas répondu')
                 : `✗ Tu as choisi : "${item.opts[ans.chosen]}"`;
               const correctLabel = isFC
-                ? `✓ Bonne réponse : mémoriser`
+                ? `✓ Repassera dans 1 jour`
                 : `✓ Correct : "${item.opts[item.ans]}"`;
               return `
                 <div class="sess-error-card">
