@@ -5581,17 +5581,26 @@ if (!S.listeningTest) S.listeningTest = { cursor: 0, answers: {}, showResults: f
 
 let _ltSpeaking = false;
 let _ltUtterance = null;
+let _ltSessionId = 0;     // incremented on every stop/navigate — invalidates in-flight callbacks
+let _ltAutoTimer = null;  // holds the setTimeout for auto-play so we can cancel it
+let _ltVoice = null;      // cached GB voice once resolved
 
-function ltPickVoice() {
-  // Try to find a good English voice: prefer British (en-GB), fallback American (en-US)
+// ── Voice resolution ──────────────────────────────────────
+// Web Speech voices load asynchronously (especially Chrome/Safari).
+// We resolve once and cache the result; if not yet loaded we wait for
+// the voiceschanged event before re-trying.
+function _ltResolveVoice() {
   const voices = speechSynthesis.getVoices();
-  // Priority list: native GB voices first, then US, then any en-
+  if (!voices.length) return null;          // not loaded yet
+
+  // Priority: en-GB (remote quality first), then en-AU, then en-US, then any en-
   const priority = [
-    v => v.lang === 'en-GB' && !v.localService, // online GB (usually higher quality)
+    v => v.lang === 'en-GB' && v.name.includes('Daniel'),   // Chrome macOS high-quality
+    v => v.lang === 'en-GB' && !v.localService,
     v => v.lang === 'en-GB',
-    v => v.lang === 'en-US' && v.name.toLowerCase().includes('samantha'),
-    v => v.lang === 'en-US' && !v.localService,
-    v => v.lang === 'en-US',
+    v => v.lang === 'en-AU' && !v.localService,
+    v => v.lang === 'en-AU',
+    v => v.lang === 'en-US' && v.name.toLowerCase().includes('karen'),
     v => v.lang.startsWith('en'),
   ];
   for (const test of priority) {
@@ -5601,48 +5610,96 @@ function ltPickVoice() {
   return null;
 }
 
+function _ltEnsureVoice(cb) {
+  // If already cached, use it immediately
+  if (_ltVoice) { cb(_ltVoice); return; }
+
+  const v = _ltResolveVoice();
+  if (v) { _ltVoice = v; cb(v); return; }
+
+  // Voices not yet loaded — wait for the event (fires once on Chrome/Safari)
+  function onVoicesChanged() {
+    speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
+    _ltVoice = _ltResolveVoice();
+    cb(_ltVoice);
+  }
+  speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
+}
+
+// ── Core speak function ───────────────────────────────────
 function ltSpeak(questionIdx) {
   if (!window.speechSynthesis) { toast('🔊 Audio non supporté'); return; }
-  const q = LISTENING_TEST[questionIdx];
-  const letters = ['A', 'B', 'C', 'D'];
 
-  // Sentences spoken individually for natural pausing between each choice
-  const sentences = [];
-  sentences.push(q.consigne);
-  q.opts.forEach((opt, i) => { sentences.push(letters[i] + '. ' + opt); });
-
+  // Cancel any in-flight speech and invalidate pending callbacks
+  _ltSessionId++;
+  const mySession = _ltSessionId;
+  clearTimeout(_ltAutoTimer);
+  _ltAutoTimer = null;
   speechSynthesis.cancel();
-  _ltSpeaking = true;
-  render();
 
-  let idx = 0;
-  function speakNext() {
-    if (idx >= sentences.length) {
-      _ltSpeaking = false;
-      _ltUtterance = null;
-      render();
-      return;
+  _ltSpeaking = true;
+  _ltUtterance = null;
+  render();   // show "Stop" button immediately
+
+  _ltEnsureVoice(function(voice) {
+    // If navigation happened while waiting for voices, abort
+    if (mySession !== _ltSessionId) return;
+
+    const q = LISTENING_TEST[questionIdx];
+    const letters = ['A', 'B', 'C', 'D'];
+    const sentences = [q.consigne].concat(
+      q.opts.map(function(opt, i) { return letters[i] + '. ' + opt; })
+    );
+
+    let idx = 0;
+    function speakNext() {
+      // Abort if this session was cancelled while we were mid-chain
+      if (mySession !== _ltSessionId) return;
+
+      if (idx >= sentences.length) {
+        _ltSpeaking = false;
+        _ltUtterance = null;
+        render();
+        return;
+      }
+      const u = new SpeechSynthesisUtterance(sentences[idx]);
+      u.lang = 'en-GB';
+      u.rate = idx === 0 ? 0.85 : 0.80;
+      u.pitch = 1.0;
+      if (voice) u.voice = voice;
+
+      _ltUtterance = u;
+
+      u.onend = function() {
+        if (mySession !== _ltSessionId) return;
+        idx++;
+        speakNext();
+      };
+      u.onerror = function(e) {
+        // 'interrupted' fires when we cancel deliberately — not a real error
+        if (e.error === 'interrupted' || e.error === 'canceled') return;
+        if (mySession !== _ltSessionId) return;
+        _ltSpeaking = false;
+        _ltUtterance = null;
+        render();
+      };
+
+      speechSynthesis.speak(u);
     }
-    const u = new SpeechSynthesisUtterance(sentences[idx]);
-    u.lang = 'en-GB';
-    u.rate = idx === 0 ? 0.85 : 0.80; // slightly slower for options
-    u.pitch = 1;
-    // Try to assign a good voice (voices may not be loaded yet on first call)
-    const voice = ltPickVoice();
-    if (voice) u.voice = voice;
-    _ltUtterance = u;
-    u.onend = () => { idx++; speakNext(); };
-    u.onerror = () => { _ltSpeaking = false; _ltUtterance = null; render(); };
-    speechSynthesis.speak(u);
-  }
-  speakNext();
+    speakNext();
+  });
 }
 
 function ltStopSpeaking() {
+  // Increment session id FIRST so any pending onend/onerror callbacks are ignored
+  _ltSessionId++;
+  clearTimeout(_ltAutoTimer);
+  _ltAutoTimer = null;
   speechSynthesis.cancel();
   _ltSpeaking = false;
   _ltUtterance = null;
-  render();
+  // Do NOT call render() here when invoked from navigation —
+  // the caller (ltNext/ltPrev) will call render() itself.
 }
 
 function ltAnswer(questionIdx, optIdx) {
@@ -5660,23 +5717,21 @@ function ltAnswer(questionIdx, optIdx) {
 }
 
 function ltNext() {
+  ltStopSpeaking();   // cancel speech & invalidate session — no render inside
   if (S.listeningTest.cursor < LISTENING_TEST.length - 1) {
     S.listeningTest.cursor++;
-    ltStopSpeaking();
-    render();
   } else {
-    ltStopSpeaking();
     S.listeningTest.showResults = true;
-    render();
   }
+  render();
 }
 
 function ltPrev() {
+  ltStopSpeaking();   // cancel speech & invalidate session — no render inside
   if (S.listeningTest.cursor > 0) {
     S.listeningTest.cursor--;
-    ltStopSpeaking();
-    render();
   }
+  render();
 }
 
 function ltReset() {
@@ -5832,8 +5887,9 @@ function buildListeningTest() {
     + resetLink;
 
   // Auto-play on first visit to each new question (not yet answered, not currently speaking)
-  if (!done && !isSpeaking) {
-    setTimeout(function() { ltSpeak(qi); }, 400);
+  if (!done && !_ltSpeaking) {
+    clearTimeout(_ltAutoTimer);
+    _ltAutoTimer = setTimeout(function() { ltSpeak(qi); }, 450);
   }
 
   return wrap;
