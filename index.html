@@ -862,6 +862,125 @@ let SPEAK_PROMPTS = [];
 let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
 
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let S = {
+  tab: 'home',
+  cursor: {vocab:0, expr:0, prep:0, phrasal:0, take:0},
+  prepView: 'cours',
+  prepSection: 'sur',
+  phrasalView: 'cours',
+  takeView: 'cours',
+  grammarView: 'cours',
+  grammar2View: 'cours',
+  grammar3View: 'cours',
+  grammar4View: 'cours',
+  grammar5View: 'cours',
+  grammar6View: 'mcq',
+  mcqAnswers: {},
+  mcqAnswers2: {},
+  mcqAnswers3: {},
+  mcqAnswers4: {},
+  mcqAnswers5: {},
+  mcqAnswers6: {},
+  mcqAnswersTake: {},
+  status: {},
+  streak: 0,
+  quiz: null,
+  speak: { transcript: '', feedback: null, loading: false, promptIdx: 0 },
+  session: null,
+  sessProgress: {},
+  daily: { date: '', actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 },
+  lastSession: null,
+  milestones: {},
+  sr: {},
+  listeningTest: { cursor: 0, answers: {}, showResults: false },
+};
+
+// ── Firebase helpers ──────────────────────────────────────
+let _saveTimer = null;
+const FB_DOC = 'users/omar';
+
+async function load() {
+  _loadLocal();
+  try {
+    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const db = getFirestore(window._fbApp);
+    const snap = await getDoc(doc(db, FB_DOC));
+    if (snap.exists()) {
+      _applyData(snap.data());
+      _saveLocal();
+      render();
+    }
+  } catch(e) {
+    console.warn('Firestore load failed, using local cache:', e.message);
+  }
+}
+
+function _loadLocal() {
+  try {
+    const r = localStorage.getItem('qae_v5');
+    if (!r) return;
+    _applyData(JSON.parse(r));
+  } catch(e) {}
+}
+
+function _applyData(p) {
+  S.status         = p.status         || {};
+  S.streak         = p.streak         || 0;
+  S.cursor         = p.cursor         || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
+  S.sessProgress   = p.sessProgress   || {};
+  S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
+  S.lastSession    = p.lastSession    || null;
+  S.milestones     = p.milestones     || {};
+  S.sr             = p.sr             || {};
+  S.mcqAnswers     = p.mcqAnswers     || {};
+  S.mcqAnswers2    = p.mcqAnswers2    || {};
+  S.mcqAnswers3    = p.mcqAnswers3    || {};
+  S.mcqAnswers4    = p.mcqAnswers4    || {};
+  S.mcqAnswers5    = p.mcqAnswers5    || {};
+  S.mcqAnswers6    = p.mcqAnswers6    || {};
+  S.mcqAnswersTake = p.mcqAnswersTake || {};
+  S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
+  const today = new Date().toISOString().slice(0,10);
+  if (S.daily.date !== today) {
+    S.daily = { date:today, actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
+  }
+}
+
+function _saveLocal() {
+  try {
+    localStorage.setItem('qae_v5', JSON.stringify(_buildPayload()));
+  } catch(e) {}
+}
+
+function _buildPayload() {
+  return {
+    status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress,
+    daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
+    mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
+    mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest,
+  };
+}
+
+function save() {
+  _saveLocal();
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(_saveFirestore, 1500);
+}
+
+async function _saveFirestore() {
+  try {
+    const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const db = getFirestore(window._fbApp);
+    await setDoc(doc(db, FB_DOC), _buildPayload());
+  } catch(e) {
+    console.warn('Firestore save failed:', e.message);
+  }
+}
+
 async function loadAllData() {
   try {
     const [vocab, prep, phrasal, grammar, speaking, listening] = await Promise.all([
@@ -901,7 +1020,8 @@ async function loadAllData() {
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
   } catch(e) {
     console.error('loadAllData failed:', e);
-    document.getElementById('app').innerHTML = "<div style="padding:40px;text-align:center;color:red">⚠ Erreur de chargement des données. Assure-toi d'ouvrir l'app via un serveur web (GitHub Pages ou localhost).</div>";
+    document.getElementById('app').innerHTML = "<div style='padding:40px;text-align:center;color:red'>⚠ Erreur de chargement des données. Assure-toi d'ouvrir l'app via un serveur web (GitHub Pages ou localhost).</div>";
+
   }
 }
 
