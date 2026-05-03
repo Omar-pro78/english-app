@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QA English — Omar</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUZiDYz4yUzfkO-avo2kpwtT0VQU9LFsE",
+    authDomain: "appenglishtest-4b1ff.firebaseapp.com",
+    projectId: "appenglishtest-4b1ff",
+    storageBucket: "appenglishtest-4b1ff.firebasestorage.app",
+    messagingSenderId: "592219400544",
+    appId: "1:592219400544:web:ea519bd3ad2b6bb11b9605"
+  };
+  window._fbApp = initializeApp(firebaseConfig);
+  window.dispatchEvent(new Event('fbReady'));
+</script>
 <style>
 :root {
   --bg:#f5f0e8; --bg2:#ede8de; --surface:#ffffff; --surface2:#ede8de;
@@ -810,6 +823,7 @@ main{flex:1;display:flex;flex-direction:column;}
     <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
     <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">SR dues🧠</span></div>
     <div class="hd-stat"><span class="n" id="statStreak">0</span><span class="l">Streak🔥</span></div>
+    <span id="syncBadge" style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);opacity:0;transition:opacity .4s;align-self:center;"></span>
   </div>
 </header>
 
@@ -1769,32 +1783,114 @@ let S = {
   sr: {},
 };
 
-function load() {
+// ── Firebase helpers ──────────────────────────────────────
+let _db = null;
+let _saveTimer = null;
+const FB_DOC = 'users/omar'; // single-user doc path
+
+function _fbDoc() {
+  return window._firestore
+    ? window._firestore.doc(window._firestore.getFirestore(), FB_DOC)
+    : null;
+}
+
+// Load from Firestore, fallback to localStorage while offline
+async function load() {
+  // 1. Always load localStorage first so the app renders immediately
+  _loadLocal();
+
+  // 2. Then try Firestore
+  try {
+    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const db = getFirestore(window._fbApp);
+    const snap = await getDoc(doc(db, FB_DOC));
+    if (snap.exists()) {
+      const p = snap.data();
+      _applyData(p);
+      // Keep localStorage in sync as cache
+      _saveLocal();
+      render();
+    }
+  } catch(e) {
+    console.warn('Firestore load failed, using local cache:', e.message);
+  }
+}
+
+function _loadLocal() {
   try {
     const r = localStorage.getItem('qae_v5');
     if (!r) return;
-    const p = JSON.parse(r);
-    S.status       = p.status      || {};
-    S.streak       = p.streak      || 0;
-    S.cursor       = p.cursor      || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
-    S.sessProgress = p.sessProgress || {};
-    S.daily        = p.daily       || { date: '', actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
-    S.lastSession  = p.lastSession  || null;
-    S.milestones   = p.milestones   || {};
-    S.sr           = p.sr          || {};
-  } catch(e){}
+    _applyData(JSON.parse(r));
+  } catch(e) {}
+}
+
+function _applyData(p) {
+  S.status       = p.status       || {};
+  S.streak       = p.streak       || 0;
+  S.cursor       = p.cursor       || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
+  S.sessProgress = p.sessProgress || {};
+  S.daily        = p.daily        || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
+  S.lastSession  = p.lastSession  || null;
+  S.milestones   = p.milestones   || {};
+  S.sr           = p.sr           || {};
+  S.mcqAnswers   = p.mcqAnswers   || {};
+  S.mcqAnswers2  = p.mcqAnswers2  || {};
+  S.mcqAnswers3  = p.mcqAnswers3  || {};
+  S.mcqAnswers4  = p.mcqAnswers4  || {};
+  S.mcqAnswers5  = p.mcqAnswers5  || {};
+  S.mcqAnswers6  = p.mcqAnswers6  || {};
+  S.mcqAnswersTake = p.mcqAnswersTake || {};
+  S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
   // Reset daily counter if it's a new day
   const today = new Date().toISOString().slice(0,10);
   if (S.daily.date !== today) {
-    S.daily = { date: today, actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
-    save();
+    S.daily = { date:today, actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   }
 }
-function save() {
-  localStorage.setItem('qae_v5', JSON.stringify({
+
+function _saveLocal() {
+  try {
+    localStorage.setItem('qae_v5', JSON.stringify(_buildPayload()));
+  } catch(e) {}
+}
+
+function _buildPayload() {
+  return {
     status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress,
     daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
-  }));
+    mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
+    mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest,
+  };
+}
+
+// Debounced save — waits 1.5s after last call before writing to Firestore
+function save() {
+  _saveLocal(); // immediate local save
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(_saveFirestore, 1500);
+}
+
+async function _saveFirestore() {
+  try {
+    const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const db = getFirestore(window._fbApp);
+    await setDoc(doc(db, FB_DOC), _buildPayload());
+    _showSyncBadge('✓ Sauvegardé');
+  } catch(e) {
+    console.warn('Firestore save failed:', e.message);
+    _showSyncBadge('⚠ Hors ligne');
+  }
+}
+
+// Small sync indicator in the header
+function _showSyncBadge(msg) {
+  let badge = document.getElementById('syncBadge');
+  if (!badge) return;
+  badge.textContent = msg;
+  badge.style.opacity = '1';
+  clearTimeout(badge._t);
+  badge._t = setTimeout(() => badge.style.opacity = '0', 2500);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -5421,11 +5517,34 @@ function loadDialogsCache() {
     const raw = localStorage.getItem(DIALOGS_LS_KEY);
     if (raw) DIALOGS_CACHE = JSON.parse(raw);
   } catch(e) {}
+  // Also try to load from Firestore in background
+  _loadDialogsFirestore();
+}
+
+async function _loadDialogsFirestore() {
+  try {
+    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const db = getFirestore(window._fbApp);
+    const snap = await getDoc(doc(db, 'users/omar_dialogs'));
+    if (snap.exists() && snap.data().cache) {
+      DIALOGS_CACHE = snap.data().cache;
+      localStorage.setItem(DIALOGS_LS_KEY, JSON.stringify(DIALOGS_CACHE));
+    }
+  } catch(e) {}
 }
 
 function saveDialogsCache() {
   try { localStorage.setItem(DIALOGS_LS_KEY, JSON.stringify(DIALOGS_CACHE)); }
   catch(e) {}
+  // Save to Firestore in background (debounced)
+  clearTimeout(saveDialogsCache._t);
+  saveDialogsCache._t = setTimeout(async () => {
+    try {
+      const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+      const db = getFirestore(window._fbApp);
+      await setDoc(doc(db, 'users/omar_dialogs'), { cache: DIALOGS_CACHE });
+    } catch(e) {}
+  }, 2000);
 }
 
 function dialogKey(item) {
@@ -5942,9 +6061,16 @@ function buildListeningTest() {
 // INIT
 // ═══════════════════════════════════════════════════════════
 loadDialogsCache();
-load();
 document.getElementById('backBar').onclick = goHome;
+// Load local data immediately so app renders fast, then Firestore syncs in background
+_loadLocal();
+const today = new Date().toISOString().slice(0,10);
+if (S.daily.date !== today) {
+  S.daily = { date:today, actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
+}
 render();
+// Firestore load runs in background and re-renders when data arrives
+load();
 </script>
 </body>
 </html>
