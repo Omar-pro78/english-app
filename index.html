@@ -4693,6 +4693,11 @@ function buildFcCard(item, cardIdx, answered, color) {
         </div>
       </div>` : '';
 
+    // Dialog block — only for vocab/expr
+    const dialogBlock = (item._sec === 'vocab' || item._sec === 'expr')
+      ? renderDialogBlock(item, panelClr)
+      : '';
+
     return `
       <div style="background:${panelBg};border:1.5px solid ${panelBdr};border-radius:14px;padding:14px 16px;margin-top:10px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
@@ -4701,6 +4706,7 @@ function buildFcCard(item, cardIdx, answered, color) {
         </div>
         <div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);">${panelMsg}</div>
         ${exBlock}
+        ${dialogBlock}
       </div>`;
   })() : '';
 
@@ -4759,6 +4765,10 @@ function sessMarkSR(cardIdx, grade) {
     if (grade > 0) { S.streak++; save(); checkMilestones(null); }
     else { S.streak = 0; save(); }
     trackAction();
+    // Trigger dialog generation for vocab/expr only
+    if ((item._sec === 'vocab' || item._sec === 'expr') && !DIALOGS_CACHE[dialogKey(item)]) {
+      generateDialog(item);
+    }
   } else {
     delete sess.answers[cardIdx];
     // Undo: remove SR data and status
@@ -5168,8 +5178,235 @@ function launchConfetti(count = 80) {
 }
 
 // ═══════════════════════════════════════════════════════════
+// MINI-DIALOGUE SYSTEM — fallback hardcodé (51 vocab + 34 expr)
+// ═══════════════════════════════════════════════════════════
+const DIALOGS_FALLBACK = {
+  // ── VOCAB (index 0-50) ────────────────────────────────────
+  "vocab:0":  [{speaker:"PO",line:"Omar, the client added a new **requirement** this morning."},{speaker:"Omar",line:"Already? I'll update the test cases right away."},{speaker:"PO",line:"Thanks, it affects the checkout flow only."}],
+  "vocab:1":  [{speaker:"Omar",line:"This **business requirement** is vague — who defined it?"},{speaker:"PO",line:"The product owner did, after the last stakeholder call."},{speaker:"Omar",line:"Okay, I'll flag it before writing test cases."}],
+  "vocab:2":  [{speaker:"Dev",line:"Did you check the **functional specification** for this ticket?"},{speaker:"Omar",line:"Yes, but step 3 is missing — the expected state isn't described."},{speaker:"Dev",line:"I'll ask the BA to complete it today."}],
+  "vocab:3":  [{speaker:"Omar",line:"The **technical specification** says the timeout is 30 seconds."},{speaker:"Dev",line:"Right, but the current code sets it to 10."},{speaker:"Omar",line:"That's a bug — I'll log it in Jira now."}],
+  "vocab:4":  [{speaker:"Lead",line:"Omar, this **user story** has no acceptance criteria yet."},{speaker:"Omar",line:"I noticed that — can we block it until the PO adds them?"},{speaker:"Lead",line:"Good catch, I'll ping her in Slack."}],
+  "vocab:5":  [{speaker:"Omar",line:"The **acceptance criteria** say the button should be disabled on error."},{speaker:"Dev",line:"I missed that — let me push a fix now."},{speaker:"Omar",line:"I'll retest once it's on staging."}],
+  "vocab:6":  [{speaker:"QA Lead",line:"How many **test cases** did you write for this sprint?"},{speaker:"Omar",line:"Fifteen so far — I still need to cover the edge cases."},{speaker:"QA Lead",line:"Prioritize the payment flow first."}],
+  "vocab:7":  [{speaker:"Omar",line:"This **test scenario** covers the full return process end to end."},{speaker:"Dev",line:"Great, does it include the partial refund case?"},{speaker:"Omar",line:"Not yet — I'll add it before the sprint review."}],
+  "vocab:8":  [{speaker:"Lead",line:"Have you shared the **test plan** with the team?"},{speaker:"Omar",line:"I sent it to Slack this morning — did you get it?"},{speaker:"Lead",line:"Not yet, can you resend it?"}],
+  "vocab:9":  [{speaker:"Omar",line:"Our **test suite** now covers the entire checkout module."},{speaker:"QA Lead",line:"How long does it take to run?"},{speaker:"Omar",line:"About 12 minutes on the CI pipeline."}],
+  "vocab:10": [{speaker:"Lead",line:"When does **test execution** start for this release?"},{speaker:"Omar",line:"Tomorrow morning — environments are ready."},{speaker:"Lead",line:"Good, keep me posted on any blockers."}],
+  "vocab:11": [{speaker:"QA Lead",line:"Our **test coverage** dropped to 70% after the last refactor."},{speaker:"Omar",line:"I saw that — I'll add tests for the new components today."},{speaker:"QA Lead",line:"Target 85% before the release."}],
+  "vocab:12": [{speaker:"Dev",line:"Can you run **regression testing** before I merge this PR?"},{speaker:"Omar",line:"Sure, I'll run the suite on staging now."},{speaker:"Dev",line:"Let me know if anything breaks."}],
+  "vocab:13": [{speaker:"Omar",line:"I just ran a quick **smoke test** after the deployment."},{speaker:"Lead",line:"All good?"},{speaker:"Omar",line:"Homepage and login work — deeper tests coming now."}],
+  "vocab:14": [{speaker:"Dev",line:"The **sanity test** passed — critical paths are all green."},{speaker:"Omar",line:"Perfect, I'll start the full regression now."},{speaker:"Dev",line:"Ping me if you find anything odd."}],
+  "vocab:15": [{speaker:"Omar",line:"The **E2E test** failed on the order confirmation step."},{speaker:"Dev",line:"Which environment — staging or QA?"},{speaker:"Omar",line:"Staging — I'll share the logs with you."}],
+  "vocab:16": [{speaker:"Omar",line:"**Integration testing** shows the API and DB are out of sync."},{speaker:"Dev",line:"That's from yesterday's migration — I'll check."},{speaker:"Omar",line:"I'll block the release until it's confirmed fixed."}],
+  "vocab:17": [{speaker:"Dev",line:"I added **unit testing** for all the new payment functions."},{speaker:"Omar",line:"Good — did you cover the error cases too?"},{speaker:"Dev",line:"Yes, including null response and timeout scenarios."}],
+  "vocab:18": [{speaker:"Omar",line:"I found a **bug** — the cart total doesn't update on quantity change."},{speaker:"Dev",line:"I can reproduce it — must be the event listener."},{speaker:"Omar",line:"I'll log it as high severity in Jira."}],
+  "vocab:19": [{speaker:"Omar",line:"I created an **issue** in Jira for the login redirect problem."},{speaker:"Dev",line:"Linked it to the sprint — I'll pick it up today."},{speaker:"Omar",line:"Let me know when it's ready for retest."}],
+  "vocab:20": [{speaker:"QA Lead",line:"What **severity** did you assign to this bug?"},{speaker:"Omar",line:"Critical — it blocks the checkout for all users."},{speaker:"QA Lead",line:"Good, escalate it to the release manager."}],
+  "vocab:21": [{speaker:"Lead",line:"What **priority** should we give this ticket?"},{speaker:"Omar",line:"High — it affects the homepage on mobile."},{speaker:"Lead",line:"Okay, let's move it to the top of the sprint."}],
+  "vocab:22": [{speaker:"Dev",line:"Your **bug report** is very clear — steps to reproduce are perfect."},{speaker:"Omar",line:"Thanks, I always add screenshots and the expected result."},{speaker:"Dev",line:"It makes fixing so much faster."}],
+  "vocab:23": [{speaker:"Omar",line:"I can **reproduce** the bug every time with this payload."},{speaker:"Dev",line:"Send me the exact request — I'll debug it locally."},{speaker:"Omar",line:"I'll paste it in the Jira ticket now."}],
+  "vocab:24": [{speaker:"Dev",line:"I pushed a **fix** for the filter bug — it's on staging now."},{speaker:"Omar",line:"I'll retest it right away."},{speaker:"Dev",line:"Let me know if it passes."}],
+  "vocab:25": [{speaker:"Lead",line:"When is the security **patch** going to production?"},{speaker:"Dev",line:"Tonight at midnight — off-peak hours."},{speaker:"Omar",line:"I'll do a smoke test first thing tomorrow."}],
+  "vocab:26": [{speaker:"Omar",line:"The **deployment** to staging just finished — I can start testing."},{speaker:"Dev",line:"Great — the fix is in the latest build."},{speaker:"Omar",line:"I'll ping you with results in an hour."}],
+  "vocab:27": [{speaker:"Lead",line:"The **release** is scheduled for Friday at 6 PM."},{speaker:"Omar",line:"All test cases are green — we're good to go."},{speaker:"Lead",line:"Perfect, I'll notify the stakeholders."}],
+  "vocab:28": [{speaker:"Omar",line:"Which **environment** should I test this on — QA or staging?"},{speaker:"Dev",line:"Staging — the fix is only deployed there."},{speaker:"Omar",line:"On it, I'll start now."}],
+  "vocab:29": [{speaker:"Lead",line:"This bug is in **production** — we need to act now."},{speaker:"Omar",line:"I'm testing a hotfix on staging as we speak."},{speaker:"Dev",line:"It'll be ready to deploy in 20 minutes."}],
+  "vocab:30": [{speaker:"Omar",line:"The feature is validated on **staging** — ready for prod."},{speaker:"Lead",line:"Any open issues?"},{speaker:"Omar",line:"One minor cosmetic bug — not blocking."}],
+  "vocab:31": [{speaker:"Dev",line:"I deployed the fix to the **QA environment** — can you check?"},{speaker:"Omar",line:"Yes, give me 10 minutes."},{speaker:"Dev",line:"No rush, just ping me."}],
+  "vocab:32": [{speaker:"Omar",line:"The **API** is returning a 500 error on the search endpoint."},{speaker:"Dev",line:"I see it in the logs — a null pointer exception."},{speaker:"Omar",line:"I'll update the Jira ticket with the logs."}],
+  "vocab:33": [{speaker:"Omar",line:"The **/users endpoint** is returning empty data after the migration."},{speaker:"Dev",line:"The mapping is broken — I'll fix it now."},{speaker:"Omar",line:"I'll retest once you deploy to QA."}],
+  "vocab:34": [{speaker:"Omar",line:"The **payload** I'm sending has all required fields — still 400."},{speaker:"Dev",line:"Let me check the validation logic on the server side."},{speaker:"Omar",line:"I'll share the exact request in Slack."}],
+  "vocab:35": [{speaker:"Omar",line:"The API **response** is 200 but the body is empty — that's odd."},{speaker:"Dev",line:"The DB query must be returning nothing — I'll check."},{speaker:"Omar",line:"I'll document it in the bug report."}],
+  "vocab:36": [{speaker:"Dev",line:"The **database** wasn't migrated correctly — some tables are missing."},{speaker:"Omar",line:"That explains the 500 errors I've been seeing."},{speaker:"Dev",line:"I'll run the migration script again."}],
+  "vocab:37": [{speaker:"Omar",line:"I ran a **query** to check if the order was created in the DB."},{speaker:"Dev",line:"And?"},{speaker:"Omar",line:"The record is there but the status is wrong."}],
+  "vocab:38": [{speaker:"Omar",line:"The **logs** show a timeout error at 10:43 AM."},{speaker:"Dev",line:"That's when the batch job ran — must be a conflict."},{speaker:"Omar",line:"I'll add that to the bug report."}],
+  "vocab:39": [{speaker:"Dev",line:"I need to **debug** this — the API call fails only in production."},{speaker:"Omar",line:"I'll send you the exact payload I used in my tests."},{speaker:"Dev",line:"That'll help a lot, thanks."}],
+  "vocab:40": [{speaker:"QA Lead",line:"We should invest in **automation** for the regression suite."},{speaker:"Omar",line:"Agreed — I already automated the login and checkout flows."},{speaker:"QA Lead",line:"Great, let's review them in the next sprint."}],
+  "vocab:41": [{speaker:"Omar",line:"I wrote a **test script** to automate the password reset flow."},{speaker:"QA Lead",line:"How long does it take to run?"},{speaker:"Omar",line:"Under 30 seconds — much faster than manual."}],
+  "vocab:42": [{speaker:"Dev",line:"Which **framework** are you using for your automated tests?"},{speaker:"Omar",line:"Cypress for E2E and Jest for unit tests."},{speaker:"Dev",line:"Good choice — Cypress integrates well with our stack."}],
+  "vocab:43": [{speaker:"Lead",line:"The **CI/CD** pipeline failed on the test stage."},{speaker:"Omar",line:"I see it — one of my new tests is flaky."},{speaker:"Lead",line:"Fix it before the next deploy, please."}],
+  "vocab:44": [{speaker:"Omar",line:"The **pipeline** is blocked — tests are failing on the API step."},{speaker:"Dev",line:"The QA environment is down — I'll restart it."},{speaker:"Omar",line:"Okay, I'll re-trigger the pipeline once it's up."}],
+  "vocab:45": [{speaker:"Dev",line:"We use Git for **version control** on all our projects."},{speaker:"Omar",line:"Good — I'll make sure to branch off main for my test scripts."},{speaker:"Dev",line:"Exactly — never commit directly to main."}],
+  "vocab:46": [{speaker:"Omar",line:"I created a **branch** for the test scripts — review when you can."},{speaker:"Dev",line:"I'll check it this afternoon."},{speaker:"Omar",line:"No rush, just before the sprint ends."}],
+  "vocab:47": [{speaker:"Dev",line:"Can you **merge** the test branch into main after review?"},{speaker:"Omar",line:"Sure — no conflicts?"},{speaker:"Dev",line:"All clean — just approve the PR."}],
+  "vocab:48": [{speaker:"Dev",line:"There's a **conflict** in the test file — two people edited it."},{speaker:"Omar",line:"I'll resolve it on my side and push again."},{speaker:"Dev",line:"Thanks, let me know when it's done."}],
+  "vocab:49": [{speaker:"Lead",line:"The release broke prod — we need to **rollback** immediately."},{speaker:"Dev",line:"On it — previous version will be live in 5 minutes."},{speaker:"Omar",line:"I'll run a smoke test as soon as it's deployed."}],
+  "vocab:50": [{speaker:"Lead",line:"Did you set up **monitoring** alerts for the new payment flow?"},{speaker:"Omar",line:"Yes — we get a Slack alert if error rate exceeds 1%."},{speaker:"Lead",line:"Perfect — that's exactly what we needed."}],
+
+  // ── EXPR (index 0-33) ─────────────────────────────────────
+  "expr:0":  [{speaker:"Omar",line:"**I found a bug** on the checkout — total doesn't update."},{speaker:"Dev",line:"Can you share the steps to reproduce?"},{speaker:"Omar",line:"Yes, I'll paste them in the Jira ticket."}],
+  "expr:1":  [{speaker:"Omar",line:"**The issue is reproducible** every time on Firefox."},{speaker:"Dev",line:"Interesting — it works fine on Chrome."},{speaker:"Omar",line:"Must be a browser-specific rendering problem."}],
+  "expr:2":  [{speaker:"Dev",line:"Can you reproduce it on your machine?"},{speaker:"Omar",line:"**I can't reproduce the issue** — can you share more details?"},{speaker:"Dev",line:"Sure, I'll record a screen capture."}],
+  "expr:3":  [{speaker:"Dev",line:"I pushed the fix — can you retest?"},{speaker:"Omar",line:"Done — **it works as expected** now."},{speaker:"Dev",line:"Great, I'll close the ticket."}],
+  "expr:4":  [{speaker:"Omar",line:"The button is disabled — **it doesn't meet the requirements**."},{speaker:"Dev",line:"Which requirement exactly?"},{speaker:"Omar",line:"AC3 — it should stay active on error."}],
+  "expr:5":  [{speaker:"Dev",line:"What info do you need to fix this?"},{speaker:"Omar",line:"**We need more details** — steps to reproduce are missing."},{speaker:"Dev",line:"I'll ask the reporter to complete the ticket."}],
+  "expr:6":  [{speaker:"Omar",line:"**Can you clarify this point?** The spec says two different things."},{speaker:"PO",line:"Which section?"},{speaker:"Omar",line:"Section 3.2 — expected state after error."}],
+  "expr:7":  [{speaker:"Omar",line:"**This is a blocker** — login is broken for all users."},{speaker:"Lead",line:"Escalate it immediately."},{speaker:"Omar",line:"Already done — Dev team is on it."}],
+  "expr:8":  [{speaker:"Dev",line:"Is the color bug urgent?"},{speaker:"Omar",line:"No, **this is a minor issue** — doesn't affect functionality."},{speaker:"Dev",line:"Okay, I'll fix it in the next sprint."}],
+  "expr:9":  [{speaker:"PO",line:"When will the bug be fixed?"},{speaker:"Dev",line:"**The fix is in progress** — should be done by end of day."},{speaker:"Omar",line:"I'll retest as soon as it's deployed."}],
+  "expr:10": [{speaker:"Dev",line:"Good news — **the issue has been fixed** and deployed to staging."},{speaker:"Omar",line:"I'll test it right now."},{speaker:"Dev",line:"Let me know if anything else comes up."}],
+  "expr:11": [{speaker:"Dev",line:"The new feature is **ready for testing** on staging."},{speaker:"Omar",line:"I'll start with the happy path first."},{speaker:"Dev",line:"Ping me if you find anything."}],
+  "expr:12": [{speaker:"Omar",line:"All scenarios passed — **tested and validated**, ready for prod."},{speaker:"Lead",line:"Perfect — I'll schedule the release for Friday."},{speaker:"Omar",line:"I'll be on standby during the deployment."}],
+  "expr:13": [{speaker:"Omar",line:"TC-042 is a **failed test case** — expected 200, got 500."},{speaker:"Dev",line:"I see it — a missing null check."},{speaker:"Omar",line:"I'll block the ticket until it's fixed."}],
+  "expr:14": [{speaker:"QA Lead",line:"How many test cases passed?"},{speaker:"Omar",line:"All critical ones are **passed test cases** — good to go."},{speaker:"QA Lead",line:"Excellent, approve the release."}],
+  "expr:15": [{speaker:"Lead",line:"We have 12 open bugs — where do we start?"},{speaker:"Omar",line:"**Let's prioritize this** — the payment one blocks the release."},{speaker:"Lead",line:"Agreed, assign it to the senior dev."}],
+  "expr:16": [{speaker:"Omar",line:"**What's the impact** if we skip this fix for the release?"},{speaker:"PO",line:"About 5% of users on mobile won't be able to checkout."},{speaker:"Omar",line:"Then it's a blocker — we can't ship without fixing it."}],
+  "expr:17": [{speaker:"Omar",line:"**Do we have a workaround** while the fix is being developed?"},{speaker:"Dev",line:"Yes — users can refresh the page to reset the state."},{speaker:"Omar",line:"I'll add it to the Jira ticket for the support team."}],
+  "expr:18": [{speaker:"Omar",line:"This worked last sprint — **it's a regression**."},{speaker:"Dev",line:"Must have been introduced in the last refactor."},{speaker:"Omar",line:"I'll compare both builds to find the diff."}],
+  "expr:19": [{speaker:"Omar",line:"**Can you deploy on staging?** I need to validate the fix."},{speaker:"Dev",line:"Give me 10 minutes — I'll push it now."},{speaker:"Omar",line:"Perfect, I'll start testing as soon as it's live."}],
+  "expr:20": [{speaker:"Dev",line:"The fix is deployed — you can test now."},{speaker:"Omar",line:"**I'll retest after the fix** — give me 15 minutes."},{speaker:"Dev",line:"Take your time, I'll be in the PR."}],
+  "expr:21": [{speaker:"Lead",line:"We're getting 500 errors but no logs — what's happening?"},{speaker:"Omar",line:"**We need to investigate** — I'll dig into the server logs."},{speaker:"Dev",line:"I'll join you — might be a DB connection issue."}],
+  "expr:22": [{speaker:"Omar",line:"After the migration, **the data looks incorrect** — prices are wrong."},{speaker:"Dev",line:"The currency conversion script had a bug."},{speaker:"Omar",line:"I'll document all the affected records in the ticket."}],
+  "expr:23": [{speaker:"Omar",line:"**The API returns an error** 422 when I submit this form."},{speaker:"Dev",line:"Which field is failing validation?"},{speaker:"Omar",line:"The phone number — it rejects the French format."}],
+  "expr:24": [{speaker:"Omar",line:"The search request fails with a **timeout error** after 30 seconds."},{speaker:"Dev",line:"The DB query is too slow — needs an index."},{speaker:"Omar",line:"I'll log it as high severity in Jira."}],
+  "expr:25": [{speaker:"Omar",line:"I get **access denied** when I try to open the admin panel."},{speaker:"Dev",line:"Your account doesn't have the right role — I'll fix that."},{speaker:"Omar",line:"Thanks, I need it for testing the admin flows."}],
+  "expr:26": [{speaker:"Omar",line:"The form shows **invalid input** when I enter a valid French phone."},{speaker:"Dev",line:"The regex doesn't allow the +33 prefix — I'll fix it."},{speaker:"Omar",line:"I'll add a test case for international formats."}],
+  "expr:27": [{speaker:"QA Lead",line:"What should every bug report include?"},{speaker:"Omar",line:"Always the **expected vs actual result** — it saves so much time."},{speaker:"QA Lead",line:"Exactly — and steps to reproduce too."}],
+  "expr:28": [{speaker:"Lead",line:"**Let's sync quickly** before the deployment — any open issues?"},{speaker:"Omar",line:"Two minor bugs — not blocking, but logged."},{speaker:"Lead",line:"Good, we'll address them in the next sprint."}],
+  "expr:29": [{speaker:"Dev",line:"Do you know why the build failed?"},{speaker:"Omar",line:"Not sure yet — **I'll follow up** by end of day."},{speaker:"Dev",line:"Okay, let me know what you find."}],
+  "expr:30": [{speaker:"Omar",line:"**Any update on this?** It's been two days since I logged it."},{speaker:"Dev",line:"I just picked it up — looking at it now."},{speaker:"Omar",line:"Great, let me know when it's ready for retest."}],
+  "expr:31": [{speaker:"Dev",line:"Is it a backend issue or a frontend one?"},{speaker:"Omar",line:"After checking, **it's on my side** — wrong test data."},{speaker:"Dev",line:"No worries, happens to everyone."}],
+  "expr:32": [{speaker:"Omar",line:"The frontend looks correct — **it's coming from backend**."},{speaker:"Dev",line:"I see it — the API is returning null instead of an empty array."},{speaker:"Omar",line:"I'll update the bug report with this info."}],
+  "expr:33": [{speaker:"Dev",line:"Is it a rendering bug or a data bug?"},{speaker:"Omar",line:"It's a **frontend issue** — the data from the API is correct."},{speaker:"Dev",line:"I'll check the component logic then."}],
+};
+
+// ═══════════════════════════════════════════════════════════
+// MINI-DIALOGUE SYSTEM — génération via API Claude
+// ═══════════════════════════════════════════════════════════
+
+// Cache en mémoire + localStorage pour persister entre sessions
+let DIALOGS_CACHE = {};
+const DIALOGS_LS_KEY = 'qa_english_dialogs_v1';
+const DIALOGS_GENERATING = new Set(); // évite les doubles appels
+
+function loadDialogsCache() {
+  try {
+    const raw = localStorage.getItem(DIALOGS_LS_KEY);
+    if (raw) DIALOGS_CACHE = JSON.parse(raw);
+  } catch(e) {}
+}
+
+function saveDialogsCache() {
+  try { localStorage.setItem(DIALOGS_LS_KEY, JSON.stringify(DIALOGS_CACHE)); }
+  catch(e) {}
+}
+
+function dialogKey(item) {
+  return `${item._sec}:${item._idx}`;
+}
+
+// Situation labels pour les prompts
+const DIALOG_SITUATIONS = [
+  'standup meeting', 'Slack thread', 'Jira ticket comment',
+  'call with a developer', 'sprint review', 'bug triage',
+  'test planning meeting', 'release call', 'PR review comment',
+  'email to product owner'
+];
+
+async function generateDialog(item) {
+  const key = dialogKey(item);
+  if (DIALOGS_CACHE[key] || DIALOGS_GENERATING.has(key)) return;
+  // Use hardcoded fallback instantly if API unavailable
+  if (DIALOGS_FALLBACK[key]) {
+    DIALOGS_CACHE[key] = DIALOGS_FALLBACK[key];
+    saveDialogsCache();
+    render();
+    return;
+  }
+  DIALOGS_GENERATING.add(key);
+
+  const situation = DIALOG_SITUATIONS[item._idx % DIALOG_SITUATIONS.length];
+  const wordOrExpr = item.en;
+  const translation = item.fr;
+
+  const prompt = `You are generating a training dialog for a French QA engineer (named Omar) learning English at work (Lacoste e-commerce team).
+
+Generate a SHORT realistic work dialog of exactly 2-3 exchanges (lines) set in a "${situation}" context.
+The word/expression "${wordOrExpr}" (meaning: "${translation}") MUST appear in bold using **double asterisks** in one of the lines.
+
+Rules:
+- Speakers: use short labels like "Omar:", "Dev:", "PO:", "Lead:", "QA Lead:" etc.
+- Each line: max 15 words, natural spoken English
+- Realistic QA/tech context only
+- Return ONLY a JSON array, no markdown, no explanation. Format:
+[{"speaker":"Omar","line":"I think **${wordOrExpr}** here because the page breaks on Chrome."},{"speaker":"Dev","line":"Got it, I'll check the logs right away."}]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = (data.content || []).map(b => b.text || '').join('').trim();
+    // Strip any accidental ```json fences
+    const clean = text.replace(/```json|```/g, '').trim();
+    const dialog = JSON.parse(clean);
+    if (Array.isArray(dialog) && dialog.length >= 2) {
+      DIALOGS_CACHE[key] = dialog;
+      saveDialogsCache();
+      render(); // re-render to show the dialog
+    }
+  } catch(e) {
+    // API failed — use hardcoded fallback if available
+    if (DIALOGS_FALLBACK[key]) {
+      DIALOGS_CACHE[key] = DIALOGS_FALLBACK[key];
+      saveDialogsCache();
+      render();
+    }
+  } finally {
+    DIALOGS_GENERATING.delete(key);
+  }
+}
+
+// Render a dialog block (HTML string)
+function renderDialogBlock(item, panelClr) {
+  const key = dialogKey(item);
+  const dialog = DIALOGS_CACHE[key];
+  const isGenerating = DIALOGS_GENERATING.has(key);
+
+  if (!dialog && !isGenerating) return '';
+
+  if (isGenerating && !dialog) {
+    return `
+      <div style="margin-top:12px;padding:12px 14px;background:rgba(124,58,237,.06);border:1.5px solid rgba(124,58,237,.2);border-radius:12px;">
+        <div style="font-family:var(--mono);font-size:.52rem;color:#7c3aed;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">💬 Dialogue en contexte réel</div>
+        <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.65rem;color:var(--muted);">
+          <div class="speak-loading-dot"><span></span><span></span><span></span></div>
+          Génération du dialogue...
+        </div>
+      </div>`;
+  }
+
+  const lines = dialog.map(line => {
+    // Render **bold** markers
+    const rendered = line.line.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#7c3aed;background:rgba(124,58,237,.12);padding:1px 4px;border-radius:3px;">$1</strong>');
+    // Plain text for TTS (strip markdown)
+    const plain = line.line.replace(/\*\*/g, '');
+    return `
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06);">
+        <span style="font-family:var(--mono);font-size:.56rem;color:var(--muted);min-width:46px;padding-top:2px;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">${line.speaker}</span>
+        <span style="font-size:.8rem;color:var(--text);line-height:1.5;flex:1;">${rendered}</span>
+        <button class="btn-audio" onclick="speak('${esc(plain)}','en')" style="flex-shrink:0;margin-top:1px;border-color:#7c3aed33;color:#7c3aed;">${spkSvg()}</button>
+      </div>`;
+  }).join('');
+
+  return `
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(124,58,237,.05);border:1.5px solid rgba(124,58,237,.2);border-radius:12px;">
+      <div style="font-family:var(--mono);font-size:.52rem;color:#7c3aed;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">💬 Dialogue en contexte réel</div>
+      ${lines}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
+loadDialogsCache();
 load(); render();
 </script>
 </body>
