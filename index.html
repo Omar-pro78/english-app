@@ -865,12 +865,12 @@ let LISTENING_TEST = [];
 async function loadAllData() {
   try {
     const [vocab, prep, phrasal, grammar, speaking, listening] = await Promise.all([
-      fetch('data/vocab.json').then(r=>r.json()),
-      fetch('data/prep.json').then(r=>r.json()),
-      fetch('data/phrasal.json').then(r=>r.json()),
-      fetch('data/grammar.json').then(r=>r.json()),
-      fetch('data/speaking.json').then(r=>r.json()),
-      fetch('data/listening.json').then(r=>r.json()),
+      fetch('vocab.json').then(r=>r.json()),
+      fetch('prep.json').then(r=>r.json()),
+      fetch('phrasal.json').then(r=>r.json()),
+      fetch('grammar.json').then(r=>r.json()),
+      fetch('speaking.json').then(r=>r.json()),
+      fetch('listening.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
