@@ -862,6 +862,25 @@ let SPEAK_PROMPTS = [];
 let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
 
+function buildPrepCards() {
+  const cards = [];
+  PREP_SECTIONS.forEach(sec => {
+    sec.rows.forEach(row => {
+      cards.push({
+        en: row.prep,
+        fr: row.type,
+        example: row.ex,
+        exampleTrad: row.trad,
+        section: sec.label,
+        _sec: 'prep',
+      });
+    });
+  });
+  return cards;
+}
+const PREP_CARDS = buildPrepCards();
+DATA.prep = PREP_CARDS;
+
 // ═══════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════
@@ -999,6 +1018,8 @@ async function loadAllData() {
     DATA.phrasal = PHRASAL_VERBS.map((item,i)=>({...item,_sec:'phrasal',_idx:i}));
     DATA.take = TAKE_VERBS.map((item,i)=>({...item,_sec:'take',_idx:i}));
     PREP_SECTIONS = prep;
+    // Rebuild PREP_CARDS after sections are loaded
+    DATA.prep = buildPrepCards().map((item,i)=>({...item,_sec:'prep',_idx:i}));
     GRAMMAR_COURS = grammar.GRAMMAR_COURS;
     GRAMMAR_QCM = grammar.GRAMMAR_QCM;
     GRAMMAR2_QCM = grammar.GRAMMAR2_QCM;
@@ -1564,6 +1585,7 @@ function goBack() {
 
 function refreshBadges() { /* badges updated on render */ }
 
+let _keyHandler = null;
 function render() {
   if(_keyHandler){document.removeEventListener('keydown',_keyHandler);_keyHandler=null;}
   const el=document.getElementById('main');
@@ -4961,6 +4983,112 @@ const DIALOGS_FALLBACK = {
 // ═══════════════════════════════════════════════════════════
 
 // Cache en mémoire + localStorage pour persister entre sessions
+
+const DIALOG_SITUATIONS = [
+  'standup meeting', 'Slack thread', 'Jira ticket comment',
+  'call with a developer', 'sprint review', 'bug triage',
+  'test planning meeting', 'release call', 'PR review comment',
+  'email to product owner'
+];
+
+async function generateDialog(item) {
+  const key = dialogKey(item);
+  if (DIALOGS_CACHE[key] || DIALOGS_GENERATING.has(key)) return;
+  // Use hardcoded fallback instantly if API unavailable
+  if (DIALOGS_FALLBACK[key]) {
+    DIALOGS_CACHE[key] = DIALOGS_FALLBACK[key];
+    saveDialogsCache();
+    render();
+    return;
+  }
+  DIALOGS_GENERATING.add(key);
+
+  const situation = DIALOG_SITUATIONS[item._idx % DIALOG_SITUATIONS.length];
+  const wordOrExpr = item.en;
+  const translation = item.fr;
+
+  const prompt = `You are generating a training dialog for a French QA engineer (named Omar) learning English at work (Lacoste e-commerce team).
+
+Generate a SHORT realistic work dialog of exactly 2-3 exchanges (lines) set in a "${situation}" context.
+The word/expression "${wordOrExpr}" (meaning: "${translation}") MUST appear in bold using **double asterisks** in one of the lines.
+
+Rules:
+- Speakers: use short labels like "Omar:", "Dev:", "PO:", "Lead:", "QA Lead:" etc.
+- Each line: max 15 words, natural spoken English
+- Realistic QA/tech context only
+- Return ONLY a JSON array, no markdown, no explanation. Format:
+[{"speaker":"Omar","line":"I think **${wordOrExpr}** here because the page breaks on Chrome."},{"speaker":"Dev","line":"Got it, I'll check the logs right away."}]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = (data.content || []).map(b => b.text || '').join('').trim();
+    // Strip any accidental ```json fences
+    const clean = text.replace(/```json|```/g, '').trim();
+    const dialog = JSON.parse(clean);
+    if (Array.isArray(dialog) && dialog.length >= 2) {
+      DIALOGS_CACHE[key] = dialog;
+      saveDialogsCache();
+      render(); // re-render to show the dialog
+    }
+  } catch(e) {
+    // API failed — use hardcoded fallback if available
+    if (DIALOGS_FALLBACK[key]) {
+      DIALOGS_CACHE[key] = DIALOGS_FALLBACK[key];
+      saveDialogsCache();
+      render();
+    }
+  } finally {
+    DIALOGS_GENERATING.delete(key);
+  }
+}
+
+// Render a dialog block (HTML string)
+function renderDialogBlock(item, panelClr) {
+  const key = dialogKey(item);
+  const dialog = DIALOGS_CACHE[key];
+  const isGenerating = DIALOGS_GENERATING.has(key);
+
+  if (!dialog && !isGenerating) return '';
+
+  if (isGenerating && !dialog) {
+    return `
+      <div style="margin-top:12px;padding:12px 14px;background:rgba(124,58,237,.06);border:1.5px solid rgba(124,58,237,.2);border-radius:12px;">
+        <div style="font-family:var(--mono);font-size:.52rem;color:#7c3aed;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">💬 Dialogue en contexte réel</div>
+        <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.65rem;color:var(--muted);">
+          <div class="speak-loading-dot"><span></span><span></span><span></span></div>
+          Génération du dialogue...
+        </div>
+      </div>`;
+  }
+
+  const lines = dialog.map(line => {
+    // Render **bold** markers
+    const rendered = line.line.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#7c3aed;background:rgba(124,58,237,.12);padding:1px 4px;border-radius:3px;">$1</strong>');
+    // Plain text for TTS (strip markdown)
+    const plain = line.line.replace(/\*\*/g, '');
+    return `
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06);">
+        <span style="font-family:var(--mono);font-size:.56rem;color:var(--muted);min-width:46px;padding-top:2px;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;">${line.speaker}</span>
+        <span style="font-size:.8rem;color:var(--text);line-height:1.5;flex:1;">${rendered}</span>
+        <button class="btn-audio" onclick="speak('${esc(plain)}','en')" style="flex-shrink:0;margin-top:1px;border-color:#7c3aed33;color:#7c3aed;">${spkSvg()}</button>
+      </div>`;
+  }).join('');
+
+  return `
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(124,58,237,.05);border:1.5px solid rgba(124,58,237,.2);border-radius:12px;">
+      <div style="font-family:var(--mono);font-size:.52rem;color:#7c3aed;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">💬 Dialogue en contexte réel</div>
+      ${lines}
+    </div>`;
+}
 
 // ═══════════════════════════════════════════════════════════
 // DIALOGS CACHE
