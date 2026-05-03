@@ -5581,9 +5581,10 @@ if (!S.listeningTest) S.listeningTest = { cursor: 0, answers: {}, showResults: f
 
 let _ltSpeaking = false;
 let _ltUtterance = null;
-let _ltSessionId = 0;     // incremented on every stop/navigate — invalidates in-flight callbacks
-let _ltAutoTimer = null;  // holds the setTimeout for auto-play so we can cancel it
-let _ltVoice = null;      // cached GB voice once resolved
+let _ltSessionId = 0;
+let _ltAutoTimer = null;
+let _ltVoice = null;
+let _ltFinished = false;   // true après lecture terminée → bouton "Rejouer"
 
 // ── Voice resolution ──────────────────────────────────────
 // Web Speech voices load asynchronously (especially Chrome/Safari).
@@ -5591,17 +5592,18 @@ let _ltVoice = null;      // cached GB voice once resolved
 // the voiceschanged event before re-trying.
 function _ltResolveVoice() {
   const voices = speechSynthesis.getVoices();
-  if (!voices.length) return null;          // not loaded yet
+  if (!voices.length) return null;
 
-  // Priority: en-GB (remote quality first), then en-AU, then en-US, then any en-
+  // Priority: best natural British voices first
   const priority = [
-    v => v.lang === 'en-GB' && v.name.includes('Daniel'),   // Chrome macOS high-quality
-    v => v.lang === 'en-GB' && !v.localService,
-    v => v.lang === 'en-GB',
-    v => v.lang === 'en-AU' && !v.localService,
+    v => v.name === 'Google UK English Female',             // Chrome — meilleure voix naturelle GB
+    v => v.name === 'Google UK English Male',               // Chrome — alternatif GB
+    v => v.lang === 'en-GB' && v.name.includes('Daniel'),  // macOS Safari high-quality
+    v => v.lang === 'en-GB' && !v.localService,            // remote en-GB (haute qualité)
+    v => v.lang === 'en-GB',                               // toute voix en-GB
+    v => v.lang === 'en-AU' && !v.localService,            // remote en-AU (proche UK)
     v => v.lang === 'en-AU',
-    v => v.lang === 'en-US' && v.name.toLowerCase().includes('karen'),
-    v => v.lang.startsWith('en'),
+    v => v.lang.startsWith('en'),                          // dernier recours
   ];
   for (const test of priority) {
     const found = voices.find(test);
@@ -5638,6 +5640,7 @@ function ltSpeak(questionIdx) {
   speechSynthesis.cancel();
 
   _ltSpeaking = true;
+  _ltFinished = false;   // reset : on repart d'une nouvelle lecture
   _ltUtterance = null;
   render();   // show "Stop" button immediately
 
@@ -5659,13 +5662,14 @@ function ltSpeak(questionIdx) {
       if (idx >= sentences.length) {
         _ltSpeaking = false;
         _ltUtterance = null;
+        _ltFinished = true;   // lecture terminée → prochain render affiche "Rejouer"
         render();
         return;
       }
       const u = new SpeechSynthesisUtterance(sentences[idx]);
       u.lang = 'en-GB';
-      u.rate = idx === 0 ? 0.85 : 0.80;
-      u.pitch = 1.0;
+      u.rate  = idx === 0 ? 0.88 : 0.82;  // consigne légèrement plus rapide que les options
+      u.pitch = 1.05;                       // légère montée — plus naturel, moins robotique
       if (voice) u.voice = voice;
 
       _ltUtterance = u;
@@ -5691,15 +5695,13 @@ function ltSpeak(questionIdx) {
 }
 
 function ltStopSpeaking() {
-  // Increment session id FIRST so any pending onend/onerror callbacks are ignored
   _ltSessionId++;
   clearTimeout(_ltAutoTimer);
   _ltAutoTimer = null;
   speechSynthesis.cancel();
   _ltSpeaking = false;
+  _ltFinished = false;   // stop manuel → retour à "Écouter" (pas "Rejouer")
   _ltUtterance = null;
-  // Do NOT call render() here when invoked from navigation —
-  // the caller (ltNext/ltPrev) will call render() itself.
 }
 
 function ltAnswer(questionIdx, optIdx) {
@@ -5717,7 +5719,8 @@ function ltAnswer(questionIdx, optIdx) {
 }
 
 function ltNext() {
-  ltStopSpeaking();   // cancel speech & invalidate session — no render inside
+  ltStopSpeaking();
+  _ltFinished = false;
   if (S.listeningTest.cursor < LISTENING_TEST.length - 1) {
     S.listeningTest.cursor++;
   } else {
@@ -5727,7 +5730,8 @@ function ltNext() {
 }
 
 function ltPrev() {
-  ltStopSpeaking();   // cancel speech & invalidate session — no render inside
+  ltStopSpeaking();
+  _ltFinished = false;
   if (S.listeningTest.cursor > 0) {
     S.listeningTest.cursor--;
   }
@@ -5804,10 +5808,15 @@ function buildListeningTest() {
   let cardCls = 'lt-card';
   if (done) cardCls += isCorrect ? ' answered-ok' : ' answered-fail';
 
-  // Audio button — center stage since options are hidden
-  const audioBtn = isSpeaking
-    ? '<button class="lt-play-btn playing" onclick="ltStopSpeaking()" style="font-size:.85rem;padding:12px 28px;">⏹ Stop</button>'
-    : '<button class="lt-play-btn" onclick="ltSpeak(' + qi + ')" style="font-size:.85rem;padding:12px 28px;">▶ Réécouter</button>';
+  // Bouton unique — 3 états selon la lecture
+  var audioBtn;
+  if (isSpeaking) {
+    audioBtn = '<button class="lt-play-btn playing" onclick="ltStopSpeaking();render();" style="font-size:.85rem;padding:12px 28px;">⏹ Stop</button>';
+  } else if (_ltFinished) {
+    audioBtn = '<button class="lt-play-btn" onclick="ltSpeak(' + qi + ')" style="font-size:.85rem;padding:12px 28px;background:#155e8a;">↩ Rejouer</button>';
+  } else {
+    audioBtn = '<button class="lt-play-btn" onclick="ltSpeak(' + qi + ')" style="font-size:.85rem;padding:12px 28px;">▶ Écouter</button>';
+  }
 
   // Options: only show the LETTER (A/B/C/D) — no text visible until answered
   let optsHtml = '';
@@ -5886,8 +5895,8 @@ function buildListeningTest() {
     + '</div>'
     + resetLink;
 
-  // Auto-play on first visit to each new question (not yet answered, not currently speaking)
-  if (!done && !_ltSpeaking) {
+  // Auto-play à la première visite uniquement (pas déjà joué, pas en cours)
+  if (!done && !_ltSpeaking && !_ltFinished) {
     clearTimeout(_ltAutoTimer);
     _ltAutoTimer = setTimeout(function() { ltSpeak(qi); }, 450);
   }
