@@ -1852,6 +1852,9 @@ function buildDailyMissions() {
   const pct = Math.min(100, Math.round((actions / goal) * 100));
   const missionDone = actions >= goal;
 
+  // Store cta in global so inline onclick can reach it (closures can't serialize)
+  window._dmCta = mission.cta || null;
+
   const div = document.createElement('div');
   div.className = 'daily-mission';
   div.innerHTML = `
@@ -1881,7 +1884,7 @@ function buildDailyMissions() {
     </div>` : ''}
 
     ${mission.cta ? `
-    <button class="dm-cta-btn" onclick="(${mission.cta.toString()})()">
+    <button class="dm-cta-btn" onclick="window._dmCta && window._dmCta()">
       ${mission.ctaLabel} →
     </button>` : ''}
 
