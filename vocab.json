@@ -1,0 +1,516 @@
+{
+  "vocab": [
+    {
+      "en": "Requirement",
+      "fr": "Exigence",
+      "ex": "The client sent us a list of requirements for the new feature.",
+      "exTrad": "Le client nous a envoyé une liste d'exigences pour la nouvelle fonctionnalité."
+    },
+    {
+      "en": "Business requirement",
+      "fr": "Besoin métier",
+      "ex": "This business requirement was defined by the product owner.",
+      "exTrad": "Ce besoin métier a été défini par le product owner."
+    },
+    {
+      "en": "Functional specification",
+      "fr": "Spécification fonctionnelle",
+      "ex": "The functional specification describes what the system should do.",
+      "exTrad": "La spécification fonctionnelle décrit ce que le système doit faire."
+    },
+    {
+      "en": "Technical specification",
+      "fr": "Spécification technique",
+      "ex": "Developers wrote the technical specification before starting to code.",
+      "exTrad": "Les développeurs ont rédigé la spécification technique avant de commencer à coder."
+    },
+    {
+      "en": "User story",
+      "fr": "User story",
+      "ex": "As a user, I want to reset my password — that's a typical user story.",
+      "exTrad": "En tant qu'utilisateur, je veux réinitialiser mon mot de passe — c'est une user story typique."
+    },
+    {
+      "en": "Acceptance criteria",
+      "fr": "Critères d'acceptation",
+      "ex": "The acceptance criteria define when a user story is done.",
+      "exTrad": "Les critères d'acceptation définissent quand une user story est terminée."
+    },
+    {
+      "en": "Test case",
+      "fr": "Cas de test",
+      "ex": "I wrote a test case to cover the login scenario.",
+      "exTrad": "J'ai écrit un cas de test pour couvrir le scénario de connexion."
+    },
+    {
+      "en": "Test scenario",
+      "fr": "Scénario de test",
+      "ex": "The test scenario covers the full checkout process.",
+      "exTrad": "Le scénario de test couvre l'ensemble du processus de paiement."
+    },
+    {
+      "en": "Test plan",
+      "fr": "Plan de test",
+      "ex": "We shared the test plan with the team before the sprint.",
+      "exTrad": "Nous avons partagé le plan de test avec l'équipe avant le sprint."
+    },
+    {
+      "en": "Test suite",
+      "fr": "Suite de tests",
+      "ex": "The regression test suite has over 200 test cases.",
+      "exTrad": "La suite de tests de régression contient plus de 200 cas de test."
+    },
+    {
+      "en": "Test execution",
+      "fr": "Exécution des tests",
+      "ex": "Test execution started on Monday and took two days.",
+      "exTrad": "L'exécution des tests a débuté lundi et a pris deux jours."
+    },
+    {
+      "en": "Test coverage",
+      "fr": "Couverture de test",
+      "ex": "Our test coverage is at 85%, which is good for this sprint.",
+      "exTrad": "Notre couverture de test est à 85%, ce qui est bien pour ce sprint."
+    },
+    {
+      "en": "Regression testing",
+      "fr": "Test de non-régression",
+      "ex": "We run regression testing after every deployment.",
+      "exTrad": "Nous effectuons des tests de non-régression après chaque déploiement."
+    },
+    {
+      "en": "Smoke test",
+      "fr": "Test de fumée",
+      "ex": "After the deployment, we did a quick smoke test on the homepage.",
+      "exTrad": "Après le déploiement, nous avons fait un test de fumée rapide sur la page d'accueil."
+    },
+    {
+      "en": "Sanity test",
+      "fr": "Test de validation rapide",
+      "ex": "The sanity test confirmed the critical paths still work.",
+      "exTrad": "Le test de validation rapide a confirmé que les chemins critiques fonctionnent toujours."
+    },
+    {
+      "en": "End-to-end (E2E) test",
+      "fr": "Test de bout en bout",
+      "ex": "The E2E test simulates a real user placing an order.",
+      "exTrad": "Le test E2E simule un vrai utilisateur passant une commande."
+    },
+    {
+      "en": "Integration testing",
+      "fr": "Test d'intégration",
+      "ex": "Integration testing checks that the API and database work together.",
+      "exTrad": "Le test d'intégration vérifie que l'API et la base de données fonctionnent ensemble."
+    },
+    {
+      "en": "Unit testing",
+      "fr": "Test unitaire",
+      "ex": "The developer wrote unit tests for each function.",
+      "exTrad": "Le développeur a écrit des tests unitaires pour chaque fonction."
+    },
+    {
+      "en": "Bug / defect",
+      "fr": "Anomalie",
+      "ex": "I found a bug on the payment page — the total doesn't update.",
+      "exTrad": "J'ai trouvé un bug sur la page de paiement — le total ne se met pas à jour."
+    },
+    {
+      "en": "Issue",
+      "fr": "Ticket / problème",
+      "ex": "I created an issue in Jira to track this problem.",
+      "exTrad": "J'ai créé un ticket dans Jira pour suivre ce problème."
+    },
+    {
+      "en": "Severity",
+      "fr": "Sévérité",
+      "ex": "This bug has a high severity because it blocks the checkout.",
+      "exTrad": "Ce bug a une sévérité élevée car il bloque le processus d'achat."
+    },
+    {
+      "en": "Priority",
+      "fr": "Priorité",
+      "ex": "Let's set this ticket to high priority — it affects all users.",
+      "exTrad": "Mettons ce ticket en haute priorité — il affecte tous les utilisateurs."
+    },
+    {
+      "en": "Bug report",
+      "fr": "Rapport de bug",
+      "ex": "Write a clear bug report with steps to reproduce.",
+      "exTrad": "Rédigez un rapport de bug clair avec les étapes pour reproduire."
+    },
+    {
+      "en": "Reproduce (a bug)",
+      "fr": "Reproduire un bug",
+      "ex": "I can reproduce the bug every time on Chrome.",
+      "exTrad": "Je peux reproduire le bug à chaque fois sur Chrome."
+    },
+    {
+      "en": "Fix",
+      "fr": "Correction",
+      "ex": "The developer pushed a fix for the login issue.",
+      "exTrad": "Le développeur a poussé une correction pour le problème de connexion."
+    },
+    {
+      "en": "Patch",
+      "fr": "Correctif",
+      "ex": "A security patch was deployed to all environments.",
+      "exTrad": "Un correctif de sécurité a été déployé sur tous les environnements."
+    },
+    {
+      "en": "Deployment",
+      "fr": "Déploiement",
+      "ex": "The deployment to production is scheduled for Friday.",
+      "exTrad": "Le déploiement en production est prévu vendredi."
+    },
+    {
+      "en": "Release",
+      "fr": "Mise en production",
+      "ex": "The release went smoothly — no incidents reported.",
+      "exTrad": "La mise en production s'est bien passée — aucun incident signalé."
+    },
+    {
+      "en": "Environment",
+      "fr": "Environnement",
+      "ex": "Please test this on the staging environment first.",
+      "exTrad": "Veuillez d'abord tester cela sur l'environnement de staging."
+    },
+    {
+      "en": "Production (prod)",
+      "fr": "Production",
+      "ex": "This bug is in production — we need to fix it urgently.",
+      "exTrad": "Ce bug est en production — nous devons le corriger d'urgence."
+    },
+    {
+      "en": "Staging",
+      "fr": "Pré-production",
+      "ex": "The feature is validated on staging and ready for prod.",
+      "exTrad": "La fonctionnalité est validée en pré-production et prête pour la prod."
+    },
+    {
+      "en": "QA environment",
+      "fr": "Environnement QA",
+      "ex": "I'll deploy the fix to the QA environment for testing.",
+      "exTrad": "Je vais déployer le correctif sur l'environnement QA pour le tester."
+    },
+    {
+      "en": "API",
+      "fr": "API",
+      "ex": "The mobile app communicates with the backend through an API.",
+      "exTrad": "L'application mobile communique avec le backend via une API."
+    },
+    {
+      "en": "Endpoint",
+      "fr": "Point d'accès API",
+      "ex": "The /users endpoint returns the list of registered users.",
+      "exTrad": "L'endpoint /users retourne la liste des utilisateurs enregistrés."
+    },
+    {
+      "en": "Payload",
+      "fr": "Données envoyées",
+      "ex": "The payload of this POST request contains the user's data.",
+      "exTrad": "Le payload de cette requête POST contient les données de l'utilisateur."
+    },
+    {
+      "en": "Response",
+      "fr": "Réponse",
+      "ex": "The API returns a 200 response when everything is correct.",
+      "exTrad": "L'API renvoie une réponse 200 quand tout est correct."
+    },
+    {
+      "en": "Database",
+      "fr": "Base de données",
+      "ex": "The user data is stored in the database.",
+      "exTrad": "Les données utilisateur sont stockées dans la base de données."
+    },
+    {
+      "en": "Query",
+      "fr": "Requête",
+      "ex": "I ran a query to check if the record was created correctly.",
+      "exTrad": "J'ai lancé une requête pour vérifier si l'enregistrement a été créé correctement."
+    },
+    {
+      "en": "Log",
+      "fr": "Log / journal",
+      "ex": "Check the server logs to find the cause of the error.",
+      "exTrad": "Vérifiez les logs du serveur pour trouver la cause de l'erreur."
+    },
+    {
+      "en": "Debug",
+      "fr": "Déboguer",
+      "ex": "I need to debug this issue — the API call is failing silently.",
+      "exTrad": "Je dois déboguer ce problème — l'appel API échoue silencieusement."
+    },
+    {
+      "en": "Automation",
+      "fr": "Automatisation",
+      "ex": "Test automation saves us hours of manual testing each week.",
+      "exTrad": "L'automatisation des tests nous fait gagner des heures de test manuel chaque semaine."
+    },
+    {
+      "en": "Test script",
+      "fr": "Script de test",
+      "ex": "I wrote a test script to automate the registration flow.",
+      "exTrad": "J'ai écrit un script de test pour automatiser le flux d'inscription."
+    },
+    {
+      "en": "Framework",
+      "fr": "Framework",
+      "ex": "We use Cypress as our end-to-end testing framework.",
+      "exTrad": "Nous utilisons Cypress comme framework de test end-to-end."
+    },
+    {
+      "en": "CI/CD",
+      "fr": "Intégration / déploiement continu",
+      "ex": "Our CI/CD pipeline runs the test suite on every pull request.",
+      "exTrad": "Notre pipeline CI/CD exécute la suite de tests à chaque pull request."
+    },
+    {
+      "en": "Pipeline",
+      "fr": "Pipeline",
+      "ex": "The pipeline failed at the testing stage — check the logs.",
+      "exTrad": "Le pipeline a échoué à l'étape de test — vérifiez les logs."
+    },
+    {
+      "en": "Version control",
+      "fr": "Gestion de version",
+      "ex": "We use Git for version control on all our projects.",
+      "exTrad": "Nous utilisons Git pour la gestion de version sur tous nos projets."
+    },
+    {
+      "en": "Branch",
+      "fr": "Branche",
+      "ex": "Create a new branch before making any changes.",
+      "exTrad": "Créez une nouvelle branche avant de faire des modifications."
+    },
+    {
+      "en": "Merge",
+      "fr": "Fusion",
+      "ex": "After the code review, we merged the branch into main.",
+      "exTrad": "Après la revue de code, nous avons fusionné la branche dans main."
+    },
+    {
+      "en": "Conflict",
+      "fr": "Conflit",
+      "ex": "There's a merge conflict — two developers edited the same file.",
+      "exTrad": "Il y a un conflit de fusion — deux développeurs ont modifié le même fichier."
+    },
+    {
+      "en": "Rollback",
+      "fr": "Retour arrière",
+      "ex": "We had to do a rollback after the deployment broke the app.",
+      "exTrad": "Nous avons dû effectuer un retour arrière après que le déploiement a cassé l'app."
+    },
+    {
+      "en": "Monitoring",
+      "fr": "Supervision",
+      "ex": "We set up monitoring alerts to detect errors in production.",
+      "exTrad": "Nous avons mis en place des alertes de supervision pour détecter les erreurs en production."
+    }
+  ],
+  "expr": [
+    {
+      "en": "I found a bug",
+      "fr": "J'ai trouvé un bug",
+      "ex": "I found a bug on the checkout page — the price doesn't update.",
+      "exTrad": "J'ai trouvé un bug sur la page de paiement — le prix ne se met pas à jour."
+    },
+    {
+      "en": "The issue is reproducible",
+      "fr": "Le bug est reproductible",
+      "ex": "The issue is reproducible every time on Firefox — I can show you.",
+      "exTrad": "Le bug est reproductible à chaque fois sur Firefox — je peux te montrer."
+    },
+    {
+      "en": "I can't reproduce the issue",
+      "fr": "Je n'arrive pas à reproduire",
+      "ex": "I can't reproduce the issue on my machine — can you share more details?",
+      "exTrad": "Je n'arrive pas à reproduire le problème sur ma machine — peux-tu donner plus de détails ?"
+    },
+    {
+      "en": "It works as expected",
+      "fr": "Ça fonctionne comme prévu",
+      "ex": "After the fix, I retested and it works as expected.",
+      "exTrad": "Après la correction, j'ai retesté et ça fonctionne comme prévu."
+    },
+    {
+      "en": "It doesn't meet the requirements",
+      "fr": "Ça ne respecte pas les exigences",
+      "ex": "The current behavior doesn't meet the requirements defined in the spec.",
+      "exTrad": "Le comportement actuel ne respecte pas les exigences définies dans la spec."
+    },
+    {
+      "en": "We need more details",
+      "fr": "On a besoin de plus d'infos",
+      "ex": "Before we can fix this, we need more details about the steps to reproduce.",
+      "exTrad": "Avant de corriger ça, on a besoin de plus de détails sur les étapes pour reproduire."
+    },
+    {
+      "en": "Can you clarify this point?",
+      "fr": "Peux-tu clarifier ?",
+      "ex": "Can you clarify this point? I'm not sure what the expected behavior is.",
+      "exTrad": "Peux-tu clarifier ce point ? Je ne suis pas sûr de quel est le comportement attendu."
+    },
+    {
+      "en": "This is a blocker",
+      "fr": "C'est bloquant",
+      "ex": "This is a blocker — we can't release until this is fixed.",
+      "exTrad": "C'est bloquant — on ne peut pas sortir la release tant que ce n'est pas corrigé."
+    },
+    {
+      "en": "This is a minor issue",
+      "fr": "C'est un problème mineur",
+      "ex": "This is a minor issue — the button color is wrong, but it doesn't affect functionality.",
+      "exTrad": "C'est un problème mineur — la couleur du bouton est incorrecte, mais ça n'affecte pas les fonctionnalités."
+    },
+    {
+      "en": "The fix is in progress",
+      "fr": "Le correctif est en cours",
+      "ex": "The fix is in progress — the developer is working on it now.",
+      "exTrad": "Le correctif est en cours — le développeur travaille dessus maintenant."
+    },
+    {
+      "en": "The issue has been fixed",
+      "fr": "Le bug est corrigé",
+      "ex": "The issue has been fixed and deployed to staging for validation.",
+      "exTrad": "Le bug est corrigé et déployé en staging pour validation."
+    },
+    {
+      "en": "Ready for testing",
+      "fr": "Prêt à être testé",
+      "ex": "The feature is ready for testing — I'll start the test cases now.",
+      "exTrad": "La fonctionnalité est prête à être testée — je commence les cas de test maintenant."
+    },
+    {
+      "en": "Tested and validated",
+      "fr": "Testé et validé",
+      "ex": "I've tested all the scenarios — tested and validated, ready for prod.",
+      "exTrad": "J'ai testé tous les scénarios — testé et validé, prêt pour la prod."
+    },
+    {
+      "en": "Failed test case",
+      "fr": "Cas de test échoué",
+      "ex": "Test case TC-042 is a failed test case — the expected result doesn't match.",
+      "exTrad": "Le cas de test TC-042 est un cas de test échoué — le résultat attendu ne correspond pas."
+    },
+    {
+      "en": "Passed test case",
+      "fr": "Cas de test validé",
+      "ex": "All critical test cases are passed test cases — good to go.",
+      "exTrad": "Tous les cas de test critiques sont des cas de test validés — on peut y aller."
+    },
+    {
+      "en": "Let's prioritize this",
+      "fr": "Priorisons ça",
+      "ex": "We have too many issues — let's prioritize this one first.",
+      "exTrad": "On a trop de problèmes — priorisons celui-ci en premier."
+    },
+    {
+      "en": "What's the impact?",
+      "fr": "Quel est l'impact ?",
+      "ex": "Before fixing this, what's the impact on the other modules?",
+      "exTrad": "Avant de corriger ça, quel est l'impact sur les autres modules ?"
+    },
+    {
+      "en": "Do we have a workaround?",
+      "fr": "Y a-t-il une solution de contournement ?",
+      "ex": "While we wait for the fix, do we have a workaround for the users?",
+      "exTrad": "En attendant le correctif, y a-t-il une solution de contournement pour les utilisateurs ?"
+    },
+    {
+      "en": "It's a regression",
+      "fr": "C'est une régression",
+      "ex": "This worked in the last release — it's a regression introduced by the last deployment.",
+      "exTrad": "Ça fonctionnait dans la dernière release — c'est une régression introduite par le dernier déploiement."
+    },
+    {
+      "en": "Can you deploy on staging?",
+      "fr": "Tu peux déployer en staging ?",
+      "ex": "Can you deploy on staging? I need to validate the fix before prod.",
+      "exTrad": "Tu peux déployer en staging ? Je dois valider le correctif avant la prod."
+    },
+    {
+      "en": "I'll retest after the fix",
+      "fr": "Je retesterai après correction",
+      "ex": "I'll retest after the fix is deployed — should be quick.",
+      "exTrad": "Je retesterai après que le correctif sera déployé — ça devrait être rapide."
+    },
+    {
+      "en": "We need to investigate",
+      "fr": "On doit investiguer",
+      "ex": "The root cause isn't clear — we need to investigate the logs.",
+      "exTrad": "La cause racine n'est pas claire — on doit investiguer les logs."
+    },
+    {
+      "en": "The data looks incorrect",
+      "fr": "Les données semblent incorrectes",
+      "ex": "After the migration, the data looks incorrect — some records are missing.",
+      "exTrad": "Après la migration, les données semblent incorrectes — certains enregistrements manquent."
+    },
+    {
+      "en": "The API returns an error",
+      "fr": "L'API renvoie une erreur",
+      "ex": "The API returns an error 500 when I send this payload.",
+      "exTrad": "L'API renvoie une erreur 500 quand j'envoie ce payload."
+    },
+    {
+      "en": "Timeout error",
+      "fr": "Erreur de timeout",
+      "ex": "The request takes too long and results in a timeout error.",
+      "exTrad": "La requête prend trop de temps et résulte en une erreur de timeout."
+    },
+    {
+      "en": "Access denied",
+      "fr": "Accès refusé",
+      "ex": "When I try to open the admin panel, I get access denied.",
+      "exTrad": "Quand j'essaie d'ouvrir le panneau admin, j'obtiens accès refusé."
+    },
+    {
+      "en": "Invalid input",
+      "fr": "Entrée invalide",
+      "ex": "The form shows 'invalid input' when I type a phone number in the email field.",
+      "exTrad": "Le formulaire affiche 'entrée invalide' quand je tape un numéro de téléphone dans le champ email."
+    },
+    {
+      "en": "Expected vs actual result",
+      "fr": "Résultat attendu vs réel",
+      "ex": "In my bug report, I always document the expected vs actual result.",
+      "exTrad": "Dans mon rapport de bug, je documente toujours le résultat attendu vs réel."
+    },
+    {
+      "en": "Let's sync quickly",
+      "fr": "Faisons un point rapide",
+      "ex": "Before the release, let's sync quickly on the open issues.",
+      "exTrad": "Avant la release, faisons un point rapide sur les problèmes ouverts."
+    },
+    {
+      "en": "I'll follow up",
+      "fr": "Je reviens vers toi",
+      "ex": "I don't have the answer now, but I'll follow up by end of day.",
+      "exTrad": "Je n'ai pas la réponse maintenant, mais je reviens vers toi en fin de journée."
+    },
+    {
+      "en": "Any update on this?",
+      "fr": "Des nouvelles ?",
+      "ex": "It's been two days — any update on this bug?",
+      "exTrad": "Ça fait deux jours — des nouvelles sur ce bug ?"
+    },
+    {
+      "en": "It's on my side",
+      "fr": "C'est de mon côté",
+      "ex": "After checking, it's on my side — I was using the wrong credentials.",
+      "exTrad": "Après vérification, c'est de mon côté — j'utilisais les mauvais identifiants."
+    },
+    {
+      "en": "It's coming from backend",
+      "fr": "Ça vient du backend",
+      "ex": "The frontend is fine — it's coming from backend, the API is returning null.",
+      "exTrad": "Le frontend est correct — ça vient du backend, l'API renvoie null."
+    },
+    {
+      "en": "Frontend issue",
+      "fr": "Problème frontend",
+      "ex": "This is a frontend issue — the data is correct but the display is broken.",
+      "exTrad": "C'est un problème frontend — les données sont correctes mais l'affichage est cassé."
+    }
+  ]
+}

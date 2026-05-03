@@ -1,0 +1,1649 @@
+{
+  "GRAMMAR_COURS": [
+    {
+      "id": "noun",
+      "icon": "🏷️",
+      "label": "Nom (Noun)",
+      "def": "Mot qui désigne une personne, un endroit, un objet ou une idée.",
+      "tip": "Souvent précédé d'un article (a, an, the) ou d'un possessif (my, your…).",
+      "examples": [
+        {
+          "en": "dog",
+          "fr": "chien"
+        },
+        {
+          "en": "happiness",
+          "fr": "bonheur"
+        },
+        {
+          "en": "school",
+          "fr": "école"
+        },
+        {
+          "en": "a cat",
+          "fr": "un chat"
+        },
+        {
+          "en": "my house",
+          "fr": "ma maison"
+        }
+      ]
+    },
+    {
+      "id": "adj",
+      "icon": "🎨",
+      "label": "Adjectif (Adjective)",
+      "def": "Mot qui donne une qualité ou une caractéristique à un nom.",
+      "tip": "En anglais, l'adjectif se place toujours AVANT le nom (a red car — jamais a car red).",
+      "examples": [
+        {
+          "en": "a beautiful girl",
+          "fr": "une belle fille"
+        },
+        {
+          "en": "a big house",
+          "fr": "une grande maison"
+        },
+        {
+          "en": "a happy child",
+          "fr": "un enfant heureux"
+        }
+      ]
+    },
+    {
+      "id": "adv",
+      "icon": "⚡",
+      "label": "Adverbe (Adverb)",
+      "def": "Mot qui modifie un verbe, un adjectif ou un autre adverbe. Indique comment, quand, où ou à quelle fréquence.",
+      "tip": "Formation classique : ajouter -ly (quick → quickly, happy → happily).",
+      "examples": [
+        {
+          "en": "She runs quickly",
+          "fr": "Elle court rapidement (modifie le verbe)"
+        },
+        {
+          "en": "He is very tall",
+          "fr": "Il est très grand (modifie l'adjectif)"
+        },
+        {
+          "en": "She speaks extremely softly",
+          "fr": "Elle parle extrêmement doucement (modifie un adverbe)"
+        }
+      ]
+    },
+    {
+      "id": "pron",
+      "icon": "👤",
+      "label": "Pronom (Pronoun)",
+      "def": "Mot qui remplace un nom pour éviter les répétitions.",
+      "tip": "Sujets : I, you, he, she, it, we, they. Compléments : me, him, her, us, them.",
+      "examples": [
+        {
+          "en": "I, you, he, she, it, we, they",
+          "fr": "pronoms sujets"
+        },
+        {
+          "en": "me, him, her, us, them",
+          "fr": "pronoms compléments"
+        },
+        {
+          "en": "mine, yours, hers",
+          "fr": "pronoms possessifs"
+        }
+      ]
+    },
+    {
+      "id": "prep2",
+      "icon": "📍",
+      "label": "Préposition (Preposition)",
+      "def": "Mot qui relie un nom/pronom à un autre mot dans la phrase.",
+      "tip": "Exemples : on, in, at, under, over, between, with.",
+      "examples": [
+        {
+          "en": "The book is on the table.",
+          "fr": "Le livre est sur la table."
+        },
+        {
+          "en": "She is talking to him.",
+          "fr": "Elle lui parle."
+        }
+      ]
+    },
+    {
+      "id": "conj",
+      "icon": "🔗",
+      "label": "Conjonction (Conjunction)",
+      "def": "Mot qui unit deux mots, phrases ou propositions.",
+      "tip": "Exemples : and, but, or, because, although.",
+      "examples": [
+        {
+          "en": "I like tea and coffee.",
+          "fr": "J'aime le thé et le café."
+        },
+        {
+          "en": "I went out because it was sunny.",
+          "fr": "Je suis sorti parce qu'il faisait soleil."
+        }
+      ]
+    }
+  ],
+  "GRAMMAR_QCM": [
+    {
+      "q": "Quel est le rôle d'un adjectif en anglais ?",
+      "opts": [
+        "Remplacer un nom",
+        "Décrire/qualifier un nom",
+        "Relier deux propositions",
+        "Modifier un verbe"
+      ],
+      "ans": 1,
+      "expl": "L'adjectif décrit un nom : \"a big house\", \"a happy child\"."
+    },
+    {
+      "q": "Où se place l'adjectif en anglais ?",
+      "opts": [
+        "Après le nom",
+        "Avant le verbe",
+        "Avant le nom",
+        "N'importe où"
+      ],
+      "ans": 2,
+      "expl": "En anglais, l'adjectif se place AVANT le nom : \"a red car\", jamais \"a car red\"."
+    },
+    {
+      "q": "Comment forme-t-on généralement un adverbe à partir d'un adjectif ?",
+      "opts": [
+        "On ajoute -ing",
+        "On ajoute -ly",
+        "On ajoute -ed",
+        "On ajoute -er"
+      ],
+      "ans": 1,
+      "expl": "\"quick → quickly\", \"happy → happily\". Le suffixe classique est -ly."
+    },
+    {
+      "q": "Dans la phrase \"She runs quickly\", quel est le rôle de \"quickly\" ?",
+      "opts": [
+        "Nom",
+        "Adjectif",
+        "Adverbe",
+        "Pronom"
+      ],
+      "ans": 2,
+      "expl": "\"Quickly\" modifie le verbe \"runs\" — c'est un adverbe de manière."
+    },
+    {
+      "q": "Laquelle de ces phrases utilise l'adjectif correctement ?",
+      "opts": [
+        "A car red is fast.",
+        "A fast car red.",
+        "A red car is fast.",
+        "Red is a car fast."
+      ],
+      "ans": 2,
+      "expl": "L'adjectif \"red\" se place avant le nom \"car\" : \"a red car\"."
+    },
+    {
+      "q": "Quel mot est un NOM (Noun) ?",
+      "opts": [
+        "Quickly",
+        "Beautiful",
+        "Happiness",
+        "Because"
+      ],
+      "ans": 2,
+      "expl": "\"Happiness\" (bonheur) est un nom. \"Quickly\" est un adverbe, \"Beautiful\" est un adjectif."
+    },
+    {
+      "q": "Quelle question pose-t-on pour identifier un adverbe ?",
+      "opts": [
+        "Qui ? Quoi ?",
+        "Comment est le nom ?",
+        "Comment ? Quand ? Où ?",
+        "Quel article ?"
+      ],
+      "ans": 2,
+      "expl": "L'adverbe répond aux questions : Comment ? Quand ? Où ? À quelle fréquence ?"
+    },
+    {
+      "q": "Dans \"He is very tall\", quel est le rôle de \"very\" ?",
+      "opts": [
+        "Nom",
+        "Pronom",
+        "Conjonction",
+        "Adverbe (modifie l'adjectif tall)"
+      ],
+      "ans": 3,
+      "expl": "\"Very\" est un adverbe qui intensifie l'adjectif \"tall\"."
+    },
+    {
+      "q": "Lequel de ces mots est un PRONOM ?",
+      "opts": [
+        "Dog",
+        "Beautiful",
+        "Them",
+        "Quickly"
+      ],
+      "ans": 2,
+      "expl": "\"Them\" est un pronom complément (eux/les). Les autres sont nom, adjectif, adverbe."
+    },
+    {
+      "q": "Quel est le rôle d'une CONJONCTION ?",
+      "opts": [
+        "Qualifier un nom",
+        "Unir deux mots ou propositions",
+        "Remplacer un nom",
+        "Indiquer la position"
+      ],
+      "ans": 1,
+      "expl": "La conjonction (and, but, because…) unit deux mots ou propositions."
+    },
+    {
+      "q": "Quelle phrase contient une PRÉPOSITION ?",
+      "opts": [
+        "She runs quickly.",
+        "The book is on the table.",
+        "He is very tall.",
+        "I like tea and coffee."
+      ],
+      "ans": 1,
+      "expl": "\"On\" est une préposition qui indique la position du livre sur la table."
+    },
+    {
+      "q": "Dans \"I get on well with my boss\", quel type de mot est \"with\" ?",
+      "opts": [
+        "Conjonction",
+        "Adverbe",
+        "Préposition",
+        "Adjectif"
+      ],
+      "ans": 2,
+      "expl": "\"With\" est une préposition qui relie \"get on\" à \"my boss\"."
+    }
+  ],
+  "GRAMMAR2_QCM": [
+    {
+      "q": "Quelle classe de mots suit généralement un déterminant (the, a, my, this…) ?",
+      "opts": [
+        "Adjectif",
+        "Verbe",
+        "Nom",
+        "Adverbe"
+      ],
+      "ans": 2,
+      "expl": "\"The, a, an, my, this\" appellent toujours un NOM : \"The agreement\", \"A report\"."
+    },
+    {
+      "q": "Après une préposition (before, after, without, by…), on utilise :",
+      "opts": [
+        "Un infinitif (to + verbe)",
+        "Un gérondif (-ing)",
+        "Un adjectif",
+        "Un adverbe"
+      ],
+      "ans": 1,
+      "expl": "After/before/without/by + verbe-ING. Ex : \"Before sealing\", \"By improving\"."
+    },
+    {
+      "q": "Dans \"___ + Nom\", quelle classe de mots remplit le blanc ?",
+      "opts": [
+        "Verbe",
+        "Adverbe",
+        "Conjonction",
+        "Adjectif"
+      ],
+      "ans": 3,
+      "expl": "Un adjectif qualifie le nom qui suit : \"A reliable supplier\", \"A financial report\"."
+    },
+    {
+      "q": "Quelle terminaison indique souvent un NOM ?",
+      "opts": [
+        "-ly",
+        "-tion / -ment / -ness",
+        "-able / -ive",
+        "-ate / -ize"
+      ],
+      "ans": 1,
+      "expl": "Les suffixes nominaux : -tion (information), -ment (agreement), -ness (happiness), -ity (reality)."
+    },
+    {
+      "q": "Quelle terminaison indique souvent un ADJECTIF ?",
+      "opts": [
+        "-ly",
+        "-tion",
+        "-able / -ive / -ous / -ful",
+        "-ate / -ify"
+      ],
+      "ans": 2,
+      "expl": "Suffixes adjectivaux : -able (reliable), -ive (active), -ous (dangerous), -ful (skillful)."
+    },
+    {
+      "q": "Quelle terminaison indique presque toujours un ADVERBE ?",
+      "opts": [
+        "-tion",
+        "-ly",
+        "-ment",
+        "-ship"
+      ],
+      "ans": 1,
+      "expl": "90% des adverbes se terminent en -ly : quickly, skillfully, extremely, badly."
+    },
+    {
+      "q": "Après un verbe d'état (be, seem, look, feel, taste…), on utilise :",
+      "opts": [
+        "Un adverbe",
+        "Un autre verbe",
+        "Un adjectif",
+        "Un gérondif"
+      ],
+      "ans": 2,
+      "expl": "\"The cake tastes good\" (adjectif), pas \"well\". Be/seem/look/feel/taste + ADJECTIF."
+    },
+    {
+      "q": "\"Look forward to\" est suivi de :",
+      "opts": [
+        "Un infinitif (to + verbe base)",
+        "Un gérondif (-ing)",
+        "Un adjectif",
+        "Un nom uniquement"
+      ],
+      "ans": 1,
+      "expl": "\"Look forward to + -ING\". Ex : \"I look forward to working with you.\""
+    },
+    {
+      "q": "\"Be used to\" est suivi de :",
+      "opts": [
+        "Un infinitif",
+        "Un adjectif",
+        "Un gérondif (-ing)",
+        "Un adverbe"
+      ],
+      "ans": 2,
+      "expl": "\"I am used to waking up early.\" Be used to + -ING (habitué à faire qqch)."
+    },
+    {
+      "q": "Dans \"A customer service\" ou \"A business plan\", le premier nom joue le rôle de :",
+      "opts": [
+        "Verbe",
+        "Adverbe",
+        "Adjectif (nom-adjectif)",
+        "Pronom"
+      ],
+      "ans": 2,
+      "expl": "Un nom peut qualifier un autre nom et jouer le rôle d'adjectif : \"business plan\", \"customer service\"."
+    },
+    {
+      "q": "\"They object to changing the plan\" — après \"object to\", on utilise :",
+      "opts": [
+        "Un infinitif",
+        "Un adjectif",
+        "Un gérondif (-ing)",
+        "Un adverbe"
+      ],
+      "ans": 2,
+      "expl": "Object to / be committed to / in addition to + -ING. Ces expressions piègent car \"to\" semble demander un infinitif."
+    },
+    {
+      "q": "Quel mot est un ADVERBE dans : \"She skillfully combines data and design\" ?",
+      "opts": [
+        "She",
+        "combines",
+        "skillfully",
+        "data"
+      ],
+      "ans": 2,
+      "expl": "\"Skillfully\" (-ly) est un adverbe qui modifie le verbe \"combines\"."
+    }
+  ],
+  "GRAMMAR3_COURS": [
+    {
+      "icon": "💧",
+      "tag": "Usage 1",
+      "color": "#2d6a4f",
+      "label": "Exprimer une nécessité (Besoin de)",
+      "desc": "C'est l'usage le plus courant. On l'utilise quand quelque chose est nécessaire pour atteindre un but ou pour son propre bien-être.",
+      "examples": [
+        {
+          "en": "I need to drink some water.",
+          "fr": "J'ai besoin de boire de l'eau."
+        },
+        {
+          "en": "We need to talk.",
+          "fr": "Nous avons besoin de parler."
+        }
+      ]
+    },
+    {
+      "icon": "📋",
+      "tag": "Usage 2",
+      "color": "#7c3aed",
+      "label": "Exprimer une obligation légère (Devoir)",
+      "desc": "\"Need to\" est une alternative plus douce et moins autoritaire que \"must\" ou \"have to\". On l'utilise souvent pour donner un conseil appuyé ou pour parler d'une tâche à accomplir.",
+      "examples": [
+        {
+          "en": "You need to finish this report by 5 PM.",
+          "fr": "Tu dois finir ce rapport avant 17h."
+        },
+        {
+          "en": "I need to go now, I'm late.",
+          "fr": "Je dois y aller maintenant, je suis en retard."
+        }
+      ]
+    }
+  ],
+  "GRAMMAR3_TABLE": [
+    {
+      "expr": "Want to",
+      "sens": "Envie de",
+      "force": "⬜ Faible (Désir)"
+    },
+    {
+      "expr": "Need to",
+      "sens": "Besoin / Nécessité",
+      "force": "🟨 Moyenne (Logique)"
+    },
+    {
+      "expr": "Have to",
+      "sens": "Devoir / Obligation",
+      "force": "🟧 Forte (Contrainte extérieure)"
+    },
+    {
+      "expr": "Must",
+      "sens": "Devoir impératif",
+      "force": "🟥 Très forte (Ordre ou règle)"
+    }
+  ],
+  "GRAMMAR3_QCM": [
+    {
+      "q": "Quelle phrase exprime un BESOIN physique ou logique ?",
+      "opts": [
+        "I must finish this now!",
+        "I want to eat pizza.",
+        "I need to drink some water.",
+        "I have to obey the rules."
+      ],
+      "ans": 2,
+      "expl": "\"Need to\" exprime une nécessité logique ou physique : boire de l'eau est un besoin vital."
+    },
+    {
+      "q": "\"You need to finish this report by 5 PM.\" — Quel est le sens de \"need to\" ici ?",
+      "opts": [
+        "Envie / désir",
+        "Obligation impérative (ordre)",
+        "Obligation légère / conseil appuyé",
+        "Habitude passée"
+      ],
+      "ans": 2,
+      "expl": "\"Need to\" pour une tâche à accomplir = obligation légère ou conseil fort, plus doux que \"must\"."
+    },
+    {
+      "q": "Quelle expression est la PLUS forte (sens le plus impératif) ?",
+      "opts": [
+        "Want to",
+        "Need to",
+        "Have to",
+        "Must"
+      ],
+      "ans": 3,
+      "expl": "L'ordre de force croissante est : Want to < Need to < Have to < Must."
+    },
+    {
+      "q": "Quelle expression est la PLUS faible (simple désir) ?",
+      "opts": [
+        "Must",
+        "Have to",
+        "Need to",
+        "Want to"
+      ],
+      "ans": 3,
+      "expl": "\"Want to\" exprime un simple désir ou une envie, sans notion d'obligation ou de nécessité."
+    },
+    {
+      "q": "\"We need to talk.\" — Comment traduire cette phrase ?",
+      "opts": [
+        "On veut parler.",
+        "On doit parler.",
+        "On a besoin de parler.",
+        "On devrait peut-être parler."
+      ],
+      "ans": 2,
+      "expl": "\"Need to\" + sens de nécessité → \"avoir besoin de\". \"We need to talk\" est une nécessité, pas un simple désir."
+    },
+    {
+      "q": "Quelle phrase utilise \"need to\" pour exprimer une tâche / obligation légère ?",
+      "opts": [
+        "I need to eat something, I'm starving.",
+        "I need to submit the test report before the meeting.",
+        "I need to breathe.",
+        "We need some water."
+      ],
+      "ans": 1,
+      "expl": "Soumettre un rapport avant une réunion est une tâche professionnelle — obligation légère, parfaitement exprimée avec \"need to\"."
+    },
+    {
+      "q": "\"Have to\" vs \"Need to\" — Quelle est la principale différence ?",
+      "opts": [
+        "\"Have to\" = désir, \"Need to\" = ordre",
+        "\"Have to\" = contrainte extérieure forte, \"Need to\" = nécessité logique ou tâche",
+        "Ils sont totalement synonymes",
+        "\"Need to\" = règle absolue, \"Have to\" = envie"
+      ],
+      "ans": 1,
+      "expl": "\"Have to\" = contrainte venant de l'extérieur (règle, loi, patron). \"Need to\" = nécessité logique ou besoin personnel."
+    },
+    {
+      "q": "Dans quel contexte utilise-t-on \"need to\" traduit par \"avoir besoin de\" ?",
+      "opts": [
+        "Quand on parle d'une règle officielle",
+        "Quand quelque chose est nécessaire physiquement ou logiquement",
+        "Quand on exprime une habitude passée",
+        "Quand on donne un ordre très fort"
+      ],
+      "ans": 1,
+      "expl": "\"Besoin de\" = nécessité physique ou logique. Exemple : I need to sleep (j'ai besoin de dormir)."
+    }
+  ],
+  "GRAMMAR4_MODALS": [
+    {
+      "modal": "CAN",
+      "icon": "💪",
+      "color": "#2d6a4f",
+      "usages": [
+        {
+          "label": "Capacité / Savoir-faire",
+          "ex": "I can drive.",
+          "fr": "Je sais conduire."
+        },
+        {
+          "label": "Possibilité",
+          "ex": "He can be here.",
+          "fr": "Il peut être ici."
+        }
+      ],
+      "negative": {
+        "label": "CAN'T = impossibilité logique ou surprise",
+        "ex": "It can't be true! / He can't be in his office (I know he left).",
+        "fr": "Ce n'est pas possible ! / Il ne peut pas être au bureau."
+      }
+    },
+    {
+      "modal": "COULD",
+      "icon": "⏪",
+      "color": "#1d6fa4",
+      "usages": [
+        {
+          "label": "Passé de CAN (capacité révolue)",
+          "ex": "I could run very fast when I was younger.",
+          "fr": "Je pouvais courir très vite quand j'étais jeune."
+        },
+        {
+          "label": "Hypothèse ou suggestion",
+          "ex": "You could do better.",
+          "fr": "Tu pourrais faire mieux."
+        },
+        {
+          "label": "Politesse (plus douce que CAN)",
+          "ex": "Could you help me?",
+          "fr": "Pourriez-vous m'aider ?"
+        }
+      ],
+      "tip": "Can you help me? → Je pense que tu peux. Could you help me? → Je ne sais pas si tu peux, mais je demande poliment."
+    },
+    {
+      "modal": "WILL",
+      "icon": "➡️",
+      "color": "#c1121f",
+      "usages": [
+        {
+          "label": "Forte probabilité",
+          "ex": "He will arrive at 10 am.",
+          "fr": "Il arrivera à 10h."
+        },
+        {
+          "label": "Volonté / intention",
+          "ex": "Will you marry me?",
+          "fr": "Veux-tu m'épouser ?"
+        }
+      ]
+    },
+    {
+      "modal": "WOULD",
+      "icon": "🔀",
+      "color": "#ea6c00",
+      "usages": [
+        {
+          "label": "Futur dans le passé",
+          "ex": "He said he would come.",
+          "fr": "Il a dit qu'il viendrait."
+        },
+        {
+          "label": "Conditionnel / politesse",
+          "ex": "I would like to go.",
+          "fr": "J'aimerais y aller."
+        }
+      ]
+    },
+    {
+      "modal": "MAY / MIGHT",
+      "icon": "🎲",
+      "color": "#7c3aed",
+      "usages": [
+        {
+          "label": "Probabilité moyenne (~50%)",
+          "ex": "He may be late. / He might be late.",
+          "fr": "Il est peut-être en retard."
+        }
+      ],
+      "tip": "MIGHT est souvent perçu comme légèrement plus incertain que MAY."
+    },
+    {
+      "modal": "MUST",
+      "icon": "🔴",
+      "color": "#dc2626",
+      "usages": [
+        {
+          "label": "Obligation forte (imposée par celui qui parle)",
+          "ex": "You must finish your meal!",
+          "fr": "Tu dois finir ton repas !"
+        },
+        {
+          "label": "Forte probabilité basée sur des faits",
+          "ex": "He must be in his office.",
+          "fr": "Il doit être dans son bureau (c'est logique)."
+        }
+      ],
+      "negative": {
+        "label": "MUSTN'T = interdiction formelle",
+        "ex": "You mustn't talk while eating.",
+        "fr": "Tu ne dois pas parler en mangeant."
+      }
+    },
+    {
+      "modal": "SHALL",
+      "icon": "🎩",
+      "color": "#6b6355",
+      "usages": [
+        {
+          "label": "Proposition / offre polie (avec I / We)",
+          "ex": "Shall we go? / Shall I close the window?",
+          "fr": "On y va ? / Je ferme la fenêtre ?"
+        }
+      ],
+      "tip": "Formel et rare. Surtout utilisé avec I et We en anglais britannique."
+    },
+    {
+      "modal": "SHOULD",
+      "icon": "💡",
+      "color": "#b45309",
+      "usages": [
+        {
+          "label": "Conseil poli (moins fort que MUST)",
+          "ex": "You should sleep early.",
+          "fr": "Tu devrais te coucher tôt."
+        },
+        {
+          "label": "Probabilité moyenne (~60–70%)",
+          "ex": "He should be here soon.",
+          "fr": "Il devrait être là bientôt."
+        }
+      ]
+    },
+    {
+      "modal": "OUGHT TO",
+      "icon": "⚖️",
+      "color": "#b45309",
+      "usages": [
+        {
+          "label": "Conseil fondé sur la morale ou la norme sociale",
+          "ex": "You ought to eat more vegetables.",
+          "fr": "Tu devrais manger plus de légumes."
+        },
+        {
+          "label": "Version négative : conseil de ne pas faire",
+          "ex": "You oughtn't to insult people.",
+          "fr": "Tu ne devrais pas insulter les gens."
+        }
+      ],
+      "tip": "SHOULD = conseil poli personnel. OUGHT TO = conseil fondé sur la morale ou une norme sociale."
+    },
+    {
+      "modal": "HAVE TO",
+      "icon": "📌",
+      "color": "#1d6fa4",
+      "usages": [
+        {
+          "label": "Obligation factuelle, extérieure (loi, règle, situation)",
+          "ex": "John has to go to Paris.",
+          "fr": "John doit aller à Paris (obligation imposée)."
+        },
+        {
+          "label": "DON'T HAVE TO = absence d'obligation (≠ interdiction)",
+          "ex": "You don't have to come pick me up.",
+          "fr": "Tu n'es pas obligé de venir me chercher."
+        }
+      ],
+      "tip": "MUST = je me l'impose moi-même. HAVE TO = une contrainte extérieure m'y oblige."
+    }
+  ],
+  "GRAMMAR4_TABLE": [
+    {
+      "modal": "MUST",
+      "type": "Obligation personnelle / forte probabilité",
+      "ex": "I must go now. / He must be tired."
+    },
+    {
+      "modal": "HAVE TO",
+      "type": "Obligation extérieure (règle, loi)",
+      "ex": "I have to pay my taxes."
+    },
+    {
+      "modal": "SHOULD",
+      "type": "Conseil poli",
+      "ex": "You should be more careful."
+    },
+    {
+      "modal": "OUGHT TO",
+      "type": "Conseil moral / selon les normes",
+      "ex": "You ought to respect your elders."
+    },
+    {
+      "modal": "MUSTN'T",
+      "type": "Interdiction formelle",
+      "ex": "You mustn't smoke here."
+    },
+    {
+      "modal": "CAN'T",
+      "type": "Impossibilité logique / interdiction",
+      "ex": "He can't be here. / You can't do that."
+    },
+    {
+      "modal": "NEEDN'T",
+      "type": "Pas nécessaire",
+      "ex": "You needn't worry."
+    },
+    {
+      "modal": "DON'T HAVE TO",
+      "type": "Pas obligé de le faire",
+      "ex": "You don't have to come."
+    }
+  ],
+  "GRAMMAR4_QCM": [
+    {
+      "q": "Quelle phrase exprime une CAPACITÉ ou un savoir-faire ?",
+      "opts": [
+        "He must drive.",
+        "I can drive.",
+        "You should drive.",
+        "She might drive."
+      ],
+      "ans": 1,
+      "expl": "\"Can\" exprime la capacité ou le savoir-faire. \"I can drive\" = je sais conduire."
+    },
+    {
+      "q": "\"It can't be true!\" — Que signifie \"can't\" ici ?",
+      "opts": [
+        "Absence d'obligation",
+        "Interdiction",
+        "Impossibilité logique / surprise",
+        "Conseil"
+      ],
+      "ans": 2,
+      "expl": "\"Can't\" peut exprimer une impossibilité logique ou une surprise : c'est impossible selon mes connaissances."
+    },
+    {
+      "q": "Quelle est la différence entre \"Can you help me?\" et \"Could you help me?\" ?",
+      "opts": [
+        "Aucune différence",
+        "\"Can\" = passé, \"Could\" = présent",
+        "\"Can\" = je pense que tu peux, \"Could\" = demande plus polie et incertaine",
+        "\"Could\" = obligation, \"Can\" = possibilité"
+      ],
+      "ans": 2,
+      "expl": "\"Could you\" est plus poli et exprime une incertitude : je ne suis pas sûr que tu puisses, mais je demande quand même."
+    },
+    {
+      "q": "Comment exprimer une INTERDICTION FORMELLE ?",
+      "opts": [
+        "You don't have to smoke here.",
+        "You needn't smoke here.",
+        "You mustn't smoke here.",
+        "You shouldn't smoke here."
+      ],
+      "ans": 2,
+      "expl": "\"Mustn't\" = interdiction formelle et absolue. \"Don't have to\" = pas obligatoire (mais autorisé)."
+    },
+    {
+      "q": "\"You don't have to come pick me up.\" — Que signifie cette phrase ?",
+      "opts": [
+        "Tu n'as pas le droit de venir.",
+        "Tu ne peux pas venir.",
+        "Ce n'est pas obligatoire de venir.",
+        "Tu dois absolument venir."
+      ],
+      "ans": 2,
+      "expl": "\"Don't have to\" = absence d'obligation. Ce n'est pas nécessaire, mais ce n'est pas interdit non plus."
+    },
+    {
+      "q": "Quelle phrase exprime un conseil fondé sur une NORME SOCIALE ou morale ?",
+      "opts": [
+        "You must respect your elders.",
+        "You ought to respect your elders.",
+        "You can respect your elders.",
+        "You will respect your elders."
+      ],
+      "ans": 1,
+      "expl": "\"Ought to\" exprime un conseil fondé sur la morale ou une norme sociale. \"Should\" est plus personnel et poli."
+    },
+    {
+      "q": "\"He must be in his office.\" — Quel sens a \"must\" ici ?",
+      "opts": [
+        "Obligation imposée par quelqu'un",
+        "Forte probabilité basée sur des faits",
+        "Conseil",
+        "Capacité"
+      ],
+      "ans": 1,
+      "expl": "\"Must\" peut exprimer une forte probabilité logique : c'est la déduction la plus logique selon ce qu'on sait."
+    },
+    {
+      "q": "Sir, you ________ be sitting in this waiting room. It is for women and children only.",
+      "opts": [
+        "oughtn't to",
+        "needn't",
+        "won't",
+        "can't"
+      ],
+      "ans": 3,
+      "expl": "\"Can't\" exprime une interdiction dans ce contexte : vous n'avez pas le droit d'être ici. \"Oughtn't to\" serait trop doux pour une règle ferme."
+    },
+    {
+      "q": "Quelle est la différence principale entre MUST et HAVE TO ?",
+      "opts": [
+        "Ils sont identiques",
+        "\"Must\" = obligation extérieure, \"Have to\" = obligation personnelle",
+        "\"Must\" = obligation que je m'impose, \"Have to\" = contrainte extérieure",
+        "\"Have to\" est plus fort que \"Must\""
+      ],
+      "ans": 2,
+      "expl": "I must go = c'est moi qui me l'impose. I have to go = une contrainte extérieure (rendez-vous, règle) m'y oblige."
+    },
+    {
+      "q": "\"Shall we go?\" — Quel est le sens de cette phrase ?",
+      "opts": [
+        "Nous allons partir (futur certain)",
+        "Proposition ou suggestion polie",
+        "Obligation de partir",
+        "Impossibilité de partir"
+      ],
+      "ans": 1,
+      "expl": "\"Shall\" avec We ou I exprime une proposition ou une offre polie. C'est formel et surtout utilisé en anglais britannique."
+    }
+  ],
+  "GRAMMAR5_CHAPTERS": [
+    {
+      "id": "subject",
+      "icon": "🟦",
+      "label": "Pronoms Sujets",
+      "subtitle": "Font l'action — toujours avant le verbe",
+      "color": "#2d6a4f",
+      "tip": "En anglais, il faut TOUJOURS un sujet dans la phrase. \"I\" est toujours suivi d'un verbe.",
+      "rows": [
+        {
+          "pro": "I",
+          "pron": "aï",
+          "ex": "I eat.",
+          "fr": "Je mange."
+        },
+        {
+          "pro": "You",
+          "pron": "you",
+          "ex": "You run.",
+          "fr": "Tu cours."
+        },
+        {
+          "pro": "He",
+          "pron": "hi",
+          "ex": "He sleeps.",
+          "fr": "Il dort."
+        },
+        {
+          "pro": "She",
+          "pron": "chii",
+          "ex": "She drives well.",
+          "fr": "Elle conduit bien."
+        },
+        {
+          "pro": "It",
+          "pron": "ite",
+          "ex": "It is raining.",
+          "fr": "Il pleut (neutre)."
+        },
+        {
+          "pro": "We",
+          "pron": "oui",
+          "ex": "We work.",
+          "fr": "Nous travaillons."
+        },
+        {
+          "pro": "They",
+          "pron": "zéï",
+          "ex": "They play.",
+          "fr": "Ils jouent."
+        }
+      ]
+    },
+    {
+      "id": "object",
+      "icon": "🟧",
+      "label": "Pronoms Compléments",
+      "subtitle": "Reçoivent l'action — après un verbe ou une préposition",
+      "color": "#ea6c00",
+      "tip": "Si le pronom est après un verbe ou une préposition → c'est un complément. Ex : \"Are you talking about me?\"",
+      "rows": [
+        {
+          "pro": "Me",
+          "pron": "mii",
+          "ex": "Call me.",
+          "fr": "Appelle-moi."
+        },
+        {
+          "pro": "You",
+          "pron": "you",
+          "ex": "I see you.",
+          "fr": "Je te vois."
+        },
+        {
+          "pro": "Him",
+          "pron": "him",
+          "ex": "They are writing to him.",
+          "fr": "Ils lui écrivent."
+        },
+        {
+          "pro": "Her",
+          "pron": "heur",
+          "ex": "She is talking to her.",
+          "fr": "Elle lui parle (à elle)."
+        },
+        {
+          "pro": "It",
+          "pron": "ite",
+          "ex": "They don't like it.",
+          "fr": "Ils ne l'aiment pas."
+        },
+        {
+          "pro": "Us",
+          "pron": "euss",
+          "ex": "Help us.",
+          "fr": "Aide-nous."
+        },
+        {
+          "pro": "Them",
+          "pron": "zèm",
+          "ex": "Look at them.",
+          "fr": "Regarde-les."
+        }
+      ]
+    },
+    {
+      "id": "possadj",
+      "icon": "🟩",
+      "label": "Adjectifs Possessifs",
+      "subtitle": "Montrent la possession — toujours suivis d'un nom",
+      "color": "#2d6a4f",
+      "tip": "Toujours suivis d'un nom : My car ✓ / Mine car ✗",
+      "rows": [
+        {
+          "pro": "My",
+          "pron": "maï",
+          "ex": "My car",
+          "fr": "Ma voiture"
+        },
+        {
+          "pro": "Your",
+          "pron": "yor",
+          "ex": "Your bag",
+          "fr": "Ton sac"
+        },
+        {
+          "pro": "His",
+          "pron": "hiz",
+          "ex": "His phone",
+          "fr": "Son téléphone (à lui)"
+        },
+        {
+          "pro": "Her",
+          "pron": "heur",
+          "ex": "Her dress",
+          "fr": "Sa robe (à elle)"
+        },
+        {
+          "pro": "Its",
+          "pron": "its",
+          "ex": "Its tail",
+          "fr": "Sa queue (animal/objet)"
+        },
+        {
+          "pro": "Our",
+          "pron": "aoueur",
+          "ex": "Our house",
+          "fr": "Notre maison"
+        },
+        {
+          "pro": "Their",
+          "pron": "zèr",
+          "ex": "Their dog",
+          "fr": "Leur chien"
+        }
+      ]
+    },
+    {
+      "id": "posspro",
+      "icon": "🟣",
+      "label": "Pronoms Possessifs",
+      "subtitle": "Remplacent le nom possédé — sans nom après",
+      "color": "#7c3aed",
+      "tip": "My car → avec un nom (adjectif). Mine → remplace le nom (pronom). Ex : This car is mine.",
+      "rows": [
+        {
+          "pro": "Mine",
+          "pron": "—",
+          "ex": "This is mine.",
+          "fr": "C'est le mien."
+        },
+        {
+          "pro": "Yours",
+          "pron": "—",
+          "ex": "That book is yours.",
+          "fr": "Ce livre est le tien."
+        },
+        {
+          "pro": "His",
+          "pron": "—",
+          "ex": "This phone is his.",
+          "fr": "Ce téléphone est à lui."
+        },
+        {
+          "pro": "Hers",
+          "pron": "—",
+          "ex": "It's hers.",
+          "fr": "C'est le sien (à elle)."
+        },
+        {
+          "pro": "Ours",
+          "pron": "—",
+          "ex": "The car is ours.",
+          "fr": "La voiture est à nous."
+        },
+        {
+          "pro": "Theirs",
+          "pron": "—",
+          "ex": "The house is theirs.",
+          "fr": "La maison est à eux."
+        }
+      ]
+    },
+    {
+      "id": "reflexive",
+      "icon": "🔁",
+      "label": "Pronoms Réfléchis",
+      "subtitle": "Le sujet fait l'action sur lui-même",
+      "color": "#c1121f",
+      "tip": "\"He talks to him\" ≠ \"He talks to himself\" → \"à lui\" ≠ \"à lui-même\"",
+      "rows": [
+        {
+          "pro": "Myself",
+          "pron": "—",
+          "ex": "I hurt myself.",
+          "fr": "Je me suis blessé."
+        },
+        {
+          "pro": "Yourself",
+          "pron": "—",
+          "ex": "You see yourself.",
+          "fr": "Tu te vois."
+        },
+        {
+          "pro": "Himself",
+          "pron": "—",
+          "ex": "He talks to himself.",
+          "fr": "Il parle à lui-même."
+        },
+        {
+          "pro": "Herself",
+          "pron": "—",
+          "ex": "She helped herself.",
+          "fr": "Elle s'est servie."
+        },
+        {
+          "pro": "Itself",
+          "pron": "—",
+          "ex": "The cat cleaned itself.",
+          "fr": "Le chat s'est nettoyé."
+        },
+        {
+          "pro": "Ourselves",
+          "pron": "—",
+          "ex": "We prepared ourselves.",
+          "fr": "Nous nous sommes préparés."
+        },
+        {
+          "pro": "Themselves",
+          "pron": "—",
+          "ex": "They introduced themselves.",
+          "fr": "Ils se sont présentés."
+        }
+      ]
+    }
+  ],
+  "GRAMMAR5_MEMO": [
+    {
+      "situation": "Au début de la phrase",
+      "type": "Sujet",
+      "ex": "I work / She runs"
+    },
+    {
+      "situation": "Après un verbe ou préposition",
+      "type": "Complément",
+      "ex": "He sees me / Talk to her"
+    },
+    {
+      "situation": "Devant un nom",
+      "type": "Possessif adjectival",
+      "ex": "My house / Their car"
+    },
+    {
+      "situation": "Sans nom derrière",
+      "type": "Possessif (indépendant)",
+      "ex": "It's mine / This is hers"
+    },
+    {
+      "situation": "Sujet = complément (sur soi)",
+      "type": "Réfléchi",
+      "ex": "I hurt myself / She sees herself"
+    }
+  ],
+  "GRAMMAR5_QCM": [
+    {
+      "q": "Quel pronom sujet traduit \"Nous\" ?",
+      "opts": [
+        "They",
+        "We",
+        "Us",
+        "Our"
+      ],
+      "ans": 1,
+      "expl": "\"We\" est le pronom sujet pour \"nous\". \"Us\" est le complément (Help us = Aide-nous)."
+    },
+    {
+      "q": "Dans \"John is talking to me\", quel type de pronom est \"me\" ?",
+      "opts": [
+        "Pronom sujet",
+        "Pronom complément",
+        "Adjectif possessif",
+        "Pronom réfléchi"
+      ],
+      "ans": 1,
+      "expl": "\"Me\" est un pronom complément : il reçoit l'action et est placé après la préposition \"to\"."
+    },
+    {
+      "q": "Laquelle de ces phrases utilise correctement un ADJECTIF POSSESSIF ?",
+      "opts": [
+        "This bag is my.",
+        "Mine bag is here.",
+        "My bag is here.",
+        "I bag is here."
+      ],
+      "ans": 2,
+      "expl": "L'adjectif possessif \"my\" doit être suivi d'un nom : \"My bag\". \"Mine\" s'utilise sans nom après."
+    },
+    {
+      "q": "\"That book is yours.\" — Quel type de pronom est \"yours\" ?",
+      "opts": [
+        "Adjectif possessif",
+        "Pronom sujet",
+        "Pronom possessif (indépendant)",
+        "Pronom réfléchi"
+      ],
+      "ans": 2,
+      "expl": "\"Yours\" est un pronom possessif indépendant : il remplace le nom (on ne dit pas \"your book\" ici, on remplace \"book\" par \"yours\")."
+    },
+    {
+      "q": "Quelle phrase contient un PRONOM RÉFLÉCHI ?",
+      "opts": [
+        "She talks to her.",
+        "She talks to herself.",
+        "She talks to hers.",
+        "She talks to she."
+      ],
+      "ans": 1,
+      "expl": "\"Herself\" est un pronom réfléchi : le sujet (she) fait l'action sur elle-même. \"Her\" serait un complément renvoyant à une autre personne."
+    },
+    {
+      "q": "Comment dit-on \"Leur chien\" en anglais ?",
+      "opts": [
+        "Them dog",
+        "They dog",
+        "Theirs dog",
+        "Their dog"
+      ],
+      "ans": 3,
+      "expl": "\"Their\" est l'adjectif possessif pour \"leur/leurs\". Il est toujours suivi d'un nom. \"Theirs\" s'utilise sans nom (The dog is theirs)."
+    },
+    {
+      "q": "Quelle est la prononciation correcte de \"They\" ?",
+      "opts": [
+        "zii",
+        "zèm",
+        "zéï",
+        "zèr"
+      ],
+      "ans": 2,
+      "expl": "\"They\" se prononce \"zéï\". \"Them\" = zèm, \"Their\" = zèr."
+    },
+    {
+      "q": "\"Are you talking about me?\" — Pourquoi \"me\" et pas \"I\" ?",
+      "opts": [
+        "Parce que \"me\" est plus court",
+        "Parce que \"me\" est un pronom sujet",
+        "Parce que \"me\" est un pronom complément, placé après la préposition \"about\"",
+        "Parce que \"I\" ne s'utilise jamais après \"about\""
+      ],
+      "ans": 2,
+      "expl": "Après une préposition (about, to, with, for...), on utilise toujours le pronom complément : me, him, her, us, them."
+    },
+    {
+      "q": "Quelle est la différence entre \"my\" et \"mine\" ?",
+      "opts": [
+        "\"My\" est pluriel, \"mine\" est singulier",
+        "\"My\" + nom (adjectif possessif), \"mine\" sans nom (pronom possessif)",
+        "Aucune différence",
+        "\"Mine\" est plus formel que \"my\""
+      ],
+      "ans": 1,
+      "expl": "\"My car\" = adjectif possessif (avec nom). \"This car is mine\" = pronom possessif (remplace le nom)."
+    },
+    {
+      "q": "Complète : \"I built it ________ !\" (j'ai construit ça tout seul)",
+      "opts": [
+        "me",
+        "my",
+        "myself",
+        "mine"
+      ],
+      "ans": 2,
+      "expl": "\"Myself\" est le pronom réfléchi de \"I\". \"I built it myself\" = je l'ai construit moi-même / tout seul."
+    }
+  ],
+  "GRAMMAR6_QCM": [
+    {
+      "q": "______ of classical ballet in the United States began around 1830.",
+      "blank": "______",
+      "opts": [
+        "To teach",
+        "Is teaching",
+        "It was taught",
+        "The teaching"
+      ],
+      "ans": 3,
+      "exp": "On a besoin d'un sujet nominal pour cette phrase. \"The teaching\" (gérondif nominalisé) fonctionne comme sujet de \"began\"."
+    },
+    {
+      "q": "Mason bees are solitary bees, which means ______ in colonies like honeybees or bumblebees.",
+      "blank": "______",
+      "opts": [
+        "do not live",
+        "when they do not live",
+        "that they do not live",
+        "that do not live"
+      ],
+      "ans": 2,
+      "exp": "\"Which means\" introduit une proposition complétive avec \"that\" + sujet (they) + verbe. \"That they do not live\" est la seule option grammaticalement complète."
+    },
+    {
+      "q": "Long before the advent of written literature, ______ their myths and stories in oral poems told by successive generations.",
+      "blank": "______",
+      "opts": [
+        "people recorded",
+        "recording people",
+        "people's recordings",
+        "people who recorded"
+      ],
+      "ans": 0,
+      "exp": "La phrase principale a besoin d'un sujet + verbe conjugué. \"People recorded\" (sujet + verbe au passé) complète la phrase correctement."
+    },
+    {
+      "q": "Comparative anatomy is ______ classification of both plants and animals.",
+      "blank": "______",
+      "opts": [
+        "the basis for",
+        "for basics",
+        "the basis that",
+        "the basically"
+      ],
+      "ans": 0,
+      "exp": "\"The basis for\" est l'expression correcte : \"the basis for + nom\". Les autres options sont agrammaticales ou incorrectes dans ce contexte."
+    },
+    {
+      "q": "Although legend has it that the Pilgrims first set foot in America on Plymouth Rock in 1620, ______ documentary evidence confirming this.",
+      "blank": "______",
+      "opts": [
+        "no",
+        "still is no",
+        "there is no",
+        "but no"
+      ],
+      "ans": 2,
+      "exp": "\"There is no\" introduit une structure existentielle négative correcte. \"No\" seul ou \"but no\" sont incorrects après la virgule car il faut un sujet + verbe."
+    },
+    {
+      "q": "Despite its fishlike form, the whale is ______ and will drown if submerged too long.",
+      "blank": "______",
+      "opts": [
+        "an animal breathes air",
+        "an animal that breathes air",
+        "an animal breathes air",
+        "that an animal breathes air"
+      ],
+      "ans": 1,
+      "exp": "\"An animal that breathes air\" utilise une proposition relative correcte (that + verbe) pour qualifier \"animal\"."
+    },
+    {
+      "q": "Clouds ______ in warm air rises, cools, and condenses.",
+      "blank": "______",
+      "opts": [
+        "when form water vapor",
+        "form when water vapor",
+        "form vapor water when",
+        "vapor form when water"
+      ],
+      "ans": 1,
+      "exp": "\"Clouds form when water vapor [rises...]\" : \"form\" est le verbe principal, \"when\" introduit la subordonnée de temps avec \"water vapor\" comme sujet."
+    },
+    {
+      "q": "Portland, ______, is located primarily on two hilly peninsulas overlooking Casco Bay and its many islands.",
+      "blank": "______",
+      "opts": [
+        "which Maine's largest city",
+        "Maine's largest city, where",
+        "is Maine's largest city",
+        "Maine's largest city"
+      ],
+      "ans": 3,
+      "exp": "\"Maine's largest city\" est une appositive (explication entre virgules). Pas besoin de \"which\" ni de verbe ici car c'est une incise nominale."
+    },
+    {
+      "q": "Mars, the so-called red planet, is actually colored red by iron oxide and other impurities ______ the whole surface.",
+      "blank": "______",
+      "opts": [
+        "that cover",
+        "in which are covered",
+        "that they cover",
+        "and covered"
+      ],
+      "ans": 0,
+      "exp": "\"That cover\" est une proposition relative correcte : \"impurities that cover the whole surface\". \"That they cover\" est redondant (double sujet)."
+    },
+    {
+      "q": "The 1903 film The Great Train Robbery was the first significant film in which the classic western story's formula of crime and retribution ______.",
+      "blank": "______",
+      "opts": [
+        "was used",
+        "to be used",
+        "used",
+        "had used"
+      ],
+      "ans": 0,
+      "exp": "\"Was used\" (passif passé) est correct car la formule est utilisée (passive), et le contexte est passé. \"Used\" actif changerait le sens : ce n'est pas la formule qui utilise quelque chose."
+    },
+    {
+      "q": "When played in certain ways, the bassoon can produce comical sounds, ______ it sometimes referred to as the clown of the orchestra.",
+      "blank": "______",
+      "opts": [
+        "or",
+        "that",
+        "so",
+        "whether"
+      ],
+      "ans": 2,
+      "exp": "\"So\" exprime la conséquence : les sons comiques ont pour conséquence qu'on le surnomme \"le clown de l'orchestre\". C'est un \"so\" de résultat."
+    },
+    {
+      "q": "In modern societies, ______ authorized body such as a legislature or a court makes the law.",
+      "blank": "______",
+      "opts": [
+        "some",
+        "some of",
+        "some the",
+        "for some"
+      ],
+      "ans": 0,
+      "exp": "\"Some authorized body\" = un certain organe. \"Some\" devant un nom singulier signifie \"un certain\". \"Some of\" nécessiterait un article après (some of the)."
+    },
+    {
+      "q": "The sense of smell functions chemically, ______ the sense of taste, but it is 10,000 times more sensitive.",
+      "blank": "______",
+      "opts": [
+        "as does",
+        "so have",
+        "which as",
+        "by which"
+      ],
+      "ans": 0,
+      "exp": "\"As does the sense of taste\" est une structure comparative inversée (comme le fait le sens du goût). C'est une ellipse élégante : \"as the sense of taste does\"."
+    },
+    {
+      "q": "______ primarily from plant oils, perfumes were used in ancient times as incense in religious rites, in medicines, and later for adornment.",
+      "blank": "______",
+      "opts": [
+        "Made them",
+        "They made",
+        "Made",
+        "By making"
+      ],
+      "ans": 2,
+      "exp": "\"Made\" est un participe passé utilisé en appositive participiale (= Being made / Having been made). Le sujet implicite est \"perfumes\". \"Made them\" ou \"They made\" créeraient un dangling modifier."
+    },
+    {
+      "q": "Boise became ______ of the state of Idaho in 1864.",
+      "blank": "______",
+      "opts": [
+        "as the capital",
+        "the capital",
+        "to be the capital",
+        "the capital was"
+      ],
+      "ans": 1,
+      "exp": "\"Became the capital\" : après \"become\", on utilise directement le groupe nominal sans \"as\", \"to be\", ou verbe supplémentaire."
+    }
+  ],
+  "GRAMMAR_RULES": [
+    {
+      "re": {},
+      "msg": "3ème personne : utilise \"doesn't\" avec he/she/it"
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it has\" (pas have)"
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it does\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it goes\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : ajoute -s au verbe (works)"
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it comes\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it says\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it finds\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it needs\""
+    },
+    {
+      "re": {},
+      "msg": "3ème personne : \"he/she/it knows\""
+    },
+    {
+      "re": {},
+      "msg": "\"I am agree\" n'existe pas → \"I agree\""
+    },
+    {
+      "re": {},
+      "msg": "\"I am disagree\" n'existe pas → \"I disagree\""
+    },
+    {
+      "re": {},
+      "msg": "\"research\" est indénombrable → \"do research\""
+    },
+    {
+      "re": {},
+      "msg": "On \"makes\" une erreur, pas \"does\""
+    },
+    {
+      "re": {},
+      "msg": "On \"makes\" une erreur → passé : \"made a mistake\""
+    },
+    {
+      "re": {},
+      "msg": "\"travel\" est un verbe ou indénombrable → \"travel\" ou \"take a trip\""
+    },
+    {
+      "re": {},
+      "msg": "Pour l'âge : \"I am X years old\" (pas \"I have\")"
+    },
+    {
+      "re": {},
+      "msg": "\"Goodly\" n'existe pas → \"very well\""
+    },
+    {
+      "re": {},
+      "msg": "\"boring\" = ennuyeux (chose), \"bored\" = qui s'ennuie (personne)"
+    },
+    {
+      "re": {},
+      "msg": "\"interesting\" décrit une chose, \"interested\" décrit une personne"
+    },
+    {
+      "re": {},
+      "msg": "\"information\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"advice\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"feedback\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"knowledge\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"progress\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"research\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"equipment\" est indénombrable, pas de -s"
+    },
+    {
+      "re": {},
+      "msg": "\"since\" + point précis, \"for\" + durée (for 3 days)"
+    },
+    {
+      "re": {},
+      "msg": "Participe passé de go = \"gone\" (I have gone) ou prétérit \"I went\""
+    },
+    {
+      "re": {},
+      "msg": "Participe passé de see = \"seen\" → I have seen"
+    },
+    {
+      "re": {},
+      "msg": "Participe passé de do = \"done\" → I have done"
+    },
+    {
+      "re": {},
+      "msg": "Participe passé de come = \"come\" → I have come"
+    },
+    {
+      "re": {},
+      "msg": "Participe passé de take = \"taken\" → I have taken"
+    },
+    {
+      "re": {},
+      "msg": "Après did, utilise la base verbale (did you find?, pas did you found?)"
+    },
+    {
+      "re": {},
+      "msg": "Deux modaux ne se combinent pas → \"would be able to\""
+    },
+    {
+      "re": {},
+      "msg": "En QA : préfère \"issue\" ou \"bug\" à \"problem\""
+    },
+    {
+      "re": {},
+      "msg": "Le bug ne \"marche pas\", c'est la fonctionnalité qui ne fonctionne pas"
+    },
+    {
+      "re": {},
+      "msg": "Bonne utilisation de will pour le futur ✓"
+    },
+    {
+      "re": {},
+      "msg": "\"depend\" se construit avec \"on\" → depend on"
+    },
+    {
+      "re": {},
+      "msg": "\"similar\" se construit avec \"to\" → similar to"
+    },
+    {
+      "re": {},
+      "msg": "\"interested\" se construit avec \"in\" → interested in"
+    },
+    {
+      "re": {},
+      "msg": "\"good\" se construit avec \"at\" → good at something"
+    },
+    {
+      "re": {},
+      "msg": "\"arrived\" + at (endroit précis) ou in (ville/pays)"
+    },
+    {
+      "re": {},
+      "msg": "\"explain\" a besoin de \"to\" → explain to me"
+    },
+    {
+      "re": {},
+      "msg": "Ordre des mots : \"I am too\" (pas \"I too am\")"
+    },
+    {
+      "re": {},
+      "msg": "Les adverbes de fréquence se placent avant le verbe principal"
+    },
+    {
+      "re": {},
+      "msg": "Ordre des mots : sujet + adverbe + verbe"
+    }
+  ]
+}

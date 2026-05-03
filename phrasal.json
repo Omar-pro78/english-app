@@ -1,0 +1,216 @@
+{
+  "PHRASAL_VERBS": [
+    {
+      "en": "Get up",
+      "fr": "Se lever",
+      "ex": "I get up at 7 AM every day.",
+      "exTrad": "Je me lève à 7h tous les jours."
+    },
+    {
+      "en": "Get in",
+      "fr": "Entrer (voiture/taxi)",
+      "ex": "Get in the car, we're late!",
+      "exTrad": "Monte dans la voiture, on est en retard !"
+    },
+    {
+      "en": "Get out",
+      "fr": "Sortir (voiture/bâtiment)",
+      "ex": "He got out of the taxi.",
+      "exTrad": "Il est sorti du taxi."
+    },
+    {
+      "en": "Get on",
+      "fr": "Monter (bus/train/vélo)",
+      "ex": "I get on the bus at this stop.",
+      "exTrad": "Je monte dans le bus à cet arrêt."
+    },
+    {
+      "en": "Get off",
+      "fr": "Descendre (bus/train)",
+      "ex": "Don't get off the train yet.",
+      "exTrad": "Ne descends pas encore du train."
+    },
+    {
+      "en": "Get on with",
+      "fr": "Bien s'entendre avec",
+      "ex": "I get on well with my boss.",
+      "exTrad": "Je m'entends bien avec mon chef."
+    },
+    {
+      "en": "Get back",
+      "fr": "Revenir / Rentrer",
+      "ex": "What time do you get back?",
+      "exTrad": "À quelle heure rentres-tu ?"
+    },
+    {
+      "en": "Get over",
+      "fr": "Surmonter / Se remettre de",
+      "ex": "She got over her break-up.",
+      "exTrad": "Elle s'est remise de sa rupture."
+    },
+    {
+      "en": "Get away",
+      "fr": "S'échapper / S'évader",
+      "ex": "I need to get away for a bit.",
+      "exTrad": "J'ai besoin de m'évader un peu."
+    },
+    {
+      "en": "Get by",
+      "fr": "S'en sortir / Se débrouiller",
+      "ex": "I can get by in English.",
+      "exTrad": "Je peux me débrouiller en anglais."
+    },
+    {
+      "en": "Get together",
+      "fr": "Se réunir / Se voir",
+      "ex": "Let's get together soon!",
+      "exTrad": "Voyons-nous bientôt !"
+    }
+  ],
+  "TAKE_VERBS": [
+    {
+      "en": "Take off",
+      "fr": "Décoller (avion) / Enlever (vêtement)",
+      "ex": "The plane takes off at 8 PM.",
+      "exTrad": "L'avion décolle à 20h."
+    },
+    {
+      "en": "Take out",
+      "fr": "Sortir quelque chose / Emmener qqn",
+      "ex": "I need to take out the trash.",
+      "exTrad": "Je dois sortir les poubelles."
+    },
+    {
+      "en": "Take up",
+      "fr": "Commencer une activité / hobby",
+      "ex": "I want to take up yoga.",
+      "exTrad": "Je veux me mettre au yoga."
+    },
+    {
+      "en": "Take in",
+      "fr": "Assimiler / Comprendre / Absorber",
+      "ex": "It was a lot of info to take in.",
+      "exTrad": "C'était beaucoup d'infos à assimiler."
+    },
+    {
+      "en": "Take back",
+      "fr": "Rapporter / Retirer ses paroles",
+      "ex": "I need to take this book back.",
+      "exTrad": "Je dois rapporter ce livre."
+    },
+    {
+      "en": "Take over",
+      "fr": "Prendre le contrôle / le relais",
+      "ex": "He will take over the company.",
+      "exTrad": "Il va reprendre l'entreprise."
+    },
+    {
+      "en": "Take after",
+      "fr": "Ressembler à (un parent)",
+      "ex": "He takes after his father.",
+      "exTrad": "Il ressemble à son père."
+    },
+    {
+      "en": "Take on",
+      "fr": "Accepter un défi / une responsabilité",
+      "ex": "Don't take on too much work.",
+      "exTrad": "N'accepte pas trop de travail."
+    },
+    {
+      "en": "Take away",
+      "fr": "Emporter (nourriture)",
+      "ex": "Two coffees to take away, please.",
+      "exTrad": "Deux cafés à emporter, s'il vous plaît."
+    }
+  ],
+  "TAKE_QCM": [
+    {
+      "q": "Que signifie \"take off\" dans un contexte aéronautique ?",
+      "opts": [
+        "Décoller",
+        "Atterrir",
+        "Rater son vol",
+        "Enregistrer"
+      ],
+      "ans": 0,
+      "expl": "\"The plane takes off\" = l'avion décolle. Aussi utilisé pour enlever un vêtement."
+    },
+    {
+      "q": "Quelle phrase utilise \"take out\" correctement ?",
+      "opts": [
+        "I take out early.",
+        "I need to take out the trash.",
+        "She took out the sky.",
+        "He take out work."
+      ],
+      "ans": 1,
+      "expl": "\"Take out\" = sortir quelque chose. \"Take out the trash\" = sortir les poubelles."
+    },
+    {
+      "q": "\"I want to take up yoga\" signifie :",
+      "opts": [
+        "Je veux arrêter le yoga",
+        "Je déteste le yoga",
+        "Je veux commencer le yoga",
+        "Je pratique le yoga depuis longtemps"
+      ],
+      "ans": 2,
+      "expl": "\"Take up\" = commencer une nouvelle activité ou un hobby."
+    },
+    {
+      "q": "Quelle est la différence entre GET et TAKE ?",
+      "opts": [
+        "Aucune différence",
+        "GET = recevoir/arriver, TAKE = prendre activement/déplacer",
+        "TAKE = recevoir, GET = prendre",
+        "Ils sont synonymes parfaits"
+      ],
+      "ans": 1,
+      "expl": "GET = recevoir ou arriver quelque part. TAKE = prendre activement, déplacer quelque chose."
+    },
+    {
+      "q": "\"He takes after his father\" veut dire :",
+      "opts": [
+        "Il suit son père",
+        "Il ressemble à son père",
+        "Il travaille pour son père",
+        "Il remplace son père"
+      ],
+      "ans": 1,
+      "expl": "\"Take after\" = ressembler à un membre de la famille."
+    },
+    {
+      "q": "Comment dit-on \"prendre le contrôle d'une entreprise\" ?",
+      "opts": [
+        "Take off the company",
+        "Take up the company",
+        "Take over the company",
+        "Take in the company"
+      ],
+      "ans": 2,
+      "expl": "\"Take over\" = prendre le contrôle, reprendre les rênes."
+    },
+    {
+      "q": "\"It was a lot of info to take in\" — que signifie \"take in\" ici ?",
+      "opts": [
+        "Acheter",
+        "Photographier",
+        "Assimiler / comprendre",
+        "Imprimer"
+      ],
+      "ans": 2,
+      "expl": "\"Take in\" = absorber, assimiler une information ou une situation."
+    },
+    {
+      "q": "Quelle phrase signifie \"n'accepte pas trop de travail\" ?",
+      "opts": [
+        "Don't take off too much work.",
+        "Don't take on too much work.",
+        "Don't take up too much work.",
+        "Don't take over too much work."
+      ],
+      "ans": 1,
+      "expl": "\"Take on\" = accepter une responsabilité, un défi ou une charge de travail."
+    }
+  ]
+}

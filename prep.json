@@ -1,0 +1,316 @@
+[
+  {
+    "id": "sur",
+    "label": "🔵 SUR",
+    "title": "Traductions de « SUR »",
+    "subtitle": "Comment dire \"sur\" selon le contexte",
+    "cols": [
+      "Préposition",
+      "Type / Explication",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "On",
+        "type": "Position & Contact",
+        "ex": "The keys are on the counter.",
+        "trad": "Les clés sont sur le comptoir."
+      },
+      {
+        "prep": "Over",
+        "type": "Supériorité & Couverture",
+        "ex": "Put a blanket over the baby.",
+        "trad": "Mets une couverture sur le bébé."
+      },
+      {
+        "prep": "Above",
+        "type": "Niveau / Hauteur",
+        "ex": "The sun is above the clouds.",
+        "trad": "Le soleil est au-dessus des nuages."
+      },
+      {
+        "prep": "Onto",
+        "type": "Mouvement (vers une surface)",
+        "ex": "He stepped onto the balcony.",
+        "trad": "Il a marché sur le balcon."
+      },
+      {
+        "prep": "About",
+        "type": "Sujet / Thème",
+        "ex": "I'm reading a book about art.",
+        "trad": "Je lis un livre sur l'art."
+      },
+      {
+        "prep": "Upon",
+        "type": "Formel (= On soutenu)",
+        "ex": "It depends upon your choice.",
+        "trad": "Cela dépend de votre choix."
+      },
+      {
+        "prep": "To",
+        "type": "Direction / Vue",
+        "ex": "The window looks to the park.",
+        "trad": "La fenêtre donne sur le parc."
+      }
+    ]
+  },
+  {
+    "id": "lieu",
+    "label": "📍 LIEU",
+    "title": "Prépositions de Lieu (Espace)",
+    "subtitle": "Indiquer où se trouve quelque chose",
+    "cols": [
+      "Préposition",
+      "Traduction",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "In",
+        "type": "Dans",
+        "ex": "The book is in the bag.",
+        "trad": "Le livre est dans le sac."
+      },
+      {
+        "prep": "On",
+        "type": "Sur",
+        "ex": "The book is on the table.",
+        "trad": "Le livre est sur la table."
+      },
+      {
+        "prep": "Under",
+        "type": "Sous",
+        "ex": "The cat is under the chair.",
+        "trad": "Le chat est sous la chaise."
+      },
+      {
+        "prep": "Next to",
+        "type": "À côté de",
+        "ex": "The car is next to the house.",
+        "trad": "La voiture est à côté de la maison."
+      }
+    ]
+  },
+  {
+    "id": "temps",
+    "label": "⏰ TEMPS",
+    "title": "Prépositions de Temps",
+    "subtitle": "AT · ON · IN — selon la précision temporelle",
+    "cols": [
+      "Préposition",
+      "Usage",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "At",
+        "type": "Heure précise",
+        "ex": "Meet at 5 o'clock.",
+        "trad": "Se retrouver à 5 heures."
+      },
+      {
+        "prep": "On",
+        "type": "Jours et dates",
+        "ex": "The party is on Monday.",
+        "trad": "La fête est lundi."
+      },
+      {
+        "prep": "In",
+        "type": "Mois, années, périodes",
+        "ex": "I was born in April.",
+        "trad": "Je suis né en avril."
+      }
+    ]
+  },
+  {
+    "id": "mouvement",
+    "label": "🚀 MOUVEMENT",
+    "title": "Prépositions de Direction / Mouvement",
+    "subtitle": "Indiquer un déplacement ou une provenance",
+    "cols": [
+      "Préposition",
+      "Mouvement",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "To",
+        "type": "Vers / À",
+        "ex": "She goes to school.",
+        "trad": "Elle va à l'école."
+      },
+      {
+        "prep": "Into",
+        "type": "Vers l'intérieur",
+        "ex": "He goes into the room.",
+        "trad": "Il entre dans la pièce."
+      },
+      {
+        "prep": "Onto",
+        "type": "Vers le dessus",
+        "ex": "The cat jumps onto the table.",
+        "trad": "Le chat saute sur la table."
+      },
+      {
+        "prep": "From",
+        "type": "Provenance (de/depuis)",
+        "ex": "She comes from Spain.",
+        "trad": "Elle vient d'Espagne."
+      }
+    ]
+  },
+  {
+    "id": "groupe",
+    "label": "👥 GROUPE",
+    "title": "Between vs Among",
+    "subtitle": "Deux éléments ou un groupe",
+    "cols": [
+      "Préposition",
+      "Contexte",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "Between",
+        "type": "Deux éléments séparés",
+        "ex": "Between you and me.",
+        "trad": "Entre toi et moi."
+      },
+      {
+        "prep": "Among",
+        "type": "Un groupe / une foule",
+        "ex": "Among the crowd.",
+        "trad": "Dans la foule."
+      }
+    ]
+  },
+  {
+    "id": "verbes",
+    "label": "🔗 VERBES + PREP",
+    "title": "Verbe + Préposition",
+    "subtitle": "Collocations indispensables à mémoriser",
+    "cols": [
+      "Expression",
+      "Traduction",
+      "Exemple EN",
+      "—"
+    ],
+    "rows": [
+      {
+        "prep": "Listen to",
+        "type": "Écouter",
+        "ex": "I'm listening to music.",
+        "trad": "Je suis en train d'écouter de la musique."
+      },
+      {
+        "prep": "Wait for",
+        "type": "Attendre",
+        "ex": "She is waiting for the bus.",
+        "trad": "Elle attend le bus."
+      },
+      {
+        "prep": "Look at",
+        "type": "Regarder",
+        "ex": "Look at the whiteboard.",
+        "trad": "Regarde le tableau."
+      },
+      {
+        "prep": "Look for",
+        "type": "Chercher",
+        "ex": "I am looking for my keys.",
+        "trad": "Je cherche mes clés."
+      },
+      {
+        "prep": "Talk to/with",
+        "type": "Parler à / avec",
+        "ex": "I need to talk to you.",
+        "trad": "J'ai besoin de te parler."
+      },
+      {
+        "prep": "Think about",
+        "type": "Penser à (réfléchir)",
+        "ex": "I'm thinking about my future.",
+        "trad": "Je pense à mon avenir."
+      },
+      {
+        "prep": "Depends on",
+        "type": "Dépendre de",
+        "ex": "It depends on the weather.",
+        "trad": "Cela dépend du temps."
+      },
+      {
+        "prep": "Belong to",
+        "type": "Appartenir à",
+        "ex": "This book belongs to me.",
+        "trad": "Ce livre m'appartient."
+      },
+      {
+        "prep": "Agree with",
+        "type": "Être d'accord avec",
+        "ex": "I agree with your idea.",
+        "trad": "Je suis d'accord avec ton idée."
+      },
+      {
+        "prep": "Laugh at",
+        "type": "Se moquer de",
+        "ex": "Don't laugh at him!",
+        "trad": "Ne te moque pas de lui !"
+      }
+    ]
+  },
+  {
+    "id": "by",
+    "label": "🔑 BY",
+    "title": "Tableau récapitulatif — BY",
+    "subtitle": "Toutes les nuances de \"BY\"",
+    "cols": [
+      "Catégorie",
+      "Explication",
+      "Exemple EN",
+      "Traduction FR"
+    ],
+    "rows": [
+      {
+        "prep": "Agent / auteur",
+        "type": "Indique qui fait l'action",
+        "ex": "The book was written by John.",
+        "trad": "Le livre a été écrit par John."
+      },
+      {
+        "prep": "Moyen / méthode",
+        "type": "Indique comment on fait",
+        "ex": "We travel by car.",
+        "trad": "Nous voyageons en voiture."
+      },
+      {
+        "prep": "Proximité",
+        "type": "Position proche",
+        "ex": "The house is by the river.",
+        "trad": "La maison est près de la rivière."
+      },
+      {
+        "prep": "Deadline",
+        "type": "Date limite",
+        "ex": "Finish this by Monday.",
+        "trad": "Termine ceci avant lundi."
+      },
+      {
+        "prep": "Mesure / écart",
+        "type": "Quantité ou différence",
+        "ex": "Prices increased by 10%.",
+        "trad": "Les prix ont augmenté de 10 %."
+      },
+      {
+        "prep": "Moyen (email etc)",
+        "type": "Via un canal",
+        "ex": "The letter was sent by email.",
+        "trad": "La lettre a été envoyée par email."
+      }
+    ]
+  }
+]
