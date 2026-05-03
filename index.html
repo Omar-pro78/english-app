@@ -1651,7 +1651,7 @@ function computeNextStep() {
           eyebrow: 'Reprends là où tu t\'es arrêté',
           label: `${cfg.label} — Lot ${batchNum}`,
           sub: `Position ${pos % BATCH_SIZE}/${BATCH_SIZE} · en cours`,
-          action: ((k, p) => () => startSession(k, p))(lastKey, pos),
+          action: ((k, p) => () => startSession(k, p, false, 'home'))(lastKey, pos),
         };
       }
     }
@@ -1711,7 +1711,7 @@ function computeNextStep() {
           eyebrow: isAbsent ? 'Bon retour !' : 'Continue ta progression',
           label: `${cfg.label}`,
           sub: tone,
-          action: ((k, p) => () => startSession(k, p))(lastKey, pos),
+          action: ((k, p) => () => startSession(k, p, false, 'home'))(lastKey, pos),
         };
       }
     }
@@ -1740,7 +1740,7 @@ function computeNextStep() {
       eyebrow: pct === 0 ? 'Nouveau module' : 'Module le moins avancé',
       label: cfg.label,
       sub: pct === 0 ? `${cfg.getData().length} items · pas encore commencé` : `${pct}% complété`,
-      action: ((m, p) => () => startSession(m, p))(leastModule, pos),
+      action: ((m, p) => () => startSession(m, p, false, 'home'))(leastModule, pos),
     };
   }
 
@@ -4265,7 +4265,7 @@ function buildSessionLauncher(moduleKey) {
 }
 
 // ── Start a session ────────────────────────────────────────
-function startSession(moduleKey, startPos, skipBatch) {
+function startSession(moduleKey, startPos, skipBatch, origin) {
   const cfg  = SESS_CFG[moduleKey];
   const data = cfg.getData();
   const total = data.length;
@@ -4300,7 +4300,13 @@ function startSession(moduleKey, startPos, skipBatch) {
   S.tab = 'session';
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
-  bar.onclick = () => { S.tab = moduleKey; S.session = null; render(); };
+  const _origin = origin || null;
+  bar.onclick = () => {
+    S.session = null;
+    if (_origin === 'home') { goHome(); }
+    else if (_origin) { switchTab(_origin); }
+    else { S.tab = moduleKey; render(); }
+  };
   render();
 }
 
