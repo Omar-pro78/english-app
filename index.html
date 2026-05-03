@@ -73,6 +73,103 @@ nav{display:none;} /* nav remplacé par home screen */
 /* Divider between content group and action group */
 .home-divider{height:1px;background:var(--border);margin:6px 0 8px;}
 
+/* ── DAILY MISSION BLOCK ── */
+.daily-mission{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
+  padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden;}
+.daily-mission::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(135deg,rgba(45,106,79,.06) 0%,transparent 60%);}
+.dm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.dm-title{font-family:var(--mono);font-size:.58rem;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;font-weight:600;}
+.dm-streak{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.65rem;font-weight:700;}
+.dm-streak-fire{font-size:1.1rem;}
+.dm-streak-val{color:var(--orange);}
+.dm-streak-lbl{color:var(--muted);font-size:.5rem;}
+.dm-progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.dm-progress-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.dm-progress-fill{height:100%;border-radius:3px;transition:width .5s ease;
+  background:linear-gradient(90deg,var(--accent2),#52b788);}
+.dm-progress-txt{font-family:var(--mono);font-size:.58rem;color:var(--muted);white-space:nowrap;}
+.dm-missions{display:flex;flex-direction:column;gap:6px;}
+.dm-mission-item{display:flex;align-items:center;gap:9px;font-size:.76rem;}
+.dm-mission-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0;transition:all .2s;}
+.dm-mission-check.done{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.dm-mission-text{color:var(--text);}
+.dm-mission-text.done{color:var(--muted);text-decoration:line-through;}
+
+/* ── MAIN MISSION ── */
+.dm-main-mission{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;
+  border-radius:12px;background:var(--bg2);border:1px solid var(--border2);margin-bottom:0;}
+.dm-main-mission.done{background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.3);}
+.dm-main-icon{font-size:1.3rem;flex-shrink:0;line-height:1.3;}
+.dm-main-body{flex:1;}
+.dm-main-title{font-size:.88rem;font-weight:800;color:var(--text);line-height:1.3;}
+.dm-main-mission.done .dm-main-title{color:var(--accent2);}
+.dm-main-detail{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:3px;}
+/* CTA inside mission */
+.dm-cta-btn{margin-top:10px;width:100%;font-family:var(--sans);font-size:.75rem;font-weight:700;
+  padding:9px 14px;border-radius:10px;border:none;background:var(--text);color:#fff;
+  cursor:pointer;transition:all .18s;letter-spacing:.1px;text-align:left;}
+.dm-cta-btn:hover{opacity:.88;transform:translateX(2px);}
+/* Indicators row */
+.dm-indicators{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.dm-ind-item{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.56rem;
+  color:var(--muted);background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:4px 9px;transition:all .2s;}
+.dm-ind-item.done{color:var(--accent2);border-color:rgba(45,106,79,.3);background:rgba(45,106,79,.07);}
+.dm-ind-icon{font-size:.62rem;}
+
+/* ── NEXT STEP CTA ── */
+.home-cta{background:var(--text);border-radius:14px;padding:16px 20px;margin-bottom:14px;
+  cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s;position:relative;overflow:hidden;}
+.home-cta::after{content:'→';position:absolute;right:18px;font-size:1.1rem;color:rgba(255,255,255,.5);transition:all .2s;}
+.home-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.home-cta:hover::after{right:14px;color:rgba(255,255,255,.9);}
+.home-cta-icon{font-size:1.6rem;flex-shrink:0;}
+.home-cta-body{flex:1;}
+.home-cta-eyebrow{font-family:var(--mono);font-size:.5rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:3px;}
+.home-cta-label{font-size:.9rem;font-weight:800;color:#fff;line-height:1.2;}
+.home-cta-sub{font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.6);margin-top:2px;}
+
+/* ── STREAK MILESTONE MSG ── */
+.streak-msg{text-align:center;font-family:var(--mono);font-size:.68rem;padding:8px 14px;
+  border-radius:10px;margin-bottom:12px;font-weight:600;}
+.streak-msg.hot{background:rgba(234,108,0,.12);border:1px solid rgba(234,108,0,.3);color:var(--orange);}
+.streak-msg.fire{background:rgba(193,18,31,.1);border:1px solid rgba(193,18,31,.3);color:var(--accent);}
+.streak-msg.cool{background:rgba(45,106,79,.08);border:1px solid rgba(45,106,79,.2);color:var(--accent2);}
+
+/* ── CONFETTI OVERLAY ── */
+#confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:9999;}
+
+/* ── RECAP CELEBRATION ── */
+.recap-celebration{text-align:center;padding:20px 0 8px;}
+.recap-celebration .big-emoji{font-size:3.5rem;display:block;margin-bottom:6px;animation:popIn .4s cubic-bezier(.2,1.6,.5,1) both;}
+.recap-celebration .cele-title{font-size:1.2rem;font-weight:800;font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px;}
+.recap-celebration .cele-sub{font-size:.78rem;color:var(--muted);margin-top:4px;}
+.recap-celebration .cele-xp{display:inline-block;background:var(--gold);color:#fff;
+  font-family:var(--mono);font-size:.7rem;font-weight:700;padding:4px 14px;border-radius:99px;margin-top:10px;
+  animation:popIn .5s .2s cubic-bezier(.2,1.6,.5,1) both;}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ── MILESTONE MODAL ── */
+#milestoneModal{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:20px;opacity:0;
+  transition:opacity .25s;pointer-events:none;}
+#milestoneModal.show{opacity:1;pointer-events:all;}
+.milestone-card{background:var(--surface);border-radius:24px;padding:36px 28px;max-width:340px;width:100%;
+  text-align:center;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.25);
+  transform:scale(.85);transition:transform .3s cubic-bezier(.2,1.4,.5,1);}
+#milestoneModal.show .milestone-card{transform:scale(1);}
+.mc-emoji{font-size:3.5rem;display:block;margin-bottom:12px;animation:popIn .45s .1s cubic-bezier(.2,1.6,.5,1) both;}
+.mc-badge{display:inline-block;font-family:var(--mono);font-size:.56rem;letter-spacing:1.5px;
+  text-transform:uppercase;padding:4px 14px;border-radius:99px;border:1.5px solid;margin-bottom:14px;}
+.mc-title{font-size:1.3rem;font-weight:800;line-height:1.2;margin-bottom:8px;}
+.mc-sub{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:22px;}
+.mc-btn{width:100%;padding:13px;border-radius:12px;border:none;font-family:var(--sans);
+  font-size:.85rem;font-weight:800;cursor:pointer;letter-spacing:.2px;transition:all .18s;}
+.mc-btn:hover{transform:translateY(-1px);opacity:.9;}
+
 /* Hub page (sub-module selector) */
 .hub-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 60px;}
 .hub-tag{display:inline-block;font-family:var(--mono);font-size:.58rem;
@@ -544,6 +641,16 @@ main{flex:1;display:flex;flex-direction:column;}
 </head>
 <body>
 <div class="shell">
+<canvas id="confettiCanvas" style="display:none"></canvas>
+<div id="milestoneModal">
+  <div class="milestone-card">
+    <span class="mc-emoji" id="mcEmoji"></span>
+    <div class="mc-badge" id="mcBadge"></div>
+    <div class="mc-title" id="mcTitle"></div>
+    <div class="mc-sub" id="mcSub"></div>
+    <button class="mc-btn" id="mcBtn" onclick="closeMilestone()"></button>
+  </div>
+</div>
 
 <header>
   <div class="logo-wrap">
@@ -1502,6 +1609,12 @@ let S = {
   // ── Session system ──
   session: null,          // active session state (null = no active session)
   sessProgress: {},       // { [moduleKey]: { pos, total } } – saved resume position
+  // ── Daily goals ──
+  daily: { date: '', actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 },
+  // ── Last session (for smart CTA) ──
+  lastSession: null, // { moduleKey, pos, ts } — ts = Date.now()
+  // ── Milestones (triggered once each) ──
+  milestones: {}, // e.g. { firstLot: true, module_vocab: true, streak5: true, streak10: true, streak20: true }
 };
 
 function load() {
@@ -1513,12 +1626,45 @@ function load() {
     S.streak       = p.streak      || 0;
     S.cursor       = p.cursor      || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
     S.sessProgress = p.sessProgress || {};
+    S.daily        = p.daily       || { date: '', actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
+    S.lastSession  = p.lastSession  || null;
+    S.milestones   = p.milestones   || {};
   } catch(e){}
+  // Reset daily counter if it's a new day
+  const today = new Date().toISOString().slice(0,10);
+  if (S.daily.date !== today) {
+    S.daily = { date: today, actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
+    save();
+  }
 }
 function save() {
   localStorage.setItem('qae_v5', JSON.stringify({
-    status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress
+    status:S.status, streak:S.streak, cursor:S.cursor, sessProgress:S.sessProgress,
+    daily:S.daily, lastSession:S.lastSession, milestones:S.milestones
   }));
+}
+
+// ── Daily tracking ─────────────────────────────────────────
+function ensureTodayDaily() {
+  const today = new Date().toISOString().slice(0,10);
+  if (S.daily.date !== today) {
+    S.daily = { date: today, actions: 0, goal: 10, lotsCompleted: 0, reviewedToday: 0 };
+  }
+}
+function trackAction() {
+  ensureTodayDaily();
+  S.daily.actions++;
+  save();
+}
+function trackLot() {
+  ensureTodayDaily();
+  S.daily.lotsCompleted++;
+  save();
+}
+function trackReview(count) {
+  ensureTodayDaily();
+  S.daily.reviewedToday += count;
+  save();
 }
 const k = (sec,i) => `${sec}_${i}`;
 const getS = (sec,i) => S.status[k(sec,i)] || null;
@@ -1655,6 +1801,253 @@ function render() {
 // ═══════════════════════════════════════════════════════════
 // HOME SCREEN
 // ═══════════════════════════════════════════════════════════
+function computeNextStep() {
+  const MODULES = ['vocab','expr','prep','phrasal','take','grammar','grammar2','grammar3','grammar4','grammar5','grammar6'];
+
+  // ── Contexte temporel ──────────────────────────────────────
+  const now = Date.now();
+  const lastTs   = S.lastSession ? S.lastSession.ts : null;
+  const lastKey  = S.lastSession ? S.lastSession.moduleKey : null;
+  const hoursAgo = lastTs ? (now - lastTs) / 3600000 : Infinity;
+  const isAbsent = hoursAgo > 48;   // absent depuis +2 jours
+  const isRecent = hoursAgo < 2;    // session il y a moins de 2h
+
+  // ── PRIORITÉ 1 : session pausée en plein milieu d'un lot ──
+  // Le dernier module touché prime sur tout le reste
+  if (lastKey) {
+    const cfg  = SESS_CFG[lastKey];
+    const prog = S.sessProgress[lastKey];
+    if (cfg && prog) {
+      const data = cfg.getData();
+      const pos  = prog.pos;
+      // Il reste des items ET c'est en plein milieu d'un batch (pas au début d'un nouveau lot)
+      const midBatch = pos % BATCH_SIZE !== 0 && pos < data.length;
+      if (midBatch) {
+        const batchNum = Math.floor(pos / BATCH_SIZE) + 1;
+        return {
+          tab: lastKey,
+          icon: '▶',
+          eyebrow: 'Reprends là où tu t\'es arrêté',
+          label: `${cfg.label} — Lot ${batchNum}`,
+          sub: `Position ${pos % BATCH_SIZE}/${BATCH_SIZE} · en cours`,
+          action: () => startSession(lastKey, pos),
+        };
+      }
+    }
+  }
+
+  // ── PRIORITÉ 2 : cartes en erreur (review) ────────────────
+  const rv = cntRev();
+  if (rv > 0) {
+    // Trouver quel module concentre le plus d'erreurs
+    let worstModule = null, worstCount = 0;
+    ['vocab','expr','prep','phrasal','take'].forEach(mk => {
+      const c = DATA[mk] ? DATA[mk].filter((_,i) => getS(mk,i) === 'review').length : 0;
+      if (c > worstCount) { worstCount = c; worstModule = mk; }
+    });
+    const sub = worstModule
+      ? `${rv} erreur${rv>1?'s':''} · surtout en ${SESS_CFG[worstModule]?.label || worstModule}`
+      : `${rv} carte${rv>1?'s':''} à revoir`;
+    return {
+      tab: 'review',
+      icon: '🎯',
+      eyebrow: 'Consolide tes points faibles',
+      label: 'Révision des erreurs',
+      sub,
+    };
+  }
+
+  // ── PRIORITÉ 3 : lot suivant du dernier module touché ─────
+  if (lastKey) {
+    const cfg  = SESS_CFG[lastKey];
+    const prog = S.sessProgress[lastKey];
+    if (cfg && prog) {
+      const data = cfg.getData();
+      const pos  = prog.pos;
+      if (pos > 0 && pos < data.length) {
+        const batchNum = Math.floor(pos / BATCH_SIZE) + 1;
+        const batchTotal = Math.ceil(data.length / BATCH_SIZE);
+        const pct = Math.round((pos / data.length) * 100);
+        const tone = isAbsent
+          ? `Ça fait ${Math.round(hoursAgo/24)}j — reprends en douceur 👋`
+          : `Lot ${batchNum}/${batchTotal} · ${pct}% complété`;
+        return {
+          tab: lastKey,
+          icon: isAbsent ? '👋' : '▶',
+          eyebrow: isAbsent ? 'Bon retour !' : 'Continue ta progression',
+          label: `${cfg.label}`,
+          sub: tone,
+          action: () => startSession(lastKey, pos),
+        };
+      }
+    }
+  }
+
+  // ── PRIORITÉ 4 : module le moins avancé (non terminé) ─────
+  let leastModule = null, leastPct = Infinity;
+  for (const mk of MODULES) {
+    const cfg = SESS_CFG[mk];
+    if (!cfg) continue;
+    const data = cfg.getData();
+    const done = cfg.type === 'fc'
+      ? data.filter((_,i) => getS(mk,i) === 'ok').length
+      : Object.keys(S[cfg.answersKey] || {}).length;
+    const pct = data.length > 0 ? done / data.length : 1;
+    if (pct < 1 && pct < leastPct) { leastPct = pct; leastModule = mk; }
+  }
+  if (leastModule) {
+    const cfg  = SESS_CFG[leastModule];
+    const prog = S.sessProgress[leastModule] || null;
+    const pos  = prog ? prog.pos : 0;
+    const pct  = Math.round(leastPct * 100);
+    return {
+      tab: leastModule,
+      icon: pct === 0 ? '🆕' : '📈',
+      eyebrow: pct === 0 ? 'Nouveau module' : 'Module le moins avancé',
+      label: cfg.label,
+      sub: pct === 0 ? `${cfg.getData().length} items · pas encore commencé` : `${pct}% complété`,
+      action: () => startSession(leastModule, pos),
+    };
+  }
+
+  // ── FALLBACK : tout terminé ────────────────────────────────
+  return {
+    tab: 'review',
+    icon: '🏆',
+    eyebrow: 'Tout complété !',
+    label: 'Refaire un quiz complet',
+    sub: 'Maintiens ton niveau',
+  };
+}
+
+function computeDailyMission() {
+  // Retourne 1 mission principale claire + contexte
+  const rv      = cntRev();
+  const lots    = S.daily.lotsCompleted;
+  const actions = S.daily.actions;
+  const goal    = S.daily.goal;
+
+  // Cas 1 : erreurs urgentes (priorité absolue si > 3)
+  if (rv >= 3) {
+    return {
+      icon: '🎯',
+      title: `Révise tes ${rv} erreurs`,
+      detail: 'Des cartes t\'attendent — consolide avant d\'avancer',
+      progress: null,
+      cta: () => { S.tab = 'review'; render(); },
+      ctaLabel: 'Réviser maintenant',
+    };
+  }
+
+  // Cas 2 : aucun lot fait aujourd'hui → objectif = faire 1 lot
+  if (lots === 0) {
+    const next = computeNextStep();
+    return {
+      icon: '▶',
+      title: 'Fais ton premier lot du jour',
+      detail: '10 minutes suffisent pour progresser',
+      progress: null,
+      cta: next.action || (() => { if (next.tab) switchTab(next.tab); }),
+      ctaLabel: 'Commencer',
+    };
+  }
+
+  // Cas 3 : en cours vers l'objectif quotidien
+  if (actions < goal) {
+    return {
+      icon: '📈',
+      title: `${actions} / ${goal} actions aujourd'hui`,
+      detail: `${goal - actions} de plus et ta mission est accomplie`,
+      progress: { done: actions, total: goal },
+      cta: null,
+      ctaLabel: null,
+    };
+  }
+
+  // Cas 4 : objectif atteint
+  return {
+    icon: '✅',
+    title: 'Mission du jour accomplie !',
+    detail: `${lots} lot${lots>1?'s':''} complété${lots>1?'s':''} · ${actions} actions`,
+    progress: { done: goal, total: goal },
+    cta: null,
+    ctaLabel: null,
+  };
+}
+
+function buildDailyMissions() {
+  const rv      = cntRev();
+  const lots    = S.daily.lotsCompleted;
+  const actions = S.daily.actions;
+  const goal    = S.daily.goal;
+  const mission = computeDailyMission();
+
+  // Indicateurs secondaires (faits / à faire)
+  const indicators = [
+    {
+      label: `${lots} lot${lots!==1?'s':''} aujourd'hui`,
+      done: lots >= 1,
+      icon: lots >= 1 ? '✓' : '○',
+    },
+    {
+      label: rv === 0 ? 'Aucune erreur en attente' : `${rv} erreur${rv>1?'s':''} à réviser`,
+      done: rv === 0,
+      icon: rv === 0 ? '✓' : '○',
+    },
+    {
+      label: actions >= goal ? `Objectif ${goal} actions atteint` : `${actions}/${goal} actions`,
+      done: actions >= goal,
+      icon: actions >= goal ? '✓' : '○',
+    },
+  ];
+
+  const pct = Math.min(100, Math.round((actions / goal) * 100));
+  const missionDone = actions >= goal;
+
+  const div = document.createElement('div');
+  div.className = 'daily-mission';
+  div.innerHTML = `
+    <div class="dm-header">
+      <div class="dm-title">Mission du jour</div>
+      <div class="dm-streak">
+        <span class="dm-streak-fire">🔥</span>
+        <span class="dm-streak-val">${S.streak}</span>
+        <span class="dm-streak-lbl">streak</span>
+      </div>
+    </div>
+
+    <div class="dm-main-mission ${missionDone ? 'done' : ''}">
+      <span class="dm-main-icon">${mission.icon}</span>
+      <div class="dm-main-body">
+        <div class="dm-main-title">${mission.title}</div>
+        <div class="dm-main-detail">${mission.detail}</div>
+      </div>
+    </div>
+
+    ${mission.progress !== null ? `
+    <div class="dm-progress-wrap" style="margin-top:10px;">
+      <div class="dm-progress-bar">
+        <div class="dm-progress-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="dm-progress-txt">${pct}%</div>
+    </div>` : ''}
+
+    ${mission.cta ? `
+    <button class="dm-cta-btn" onclick="(${mission.cta.toString()})()">
+      ${mission.ctaLabel} →
+    </button>` : ''}
+
+    <div class="dm-indicators">
+      ${indicators.map(ind => `
+        <div class="dm-ind-item ${ind.done ? 'done' : ''}">
+          <span class="dm-ind-icon">${ind.icon}</span>
+          <span class="dm-ind-label">${ind.label}</span>
+        </div>`).join('')}
+    </div>
+  `;
+  return div;
+}
+
 function buildHome() {
   const rv = cntRev();
   const total = DATA.vocab.length + DATA.expr.length + PREP_CARDS.length + PHRASAL_VERBS.length + TAKE_VERBS.length;
@@ -1678,17 +2071,54 @@ function buildHome() {
   const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length + GRAMMAR5_QCM.length + GRAMMAR6_QCM.length;
   const doneGr = doneG + doneG2 + doneG3 + doneG4 + doneG5;
 
-  // 3 semantic colors: rouge = contenu, violet = grammaire, vert = action
-  const COL_CONTENT  = '#c1121f';  // Foundations + Phrasal (learning content)
-  const COL_GRAMMAR  = '#7c3aed';  // Grammar
-  const COL_ACTION   = '#2d6a4f';  // Speaking Practice + Quiz & Review
+  // 3 semantic colors
+  const COL_CONTENT  = '#c1121f';
+  const COL_GRAMMAR  = '#7c3aed';
+  const COL_ACTION   = '#2d6a4f';
 
   const wrap = document.createElement('div');
   wrap.className = 'home-screen fade-up';
 
+  // ── Streak message
+  if (S.streak >= 20) {
+    const msg = document.createElement('div');
+    msg.className = 'streak-msg fire';
+    msg.textContent = `🏆 ${S.streak} bonnes réponses d'affilée — tu déchires !`;
+    wrap.appendChild(msg);
+  } else if (S.streak >= 10) {
+    const msg = document.createElement('div');
+    msg.className = 'streak-msg hot';
+    msg.textContent = `🔥 Streak x${S.streak} — continue sur ta lancée !`;
+    wrap.appendChild(msg);
+  } else if (S.streak >= 5) {
+    const msg = document.createElement('div');
+    msg.className = 'streak-msg cool';
+    msg.textContent = `✨ ${S.streak} bonnes réponses — bien joué !`;
+    wrap.appendChild(msg);
+  }
+
+  // ── Daily mission block
+  wrap.appendChild(buildDailyMissions());
+
+  // ── Smart CTA (next step)
+  const next = computeNextStep();
+  const cta = document.createElement('div');
+  cta.className = 'home-cta';
+  cta.innerHTML = `
+    <div class="home-cta-icon">${next.icon}</div>
+    <div class="home-cta-body">
+      <div class="home-cta-eyebrow">${next.eyebrow}</div>
+      <div class="home-cta-label">${next.label}</div>
+      <div class="home-cta-sub">${next.sub}</div>
+    </div>
+  `;
+  cta.onclick = next.action ? next.action : () => switchTab(next.tab);
+  wrap.appendChild(cta);
+
+  // ── Module list title
   const title = document.createElement('div');
   title.className = 'home-title';
-  title.textContent = 'Modules';
+  title.textContent = 'Tous les modules';
   wrap.appendChild(title);
 
   const grid = document.createElement('div');
@@ -4072,7 +4502,8 @@ function sessMarkFc(cardIdx, val) {
   if (newVal) {
     sess.answers[cardIdx] = { val: newVal, correct: newVal === 'ok' };
     setS(item._sec, item._idx, newVal);
-    if (newVal === 'ok') { S.streak++; save(); }
+    if (newVal === 'ok') { S.streak++; save(); checkMilestones(null); }
+    trackAction();
   } else {
     delete sess.answers[cardIdx];
     setS(item._sec, item._idx, null);
@@ -4131,7 +4562,8 @@ function sessMcqAnswer(cardIdx, chosen, correctAns) {
     S[cfg.answersKey][item._idx] = chosen;
   }
 
-  if (isCorrect) { S.streak++; save(); }
+  if (isCorrect) { S.streak++; save(); checkMilestones(null); }
+  trackAction();
   render();
 }
 
@@ -4140,11 +4572,15 @@ function sessNext() {
   const sess = S.session;
   if (sess.cardIdx + 1 >= sess.batch.length) {
     // End of batch → show recap
-    // Save progress: next position after this batch
     const nextPos = sess.batchEnd;
     S.sessProgress[sess.moduleKey] = { pos: nextPos };
+    // Record last session for smart CTA
+    S.lastSession = { moduleKey: sess.moduleKey, pos: nextPos, ts: Date.now() };
+    trackLot();
     save();
     sess.showRecap = true;
+    // Check milestones after lot complete (deferred so recap renders first)
+    setTimeout(() => checkMilestones(sess.moduleKey), 600);
     render();
   } else {
     sess.cardIdx++;
@@ -4156,7 +4592,10 @@ function sessionPause() {
   // Save current position and go back to launcher
   const sess = S.session;
   if (sess) {
-    S.sessProgress[sess.moduleKey] = { pos: sess.batchStart + sess.cardIdx };
+    const pausePos = sess.batchStart + sess.cardIdx;
+    S.sessProgress[sess.moduleKey] = { pos: pausePos };
+    // Record last session for smart CTA (paused mid-batch)
+    S.lastSession = { moduleKey: sess.moduleKey, pos: pausePos, ts: Date.now() };
     save();
   }
   S.tab = sess ? sess.moduleKey : 'home';
@@ -4179,6 +4618,12 @@ function buildSessionRecap() {
   else if (pct >= 70) { em='💪'; ti='Bien joué !'; sub='Encore quelques à consolider.'; }
   else if (pct >= 50) { em='📈'; ti='En progrès !'; sub='La moitié réussie — continue !'; }
 
+  // XP calculation
+  const xp = correct * 10 + (pct >= 90 ? 50 : pct >= 70 ? 25 : 0);
+
+  // Fire confetti for good performance
+  if (pct >= 70) setTimeout(() => launchConfetti(pct >= 90 ? 120 : 60), 200);
+
   // Collect errors
   const errors = batch.map((item, i) => {
     const a = answers[i];
@@ -4196,11 +4641,12 @@ function buildSessionRecap() {
 
   wrap.innerHTML = `
     <div class="sess-recap">
-      <div style="text-align:center;margin-bottom:16px;">
-        <div style="font-size:2.8rem;margin-bottom:8px;">${em}</div>
-        <div style="font-size:1.1rem;font-weight:800;color:${color};font-family:var(--mono);text-transform:uppercase;">${ti}</div>
-        <div style="font-size:.78rem;color:var(--muted);margin-top:4px;">${sub}</div>
-        <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:8px;letter-spacing:1px;">Lot ${batchNum}/${batchTotal} — ${label}</div>
+      <div class="recap-celebration">
+        <span class="big-emoji">${em}</span>
+        <div class="cele-title" style="color:${color}">${ti}</div>
+        <div class="cele-sub">${sub}</div>
+        ${pct >= 70 ? `<div class="cele-xp">+${xp} XP</div>` : ''}
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:10px;letter-spacing:1px;">Lot ${batchNum}/${batchTotal} — ${label}</div>
       </div>
 
       <div class="sess-recap-scores">
@@ -4286,6 +4732,178 @@ function checkAns(inp,exp){
   return false;
 }
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ═══════════════════════════════════════════════════════════
+// MILESTONE ENGINE
+// ═══════════════════════════════════════════════════════════
+const MILESTONE_DEFS = {
+  firstLot: {
+    emoji: '🚀', badge: 'Premier lot', badgeColor: '#2d6a4f',
+    title: 'Tu es lancé !',
+    sub: 'Premier lot terminé. La progression commence ici — chaque lot compte.',
+    btn: 'Continuer sur ma lancée',
+    confetti: 60,
+  },
+  streak5: {
+    emoji: '🔥', badge: 'Streak x5', badgeColor: '#ea6c00',
+    title: '5 bonnes réponses d\'affilée',
+    sub: 'Tu es dans le flow. Ne t\'arrête pas maintenant.',
+    btn: 'Continuer le streak',
+    confetti: 50,
+  },
+  streak10: {
+    emoji: '⚡', badge: 'Streak x10', badgeColor: '#c1121f',
+    title: '10 bonnes réponses d\'affilée',
+    sub: 'Concentration maximale. Tu mérites cette pause.',
+    btn: 'Continuer',
+    confetti: 80,
+  },
+  streak20: {
+    emoji: '👑', badge: 'Streak x20', badgeColor: '#7c3aed',
+    title: '20 de suite. Impressionnant.',
+    sub: 'C\'est le genre de séance dont on se souvient.',
+    btn: 'Poursuivre',
+    confetti: 140,
+  },
+};
+// Module 100% milestones are generated dynamically
+
+let _milestoneQueue = [];
+let _milestoneOpen  = false;
+
+function checkMilestones(moduleKey) {
+  const toShow = [];
+
+  // 1. Premier lot ever
+  if (!S.milestones.firstLot && S.daily.lotsCompleted >= 1) {
+    S.milestones.firstLot = true;
+    toShow.push('firstLot');
+  }
+
+  // 2. Module à 100%
+  if (moduleKey) {
+    const milKey = `module_${moduleKey}`;
+    if (!S.milestones[milKey]) {
+      const cfg  = SESS_CFG[moduleKey];
+      if (cfg) {
+        const data = cfg.getData();
+        const done = cfg.type === 'fc'
+          ? data.filter((_,i) => getS(moduleKey, i) === 'ok').length
+          : Object.keys(S[cfg.answersKey] || {}).length;
+        if (done >= data.length) {
+          S.milestones[milKey] = true;
+          // Build a dynamic def for this module
+          MILESTONE_DEFS[milKey] = {
+            emoji: '🏆',
+            badge: '100% complété',
+            badgeColor: cfg.color || '#2d6a4f',
+            title: `${cfg.label} — maîtrisé !`,
+            sub: `Tu as parcouru les ${data.length} éléments de ce module. Un vrai acquis.`,
+            btn: 'Continuer',
+            confetti: 100,
+          };
+          toShow.push(milKey);
+        }
+      }
+    }
+  }
+
+  // 3. Streak milestones
+  [5, 10, 20].forEach(n => {
+    const milKey = `streak${n}`;
+    if (!S.milestones[milKey] && S.streak >= n) {
+      S.milestones[milKey] = true;
+      toShow.push(milKey);
+    }
+  });
+
+  if (toShow.length > 0) {
+    save();
+    _milestoneQueue.push(...toShow);
+    if (!_milestoneOpen) drainMilestoneQueue();
+  }
+}
+
+function drainMilestoneQueue() {
+  if (_milestoneQueue.length === 0) { _milestoneOpen = false; return; }
+  _milestoneOpen = true;
+  const key = _milestoneQueue.shift();
+  const def = MILESTONE_DEFS[key];
+  if (!def) { drainMilestoneQueue(); return; }
+  showMilestone(def);
+}
+
+function showMilestone(def) {
+  const modal = document.getElementById('milestoneModal');
+  document.getElementById('mcEmoji').textContent  = def.emoji;
+  document.getElementById('mcTitle').textContent  = def.title;
+  document.getElementById('mcSub').textContent    = def.sub;
+  document.getElementById('mcBtn').textContent    = def.btn;
+  const badge = document.getElementById('mcBadge');
+  badge.textContent    = def.badge;
+  badge.style.color    = def.badgeColor;
+  badge.style.borderColor = def.badgeColor;
+  badge.style.background  = def.badgeColor + '18';
+  document.getElementById('mcBtn').style.background = def.badgeColor;
+  document.getElementById('mcBtn').style.color = '#fff';
+  modal.classList.add('show');
+  if (def.confetti) setTimeout(() => launchConfetti(def.confetti), 150);
+}
+
+function closeMilestone() {
+  const modal = document.getElementById('milestoneModal');
+  modal.classList.remove('show');
+  setTimeout(() => drainMilestoneQueue(), 300);
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════════════════════
+function launchConfetti(count = 80) {
+  const canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  canvas.style.display = 'block';
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const colors = ['#c1121f','#2d6a4f','#7c3aed','#ea6c00','#b45309','#52b788','#ff4d5e','#fbbf24'];
+  const particles = Array.from({length: count}, () => ({
+    x: Math.random() * canvas.width,
+    y: -10 - Math.random() * 40,
+    r: 4 + Math.random() * 6,
+    d: 2 + Math.random() * 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    tilt: Math.random() * 20 - 10,
+    tiltAngle: 0,
+    tiltSpeed: 0.05 + Math.random() * 0.08,
+    opacity: 1,
+  }));
+  let frame;
+  let tick = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    tick++;
+    particles.forEach(p => {
+      p.tiltAngle += p.tiltSpeed;
+      p.y += p.d;
+      p.tilt = Math.sin(p.tiltAngle) * 12;
+      if (tick > 120) p.opacity -= 0.015;
+      ctx.beginPath();
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.ellipse(p.x + p.tilt, p.y, p.r * 0.5, p.r, p.tiltAngle, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if (particles.some(p => p.opacity > 0)) {
+      frame = requestAnimationFrame(draw);
+    } else {
+      canvas.style.display = 'none';
+      cancelAnimationFrame(frame);
+    }
+  }
+  draw();
+}
 
 // ═══════════════════════════════════════════════════════════
 // INIT
