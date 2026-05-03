@@ -3477,7 +3477,7 @@ function resetMcq2(){S.mcqAnswers2={};render();toast('QCM réinitialisé');}
 // ═══════════════════════════════════════════════════════════
 // GRAMMAR 6 — SENTENCE COMPLETION (fill-in-the-blank)
 // ═══════════════════════════════════════════════════════════
-const GRAMMAR6_QCM = [
+GRAMMAR6_QCM = [
   {
     q: "______ of classical ballet in the United States began around 1830.",
     blank: "______",
@@ -3818,7 +3818,7 @@ function injectGrammar6CSS() {
 // ═══════════════════════════════════════════════════════════
 // SPEAK & IMPROVE SECTION
 // ═══════════════════════════════════════════════════════════
-const SPEAK_PROMPTS = [
+SPEAK_PROMPTS = [
   "Describe what you do at work as a QA engineer.",
   "Explain what a bug report is and how to write one.",
   "Tell me about the difference between a bug and a feature request.",
@@ -3985,7 +3985,7 @@ function stopRecording() {
 }
 
 // ── OFFLINE GRAMMAR ENGINE ──────────────────────────────────
-const GRAMMAR_RULES = [
+GRAMMAR_RULES = [
   // Subject-verb agreement (3rd person)
   { re:/\b(he|she|it)\s+don't\b/gi,          fix:(m,s)=>m.replace(/don't/i,"doesn't"),       msg:"3ème personne : utilise \"doesn't\" avec he/she/it" },
   { re:/\b(he|she|it)\s+have\b/gi,           fix:(m,s)=>m.replace(/\bhave\b/i,"has"),         msg:"3ème personne : \"he/she/it has\" (pas have)" },
