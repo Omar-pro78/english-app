@@ -696,7 +696,7 @@ main{flex:1;display:flex;flex-direction:column;}
   </div>
 </header>
 
-<div id="backBar" style="display:none" class="home-back" onclick="goBack()">
+<div id="backBar" style="display:none" class="home-back">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
   Retour à l'accueil
 </div>
@@ -1873,12 +1873,20 @@ function switchTab(tab) {
   S.tab = tab;
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
-  // Hub pages go back to home; sub-pages go back to their hub
+  bar.onclick = null; // clear any previous handler
   if (HUB_TABS.has(tab)) {
+    // Hub page → back to home
     bar.onclick = goHome;
     bar.querySelector ? null : null;
   } else {
-    bar.onclick = goBack;
+    const parent = TAB_PARENT[tab];
+    if (parent && HUB_TABS.has(parent)) {
+      // Sub-page whose parent is a hub → back to hub
+      bar.onclick = () => switchTab(parent);
+    } else {
+      // Sub-page with no hub parent → back to home
+      bar.onclick = goHome;
+    }
   }
   render();
 }
@@ -5407,7 +5415,9 @@ function renderDialogBlock(item, panelClr) {
 // INIT
 // ═══════════════════════════════════════════════════════════
 loadDialogsCache();
-load(); render();
+load();
+document.getElementById('backBar').onclick = goHome;
+render();
 </script>
 </body>
 </html>
