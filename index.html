@@ -776,6 +776,16 @@ main{flex:1;display:flex;flex-direction:column;}
 
 .lt-block-revealed{font-size:.72rem;color:var(--text);text-align:center;line-height:1.3;
   font-style:italic;padding:0 4px;max-width:140px;}
+
+/* Pending (selected but not yet validated) */
+.lt-opt-block.block-pending .lt-block-letter{background:#1d6fa4;border-color:#1d6fa4;color:#fff;}
+.lt-opt-block.block-pending{background:rgba(29,111,164,.12);border-color:#1d6fa4;}
+
+/* Validate button */
+.lt-validate-btn{width:100%;margin-top:14px;padding:13px 20px;border-radius:12px;border:none;
+  background:#1d6fa4;color:#fff;font-family:var(--sans);font-size:.88rem;font-weight:800;
+  cursor:pointer;transition:all .18s;letter-spacing:.1px;}
+.lt-validate-btn:hover{background:#155e8a;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,111,164,.35);}
 </style>
 </head>
 <body>
@@ -5586,6 +5596,8 @@ let _ltUtterance = null;
 let _ltSessionId = 0;     // incremented on every stop/navigate — invalidates in-flight callbacks
 let _ltAutoTimer = null;  // holds the setTimeout for auto-play so we can cancel it
 let _ltVoice = null;      // cached GB voice once resolved
+let _ltPending = null;    // selected option index, pending validation (not yet confirmed)
+let _ltAutoPlayed = new Set(); // question indices that have already been auto-played
 
 // ── Voice resolution ──────────────────────────────────────
 // Web Speech voices load asynchronously (especially Chrome/Safari).
@@ -5704,22 +5716,35 @@ function ltStopSpeaking() {
   // the caller (ltNext/ltPrev) will call render() itself.
 }
 
-function ltAnswer(questionIdx, optIdx) {
+function ltSelectOption(questionIdx, optIdx) {
   if (S.listeningTest.answers[questionIdx] !== undefined) return;
-  S.listeningTest.answers[questionIdx] = optIdx;
+  _ltPending = optIdx;
+  render();
+}
+
+function ltValidate(questionIdx) {
+  if (_ltPending === null) return;
+  if (S.listeningTest.answers[questionIdx] !== undefined) return;
+  S.listeningTest.answers[questionIdx] = _ltPending;
   const q = LISTENING_TEST[questionIdx];
-  if (optIdx === q.ans) {
+  if (_ltPending === q.ans) {
     S.streak++;
     trackAction();
   } else {
     S.streak = 0;
   }
+  _ltPending = null;
   save();
   render();
 }
 
+function ltAnswer(questionIdx, optIdx) {
+  ltSelectOption(questionIdx, optIdx);
+}
+
 function ltNext() {
   ltStopSpeaking();   // cancel speech & invalidate session — no render inside
+  _ltPending = null;
   if (S.listeningTest.cursor < LISTENING_TEST.length - 1) {
     S.listeningTest.cursor++;
   } else {
@@ -5730,6 +5755,7 @@ function ltNext() {
 
 function ltPrev() {
   ltStopSpeaking();   // cancel speech & invalidate session — no render inside
+  _ltPending = null;
   if (S.listeningTest.cursor > 0) {
     S.listeningTest.cursor--;
   }
@@ -5738,6 +5764,8 @@ function ltPrev() {
 
 function ltReset() {
   ltStopSpeaking();
+  _ltPending = null;
+  _ltAutoPlayed = new Set();
   S.listeningTest = { cursor: 0, answers: {}, showResults: false };
   render();
 }
@@ -5806,10 +5834,19 @@ function buildListeningTest() {
   let cardCls = 'lt-card';
   if (done) cardCls += isCorrect ? ' answered-ok' : ' answered-fail';
 
-  // Audio button — center stage since options are hidden
-  const audioBtn = isSpeaking
-    ? '<button class="lt-play-btn playing" onclick="ltStopSpeaking()" style="font-size:.85rem;padding:12px 28px;">⏹ Stop</button>'
-    : '<button class="lt-play-btn" onclick="ltSpeak(' + qi + ')" style="font-size:.85rem;padding:12px 28px;">▶ Réécouter</button>';
+  // Audio buttons — always show both Stop and Repeat
+  const audioBtns = '<div style="display:flex;gap:10px;justify-content:center;">'
+    + '<button class="lt-play-btn' + (isSpeaking ? ' playing' : '') + '" '
+    + (isSpeaking ? '' : 'disabled ')
+    + 'onclick="ltStopSpeaking();render();" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking ? '' : 'opacity:.35;cursor:default;')
+    + '">⏹ Stop</button>'
+    + '<button class="lt-play-btn" '
+    + (isSpeaking ? 'disabled ' : '')
+    + 'onclick="ltSpeak(' + qi + ')" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking ? 'opacity:.35;cursor:default;' : '')
+    + '">🔁 Réécouter</button>'
+    + '</div>';
 
   // Options: only show the LETTER (A/B/C/D) — no text visible until answered
   let optsHtml = '';
@@ -5822,15 +5859,16 @@ function buildListeningTest() {
       cls += ' disabled';
       if (oi === q.ans) {
         cls += ' block-correct';
-        // Reveal the correct answer text after answering
         labelHtml += '<span class="lt-block-revealed">' + q.opts[oi] + '</span>';
       } else if (oi === userAns) {
         cls += ' block-wrong';
         labelHtml += '<span class="lt-block-revealed">' + q.opts[oi] + '</span>';
       }
+    } else if (_ltPending === oi) {
+      cls += ' block-pending';
     }
 
-    const clickHandler = done ? '' : 'ltAnswer(' + qi + ',' + oi + ')';
+    const clickHandler = done ? '' : 'ltSelectOption(' + qi + ',' + oi + ')';
     optsHtml += '<div class="' + cls + '" onclick="' + clickHandler + '">' + labelHtml + '</div>';
   }
 
@@ -5842,6 +5880,8 @@ function buildListeningTest() {
       ? '✓ Bonne réponse !'
       : '✗ Incorrect — La bonne réponse était : ' + letters[q.ans] + '. ' + q.opts[q.ans];
     feedbackHtml = '<div class="lt-feedback ' + fbCls + '">' + fbMsg + '</div>';
+  } else if (_ltPending !== null) {
+    feedbackHtml = '<button class="lt-validate-btn" onclick="ltValidate(' + qi + ')">✓ Valider ma réponse</button>';
   }
 
   // Nav right button
@@ -5876,7 +5916,7 @@ function buildListeningTest() {
     + '<div class="lt-q-num">QUESTION ' + q.num + '</div>'
     + '</div>'
     + '<div class="lt-body">'
-    + '<div class="lt-audio-center">' + audioBtn + '</div>'
+    + '<div class="lt-audio-center">' + audioBtns + '</div>'
     + listenHint
     + '<div class="lt-opts-grid">' + optsHtml + '</div>'
     + feedbackHtml
@@ -5888,8 +5928,9 @@ function buildListeningTest() {
     + '</div>'
     + resetLink;
 
-  // Auto-play on first visit to each new question (not yet answered, not currently speaking)
-  if (!done && !_ltSpeaking) {
+  // Auto-play only on first visit to each new question (not yet answered, not currently speaking)
+  if (!done && !_ltSpeaking && !_ltAutoPlayed.has(qi)) {
+    _ltAutoPlayed.add(qi);
     clearTimeout(_ltAutoTimer);
     _ltAutoTimer = setTimeout(function() { ltSpeak(qi); }, 450);
   }
