@@ -86,6 +86,38 @@ nav{display:none;} /* nav remplacé par home screen */
 /* Divider between content group and action group */
 .home-divider{height:1px;background:var(--border);margin:6px 0 8px;}
 
+/* ── TOEIC PARENT CARD ── */
+.toeic-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
+  overflow:hidden;transition:border-color .2s;}
+.toeic-card.open{border-color:#1d6fa4;}
+.toeic-card-header{padding:18px 20px;display:flex;align-items:center;gap:16px;
+  cursor:pointer;position:relative;}
+.toeic-card-header::after{content:'›';position:absolute;right:18px;font-size:1.1rem;
+  color:var(--border2);transition:all .25s;transform:rotate(0deg);}
+.toeic-card.open .toeic-card-header::after{transform:rotate(90deg);color:#1d6fa4;}
+.toeic-card-header:hover .toeic-card-header-inner{opacity:.85;}
+.toeic-sublist{display:flex;flex-direction:column;gap:0;
+  max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.toeic-card.open .toeic-sublist{max-height:400px;}
+.toeic-subitem{display:flex;align-items:center;gap:14px;
+  padding:12px 20px 12px 28px;border-top:1px solid var(--border);
+  cursor:pointer;transition:background .15s;}
+.toeic-subitem:hover{background:rgba(29,111,164,.05);}
+.toeic-subitem-bar{width:2px;height:28px;border-radius:2px;flex-shrink:0;background:#1d6fa4;}
+.toeic-subitem-icon{font-size:1.2rem;flex-shrink:0;width:30px;text-align:center;}
+.toeic-subitem-body{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+.toeic-subitem-label{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.2;}
+.toeic-subitem-sub{font-family:var(--mono);font-size:.54rem;color:var(--muted);}
+.toeic-subitem-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;margin-right:18px;}
+.toeic-subitem-count{font-family:var(--mono);font-size:.68rem;font-weight:700;color:#1d6fa4;}
+.toeic-subitem-prog{font-family:var(--mono);font-size:.5rem;color:var(--muted);}
+/* "Coming soon" sub-item */
+.toeic-subitem.soon{opacity:.45;cursor:default;}
+.toeic-subitem.soon:hover{background:transparent;}
+.toeic-soon-badge{font-family:var(--mono);font-size:.48rem;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);background:var(--bg2);border:1px solid var(--border);
+  border-radius:6px;padding:2px 6px;margin-right:20px;flex-shrink:0;}
+
 /* ── DAILY MISSION BLOCK ── */
 .daily-mission{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
   padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden;}
@@ -2037,13 +2069,85 @@ function buildHome() {
     progDone: null, progTotal: 0,
   }));
 
-  grid.appendChild(makeCard({
-    tab:'listening', icon:'🎧', label:'Listening Test', color: '#1d6fa4',
-    sub: 'Photos · Choix multiple · Audio',
-    countLabel: LISTENING_TEST.length + ' Q',
-    progDone: Object.keys(S.listeningTest ? S.listeningTest.answers : {}).length,
-    progTotal: LISTENING_TEST ? LISTENING_TEST.length : 6,
-  }));
+  // ── TOEIC parent card (expandable)
+  (function() {
+    const TOEIC_COLOR = '#1d6fa4';
+    const ltDone = Object.keys(S.listeningTest ? S.listeningTest.answers : {}).length;
+    const ltTotal = LISTENING_TEST ? LISTENING_TEST.length : 6;
+    const ltPct   = ltTotal > 0 ? Math.round((ltDone / ltTotal) * 100) : 0;
+
+    const toeicCard = document.createElement('div');
+    toeicCard.className = 'toeic-card';
+
+    // Header (parent row)
+    const header = document.createElement('div');
+    header.className = 'toeic-card-header';
+    header.innerHTML = `
+      <div class="home-card-bar" style="background:${TOEIC_COLOR}"></div>
+      <div class="home-card-icon">📝</div>
+      <div class="home-card-body">
+        <div class="home-card-label">TOEIC</div>
+        <div class="home-card-sub">Listening · Reading · Full Exam</div>
+      </div>
+      <div class="home-card-meta" style="margin-right:18px;">
+        <div class="home-card-count" style="color:${TOEIC_COLOR};">${ltDone}/${ltTotal}</div>
+        <div class="home-card-prog">${ltPct}%</div>
+      </div>
+    `;
+    header.onclick = () => toeicCard.classList.toggle('open');
+    toeicCard.appendChild(header);
+
+    // Sub-list container
+    const sublist = document.createElement('div');
+    sublist.className = 'toeic-sublist';
+
+    function makeSubItem({ icon, label, sub, countLabel, progDone, progTotal, onClick, soon }) {
+      const item = document.createElement('div');
+      item.className = 'toeic-subitem' + (soon ? ' soon' : '');
+      const pct = progTotal > 0 ? Math.round((progDone / progTotal) * 100) : null;
+      item.innerHTML = `
+        <div class="toeic-subitem-bar"></div>
+        <div class="toeic-subitem-icon">${icon}</div>
+        <div class="toeic-subitem-body">
+          <div class="toeic-subitem-label">${label}</div>
+          <div class="toeic-subitem-sub">${sub}</div>
+        </div>
+        ${soon
+          ? `<div class="toeic-soon-badge">Bientôt</div>`
+          : `<div class="toeic-subitem-meta">
+               <div class="toeic-subitem-count">${countLabel}</div>
+               ${pct !== null ? `<div class="toeic-subitem-prog">${progDone}/${progTotal} · ${pct}%</div>` : ''}
+             </div>`
+        }
+      `;
+      if (!soon && onClick) item.onclick = onClick;
+      return item;
+    }
+
+    // Listening Test sub-item (actif)
+    sublist.appendChild(makeSubItem({
+      icon: '🎧', label: 'Listening Test',
+      sub: 'Photos · Choix multiple · Audio',
+      countLabel: LISTENING_TEST.length + ' Q',
+      progDone: ltDone, progTotal: ltTotal,
+      onClick: () => switchTab('listening'),
+    }));
+
+    // Placeholders (bientôt)
+    sublist.appendChild(makeSubItem({
+      icon: '📖', label: 'Reading Test',
+      sub: 'Parts 5, 6, 7 — Q&A / Texts',
+      countLabel: '—', progDone: 0, progTotal: 0, soon: true,
+    }));
+    sublist.appendChild(makeSubItem({
+      icon: '📋', label: 'Full Exam',
+      sub: 'Listening + Reading · 200 Q',
+      countLabel: '—', progDone: 0, progTotal: 0, soon: true,
+    }));
+
+    toeicCard.appendChild(sublist);
+    grid.appendChild(toeicCard);
+  })();
 
   grid.appendChild(makeCard({
     tab:'review', icon:'🎯', label:'Quiz & Review', color: COL_ACTION,
