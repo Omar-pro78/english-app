@@ -1526,8 +1526,15 @@ function dtSpeak(text, btnEl, onEnd) {
   if (!window.speechSynthesis) return;
   dtStopSpeaking();
   const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'en-US';
-  utt.rate = 0.92;
+  utt.lang = 'en-GB';
+  utt.rate = 1.05;
+  utt.pitch = 1.2;
+  // Pick best British voice available
+  const voices = window.speechSynthesis.getVoices();
+  const gbVoice = voices.find(v => v.lang === 'en-GB' && /daniel|oliver|kate|serena|rishi/i.test(v.name))
+               || voices.find(v => v.lang === 'en-GB')
+               || voices.find(v => v.lang.startsWith('en-'));
+  if (gbVoice) utt.voice = gbVoice;
   _dtUtterance = utt;
   _dtSpeaking = true;
   if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
@@ -1599,7 +1606,6 @@ function buildDirectionsTest() {
   card.innerHTML = `
     <div class="dt-body">
       <div class="dt-qnum">Question ${qi+1} / ${total}</div>
-      <div class="dt-question">${q.question}</div>
 
       <div class="dt-audio-row">
         <button class="dt-play-btn" id="dtPlayBtn">🔊 Écouter</button>
@@ -1629,8 +1635,9 @@ function buildDirectionsTest() {
 
       ${answered ? `
         <div class="dt-feedback ${userAns === q.ans ? 'ok' : 'fail'}">
+          <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:6px;font-style:italic;">❝ ${q.question} ❞</div>
           ${userAns === q.ans
-            ? `✅ Correct ! La bonne réponse est <strong>${q.ans}</strong>.`
+            ? `✅ Correct ! La bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`
             : `❌ Incorrect. Tu as choisi <strong>${userAns}</strong> — la bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`}
         </div>` : ''}
 
