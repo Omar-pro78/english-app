@@ -831,6 +831,79 @@ main{flex:1;display:flex;flex-direction:column;}
   background:#1d6fa4;color:#fff;font-family:var(--sans);font-size:.88rem;font-weight:800;
   cursor:pointer;transition:all .18s;letter-spacing:.1px;}
 .lt-validate-btn:hover{background:#155e8a;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,111,164,.35);}
+
+/* ── DIRECTIONS TEST ── */
+.dt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 60px;}
+.dt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.dt-tag{font-family:var(--mono);font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:6px;border:1px solid rgba(45,106,79,.35);
+  background:rgba(45,106,79,.08);color:#2d6a4f;}
+.dt-prog-wrap{display:flex;align-items:center;gap:8px;}
+.dt-prog-bar{width:120px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.dt-prog-fill{height:100%;background:#2d6a4f;border-radius:2px;transition:width .4s ease;}
+.dt-prog-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
+.dt-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;overflow:hidden;margin-bottom:16px;transition:border-color .3s;}
+.dt-card.answered-ok{border-color:rgba(45,106,79,.45);}
+.dt-card.answered-fail{border-color:rgba(193,18,31,.45);}
+.dt-body{padding:20px 20px 22px;}
+.dt-qnum{font-family:var(--mono);font-size:.6rem;color:#2d6a4f;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+.dt-question{font-size:.94rem;font-weight:800;color:var(--text);line-height:1.5;margin-bottom:14px;}
+.dt-audio-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;}
+.dt-play-btn{background:#2d6a4f;border:none;color:#fff;
+  border-radius:99px;padding:10px 22px;font-family:var(--sans);font-size:.82rem;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s;
+  box-shadow:0 4px 14px rgba(45,106,79,.3);}
+.dt-play-btn:hover{background:#245e44;transform:translateY(-1px);}
+.dt-play-btn.playing{background:#c1121f;box-shadow:0 4px 14px rgba(193,18,31,.35);}
+@keyframes dtPulse{0%,100%{box-shadow:0 0 0 0 rgba(193,18,31,.4);}50%{box-shadow:0 0 0 12px rgba(193,18,31,0);}}
+.dt-play-btn.playing{animation:dtPulse 1.2s ease-in-out infinite;}
+.dt-opts{display:flex;flex-direction:column;gap:9px;margin-bottom:4px;}
+.dt-opt{display:flex;align-items:center;gap:14px;padding:13px 16px;
+  background:var(--bg2);border:2px solid var(--border2);border-radius:14px;
+  cursor:pointer;transition:all .18s;}
+.dt-opt:hover:not(.disabled){background:rgba(45,106,79,.07);border-color:rgba(45,106,79,.4);transform:translateX(3px);}
+.dt-opt.disabled{cursor:default;pointer-events:none;}
+.dt-opt-letter{font-family:var(--mono);font-size:.9rem;font-weight:900;
+  width:36px;height:36px;border-radius:10px;border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all .18s;background:var(--surface);}
+.dt-opt-audio{background:none;border:1.5px solid var(--border2);border-radius:8px;
+  padding:5px 9px;cursor:pointer;font-size:.7rem;color:var(--muted);
+  transition:all .15s;flex-shrink:0;display:flex;align-items:center;gap:4px;font-family:var(--mono);}
+.dt-opt-audio:hover{border-color:#2d6a4f;color:#2d6a4f;}
+.dt-opt-text{font-size:.82rem;color:var(--text);flex:1;line-height:1.4;display:none;font-style:italic;}
+.dt-opt.revealed .dt-opt-text{display:block;}
+.dt-opt.pending .dt-opt-letter{background:#2d6a4f;border-color:#2d6a4f;color:#fff;}
+.dt-opt.pending{background:rgba(45,106,79,.1);border-color:#2d6a4f;}
+.dt-opt.correct .dt-opt-letter{background:#2d6a4f;border-color:#2d6a4f;color:#fff;}
+.dt-opt.correct{background:rgba(45,106,79,.12);border-color:#52b788;}
+.dt-opt.wrong .dt-opt-letter{background:#c1121f;border-color:#c1121f;color:#fff;}
+.dt-opt.wrong{background:rgba(193,18,31,.08);border-color:#c1121f;}
+.dt-opt.reveal-correct .dt-opt-letter{background:rgba(45,106,79,.2);border-color:#2d6a4f;color:#2d6a4f;}
+.dt-opt.reveal-correct{background:rgba(45,106,79,.04);border-color:rgba(45,106,79,.3);}
+.dt-opt.reveal-correct .dt-opt-text{display:block;}
+.dt-feedback{margin-top:12px;padding:10px 14px;border-radius:10px;font-family:var(--mono);font-size:.72rem;line-height:1.4;}
+.dt-feedback.ok{background:rgba(45,106,79,.12);color:#2d6a4f;border-left:3px solid #52b788;}
+.dt-feedback.fail{background:rgba(193,18,31,.08);color:#c1121f;border-left:3px solid #c1121f;}
+.dt-validate-btn{width:100%;margin-top:14px;padding:13px 20px;border-radius:12px;border:none;
+  background:#2d6a4f;color:#fff;font-family:var(--sans);font-size:.88rem;font-weight:800;
+  cursor:pointer;transition:all .18s;}
+.dt-validate-btn:hover{background:#245e44;transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,106,79,.3);}
+.dt-validate-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none;}
+.dt-nav{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.dt-btn-nav{font-family:var(--sans);font-size:.78rem;font-weight:700;padding:10px 20px;
+  border-radius:10px;border:1.5px solid var(--border2);background:var(--surface);
+  color:var(--text);cursor:pointer;transition:all .18s;}
+.dt-btn-nav:hover{border-color:#2d6a4f;color:#2d6a4f;}
+.dt-btn-nav.primary{background:#2d6a4f;border-color:#2d6a4f;color:#fff;}
+.dt-btn-nav.primary:hover{background:#245e44;}
+.dt-btn-nav:disabled{opacity:.35;cursor:default;pointer-events:none;}
+.dt-score-card{background:var(--surface);border:1.5px solid rgba(45,106,79,.3);
+  border-radius:20px;padding:32px 24px;text-align:center;margin-bottom:16px;}
+.dt-score-big{font-size:3.2rem;font-weight:900;font-family:var(--mono);color:#2d6a4f;line-height:1;}
+.dt-score-sub{font-size:.8rem;color:var(--muted);margin-top:6px;margin-bottom:20px;}
+.dt-score-bar-wrap{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:20px;}
+.dt-score-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#2d6a4f,#52b788);transition:width .8s ease;}
 </style>
 </head>
 <body>
@@ -893,6 +966,7 @@ let GRAMMAR6_QCM = [];
 let SPEAK_PROMPTS = [];
 let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
+let DIRECTIONS_TEST = [];
 
 function buildPrepCards() {
   const cards = [];
@@ -947,6 +1021,7 @@ let S = {
   milestones: {},
   sr: {},
   listeningTest: { cursor: 0, answers: {}, showResults: false },
+  directionsTest: { cursor: 0, answers: {}, showResults: false },
 };
 
 // ── Firebase helpers ──────────────────────────────────────
@@ -994,6 +1069,7 @@ function _applyData(p) {
   S.mcqAnswers6    = p.mcqAnswers6    || {};
   S.mcqAnswersTake = p.mcqAnswersTake || {};
   S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
+  S.directionsTest = p.directionsTest || { cursor:0, answers:{}, showResults:false };
   const today = new Date().toISOString().slice(0,10);
   if (S.daily.date !== today) {
     S.daily = { date:today, actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
@@ -1012,7 +1088,7 @@ function _buildPayload() {
     daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
     mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
-    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, directionsTest:S.directionsTest,
   };
 }
 
@@ -1034,13 +1110,14 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, directions] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
       fetch('grammar.json').then(r=>r.json()),
       fetch('speaking.json').then(r=>r.json()),
       fetch('listening.json').then(r=>r.json()),
+      fetch('directions.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1068,6 +1145,7 @@ async function loadAllData() {
     GRAMMAR_RULES = grammar.GRAMMAR_RULES;
     SPEAK_PROMPTS = speaking;
     LISTENING_TEST = listening;
+    DIRECTIONS_TEST = directions;
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -1428,6 +1506,217 @@ function buildListeningTest() {
 }
 
 // ═══════════════════════════════════════════════════════════
+// DIRECTIONS TEST
+// ═══════════════════════════════════════════════════════════
+let _dtSpeaking = false;
+let _dtUtterance = null;
+
+function dtStopSpeaking() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _dtSpeaking = false;
+  _dtUtterance = null;
+  // Reset all play buttons
+  document.querySelectorAll('.dt-play-btn').forEach(b => {
+    b.classList.remove('playing');
+    b.innerHTML = '🔊 Écouter';
+  });
+}
+
+function dtSpeak(text, btnEl, onEnd) {
+  if (!window.speechSynthesis) return;
+  dtStopSpeaking();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-US';
+  utt.rate = 0.92;
+  _dtUtterance = utt;
+  _dtSpeaking = true;
+  if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
+  utt.onend = utt.onerror = function() {
+    _dtSpeaking = false;
+    if (btnEl && document.body.contains(btnEl)) {
+      btnEl.classList.remove('playing');
+      btnEl.innerHTML = '🔊 Écouter';
+    }
+    if (onEnd) onEnd();
+  };
+  window.speechSynthesis.speak(utt);
+}
+
+function buildDirectionsTest() {
+  if (!S.directionsTest) S.directionsTest = { cursor:0, answers:{}, showResults:false };
+  const dt = S.directionsTest;
+  const total = DIRECTIONS_TEST.length;
+  const wrap = document.createElement('div');
+  wrap.className = 'dt-page fade-up';
+
+  // ── Results screen ─────────────────────────────────────
+  if (dt.showResults) {
+    const correct = DIRECTIONS_TEST.filter((q,i) => dt.answers[i] === q.ans).length;
+    const pct = Math.round((correct / total) * 100);
+    const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '💪';
+    wrap.innerHTML = `
+      <div class="dt-score-card">
+        <div style="font-size:2.4rem;margin-bottom:10px;">${emoji}</div>
+        <div class="dt-score-big">${correct}/${total}</div>
+        <div class="dt-score-sub">Score final — Directions Part 2</div>
+        <div class="dt-score-bar-wrap"><div class="dt-score-bar-fill" style="width:${pct}%"></div></div>
+        <div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:#2d6a4f;margin-bottom:6px;">${pct}%</div>
+      </div>
+      <button class="dt-btn-nav primary" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest={cursor:0,answers:{},showResults:false};save();render();">🔁 Recommencer</button>
+      <button class="dt-btn-nav" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest.showResults=false;S.directionsTest.cursor=0;save();render();">📋 Revoir les questions</button>
+    `;
+    return wrap;
+  }
+
+  const qi = dt.cursor;
+  const q  = DIRECTIONS_TEST[qi];
+  const answered = dt.answers[qi] !== undefined;
+  const userAns  = dt.answers[qi];
+  const pct = total > 0 ? Math.round((Object.keys(dt.answers).length / total) * 100) : 0;
+
+  // ── Header ────────────────────────────────────────────
+  const header = document.createElement('div');
+  header.className = 'dt-header';
+  header.innerHTML = `
+    <div class="dt-tag">🧭 Directions — Part 2</div>
+    <div class="dt-prog-wrap">
+      <div class="dt-prog-bar"><div class="dt-prog-fill" style="width:${pct}%"></div></div>
+      <div class="dt-prog-label">${qi+1}/${total}</div>
+    </div>
+  `;
+  wrap.appendChild(header);
+
+  // ── Card ──────────────────────────────────────────────
+  const card = document.createElement('div');
+  card.className = 'dt-card' + (answered ? (userAns === q.ans ? ' answered-ok' : ' answered-fail') : '');
+
+  // Build full TTS text: question + options A, B, C in sequence
+  const fullText = `Question ${qi+1}. ${q.question}. Option A: ${q.options.A}. Option B: ${q.options.B}. Option C: ${q.options.C}.`;
+
+  // Pending selection tracking
+  let _pending = null;
+
+  card.innerHTML = `
+    <div class="dt-body">
+      <div class="dt-qnum">Question ${qi+1} / ${total}</div>
+      <div class="dt-question">${q.question}</div>
+
+      <div class="dt-audio-row">
+        <button class="dt-play-btn" id="dtPlayBtn">🔊 Écouter</button>
+      </div>
+
+      <div class="dt-opts" id="dtOpts">
+        ${['A','B','C'].map(letter => {
+          let cls = 'dt-opt';
+          let revealedCls = '';
+          if (answered) {
+            cls += ' disabled';
+            if (letter === userAns) {
+              cls += letter === q.ans ? ' correct revealed' : ' wrong revealed';
+            } else if (letter === q.ans) {
+              cls += ' reveal-correct revealed';
+            }
+          }
+          return `
+            <div class="${cls}" data-letter="${letter}" id="dtOpt${letter}">
+              <div class="dt-opt-letter">${letter}</div>
+              <button class="dt-opt-audio" onclick="event.stopPropagation();
+                dtSpeak('${q.options[letter].replace(/'/g,"\\'")}', this)">🔊</button>
+              <div class="dt-opt-text">${q.options[letter]}</div>
+            </div>`;
+        }).join('')}
+      </div>
+
+      ${answered ? `
+        <div class="dt-feedback ${userAns === q.ans ? 'ok' : 'fail'}">
+          ${userAns === q.ans
+            ? `✅ Correct ! La bonne réponse est <strong>${q.ans}</strong>.`
+            : `❌ Incorrect. Tu as choisi <strong>${userAns}</strong> — la bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`}
+        </div>` : ''}
+
+      ${!answered ? `<button class="dt-validate-btn" id="dtValidateBtn" disabled>Valider ma réponse</button>` : ''}
+    </div>
+  `;
+
+  // ── Wire: play button (full sequence)
+  card.querySelector('#dtPlayBtn').addEventListener('click', function() {
+    if (_dtSpeaking) { dtStopSpeaking(); return; }
+    dtSpeak(fullText, this);
+  });
+
+  // ── Wire: option selection (only before answering)
+  if (!answered) {
+    ['A','B','C'].forEach(letter => {
+      const optEl = card.querySelector(`#dtOpt${letter}`);
+      optEl.addEventListener('click', function() {
+        // Deselect all
+        ['A','B','C'].forEach(l => {
+          const el = card.querySelector(`#dtOpt${l}`);
+          el.classList.remove('pending');
+        });
+        // Select this
+        optEl.classList.add('pending');
+        _pending = letter;
+        card.querySelector('#dtValidateBtn').disabled = false;
+      });
+    });
+
+    // ── Wire: validate button
+    card.querySelector('#dtValidateBtn').addEventListener('click', function() {
+      if (!_pending) return;
+      dt.answers[qi] = _pending;
+      save();
+      render();
+    });
+  }
+
+  wrap.appendChild(card);
+
+  // ── Nav buttons ───────────────────────────────────────
+  const nav = document.createElement('div');
+  nav.className = 'dt-nav';
+
+  const btnPrev = document.createElement('button');
+  btnPrev.className = 'dt-btn-nav';
+  btnPrev.textContent = '← Précédent';
+  btnPrev.disabled = qi === 0;
+  btnPrev.addEventListener('click', function() {
+    dtStopSpeaking();
+    dt.cursor--;
+    save();
+    render();
+  });
+
+  const btnNext = document.createElement('button');
+  if (qi === total - 1 && answered) {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Voir les résultats →';
+    btnNext.addEventListener('click', function() {
+      dtStopSpeaking();
+      dt.showResults = true;
+      save();
+      render();
+    });
+  } else {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Suivant →';
+    btnNext.disabled = !answered;
+    btnNext.addEventListener('click', function() {
+      dtStopSpeaking();
+      dt.cursor++;
+      save();
+      render();
+    });
+  }
+
+  nav.appendChild(btnPrev);
+  nav.appendChild(btnNext);
+  wrap.appendChild(nav);
+
+  return wrap;
+}
+
+// ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════
@@ -1584,6 +1873,7 @@ const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','revie
 
 function goHome() {
   if (S.tab === 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if (S.tab === 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   S.tab = 'home';
   document.getElementById('backBar').style.display = 'none';
   document.getElementById('backBar').onclick = goHome;
@@ -1592,6 +1882,7 @@ function goHome() {
 
 function switchTab(tab) {
   if (S.tab === 'listening' && tab !== 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if (S.tab === 'directions' && tab !== 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   S.tab = tab;
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
@@ -1643,6 +1934,7 @@ function render() {
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='grammar6')     el.appendChild(buildGrammar6Section());
   else if(S.tab==='listening')    el.appendChild(buildListeningTest());
+  else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -2074,6 +2366,10 @@ function buildHome() {
     const TOEIC_COLOR = '#1d6fa4';
     const ltDone = Object.keys(S.listeningTest ? S.listeningTest.answers : {}).length;
     const ltTotal = LISTENING_TEST ? LISTENING_TEST.length : 6;
+    const dtDone = Object.keys(S.directionsTest ? S.directionsTest.answers : {}).length;
+    const dtTotal = DIRECTIONS_TEST ? DIRECTIONS_TEST.length : 8;
+    const totalDone = ltDone + dtDone;
+    const totalAll  = ltTotal + dtTotal;
     const ltPct   = ltTotal > 0 ? Math.round((ltDone / ltTotal) * 100) : 0;
 
     const toeicCard = document.createElement('div');
@@ -2090,8 +2386,8 @@ function buildHome() {
         <div class="home-card-sub">Listening · Reading · Full Exam</div>
       </div>
       <div class="home-card-meta" style="margin-right:18px;">
-        <div class="home-card-count" style="color:${TOEIC_COLOR};">${ltDone}/${ltTotal}</div>
-        <div class="home-card-prog">${ltPct}%</div>
+        <div class="home-card-count" style="color:${TOEIC_COLOR};">${totalDone}/${totalAll}</div>
+        <div class="home-card-prog">${totalAll > 0 ? Math.round((totalDone/totalAll)*100) : 0}%</div>
       </div>
     `;
     header.onclick = () => toeicCard.classList.toggle('open');
@@ -2133,16 +2429,14 @@ function buildHome() {
       onClick: () => switchTab('listening'),
     }));
 
-    // Placeholders (bientôt)
+    // Directions sub-item (actif)
     sublist.appendChild(makeSubItem({
-      icon: '📖', label: 'Reading Test',
-      sub: 'Parts 5, 6, 7 — Q&A / Texts',
-      countLabel: '—', progDone: 0, progTotal: 0, soon: true,
-    }));
-    sublist.appendChild(makeSubItem({
-      icon: '📋', label: 'Full Exam',
-      sub: 'Listening + Reading · 200 Q',
-      countLabel: '—', progDone: 0, progTotal: 0, soon: true,
+      icon: '🧭', label: 'Directions',
+      sub: 'Part 2 — Questions & réponses orales',
+      countLabel: DIRECTIONS_TEST.length + ' Q',
+      progDone: Object.keys(S.directionsTest ? S.directionsTest.answers : {}).length,
+      progTotal: DIRECTIONS_TEST ? DIRECTIONS_TEST.length : 8,
+      onClick: () => switchTab('directions'),
     }));
 
     toeicCard.appendChild(sublist);

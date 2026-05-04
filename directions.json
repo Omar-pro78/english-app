@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "question": "When is Amelia's resignation going to be officially announced?",
+    "options": {
+      "A": "Yes, he was fired.",
+      "B": "Congratulations on your retirement.",
+      "C": "At the next board meeting."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 2,
+    "question": "Would you prefer to meet in the meeting room or somewhere else?",
+    "options": {
+      "A": "Someone else will take it.",
+      "B": "Let me reserve the cafeteria.",
+      "C": "Yes, he's in a meeting."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 3,
+    "question": "Don't you think we should start looking for a different distributor?",
+    "options": {
+      "A": "No, it's a different kind of paper.",
+      "B": "I'm not looking for a job.",
+      "C": "You're probably right."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 4,
+    "question": "How long will it take to implement the new procedures?",
+    "options": {
+      "A": "Approximately 2 months.",
+      "B": "By analysing procedures.",
+      "C": "About a new policy."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 5,
+    "question": "Why hasn't the new equipment been installed yet?",
+    "options": {
+      "A": "It's from Asia.",
+      "B": "No, I'll use other devices.",
+      "C": "They're waiting for an additional part."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 6,
+    "question": "When will the Technical Support team arrive from London?",
+    "options": {
+      "A": "About seven or eight people.",
+      "B": "The plan hasn't been confirmed yet.",
+      "C": "They work cooperatively."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 7,
+    "question": "Do we have to pay for the tickets?",
+    "options": {
+      "A": "No. The company pays for them.",
+      "B": "Yes, it's a beautiful city.",
+      "C": "No, I sent it by fax."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 8,
+    "question": "Who sent us these financial reports?",
+    "options": {
+      "A": "Brian did.",
+      "B": "By e-mail.",
+      "C": "To review them."
+    },
+    "ans": "A"
+  }
+]
