@@ -1008,6 +1008,8 @@ let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
 let DIRECTIONS_TEST = [];
 let DIRECTIONS_TEST2 = [];
+let DIRECTIONS_TEST3 = [];
+let DIRECTIONS_TEST4 = [];
 
 function buildPrepCards() {
   const cards = [];
@@ -1064,6 +1066,8 @@ let S = {
   listeningTest: { cursor: 0, answers: {}, showResults: false },
   directionsTest: { cursor: 0, answers: {}, showResults: false },
   directionsTest2: { cursor: 0, answers: {}, showResults: false },
+  directionsTest3: { cursor: 0, answers: {}, showResults: false },
+  directionsTest4: { cursor: 0, answers: {}, showResults: false },
 };
 
 // ── Firebase helpers ──────────────────────────────────────
@@ -1113,6 +1117,8 @@ function _applyData(p) {
   S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
   S.directionsTest = p.directionsTest || { cursor:0, answers:{}, showResults:false };
   S.directionsTest2 = p.directionsTest2 || { cursor:0, answers:{}, showResults:false };
+  S.directionsTest3 = p.directionsTest3 || { cursor:0, answers:{}, showResults:false };
+  S.directionsTest4 = p.directionsTest4 || { cursor:0, answers:{}, showResults:false };
   const today = new Date().toISOString().slice(0,10);
   if (S.daily.date !== today) {
     S.daily = { date:today, actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
@@ -1132,7 +1138,7 @@ function _buildPayload() {
     mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
     mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, directionsTest:S.directionsTest,
-    directionsTest2:S.directionsTest2,
+    directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
   };
 }
 
@@ -1154,7 +1160,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, directions, directions2] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, directions, directions2, directions3, directions4] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1163,6 +1169,8 @@ async function loadAllData() {
       fetch('listening.json').then(r=>r.json()),
       fetch('directions.json').then(r=>r.json()),
       fetch('directions2.json').then(r=>r.json()),
+      fetch('directions3.json').then(r=>r.json()),
+      fetch('directions4.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1192,6 +1200,8 @@ async function loadAllData() {
     LISTENING_TEST = listening;
     DIRECTIONS_TEST = directions;
     DIRECTIONS_TEST2 = directions2;
+    DIRECTIONS_TEST3 = directions3;
+    DIRECTIONS_TEST4 = directions4;
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -1998,6 +2008,392 @@ function buildDirectionsTest2() {
   return wrap;
 }
 
+// DIRECTIONS TEST 3
+// ═══════════════════════════════════════════════════════════
+let _dt3Speaking = false;
+let _dt3Utterance = null;
+
+function dt3StopSpeaking() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _dt3Speaking = false;
+  _dt3Utterance = null;
+  document.querySelectorAll('.dt3-play-btn').forEach(b => {
+    b.classList.remove('playing');
+    b.innerHTML = '🔊 Écouter';
+  });
+}
+
+function dt3Speak(text, btnEl, onEnd) {
+  if (!window.speechSynthesis) return;
+  dt3StopSpeaking();
+  _ensureVoice('en', function(voice) {
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang  = 'en-GB';
+    utt.rate  = 0.88;
+    utt.pitch = 1.05;
+    if (voice) utt.voice = voice;
+    _dt3Utterance = utt;
+    _dt3Speaking = true;
+    if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
+    utt.onend = utt.onerror = function() {
+      _dt3Speaking = false;
+      if (btnEl && document.body.contains(btnEl)) {
+        btnEl.classList.remove('playing');
+        btnEl.innerHTML = '🔊 Écouter';
+      }
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utt);
+  });
+}
+
+function buildDirectionsTest3() {
+  if (!S.directionsTest3) S.directionsTest3 = { cursor:0, answers:{}, showResults:false };
+  const dt = S.directionsTest3;
+  const total = DIRECTIONS_TEST3.length;
+  const wrap = document.createElement('div');
+  wrap.className = 'dt-page fade-up';
+
+  if (dt.showResults) {
+    const correct = DIRECTIONS_TEST3.filter((q,i) => dt.answers[i] === q.ans).length;
+    const pct = Math.round((correct / total) * 100);
+    const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '💪';
+    wrap.innerHTML = `
+      <div class="dt-score-card">
+        <div style="font-size:2.4rem;margin-bottom:10px;">${emoji}</div>
+        <div class="dt-score-big">${correct}/${total}</div>
+        <div class="dt-score-sub">Score final — Directions 3 Part 2</div>
+        <div class="dt-score-bar-wrap"><div class="dt-score-bar-fill" style="width:${pct}%"></div></div>
+        <div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:#2d6a4f;margin-bottom:6px;">${pct}%</div>
+      </div>
+      <button class="dt-btn-nav primary" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest3={cursor:0,answers:{},showResults:false};save();render();">🔁 Recommencer</button>
+      <button class="dt-btn-nav" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest3.showResults=false;S.directionsTest3.cursor=0;save();render();">📋 Revoir les questions</button>
+    `;
+    return wrap;
+  }
+
+  const qi = dt.cursor;
+  const q  = DIRECTIONS_TEST3[qi];
+  const answered = dt.answers[qi] !== undefined;
+  const userAns  = dt.answers[qi];
+  const pct = total > 0 ? Math.round((Object.keys(dt.answers).length / total) * 100) : 0;
+
+  const header = document.createElement('div');
+  header.className = 'dt-header';
+  header.innerHTML = `
+    <div class="dt-tag">🧭 Directions 3 — Part 2</div>
+    <div class="dt-prog-wrap">
+      <div class="dt-prog-bar"><div class="dt-prog-fill" style="width:${pct}%"></div></div>
+      <div class="dt-prog-label">${qi+1}/${total}</div>
+    </div>
+  `;
+  wrap.appendChild(header);
+
+  const card = document.createElement('div');
+  card.className = 'dt-card' + (answered ? (userAns === q.ans ? ' answered-ok' : ' answered-fail') : '');
+  const fullText = `Question ${qi+1}. ${q.question}. Option A: ${q.options.A}. Option B: ${q.options.B}. Option C: ${q.options.C}.`;
+  let _pending = null;
+
+  card.innerHTML = `
+    <div class="dt-body">
+      <div class="dt-qnum">Question ${qi+1} / ${total}</div>
+      <div class="dt-audio-row">
+        <button class="dt3-play-btn" id="dt3PlayBtn">🔊 Écouter</button>
+      </div>
+      <div class="dt-opts" id="dt3Opts">
+        ${['A','B','C'].map(letter => {
+          let cls = 'dt-opt';
+          if (answered) {
+            cls += ' disabled';
+            if (letter === userAns) {
+              cls += letter === q.ans ? ' correct revealed' : ' wrong revealed';
+            } else if (letter === q.ans) {
+              cls += ' reveal-correct revealed';
+            }
+          }
+          return `
+            <div class="${cls}" data-letter="${letter}" id="dt3Opt${letter}">
+              <div class="dt-opt-letter">${letter}</div>
+              <button class="dt-opt-audio" onclick="event.stopPropagation();
+                dt3Speak('${q.options[letter].replace(/'/g,"\\'")}', this)">🔊</button>
+              <div class="dt-opt-text">${q.options[letter]}</div>
+            </div>`;
+        }).join('')}
+      </div>
+      ${answered ? `
+        <div class="dt-feedback ${userAns === q.ans ? 'ok' : 'fail'}">
+          <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:6px;font-style:italic;">❝ ${q.question} ❞</div>
+          ${userAns === q.ans
+            ? `✅ Correct ! La bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`
+            : `❌ Incorrect. Tu as choisi <strong>${userAns}</strong> — la bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`}
+        </div>` : ''}
+      ${!answered ? `<button class="dt-validate-btn" id="dt3ValidateBtn" disabled>Valider ma réponse</button>` : ''}
+    </div>
+  `;
+
+  card.querySelector('#dt3PlayBtn').addEventListener('click', function() {
+    if (_dt3Speaking) { dt3StopSpeaking(); return; }
+    dt3Speak(fullText, this);
+  });
+
+  if (!answered) {
+    ['A','B','C'].forEach(letter => {
+      const optEl = card.querySelector(`#dt3Opt${letter}`);
+      optEl.addEventListener('click', function() {
+        ['A','B','C'].forEach(l => {
+          card.querySelector(`#dt3Opt${l}`).classList.remove('pending');
+        });
+        optEl.classList.add('pending');
+        _pending = letter;
+        card.querySelector('#dt3ValidateBtn').disabled = false;
+      });
+    });
+    card.querySelector('#dt3ValidateBtn').addEventListener('click', function() {
+      if (!_pending) return;
+      dt.answers[qi] = _pending;
+      save();
+      render();
+    });
+  }
+
+  wrap.appendChild(card);
+
+  const nav = document.createElement('div');
+  nav.className = 'dt-nav';
+
+  const btnPrev = document.createElement('button');
+  btnPrev.className = 'dt-btn-nav';
+  btnPrev.textContent = '← Précédent';
+  btnPrev.disabled = qi === 0;
+  btnPrev.addEventListener('click', function() {
+    dt3StopSpeaking();
+    dt.cursor--;
+    save();
+    render();
+  });
+
+  const btnNext = document.createElement('button');
+  if (qi === total - 1 && answered) {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Voir les résultats →';
+    btnNext.addEventListener('click', function() {
+      dt3StopSpeaking();
+      dt.showResults = true;
+      save();
+      render();
+    });
+  } else {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Suivant →';
+    btnNext.disabled = !answered;
+    btnNext.addEventListener('click', function() {
+      dt3StopSpeaking();
+      dt.cursor++;
+      save();
+      render();
+    });
+  }
+
+  nav.appendChild(btnPrev);
+  nav.appendChild(btnNext);
+  wrap.appendChild(nav);
+
+  return wrap;
+}
+
+// DIRECTIONS TEST 4
+// ═══════════════════════════════════════════════════════════
+let _dt4Speaking = false;
+let _dt4Utterance = null;
+
+function dt4StopSpeaking() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _dt4Speaking = false;
+  _dt4Utterance = null;
+  document.querySelectorAll('.dt4-play-btn').forEach(b => {
+    b.classList.remove('playing');
+    b.innerHTML = '🔊 Écouter';
+  });
+}
+
+function dt4Speak(text, btnEl, onEnd) {
+  if (!window.speechSynthesis) return;
+  dt4StopSpeaking();
+  _ensureVoice('en', function(voice) {
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang  = 'en-GB';
+    utt.rate  = 0.88;
+    utt.pitch = 1.05;
+    if (voice) utt.voice = voice;
+    _dt4Utterance = utt;
+    _dt4Speaking = true;
+    if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
+    utt.onend = utt.onerror = function() {
+      _dt4Speaking = false;
+      if (btnEl && document.body.contains(btnEl)) {
+        btnEl.classList.remove('playing');
+        btnEl.innerHTML = '🔊 Écouter';
+      }
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utt);
+  });
+}
+
+function buildDirectionsTest4() {
+  if (!S.directionsTest4) S.directionsTest4 = { cursor:0, answers:{}, showResults:false };
+  const dt = S.directionsTest4;
+  const total = DIRECTIONS_TEST4.length;
+  const wrap = document.createElement('div');
+  wrap.className = 'dt-page fade-up';
+
+  if (dt.showResults) {
+    const correct = DIRECTIONS_TEST4.filter((q,i) => dt.answers[i] === q.ans).length;
+    const pct = Math.round((correct / total) * 100);
+    const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '💪';
+    wrap.innerHTML = `
+      <div class="dt-score-card">
+        <div style="font-size:2.4rem;margin-bottom:10px;">${emoji}</div>
+        <div class="dt-score-big">${correct}/${total}</div>
+        <div class="dt-score-sub">Score final — Directions 4 Part 2</div>
+        <div class="dt-score-bar-wrap"><div class="dt-score-bar-fill" style="width:${pct}%"></div></div>
+        <div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:#2d6a4f;margin-bottom:6px;">${pct}%</div>
+      </div>
+      <button class="dt-btn-nav primary" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest4={cursor:0,answers:{},showResults:false};save();render();">🔁 Recommencer</button>
+      <button class="dt-btn-nav" style="width:100%;margin-bottom:10px;" onclick="S.directionsTest4.showResults=false;S.directionsTest4.cursor=0;save();render();">📋 Revoir les questions</button>
+    `;
+    return wrap;
+  }
+
+  const qi = dt.cursor;
+  const q  = DIRECTIONS_TEST4[qi];
+  const answered = dt.answers[qi] !== undefined;
+  const userAns  = dt.answers[qi];
+  const pct = total > 0 ? Math.round((Object.keys(dt.answers).length / total) * 100) : 0;
+
+  const header = document.createElement('div');
+  header.className = 'dt-header';
+  header.innerHTML = `
+    <div class="dt-tag">🧭 Directions 4 — Part 2</div>
+    <div class="dt-prog-wrap">
+      <div class="dt-prog-bar"><div class="dt-prog-fill" style="width:${pct}%"></div></div>
+      <div class="dt-prog-label">${qi+1}/${total}</div>
+    </div>
+  `;
+  wrap.appendChild(header);
+
+  const card = document.createElement('div');
+  card.className = 'dt-card' + (answered ? (userAns === q.ans ? ' answered-ok' : ' answered-fail') : '');
+  const fullText = `Question ${qi+1}. ${q.question}. Option A: ${q.options.A}. Option B: ${q.options.B}. Option C: ${q.options.C}.`;
+  let _pending = null;
+
+  card.innerHTML = `
+    <div class="dt-body">
+      <div class="dt-qnum">Question ${qi+1} / ${total}</div>
+      <div class="dt-audio-row">
+        <button class="dt4-play-btn" id="dt4PlayBtn">🔊 Écouter</button>
+      </div>
+      <div class="dt-opts" id="dt4Opts">
+        ${['A','B','C'].map(letter => {
+          let cls = 'dt-opt';
+          if (answered) {
+            cls += ' disabled';
+            if (letter === userAns) {
+              cls += letter === q.ans ? ' correct revealed' : ' wrong revealed';
+            } else if (letter === q.ans) {
+              cls += ' reveal-correct revealed';
+            }
+          }
+          return `
+            <div class="${cls}" data-letter="${letter}" id="dt4Opt${letter}">
+              <div class="dt-opt-letter">${letter}</div>
+              <button class="dt-opt-audio" onclick="event.stopPropagation();
+                dt4Speak('${q.options[letter].replace(/'/g,"\\'")}', this)">🔊</button>
+              <div class="dt-opt-text">${q.options[letter]}</div>
+            </div>`;
+        }).join('')}
+      </div>
+      ${answered ? `
+        <div class="dt-feedback ${userAns === q.ans ? 'ok' : 'fail'}">
+          <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:6px;font-style:italic;">❝ ${q.question} ❞</div>
+          ${userAns === q.ans
+            ? `✅ Correct ! La bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`
+            : `❌ Incorrect. Tu as choisi <strong>${userAns}</strong> — la bonne réponse est <strong>${q.ans}</strong> : <em>${q.options[q.ans]}</em>`}
+        </div>` : ''}
+      ${!answered ? `<button class="dt-validate-btn" id="dt4ValidateBtn" disabled>Valider ma réponse</button>` : ''}
+    </div>
+  `;
+
+  card.querySelector('#dt4PlayBtn').addEventListener('click', function() {
+    if (_dt4Speaking) { dt4StopSpeaking(); return; }
+    dt4Speak(fullText, this);
+  });
+
+  if (!answered) {
+    ['A','B','C'].forEach(letter => {
+      const optEl = card.querySelector(`#dt4Opt${letter}`);
+      optEl.addEventListener('click', function() {
+        ['A','B','C'].forEach(l => {
+          card.querySelector(`#dt4Opt${l}`).classList.remove('pending');
+        });
+        optEl.classList.add('pending');
+        _pending = letter;
+        card.querySelector('#dt4ValidateBtn').disabled = false;
+      });
+    });
+    card.querySelector('#dt4ValidateBtn').addEventListener('click', function() {
+      if (!_pending) return;
+      dt.answers[qi] = _pending;
+      save();
+      render();
+    });
+  }
+
+  wrap.appendChild(card);
+
+  const nav = document.createElement('div');
+  nav.className = 'dt-nav';
+
+  const btnPrev = document.createElement('button');
+  btnPrev.className = 'dt-btn-nav';
+  btnPrev.textContent = '← Précédent';
+  btnPrev.disabled = qi === 0;
+  btnPrev.addEventListener('click', function() {
+    dt4StopSpeaking();
+    dt.cursor--;
+    save();
+    render();
+  });
+
+  const btnNext = document.createElement('button');
+  if (qi === total - 1 && answered) {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Voir les résultats →';
+    btnNext.addEventListener('click', function() {
+      dt4StopSpeaking();
+      dt.showResults = true;
+      save();
+      render();
+    });
+  } else {
+    btnNext.className = 'dt-btn-nav primary';
+    btnNext.textContent = 'Suivant →';
+    btnNext.disabled = !answered;
+    btnNext.addEventListener('click', function() {
+      dt4StopSpeaking();
+      dt.cursor++;
+      save();
+      render();
+    });
+  }
+
+  nav.appendChild(btnPrev);
+  nav.appendChild(btnNext);
+  wrap.appendChild(nav);
+
+  return wrap;
+}
+
 // ═══════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════
@@ -2163,6 +2559,8 @@ function goHome() {
   if (S.tab === 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
+  if (S.tab === 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
+  if (S.tab === 'directions4' && typeof dt4StopSpeaking === 'function') dt4StopSpeaking();
   S.tab = 'home';
   document.getElementById('backBar').style.display = 'none';
   document.getElementById('backBar').onclick = goHome;
@@ -2173,6 +2571,8 @@ function switchTab(tab) {
   if (S.tab === 'listening' && tab !== 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'directions' && tab !== 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && tab !== 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
+  if (S.tab === 'directions3' && tab !== 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
+  if (S.tab === 'directions4' && tab !== 'directions4' && typeof dt4StopSpeaking === 'function') dt4StopSpeaking();
   S.tab = tab;
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
@@ -2226,6 +2626,8 @@ function render() {
   else if(S.tab==='listening')    el.appendChild(buildListeningTest());
   else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
   else if(S.tab==='directions2')  el.appendChild(buildDirectionsTest2());
+  else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
+  else if(S.tab==='directions4')  el.appendChild(buildDirectionsTest4());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -2661,8 +3063,12 @@ function buildHome() {
     const dtTotal = DIRECTIONS_TEST ? DIRECTIONS_TEST.length : 10;
     const dt2Done = Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length;
     const dt2Total = DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 15;
-    const totalDone = ltDone + dtDone + dt2Done;
-    const totalAll  = ltTotal + dtTotal + dt2Total;
+    const dt3Done = Object.keys(S.directionsTest3 ? S.directionsTest3.answers : {}).length;
+    const dt3Total = DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 10;
+    const dt4Done = Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length;
+    const dt4Total = DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 10;
+    const totalDone = ltDone + dtDone + dt2Done + dt3Done + dt4Done;
+    const totalAll  = ltTotal + dtTotal + dt2Total + dt3Total + dt4Total;
     const ltPct   = ltTotal > 0 ? Math.round((ltDone / ltTotal) * 100) : 0;
 
     const toeicCard = document.createElement('div');
@@ -2740,6 +3146,26 @@ function buildHome() {
       progDone: Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length,
       progTotal: DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 15,
       onClick: () => switchTab('directions2'),
+    }));
+
+    // Directions 3 sub-item (actif)
+    sublist.appendChild(makeSubItem({
+      icon: '🧭', label: 'Directions 3',
+      sub: 'Part 2 — Questions & réponses orales',
+      countLabel: DIRECTIONS_TEST3.length + ' Q',
+      progDone: Object.keys(S.directionsTest3 ? S.directionsTest3.answers : {}).length,
+      progTotal: DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 10,
+      onClick: () => switchTab('directions3'),
+    }));
+
+    // Directions 4 sub-item (actif)
+    sublist.appendChild(makeSubItem({
+      icon: '🧭', label: 'Directions 4',
+      sub: 'Part 2 — Questions & réponses orales',
+      countLabel: DIRECTIONS_TEST4.length + ' Q',
+      progDone: Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length,
+      progTotal: DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 10,
+      onClick: () => switchTab('directions4'),
     }));
 
     toeicCard.appendChild(sublist);

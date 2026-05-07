@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "question": "Hasn't the merger agreement been finalized yet?",
+    "options": {
+      "A": "No, legal is still reviewing the terms.",
+      "B": "Yes, the merger took place last spring.",
+      "C": "It was a very complex negotiation."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 2,
+    "question": "Who authorized the transfer of funds to the offshore account?",
+    "options": {
+      "A": "The transfer was completed on Friday.",
+      "B": "The CFO approved it after the board meeting.",
+      "C": "Funds are allocated every quarter."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 3,
+    "question": "Why was Mr. Okafor's presentation rescheduled?",
+    "options": {
+      "A": "He was called away on urgent business.",
+      "B": "Yes, it's been moved to the main hall.",
+      "C": "The presentation was very well received."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 4,
+    "question": "Could you forward me the updated vendor list by this afternoon?",
+    "options": {
+      "A": "The vendor met with us last Tuesday.",
+      "B": "Sure, I'll send it as soon as I update the last few entries.",
+      "C": "I prefer to work with local suppliers."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 5,
+    "question": "The client's onsite visit is scheduled for Thursday, isn't it?",
+    "options": {
+      "A": "Yes, we should have everything ready by then.",
+      "B": "No, I haven't visited the client yet.",
+      "C": "Thursday works well for most of the team."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 6,
+    "question": "How did the focus group respond to the prototype?",
+    "options": {
+      "A": "The prototype was built in-house.",
+      "B": "Mostly positive, though they flagged a few usability issues.",
+      "C": "We usually conduct focus groups quarterly."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 7,
+    "question": "Shouldn't the compliance report have been submitted before the deadline?",
+    "options": {
+      "A": "Absolutely — I'll look into what caused the delay.",
+      "B": "The compliance team is very thorough.",
+      "C": "The deadline was extended by two weeks."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 8,
+    "question": "Where can I find the archived contracts from the previous fiscal year?",
+    "options": {
+      "A": "They're stored on the shared drive under Legal Archives.",
+      "B": "The contracts were signed by both parties.",
+      "C": "Last fiscal year was particularly strong."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 9,
+    "question": "Aren't we running over budget on the infrastructure project?",
+    "options": {
+      "A": "The infrastructure upgrade is nearly complete.",
+      "B": "Yes, we've exceeded the initial estimate by about twelve percent.",
+      "C": "The project manager submitted the budget last month."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 10,
+    "question": "The executive committee hasn't reviewed the restructuring plan yet.",
+    "options": {
+      "A": "I know — it's been pushed to next week's agenda.",
+      "B": "The restructuring was announced internally.",
+      "C": "Yes, the committee meets every month."
+    },
+    "ans": "A"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "question": "Has the keynote speaker confirmed their availability for the annual summit?",
+    "options": {
+      "A": "The summit is held every November.",
+      "B": "Not yet — we're still waiting to hear back from their agent.",
+      "C": "Yes, the keynote was very inspiring."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 2,
+    "question": "Why is the production line operating at reduced capacity this week?",
+    "options": {
+      "A": "Capacity was increased after the renovation.",
+      "B": "Two of the main assembly units are undergoing scheduled maintenance.",
+      "C": "The production team works in rotating shifts."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 3,
+    "question": "Didn't you say the lease renewal was handled last quarter?",
+    "options": {
+      "A": "I thought so too, but it seems it was overlooked.",
+      "B": "The lease is for a five-year term.",
+      "C": "Yes, the landlord is very cooperative."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 4,
+    "question": "Who is covering Ms. Brennan's accounts while she's on maternity leave?",
+    "options": {
+      "A": "Her leave started at the beginning of the month.",
+      "B": "Daniel from the west coast team has taken them over.",
+      "C": "We should hire a temporary replacement."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 5,
+    "question": "How soon can we expect the regulatory approval to come through?",
+    "options": {
+      "A": "The approval process can be lengthy.",
+      "B": "The regulatory body is based in Geneva.",
+      "C": "Our consultant estimates four to six weeks."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 6,
+    "question": "The new data privacy policy applies to all subsidiaries, doesn't it?",
+    "options": {
+      "A": "Yes, it was rolled out group-wide last month.",
+      "B": "Data privacy is a growing concern globally.",
+      "C": "No, I haven't read the new policy yet."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 7,
+    "question": "What prompted the decision to relocate the regional headquarters?",
+    "options": {
+      "A": "The headquarters is in the financial district.",
+      "B": "Primarily lower operating costs and better transport links.",
+      "C": "Relocation is always a significant undertaking."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 8,
+    "question": "Couldn't we arrange a video call with the Singapore office instead of flying out?",
+    "options": {
+      "A": "The Singapore office opened two years ago.",
+      "B": "That's a reasonable alternative — I'll check everyone's availability.",
+      "C": "Video conferencing has improved significantly."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 9,
+    "question": "Wasn't the trade show attendance lower than projected this year?",
+    "options": {
+      "A": "Yes, footfall was down by nearly a fifth compared to last year.",
+      "B": "We attended three trade shows this quarter.",
+      "C": "The projections were set in January."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 10,
+    "question": "We're still waiting on the supplier's revised quote, aren't we?",
+    "options": {
+      "A": "The supplier has been very reliable so far.",
+      "B": "Yes — I'll follow up with them first thing tomorrow.",
+      "C": "Quotes are usually valid for thirty days."
+    },
+    "ans": "B"
+  }
+]
