@@ -928,9 +928,49 @@ main{flex:1;display:flex;flex-direction:column;}
     <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
     <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">SR dues🧠</span></div>
     <div class="hd-stat"><span class="n" id="statStreak">0</span><span class="l">Streak🔥</span></div>
+    <button id="voicePickerBtn" title="Choisir la voix" onclick="toggleVoicePicker()"
+      style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;
+             padding:4px 8px;cursor:pointer;font-size:.75rem;color:var(--muted);
+             font-family:var(--mono);transition:all .18s;flex-shrink:0;">🔊</button>
     <span id="syncBadge" style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);opacity:0;transition:opacity .4s;align-self:center;"></span>
   </div>
 </header>
+
+<!-- Voice Picker Panel -->
+<div id="voicePanel" style="display:none;position:fixed;top:54px;right:12px;z-index:200;
+  background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;
+  padding:14px 16px;min-width:260px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.15);">
+  <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:2px;
+    text-transform:uppercase;margin-bottom:10px;">🎙 Voix anglaise</div>
+  <select id="voiceSelect" onchange="applyVoiceChoice()"
+    style="width:100%;font-family:var(--mono);font-size:.72rem;padding:8px 10px;
+           border-radius:8px;border:1.5px solid var(--border2);background:var(--bg2);
+           color:var(--text);margin-bottom:10px;cursor:pointer;">
+  </select>
+  <div style="display:flex;gap:8px;margin-bottom:10px;">
+    <div style="flex:1;">
+      <div style="font-family:var(--mono);font-size:.5rem;color:var(--muted);margin-bottom:4px;">DÉBIT</div>
+      <input type="range" id="voiceRate" min="0.6" max="1.2" step="0.05" value="0.88"
+        oninput="document.getElementById('voiceRateVal').textContent=parseFloat(this.value).toFixed(2)"
+        style="width:100%;">
+      <span id="voiceRateVal" style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);">0.88</span>
+    </div>
+    <div style="flex:1;">
+      <div style="font-family:var(--mono);font-size:.5rem;color:var(--muted);margin-bottom:4px;">PITCH</div>
+      <input type="range" id="voicePitch" min="0.8" max="1.4" step="0.05" value="1.05"
+        oninput="document.getElementById('voicePitchVal').textContent=parseFloat(this.value).toFixed(2)"
+        style="width:100%;">
+      <span id="voicePitchVal" style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);">1.05</span>
+    </div>
+  </div>
+  <button onclick="testVoice()"
+    style="width:100%;font-family:var(--sans);font-weight:700;font-size:.72rem;
+           padding:8px;border-radius:8px;border:none;background:var(--accent2);
+           color:#fff;cursor:pointer;margin-bottom:6px;">▶ Tester la voix</button>
+  <button onclick="document.getElementById('voicePanel').style.display='none'"
+    style="width:100%;font-family:var(--mono);font-size:.6rem;padding:6px;border-radius:8px;
+           border:1px solid var(--border2);background:none;color:var(--muted);cursor:pointer;">Fermer</button>
+</div>
 
 <div id="backBar" style="display:none" class="home-back">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1172,46 +1212,84 @@ let _ltVoice = null;      // cached GB voice once resolved
 let _ltPending = null;    // selected option index, pending validation (not yet confirmed)
 let _ltAutoPlayed = new Set(); // question indices that have already been auto-played
 
-// ── Voice resolution ──────────────────────────────────────
-// Web Speech voices load asynchronously (especially Chrome/Safari).
-// We resolve once and cache the result; if not yet loaded we wait for
-// the voiceschanged event before re-trying.
-function _ltResolveVoice() {
-  const voices = speechSynthesis.getVoices();
-  if (!voices.length) return null;          // not loaded yet
+// ══════════════════════════════════════════════════════════════
+// GLOBAL VOICE ENGINE — utilisé par TOUS les modules audio
+// ══════════════════════════════════════════════════════════════
+// Hiérarchie de priorité (du plus naturel au plus basique) :
+//   1. Voix réseau non-locales (Neural / Enhanced) — meilleure qualité
+//   2. Voix nommées connues pour être naturelles sur chaque OS/navigateur
+//   3. Fallback sur n'importe quelle voix anglaise disponible
+let _cachedEnVoice = null;
+let _cachedFrVoice = null;
 
-  // Priority: en-GB (remote quality first), then en-AU, then en-US, then any en-
-  const priority = [
-    v => v.lang === 'en-GB' && v.name.includes('Daniel'),   // Chrome macOS high-quality
-    v => v.lang === 'en-GB' && !v.localService,
+function _pickBestVoice(lang) {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  if (lang === 'fr') {
+    // Meilleure voix française disponible
+    const frPriority = [
+      v => v.lang === 'fr-FR' && !v.localService,                        // réseau
+      v => v.lang === 'fr-FR' && /thomas|amelie|marie/i.test(v.name),    // macOS
+      v => v.lang === 'fr-FR',
+      v => v.lang.startsWith('fr'),
+    ];
+    for (const test of frPriority) {
+      const found = voices.find(test);
+      if (found) return found;
+    }
+    return null;
+  }
+
+  // Anglais — priorité voix neural/enhanced non-locales, puis nommées reconnues
+  const enPriority = [
+    // ── Chrome / Edge (Windows & Android) — voix Neural
+    v => /en-(GB|AU|US)/.test(v.lang) && !v.localService && /neural|enhanced/i.test(v.name),
+    v => v.lang === 'en-GB' && !v.localService,                          // réseau GB
+    v => v.lang === 'en-AU' && !v.localService,                          // réseau AU (très naturel)
+    v => v.lang === 'en-US' && !v.localService,                          // réseau US
+    // ── macOS / iOS voix premium nommées
+    v => v.lang === 'en-GB' && /daniel|oliver|kate|serena|rishi/i.test(v.name),
+    v => v.lang === 'en-AU' && /karen|lee|catherine/i.test(v.name),
+    v => v.lang === 'en-US' && /samantha|alex|zoe|ava|susan|victoria/i.test(v.name),
+    v => v.lang === 'en-IN' && /rishi|veena/i.test(v.name),              // accent indien clair
+    // ── Fallback local
     v => v.lang === 'en-GB',
-    v => v.lang === 'en-AU' && !v.localService,
     v => v.lang === 'en-AU',
-    v => v.lang === 'en-US' && v.name.toLowerCase().includes('karen'),
+    v => v.lang === 'en-US',
     v => v.lang.startsWith('en'),
   ];
-  for (const test of priority) {
+  for (const test of enPriority) {
     const found = voices.find(test);
     if (found) return found;
   }
   return null;
 }
 
-function _ltEnsureVoice(cb) {
-  // If already cached, use it immediately
-  if (_ltVoice) { cb(_ltVoice); return; }
+// Résolution asynchrone avec cache — appeler partout
+function _ensureVoice(lang, cb) {
+  const cached = lang === 'fr' ? _cachedFrVoice : _cachedEnVoice;
+  if (cached) { cb(cached); return; }
 
-  const v = _ltResolveVoice();
-  if (v) { _ltVoice = v; cb(v); return; }
-
-  // Voices not yet loaded — wait for the event (fires once on Chrome/Safari)
-  function onVoicesChanged() {
-    speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
-    _ltVoice = _ltResolveVoice();
-    cb(_ltVoice);
+  const v = _pickBestVoice(lang);
+  if (v) {
+    if (lang === 'fr') _cachedFrVoice = v; else _cachedEnVoice = v;
+    cb(v);
+    return;
   }
-  speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
+  // Voix pas encore chargées (Chrome async) — on attend l'événement
+  function onChanged() {
+    speechSynthesis.removeEventListener('voiceschanged', onChanged);
+    const resolved = _pickBestVoice(lang);
+    if (lang === 'fr') _cachedFrVoice = resolved; else _cachedEnVoice = resolved;
+    cb(resolved);
+  }
+  speechSynthesis.addEventListener('voiceschanged', onChanged);
 }
+
+// Compatibilité : _ltResolveVoice et _ltEnsureVoice redirigent vers le moteur global
+function _ltResolveVoice() { return _pickBestVoice('en'); }
+function _ltEnsureVoice(cb) { _ensureVoice('en', cb); }
 
 // ── Core speak function ───────────────────────────────────
 function ltSpeak(questionIdx) {
@@ -1251,8 +1329,8 @@ function ltSpeak(questionIdx) {
       }
       const u = new SpeechSynthesisUtterance(sentences[idx]);
       u.lang = 'en-GB';
-      u.rate = idx === 0 ? 0.85 : 0.80;
-      u.pitch = 1.0;
+      u.rate  = idx === 0 ? 0.88 : 0.82;   // question légèrement plus rapide que options
+      u.pitch = 1.05;                        // légèrement au-dessus du neutre, plus vivant
       if (voice) u.voice = voice;
 
       _ltUtterance = u;
@@ -1531,28 +1609,25 @@ function dtStopSpeaking() {
 function dtSpeak(text, btnEl, onEnd) {
   if (!window.speechSynthesis) return;
   dtStopSpeaking();
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'en-GB';
-  utt.rate = 1.0;
-  utt.pitch = 1.2;
-  // Pick best British voice available
-  const voices = window.speechSynthesis.getVoices();
-  const gbVoice = voices.find(v => v.lang === 'en-GB' && /daniel|oliver|kate|serena|rishi/i.test(v.name))
-               || voices.find(v => v.lang === 'en-GB')
-               || voices.find(v => v.lang.startsWith('en-'));
-  if (gbVoice) utt.voice = gbVoice;
-  _dtUtterance = utt;
-  _dtSpeaking = true;
-  if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
-  utt.onend = utt.onerror = function() {
-    _dtSpeaking = false;
-    if (btnEl && document.body.contains(btnEl)) {
-      btnEl.classList.remove('playing');
-      btnEl.innerHTML = '🔊 Écouter';
-    }
-    if (onEnd) onEnd();
-  };
-  window.speechSynthesis.speak(utt);
+  _ensureVoice('en', function(voice) {
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang  = 'en-GB';
+    utt.rate  = 0.88;
+    utt.pitch = 1.05;
+    if (voice) utt.voice = voice;
+    _dtUtterance = utt;
+    _dtSpeaking = true;
+    if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
+    utt.onend = utt.onerror = function() {
+      _dtSpeaking = false;
+      if (btnEl && document.body.contains(btnEl)) {
+        btnEl.classList.remove('playing');
+        btnEl.innerHTML = '🔊 Écouter';
+      }
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utt);
+  });
 }
 
 function buildDirectionsTest() {
@@ -1747,27 +1822,25 @@ function dt2StopSpeaking() {
 function dt2Speak(text, btnEl, onEnd) {
   if (!window.speechSynthesis) return;
   dt2StopSpeaking();
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'en-GB';
-  utt.rate = 1.0;
-  utt.pitch = 1.2;
-  const voices = window.speechSynthesis.getVoices();
-  const gbVoice = voices.find(v => v.lang === 'en-GB' && /daniel|oliver|kate|serena|rishi/i.test(v.name))
-               || voices.find(v => v.lang === 'en-GB')
-               || voices.find(v => v.lang.startsWith('en-'));
-  if (gbVoice) utt.voice = gbVoice;
-  _dt2Utterance = utt;
-  _dt2Speaking = true;
-  if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
-  utt.onend = utt.onerror = function() {
-    _dt2Speaking = false;
-    if (btnEl && document.body.contains(btnEl)) {
-      btnEl.classList.remove('playing');
-      btnEl.innerHTML = '🔊 Écouter';
-    }
-    if (onEnd) onEnd();
-  };
-  window.speechSynthesis.speak(utt);
+  _ensureVoice('en', function(voice) {
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang  = 'en-GB';
+    utt.rate  = 0.88;
+    utt.pitch = 1.05;
+    if (voice) utt.voice = voice;
+    _dt2Utterance = utt;
+    _dt2Speaking = true;
+    if (btnEl) { btnEl.classList.add('playing'); btnEl.innerHTML = '⏹ Arrêter'; }
+    utt.onend = utt.onerror = function() {
+      _dt2Speaking = false;
+      if (btnEl && document.body.contains(btnEl)) {
+        btnEl.classList.remove('playing');
+        btnEl.innerHTML = '🔊 Écouter';
+      }
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utt);
+  });
 }
 
 function buildDirectionsTest2() {
@@ -1949,12 +2022,18 @@ function toast(msg){
   clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),2200);
 }
 
-function speak(txt,lang) {
-  if(!window.speechSynthesis){toast('Audio non supporté');return;}
+function speak(txt, lang) {
+  if (!window.speechSynthesis) { toast('Audio non supporté'); return; }
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(txt);
-  u.lang=lang==='fr'?'fr-FR':'en-US'; u.rate=0.87;
-  speechSynthesis.speak(u);
+  const tgtLang = lang === 'fr' ? 'fr' : 'en';
+  _ensureVoice(tgtLang, function(voice) {
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang  = tgtLang === 'fr' ? 'fr-FR' : 'en-GB';
+    u.rate  = 0.85;
+    u.pitch = 1.05;
+    if (voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  });
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -5765,8 +5844,124 @@ function dialogKey(item) {
   return item._sec + ':' + item._idx;
 }
 
-loadDialogsCache();
-document.getElementById('backBar').onclick = goHome;
+// ═══════════════════════════════════════════════════════════
+// VOICE PICKER
+// ═══════════════════════════════════════════════════════════
+function _populateVoiceSelect() {
+  const sel = document.getElementById('voiceSelect');
+  if (!sel) return;
+  const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  if (!voices.length) return;
+  sel.innerHTML = '';
+  // Sort: network voices first, then alphabetical
+  voices.sort((a,b) => {
+    if (!a.localService && b.localService) return -1;
+    if (a.localService && !b.localService) return 1;
+    return a.name.localeCompare(b.name);
+  });
+  voices.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.dataset.name = v.name;
+    opt.dataset.lang = v.lang;
+    const tag = v.localService ? '📦' : '🌐';
+    opt.textContent = `${tag} ${v.name} (${v.lang})`;
+    // Pre-select current cached voice
+    if (_cachedEnVoice && v.name === _cachedEnVoice.name) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function toggleVoicePicker() {
+  const panel = document.getElementById('voicePanel');
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) _populateVoiceSelect();
+}
+
+function applyVoiceChoice() {
+  const sel = document.getElementById('voiceSelect');
+  const opt = sel.options[sel.selectedIndex];
+  if (!opt) return;
+  const voices = speechSynthesis.getVoices();
+  const chosen = voices.find(v => v.name === opt.dataset.name && v.lang === opt.dataset.lang);
+  if (chosen) {
+    _cachedEnVoice = chosen;
+    // Persist choice
+    try { localStorage.setItem('qa_voice_name', chosen.name); localStorage.setItem('qa_voice_lang', chosen.lang); } catch(e) {}
+  }
+}
+
+function testVoice() {
+  speechSynthesis.cancel();
+  const rate  = parseFloat(document.getElementById('voiceRate').value);
+  const pitch = parseFloat(document.getElementById('voicePitch').value);
+  const u = new SpeechSynthesisUtterance("Hello! This is a test of the selected voice. How does it sound?");
+  u.lang  = 'en-GB';
+  u.rate  = rate;
+  u.pitch = pitch;
+  if (_cachedEnVoice) u.voice = _cachedEnVoice;
+  speechSynthesis.speak(u);
+  // Apply rate/pitch settings globally
+  try {
+    localStorage.setItem('qa_voice_rate',  rate);
+    localStorage.setItem('qa_voice_pitch', pitch);
+  } catch(e) {}
+}
+
+// Load persisted voice settings on startup
+function _loadVoicePrefs() {
+  try {
+    const name  = localStorage.getItem('qa_voice_name');
+    const lang  = localStorage.getItem('qa_voice_lang');
+    const rate  = localStorage.getItem('qa_voice_rate');
+    const pitch = localStorage.getItem('qa_voice_pitch');
+    if (rate)  document.getElementById('voiceRate').value  = rate;
+    if (pitch) document.getElementById('voicePitch').value = pitch;
+    if (rate)  document.getElementById('voiceRateVal').textContent  = parseFloat(rate).toFixed(2);
+    if (pitch) document.getElementById('voicePitchVal').textContent = parseFloat(pitch).toFixed(2);
+    if (name && lang) {
+      // Will be applied once voices load
+      function tryRestore() {
+        const voices = speechSynthesis.getVoices();
+        const v = voices.find(x => x.name === name && x.lang === lang);
+        if (v) { _cachedEnVoice = v; return true; }
+        return false;
+      }
+      if (!tryRestore()) {
+        speechSynthesis.addEventListener('voiceschanged', function once() {
+          speechSynthesis.removeEventListener('voiceschanged', once);
+          tryRestore();
+        });
+      }
+    }
+  } catch(e) {}
+}
+
+// speak() utilise les réglages du voice picker (rate/pitch sliders)
+function _speakWithPrefs(txt, lang) {
+  if (!window.speechSynthesis) { toast('Audio non supporté'); return; }
+  speechSynthesis.cancel();
+  const tgtLang = lang === 'fr' ? 'fr' : 'en';
+  _ensureVoice(tgtLang, function(voice) {
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang  = tgtLang === 'fr' ? 'fr-FR' : 'en-GB';
+    try {
+      u.rate  = tgtLang === 'en' ? parseFloat(localStorage.getItem('qa_voice_rate')  || '0.85') : 0.88;
+      u.pitch = tgtLang === 'en' ? parseFloat(localStorage.getItem('qa_voice_pitch') || '1.05') : 1.05;
+    } catch(e) { u.rate = 0.85; u.pitch = 1.05; }
+    if (voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  });
+}
+// Remplace la fonction globale speak() par la version avec préférences
+window.speak = _speakWithPrefs;
+
+_loadVoicePrefs();
+if (speechSynthesis.getVoices().length) _populateVoiceSelect();
+speechSynthesis.addEventListener('voiceschanged', _populateVoiceSelect);
+
+// ═══════════════════════════════════════════════════════════
 // Load local user progress immediately
 _loadLocal();
 const today = new Date().toISOString().slice(0,10);
