@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "question": "Didn't I write down your company name correctly?",
+    "options": {
+      "A": "Yes, it's right over there.",
+      "B": "No, it has two J's, not one C.",
+      "C": "I'm sorry, I can't."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 2,
+    "question": "Margaret McCarthy is the head of advertising, isn't she?",
+    "options": {
+      "A": "Yes, I work in the advertising department.",
+      "B": "No, she didn't make it.",
+      "C": "Yes, she just got a promotion."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 3,
+    "question": "Where did you go on your summer break?",
+    "options": {
+      "A": "At the end of the year.",
+      "B": "Bali for a change.",
+      "C": "The camera lens is broken."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 4,
+    "question": "Should there be more strict safety regulations at the workplace?",
+    "options": {
+      "A": "Yes, but it takes place in September.",
+      "B": "No, it's in the safety policy.",
+      "C": "No, the present rules cover everything."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 5,
+    "question": "How long have you had this job?",
+    "options": {
+      "A": "For almost five years.",
+      "B": "It is five kilometers away.",
+      "C": "I work five days a week."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 6,
+    "question": "Aren't you meeting with the real estate agent today?",
+    "options": {
+      "A": "No, our meeting was cancelled.",
+      "B": "By bus, usually.",
+      "C": "To find a new office."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 7,
+    "question": "What's the exact size of the new office?",
+    "options": {
+      "A": "It is conveniently located.",
+      "B": "Yes, it has three meeting rooms.",
+      "C": "I'm not sure."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 8,
+    "question": "Who can give us some assistance with the advertising campaign?",
+    "options": {
+      "A": "Yeah, it's really helpful.",
+      "B": "Mr. Ramirez can help us with that.",
+      "C": "No, she's a part-time assistant."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 9,
+    "question": "Are the marketing reports nearly ready?",
+    "options": {
+      "A": "What are you reporting?",
+      "B": "Nearly a year ago.",
+      "C": "We need more time."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 10,
+    "question": "Excuse me, is this the express bus for Tokyo?",
+    "options": {
+      "A": "We'd rather take a taxi.",
+      "B": "Sorry, I'm not sure myself.",
+      "C": "To express a concern."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 11,
+    "question": "This report looks pretty impressive, doesn't it?",
+    "options": {
+      "A": "I'm just browsing.",
+      "B": "Yes, they've done a good job.",
+      "C": "Tomorrow morning looks good."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 12,
+    "question": "Why didn't anyone answer the phone this morning?",
+    "options": {
+      "A": "Sure, that's a good idea.",
+      "B": "You can use my phone.",
+      "C": "I think the office is closed today."
+    },
+    "ans": "C"
+  },
+  {
+    "id": 13,
+    "question": "Where should I keep these company letterheads?",
+    "options": {
+      "A": "In the cabinet by the door.",
+      "B": "Late this afternoon.",
+      "C": "My assistant will order them."
+    },
+    "ans": "A"
+  },
+  {
+    "id": 14,
+    "question": "The maintenance department will install another air purifying system in the cafeteria.",
+    "options": {
+      "A": "No, I can't.",
+      "B": "Good, it's hard to breathe in there as it is.",
+      "C": "I'm not hungry yet."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 15,
+    "question": "Why don't we go over the research results next?",
+    "options": {
+      "A": "We could do that.",
+      "B": "Yes, she did.",
+      "C": "Usually once a year."
+    },
+    "ans": "A"
+  }
+]

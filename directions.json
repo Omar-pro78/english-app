@@ -78,5 +78,25 @@
       "C": "To review them."
     },
     "ans": "A"
+  },
+  {
+    "id": 9,
+    "question": "Why did you choose that office?",
+    "options": {
+      "A": "We need to choose a delegate for the conference.",
+      "B": "It has a great view.",
+      "C": "Two days ago."
+    },
+    "ans": "B"
+  },
+  {
+    "id": 10,
+    "question": "What should I wear when we attend the conference?",
+    "options": {
+      "A": "I'd recommend a suit and tie.",
+      "B": "I bought it yesterday.",
+      "C": "Over there in the fitting room."
+    },
+    "ans": "A"
   }
 ]
