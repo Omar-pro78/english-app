@@ -1014,6 +1014,7 @@ let GRAMMAR6_QCM = [];
 let SPEAK_PROMPTS = [];
 let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
+let LISTENING_TEST2 = [];
 let DIRECTIONS_TEST = [];
 let DIRECTIONS_TEST2 = [];
 let DIRECTIONS_TEST3 = [];
@@ -1072,6 +1073,7 @@ let S = {
   milestones: {},
   sr: {},
   listeningTest: { cursor: 0, answers: {}, showResults: false },
+  listeningTest2: { cursor: 0, answers: {}, showResults: false },
   directionsTest: { cursor: 0, answers: {}, showResults: false },
   directionsTest2: { cursor: 0, answers: {}, showResults: false },
   directionsTest3: { cursor: 0, answers: {}, showResults: false },
@@ -1123,6 +1125,7 @@ function _applyData(p) {
   S.mcqAnswers6    = p.mcqAnswers6    || {};
   S.mcqAnswersTake = p.mcqAnswersTake || {};
   S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
+  S.listeningTest2 = p.listeningTest2 || { cursor:0, answers:{}, showResults:false };
   S.directionsTest = p.directionsTest || { cursor:0, answers:{}, showResults:false };
   S.directionsTest2 = p.directionsTest2 || { cursor:0, answers:{}, showResults:false };
   S.directionsTest3 = p.directionsTest3 || { cursor:0, answers:{}, showResults:false };
@@ -1145,7 +1148,7 @@ function _buildPayload() {
     daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
     mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
-    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, directionsTest:S.directionsTest,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, directionsTest:S.directionsTest,
     directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
   };
 }
@@ -1168,13 +1171,14 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, directions, directions2, directions3, directions4] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, directions, directions2, directions3, directions4] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
       fetch('grammar.json').then(r=>r.json()),
       fetch('speaking.json').then(r=>r.json()),
       fetch('listening.json').then(r=>r.json()),
+      fetch('listening2.json').then(r=>r.json()),
       fetch('directions.json').then(r=>r.json()),
       fetch('directions2.json').then(r=>r.json()),
       fetch('directions3.json').then(r=>r.json()),
@@ -1206,6 +1210,7 @@ async function loadAllData() {
     GRAMMAR_RULES = grammar.GRAMMAR_RULES;
     SPEAK_PROMPTS = speaking;
     LISTENING_TEST = listening;
+    LISTENING_TEST2 = listening2;
     DIRECTIONS_TEST = directions;
     DIRECTIONS_TEST2 = directions2;
     DIRECTIONS_TEST3 = directions3;
@@ -1646,6 +1651,218 @@ function dtSpeak(text, btnEl, onEnd) {
     };
     window.speechSynthesis.speak(utt);
   });
+}
+
+    window.speechSynthesis.speak(utt);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// LISTENING TEST 2 — même moteur, données différentes
+// ═══════════════════════════════════════════════════════════
+function lt2Speak(qi) {
+  if (!window.speechSynthesis) { toast('🔊 Audio non supporté'); return; }
+  _ltSessionId++;
+  const mySession = _ltSessionId;
+  clearTimeout(_ltAutoTimer); _ltAutoTimer = null;
+  speechSynthesis.cancel();
+  _ltSpeaking = true; _ltUtterance = null;
+  render();
+  _ltEnsureVoice(function(voice) {
+    if (mySession !== _ltSessionId) return;
+    const q = LISTENING_TEST2[qi];
+    const letters = ['A','B','C','D'];
+    const sentences = [q.consigne].concat(q.opts.map((opt,i) => letters[i] + '. ' + opt));
+    let idx = 0;
+    function speakNext() {
+      if (mySession !== _ltSessionId) return;
+      if (idx >= sentences.length) { _ltSpeaking = false; _ltUtterance = null; render(); return; }
+      const u = new SpeechSynthesisUtterance(sentences[idx]);
+      u.lang = 'en-GB'; u.rate = idx === 0 ? 0.88 : 0.82; u.pitch = 1.05;
+      if (voice) u.voice = voice;
+      _ltUtterance = u;
+      u.onend = function() { if (mySession !== _ltSessionId) return; idx++; speakNext(); };
+      u.onerror = function(e) {
+        if (e.error === 'interrupted' || e.error === 'canceled') return;
+        if (mySession !== _ltSessionId) return;
+        _ltSpeaking = false; _ltUtterance = null; render();
+      };
+      speechSynthesis.speak(u);
+    }
+    speakNext();
+  });
+}
+
+function lt2SelectOption(qi, oi) {
+  if (S.listeningTest2.answers[qi] !== undefined) return;
+  _ltPending = oi; render();
+}
+
+function lt2Validate(qi) {
+  if (_ltPending === null) return;
+  if (S.listeningTest2.answers[qi] !== undefined) return;
+  S.listeningTest2.answers[qi] = _ltPending;
+  const q = LISTENING_TEST2[qi];
+  if (_ltPending === q.ans) { S.streak++; trackAction(); } else { S.streak = 0; }
+  _ltPending = null; save(); render();
+}
+
+function lt2Next() {
+  ltStopSpeaking(); _ltPending = null;
+  if (S.listeningTest2.cursor < LISTENING_TEST2.length - 1) { S.listeningTest2.cursor++; }
+  else { S.listeningTest2.showResults = true; }
+  render();
+}
+
+function lt2Prev() {
+  ltStopSpeaking(); _ltPending = null;
+  if (S.listeningTest2.cursor > 0) S.listeningTest2.cursor--;
+  render();
+}
+
+function lt2Reset() {
+  ltStopSpeaking(); _ltPending = null; _ltAutoPlayed = new Set();
+  S.listeningTest2 = { cursor: 0, answers: {}, showResults: false };
+  render();
+}
+
+function buildListeningTest2() {
+  if (!S.listeningTest2) S.listeningTest2 = { cursor: 0, answers: {}, showResults: false };
+  const lt = S.listeningTest2;
+  const total = LISTENING_TEST2.length;
+  const answered = Object.keys(lt.answers).length;
+  const pct = Math.round((answered / total) * 100);
+  const letters = ['A','B','C','D'];
+  const wrap = document.createElement('div');
+  wrap.className = 'lt-page fade-up';
+
+  // ── RESULTS ──────────────────────────────────────────────
+  if (lt.showResults) {
+    const correct = LISTENING_TEST2.filter(function(q,i){ return lt.answers[i] === q.ans; }).length;
+    const scorePct = Math.round((correct/total)*100);
+    const emoji = scorePct >= 80 ? '🏆' : scorePct >= 60 ? '💪' : '📖';
+    const sub = scorePct >= 80 ? 'Excellent ! ' : scorePct >= 60 ? 'Bien joué ! ' : "Continue à t'entraîner ! ";
+    let reviewRows = '';
+    for (let i = 0; i < LISTENING_TEST2.length; i++) {
+      const q = LISTENING_TEST2[i];
+      const ua = lt.answers[i];
+      const ok = ua === q.ans;
+      const borderColor = ok ? 'rgba(45,106,79,.3)' : 'rgba(193,18,31,.25)';
+      const labelColor  = ok ? '#2d6a4f' : '#c1121f';
+      const labelText   = ok ? '✓ Correct' : '✗ Incorrect';
+      let wrongLine = '';
+      if (!ok && ua !== undefined) {
+        wrongLine = '<div style="font-size:.72rem;color:#c1121f;">Tu as répondu : ' + letters[ua] + '. ' + q.opts[ua] + '</div>';
+      }
+      let explLine = q.explanation ? '<div style="font-size:.68rem;color:var(--muted);margin-top:4px;font-style:italic;">' + q.explanation + '</div>' : '';
+      reviewRows += '<div style="background:var(--surface);border:1.5px solid ' + borderColor + ';border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">'
+        + '<img src="' + q.img + '" style="width:60px;height:45px;object-fit:cover;border-radius:8px;flex-shrink:0;">'
+        + '<div style="flex:1;min-width:0;">'
+        + '<div style="font-family:var(--mono);font-size:.52rem;color:' + labelColor + ';text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Q' + (i+1) + ' · ' + labelText + '</div>'
+        + '<div style="font-size:.78rem;color:var(--text);font-weight:600;margin-bottom:2px;">' + letters[q.ans] + '. ' + q.opts[q.ans] + '</div>'
+        + wrongLine + explLine
+        + '</div></div>';
+    }
+    wrap.innerHTML = '<div class="lt-header">'
+      + '<div class="lt-tag">🎧 Listening Test 2</div>'
+      + '<div class="lt-tag" style="background:rgba(45,106,79,.08);border-color:rgba(45,106,79,.3);color:#2d6a4f">Résultats</div>'
+      + '</div>'
+      + '<div class="lt-score-card">'
+      + '<div style="font-size:2.8rem;margin-bottom:10px">' + emoji + '</div>'
+      + '<div class="lt-score-big">' + correct + ' / ' + total + '</div>'
+      + '<div class="lt-score-sub">' + sub + scorePct + '% de bonnes réponses</div>'
+      + '<div class="lt-score-bar-wrap"><div class="lt-score-bar-fill" style="width:' + scorePct + '%"></div></div>'
+      + '<button class="lt-btn-nav primary" onclick="lt2Reset()" style="margin:0 auto;display:block;">🔄 Recommencer</button>'
+      + '</div>'
+      + '<div style="display:flex;flex-direction:column;gap:10px;">' + reviewRows + '</div>';
+    return wrap;
+  }
+
+  // ── QUESTION ─────────────────────────────────────────────
+  const qi = lt.cursor;
+  const q  = LISTENING_TEST2[qi];
+  const done      = lt.answers[qi] !== undefined;
+  const userAns   = lt.answers[qi];
+  const isCorrect = done && userAns === q.ans;
+  const isSpeaking = _ltSpeaking;
+
+  let cardCls = 'lt-card';
+  if (done) cardCls += isCorrect ? ' answered-ok' : ' answered-fail';
+
+  const audioBtns = '<div style="display:flex;gap:10px;justify-content:center;">'
+    + '<button class="lt-play-btn' + (isSpeaking ? ' playing' : '') + '" '
+    + (isSpeaking ? '' : 'disabled ')
+    + 'onclick="ltStopSpeaking();render();" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking ? '' : 'opacity:.35;cursor:default;')
+    + '">⏹ Stop</button>'
+    + '<button class="lt-play-btn" '
+    + (isSpeaking ? 'disabled ' : '')
+    + 'onclick="lt2Speak(' + qi + ')" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking ? 'opacity:.35;cursor:default;' : '')
+    + '">🔁 Réécouter</button>'
+    + '</div>';
+
+  let optsHtml = '';
+  for (let oi = 0; oi < q.opts.length; oi++) {
+    let cls = 'lt-opt-block';
+    let labelHtml = '<span class="lt-block-letter">' + letters[oi] + '</span>';
+    if (done) {
+      cls += ' disabled';
+      if (oi === q.ans) { cls += ' block-correct'; labelHtml += '<span class="lt-block-revealed">' + q.opts[oi] + '</span>'; }
+      else if (oi === userAns) { cls += ' block-wrong'; labelHtml += '<span class="lt-block-revealed">' + q.opts[oi] + '</span>'; }
+    } else if (_ltPending === oi) { cls += ' block-pending'; }
+    const clickHandler = done ? '' : 'lt2SelectOption(' + qi + ',' + oi + ')';
+    optsHtml += '<div class="' + cls + '" onclick="' + clickHandler + '">' + labelHtml + '</div>';
+  }
+
+  let feedbackHtml = '';
+  if (done) {
+    const fbCls = isCorrect ? 'ok' : 'fail';
+    const fbMsg = isCorrect
+      ? '✓ Bonne réponse !'
+      : '✗ Incorrect — La bonne réponse était : ' + letters[q.ans] + '. ' + q.opts[q.ans];
+    const explHtml = done && q.explanation ? '<div style="font-size:.7rem;color:var(--muted);margin-top:6px;font-style:italic;text-align:center;">' + q.explanation + '</div>' : '';
+    feedbackHtml = '<div class="lt-feedback ' + fbCls + '">' + fbMsg + '</div>' + explHtml;
+  } else if (_ltPending !== null) {
+    feedbackHtml = '<button class="lt-validate-btn" onclick="lt2Validate(' + qi + ')">✓ Valider ma réponse</button>';
+  }
+
+  let navRight = '';
+  if (qi < total - 1) {
+    navRight = '<button class="lt-btn-nav primary" onclick="lt2Next()">Suivant →</button>';
+  } else if (answered === total) {
+    navRight = '<button class="lt-btn-nav primary" onclick="lt2Next()">🏆 Voir les résultats</button>';
+  } else {
+    navRight = '<button class="lt-btn-nav primary" onclick="lt2Next()" style="opacity:.5">Suivant →</button>';
+  }
+
+  wrap.innerHTML = '<div class="lt-header">'
+    + '<div class="lt-tag">🎧 Listening Test 2</div>'
+    + '<div class="lt-tag" style="background:rgba(29,111,164,.08);border-color:rgba(29,111,164,.3);color:#1d6fa4">Part 1 — Photographs</div>'
+    + '</div>'
+    + '<div class="lt-progress-bar"><div class="lt-progress-fill" style="width:' + pct + '%"></div></div>'
+    + '<div class="lt-progress-txt">Question ' + (qi+1) + ' / ' + total + ' · ' + answered + ' répondues</div>'
+    + '<div class="' + cardCls + '">'
+    + '<img class="lt-photo" src="' + q.img + '" alt="Photo question ' + (qi+1) + '">'
+    + '<div class="lt-consigne">🎧 Écoutez les 4 propositions — choisissez celle qui décrit l\'image</div>'
+    + audioBtns
+    + '<div class="lt-opts-grid">' + optsHtml + '</div>'
+    + feedbackHtml
+    + '</div>'
+    + '<div class="lt-nav">'
+    + '<button class="lt-btn-nav" onclick="lt2Prev()" ' + (qi === 0 ? 'disabled' : '') + '>← Précédent</button>'
+    + navRight
+    + '</div>';
+
+  // Auto-play on first visit
+  if (!_ltAutoPlayed) _ltAutoPlayed = new Set();
+  const autoKey = 'lt2_' + qi;
+  if (!_ltAutoPlayed.has(autoKey) && !done) {
+    _ltAutoPlayed.add(autoKey);
+    _ltAutoTimer = setTimeout(function() { lt2Speak(qi); }, 600);
+  }
+
+  return wrap;
 }
 
 function buildDirectionsTest() {
@@ -2580,6 +2797,7 @@ function _setBackBarLabel(text) {
 
 function goHome() {
   if (S.tab === 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if (S.tab === 'listening2' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
@@ -2657,6 +2875,7 @@ function render() {
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='grammar6')     el.appendChild(buildGrammar6Section());
   else if(S.tab==='listening')    el.appendChild(buildListeningTest());
+  else if(S.tab==='listening2')   el.appendChild(buildListeningTest2());
   else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
   else if(S.tab==='directions2')  el.appendChild(buildDirectionsTest2());
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
@@ -3092,6 +3311,8 @@ function buildHome() {
     const TOEIC_COLOR = '#1d6fa4';
     const ltDone = Object.keys(S.listeningTest ? S.listeningTest.answers : {}).length;
     const ltTotal = LISTENING_TEST ? LISTENING_TEST.length : 6;
+    const lt2Done = Object.keys(S.listeningTest2 ? S.listeningTest2.answers : {}).length;
+    const lt2Total = LISTENING_TEST2 ? LISTENING_TEST2.length : 10;
     const dtDone = Object.keys(S.directionsTest ? S.directionsTest.answers : {}).length;
     const dtTotal = DIRECTIONS_TEST ? DIRECTIONS_TEST.length : 10;
     const dt2Done = Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length;
@@ -3100,8 +3321,8 @@ function buildHome() {
     const dt3Total = DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 10;
     const dt4Done = Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length;
     const dt4Total = DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 10;
-    const totalDone = ltDone + dtDone + dt2Done + dt3Done + dt4Done;
-    const totalAll  = ltTotal + dtTotal + dt2Total + dt3Total + dt4Total;
+    const totalDone = ltDone + lt2Done + dtDone + dt2Done + dt3Done + dt4Done;
+    const totalAll  = ltTotal + lt2Total + dtTotal + dt2Total + dt3Total + dt4Total;
     const ltPct   = ltTotal > 0 ? Math.round((ltDone / ltTotal) * 100) : 0;
 
     const toeicCard = document.createElement('div');
@@ -3159,6 +3380,15 @@ function buildHome() {
       countLabel: LISTENING_TEST.length + ' Q',
       progDone: ltDone, progTotal: ltTotal,
       onClick: () => switchTab('listening'),
+    }));
+
+    // Listening Test 2 sub-item (actif)
+    sublist.appendChild(makeSubItem({
+      icon: '🎧', label: 'Listening Test 2',
+      sub: 'Photos · Choix multiple · Audio',
+      countLabel: LISTENING_TEST2.length + ' Q',
+      progDone: lt2Done, progTotal: lt2Total,
+      onClick: () => switchTab('listening2'),
     }));
 
     // Directions sub-item (actif)

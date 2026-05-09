@@ -1,0 +1,122 @@
+[
+  {
+    "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "The chairs are arranged around a conference table.",
+      "A man is writing on a whiteboard.",
+      "The windows are covered with curtains.",
+      "Some laptops are stacked on the floor."
+    ],
+    "ans": 0,
+    "explanation": "The photograph shows an empty meeting room with chairs arranged around a central conference table. No person is visible, no curtains, and no laptops on the floor."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "A cashier is handing change to a customer.",
+      "A woman is examining items on a shelf.",
+      "The store is completely empty.",
+      "Some products are being packed into boxes."
+    ],
+    "ans": 0,
+    "explanation": "The photo shows a cashier at a point-of-sale counter interacting with a customer. B is a distractor — no one is examining a shelf. C and D are not consistent with the scene."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "Workers are climbing a ladder inside the building.",
+      "Construction workers are working on a building exterior.",
+      "A truck is parked beside the scaffolding.",
+      "The building has already been completed."
+    ],
+    "ans": 1,
+    "explanation": "The photograph shows workers on scaffolding on the outside of a building under construction. A is incorrect — they are outside, not inside. No truck is visible, and the building is clearly unfinished."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "The people are eating lunch together.",
+      "A presentation is being displayed on a screen.",
+      "Several people are gathered around a table with laptops.",
+      "Someone is pointing at a map on the wall."
+    ],
+    "ans": 2,
+    "explanation": "The photo shows a group of people sitting around a table, each with a laptop in front of them — a typical collaborative work session. No food, no screen projection, no map is visible."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "A woman is talking on the phone at her desk.",
+      "The desk is completely clear of any items.",
+      "A man is repairing a computer monitor.",
+      "Office supplies are scattered on the floor."
+    ],
+    "ans": 0,
+    "explanation": "The photograph shows a woman seated at her desk speaking on the phone. The desk has items on it (not clear), no man is repairing anything, and nothing is scattered on the floor."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "Packages are being loaded onto a conveyor belt.",
+      "A delivery driver is signing a document.",
+      "Boxes are stacked on shelves in a warehouse.",
+      "Workers are unloading a truck in the street."
+    ],
+    "ans": 2,
+    "explanation": "The image shows a warehouse with boxes neatly stacked on shelving units. There is no conveyor belt, no driver signing documents, and no truck visible."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "A chef is serving food to customers at a table.",
+      "Food is being displayed on plates at a restaurant.",
+      "A waiter is cleaning the kitchen counters.",
+      "The dining tables are all empty."
+    ],
+    "ans": 1,
+    "explanation": "The photo shows plated dishes presented at a restaurant, with food artfully displayed on plates. No chef is actively serving customers, no cleaning is happening, and the tables are in use."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "Two colleagues are shaking hands in an office.",
+      "A man is working alone at a standing desk.",
+      "People are having a discussion in a modern open-plan office.",
+      "Employees are lining up at the reception desk."
+    ],
+    "ans": 2,
+    "explanation": "The photograph depicts several people engaged in conversation in a bright, open-plan office environment. No handshake, no standing desk, and no reception line is visible."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1434082033009-b81d41d32e1c?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "A plane is landing on the runway.",
+      "Passengers are boarding an aircraft.",
+      "Ground crew members are loading luggage into the cargo hold.",
+      "The airport terminal is crowded with travelers."
+    ],
+    "ans": 1,
+    "explanation": "The photo shows passengers walking up a jet bridge or stairs to board an aircraft. No landing is taking place, no cargo loading is visible, and the scene is outside the terminal."
+  },
+  {
+    "img": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=640&q=80",
+    "consigne": "Look at the photograph and listen. Choose the statement that best describes what you see.",
+    "opts": [
+      "A technician is repairing a server rack.",
+      "Computer screens are displaying data dashboards.",
+      "Workers are installing cables on the ceiling.",
+      "The office equipment is covered with dust sheets."
+    ],
+    "ans": 1,
+    "explanation": "The photograph shows multiple monitors displaying data — typical of a data center or NOC environment. No repair work, no cable installation, and no dust sheets are shown."
+  }
+]
