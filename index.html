@@ -2531,7 +2531,8 @@ function revQueue(source) {
   let out=[];
   const secs = source==='all'?['vocab','expr','prep','phrasal']:
                source==='prep-only'?['prep']:
-               source==='phrasal-only'?['phrasal']:[source];
+               source==='phrasal-only'?['phrasal']:
+               source==='take-only'?['take']:[source];
   secs.forEach(sec=>{ DATA[sec].forEach((it,i)=>{ if(getS(sec,i)==='review') out.push({...it,_sec:sec,_idx:i}); }); });
   return shuffle(out);
 }
@@ -2539,7 +2540,8 @@ function fullQueue(source) {
   let out=[];
   const secs = source==='all'?['vocab','expr','prep','phrasal']:
                source==='prep-only'?['prep']:
-               source==='phrasal-only'?['phrasal']:[source];
+               source==='phrasal-only'?['phrasal']:
+               source==='take-only'?['take']:[source];
   secs.forEach(sec=>{ DATA[sec].forEach((it,i)=>out.push({...it,_sec:sec,_idx:i})); });
   return shuffle(out);
 }
@@ -2574,6 +2576,7 @@ function goHome() {
   if (S.tab === 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
   if (S.tab === 'directions4' && typeof dt4StopSpeaking === 'function') dt4StopSpeaking();
+  S.quiz = null;
   S.tab = 'home';
   document.getElementById('backBar').style.display = 'none';
   document.getElementById('backBar').onclick = goHome;
@@ -2587,6 +2590,8 @@ function switchTab(tab) {
   if (S.tab === 'directions2' && tab !== 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && tab !== 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
   if (S.tab === 'directions4' && tab !== 'directions4' && typeof dt4StopSpeaking === 'function') dt4StopSpeaking();
+  // Si on change de tab, annuler tout quiz en cours (sauf si on reste sur review)
+  if (tab !== 'review') S.quiz = null;
   S.tab = tab;
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
@@ -2626,7 +2631,10 @@ function render() {
   document.getElementById('statRev').textContent=srDueCount();
   document.getElementById('statStreak').textContent=S.streak;
 
-  if(S.tab==='home')              el.appendChild(buildHome());
+  // Si un quiz est actif depuis n'importe quel module, on l'affiche en priorité
+  if(S.quiz && S.tab !== 'review') {
+    el.appendChild(buildQuiz());
+  } else if(S.tab==='home')              el.appendChild(buildHome());
   else if(S.tab==='foundations')  el.appendChild(buildFoundationsHub());
   else if(S.tab==='phrasalhub')   el.appendChild(buildPhrasalHub());
   else if(S.tab==='grammarhub')   el.appendChild(buildGrammarHub());
@@ -4465,6 +4473,7 @@ function buildTakeSection() {
       <button class="phrasal-subbtn ${tv==='cours'?'active':''}" style="${tv==='cours'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('cours')">📖 Cours</button>
       <button class="phrasal-subbtn ${tv==='cards'?'active':''}" style="${tv==='cards'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('cards')">🃏 Flashcards (${total})</button>
       <button class="phrasal-subbtn ${tv==='mcq'?'active':''}" style="${tv==='mcq'?'background:rgba(56,189,248,.15);border-color:#38bdf8;color:#38bdf8':''}" onclick="setTakeView('mcq')">✅ QCM (${TAKE_QCM.length} Q)</button>
+      ${nRev>0?`<button class="phrasal-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="startQuiz('take-only')">🎯 Réviser (${nRev})</button>`:''}
     </div>
   `;
 
