@@ -974,7 +974,7 @@ main{flex:1;display:flex;flex-direction:column;}
 
 <div id="backBar" style="display:none" class="home-back">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour à l'accueil
+  <span id="backBarLabel">Retour à l'accueil</span>
 </div>
 
 <main id="main"></main>
@@ -2555,6 +2555,19 @@ const TAB_PARENT = {
 };
 const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
 
+const HUB_LABELS = {
+  foundations: 'Foundations',
+  phrasalhub:  'Phrasal Verbs',
+  grammarhub:  'Grammar',
+  speak:       'Speaking',
+  review:      'Quiz & Review',
+};
+
+function _setBackBarLabel(text) {
+  const lbl = document.getElementById('backBarLabel');
+  if (lbl) lbl.textContent = text;
+}
+
 function goHome() {
   if (S.tab === 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
@@ -2564,6 +2577,7 @@ function goHome() {
   S.tab = 'home';
   document.getElementById('backBar').style.display = 'none';
   document.getElementById('backBar').onclick = goHome;
+  _setBackBarLabel("Retour à l'accueil");
   render();
 }
 
@@ -2579,12 +2593,15 @@ function switchTab(tab) {
   bar.onclick = null;
   if (HUB_TABS.has(tab)) {
     bar.onclick = goHome;
+    _setBackBarLabel("Retour à l'accueil");
   } else {
     const parent = TAB_PARENT[tab];
     if (parent && HUB_TABS.has(parent)) {
       bar.onclick = () => switchTab(parent);
+      _setBackBarLabel('← ' + HUB_LABELS[parent]);
     } else {
       bar.onclick = goHome;
+      _setBackBarLabel("Retour à l'accueil");
     }
   }
   render();
