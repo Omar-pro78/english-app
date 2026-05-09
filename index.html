@@ -468,11 +468,19 @@ main{flex:1;display:flex;flex-direction:column;}
   padding:12px 14px;background:var(--surface);border:2px solid var(--border2);border-radius:10px;
   color:var(--text);outline:none;text-align:center;transition:border-color .2s;margin-bottom:10px;}
 .quiz-input:focus{border-color:var(--accent2);}
-.quiz-input.ok  {border-color:var(--accent)!important;background:rgba(0,212,170,.07);}
+.quiz-input.ok  {border-color:#52b788!important;background:rgba(45,106,79,.08);}
 .quiz-input.fail{border-color:var(--red)!important;background:rgba(255,64,96,.07);}
 .quiz-feedback{min-height:26px;display:flex;align-items:center;justify-content:center;
   gap:7px;font-size:.84rem;margin-bottom:14px;}
-.fb-ok  {color:var(--accent);font-weight:700;}
+.fb-ok  {
+  display:inline-flex;align-items:center;gap:6px;
+  color:#2d6a4f;font-weight:700;font-size:.92rem;
+  background:rgba(45,106,79,.12);
+  border:1.5px solid rgba(45,106,79,.3);
+  border-radius:10px;padding:6px 14px;
+  animation:popIn .25s cubic-bezier(.2,1.4,.5,1) both;
+}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
 .fb-fail{color:var(--red);}
 .fb-ans {color:var(--gold);font-family:var(--mono);font-weight:600;}
 .quiz-hint{font-size:.72rem;color:var(--muted);font-style:italic;margin-bottom:10px;}
@@ -3681,6 +3689,15 @@ function startFull(){
   render();
 }
 
+const _OK_MSGS = [
+  '🎉 Excellent !', '✅ Parfait !', '🔥 En feu !', '💪 Bien joué !',
+  '🌟 Bravo !', '🚀 Super !', '👏 Nickel !', '😎 Top !',
+  '🏆 Correct !', '⚡ Impressionnant !', '🎯 Dans le mille !', '💡 Exactement !',
+];
+function _randomOk() {
+  return _OK_MSGS[Math.floor(Math.random() * _OK_MSGS.length)];
+}
+
 function buildQuiz(){
   const q=S.quiz;
   if(q.idx>=q.queue.length) return buildResults();
@@ -3728,7 +3745,7 @@ function buildQuiz(){
       />
       <div class="quiz-feedback">
         ${ans?(isOk
-          ?`<span class="fb-ok">✓ Correct !</span>`
+          ?`<span class="fb-ok">${_randomOk()}</span>`
           :`<span class="fb-fail">✗ Incorrect —</span><span class="fb-ans">&nbsp;${item.en}</span>`):''}
       </div>
       ${ans && isOk && q.source === 'sr' ? `
