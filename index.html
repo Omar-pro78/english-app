@@ -98,7 +98,7 @@ nav{display:none;} /* nav remplacé par home screen */
 .toeic-card-header:hover .toeic-card-header-inner{opacity:.85;}
 .toeic-sublist{display:flex;flex-direction:column;gap:0;
   max-height:0;overflow:hidden;transition:max-height .3s ease;}
-.toeic-card.open .toeic-sublist{max-height:400px;}
+.toeic-card.open .toeic-sublist{max-height:120px;}
 .toeic-subitem{display:flex;align-items:center;gap:14px;
   padding:12px 20px 12px 28px;border-top:1px solid var(--border);
   cursor:pointer;transition:background .15s;}
@@ -2775,15 +2775,28 @@ const TAB_PARENT = {
   phrasal: 'phrasalhub', take: 'phrasalhub',
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
+  // TOEIC hierarchy
+  listeninghub: 'home',
+  part1hub:     'listeninghub',
+  part2hub:     'listeninghub',
+  listening:    'part1hub',
+  listening2:   'part1hub',
+  directions:   'part2hub',
+  directions2:  'part2hub',
+  directions3:  'part2hub',
+  directions4:  'part2hub',
 };
-const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review']);
+const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review','listeninghub','part1hub','part2hub']);
 
 const HUB_LABELS = {
-  foundations: 'Foundations',
-  phrasalhub:  'Phrasal Verbs',
-  grammarhub:  'Grammar',
-  speak:       'Speaking',
-  review:      'Quiz & Review',
+  foundations:  'Foundations',
+  phrasalhub:   'Phrasal Verbs',
+  grammarhub:   'Grammar',
+  speak:        'Speaking',
+  review:       'Quiz & Review',
+  listeninghub: 'Listening Test',
+  part1hub:     'Part 1 — Photographs',
+  part2hub:     'Part 2 — Question–Response',
 };
 
 function _setBackBarLabel(text) {
@@ -2808,6 +2821,7 @@ function goHome() {
 
 function switchTab(tab) {
   if (S.tab === 'listening' && tab !== 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if ((S.tab === 'listening' || S.tab === 'listening2') && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'directions' && tab !== 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && tab !== 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && tab !== 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
@@ -2818,18 +2832,16 @@ function switchTab(tab) {
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
   bar.onclick = null;
-  if (HUB_TABS.has(tab)) {
+
+  const parent = TAB_PARENT[tab];
+  if (!parent || parent === 'home') {
+    // Top-level hub or no parent → retour accueil
     bar.onclick = goHome;
     _setBackBarLabel("Retour à l'accueil");
   } else {
-    const parent = TAB_PARENT[tab];
-    if (parent && HUB_TABS.has(parent)) {
-      bar.onclick = () => switchTab(parent);
-      _setBackBarLabel('← ' + HUB_LABELS[parent]);
-    } else {
-      bar.onclick = goHome;
-      _setBackBarLabel("Retour à l'accueil");
-    }
+    // Has a real parent tab → back button goes to parent
+    bar.onclick = () => switchTab(parent);
+    _setBackBarLabel('← ' + (HUB_LABELS[parent] || parent));
   }
   render();
 }
@@ -2870,6 +2882,9 @@ function render() {
   else if(S.tab==='grammar4')     el.appendChild(buildGrammar4Section());
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='grammar6')     el.appendChild(buildGrammar6Section());
+  else if(S.tab==='listeninghub') el.appendChild(buildListeningHub());
+  else if(S.tab==='part1hub')     el.appendChild(buildPart1Hub());
+  else if(S.tab==='part2hub')     el.appendChild(buildPart2Hub());
   else if(S.tab==='listening')    el.appendChild(buildListeningTest());
   else if(S.tab==='listening2')   el.appendChild(buildListeningTest2());
   else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
@@ -3369,62 +3384,15 @@ function buildHome() {
       return item;
     }
 
-    // Listening Test sub-item (actif)
+    // Listening Test hub — seul sous-item TOEIC visible
+    const allDone = ltDone + lt2Done + dtDone + dt2Done + dt3Done + dt4Done;
+    const allTotal = ltTotal + lt2Total + dtTotal + dt2Total + dt3Total + dt4Total;
     sublist.appendChild(makeSubItem({
       icon: '🎧', label: 'Listening Test',
-      sub: 'Photos · Choix multiple · Audio',
-      countLabel: LISTENING_TEST.length + ' Q',
-      progDone: ltDone, progTotal: ltTotal,
-      onClick: () => switchTab('listening'),
-    }));
-
-    // Listening Test 2 sub-item (actif)
-    sublist.appendChild(makeSubItem({
-      icon: '🎧', label: 'Listening Test 2',
-      sub: 'Photos · Choix multiple · Audio',
-      countLabel: LISTENING_TEST2.length + ' Q',
-      progDone: lt2Done, progTotal: lt2Total,
-      onClick: () => switchTab('listening2'),
-    }));
-
-    // Directions sub-item (actif)
-    sublist.appendChild(makeSubItem({
-      icon: '🧭', label: 'Directions',
-      sub: 'Part 2 — Questions & réponses orales',
-      countLabel: DIRECTIONS_TEST.length + ' Q',
-      progDone: Object.keys(S.directionsTest ? S.directionsTest.answers : {}).length,
-      progTotal: DIRECTIONS_TEST ? DIRECTIONS_TEST.length : 10,
-      onClick: () => switchTab('directions'),
-    }));
-
-    // Directions 2 sub-item (actif)
-    sublist.appendChild(makeSubItem({
-      icon: '🧭', label: 'Directions 2',
-      sub: 'Part 2 — Questions & réponses orales',
-      countLabel: DIRECTIONS_TEST2.length + ' Q',
-      progDone: Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length,
-      progTotal: DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 15,
-      onClick: () => switchTab('directions2'),
-    }));
-
-    // Directions 3 sub-item (actif)
-    sublist.appendChild(makeSubItem({
-      icon: '🧭', label: 'Directions 3',
-      sub: 'Part 2 — Questions & réponses orales',
-      countLabel: DIRECTIONS_TEST3.length + ' Q',
-      progDone: Object.keys(S.directionsTest3 ? S.directionsTest3.answers : {}).length,
-      progTotal: DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 10,
-      onClick: () => switchTab('directions3'),
-    }));
-
-    // Directions 4 sub-item (actif)
-    sublist.appendChild(makeSubItem({
-      icon: '🧭', label: 'Directions 4',
-      sub: 'Part 2 — Questions & réponses orales',
-      countLabel: DIRECTIONS_TEST4.length + ' Q',
-      progDone: Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length,
-      progTotal: DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 10,
-      onClick: () => switchTab('directions4'),
+      sub: 'Part 1 · Photographs — Part 2 · Question–Response',
+      countLabel: allDone + '/' + allTotal + ' Q',
+      progDone: allDone, progTotal: allTotal,
+      onClick: () => switchTab('listeninghub'),
     }));
 
     toeicCard.appendChild(sublist);
@@ -3456,6 +3424,154 @@ function buildHome() {
     stats.appendChild(b);
   });
   wrap.appendChild(stats);
+  return wrap;
+}
+
+// ── TOEIC HUB PAGES ──────────────────────────────────────────
+
+function buildListeningHub() {
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+
+  const ltDone  = Object.keys(S.listeningTest  ? S.listeningTest.answers  : {}).length;
+  const lt2Done = Object.keys(S.listeningTest2 ? S.listeningTest2.answers : {}).length;
+  const dtDone  = Object.keys(S.directionsTest  ? S.directionsTest.answers  : {}).length;
+  const dt2Done = Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length;
+  const dt3Done = Object.keys(S.directionsTest3 ? S.directionsTest3.answers : {}).length;
+  const dt4Done = Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length;
+
+  const p1Done  = ltDone + lt2Done;
+  const p1Total = (LISTENING_TEST ? LISTENING_TEST.length : 0) + (LISTENING_TEST2 ? LISTENING_TEST2.length : 0);
+  const p2Done  = dtDone + dt2Done + dt3Done + dt4Done;
+  const p2Total = (DIRECTIONS_TEST  ? DIRECTIONS_TEST.length  : 0)
+                + (DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 0)
+                + (DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 0)
+                + (DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 0);
+
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🎧 TOEIC — LISTENING</div>
+    <div class="hub-title" style="color:${COLOR}">Listening Test</div>
+    <div class="hub-subtitle">Entraîne-toi sur les deux parties de l'épreuve Listening du TOEIC</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('part1hub')">
+        <div class="hub-card-icon">📸</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Part 1 — Photographs</div>
+          <div class="hub-card-desc">Décrire une photo · Choix multiple · Audio</div>
+          ${hubProgBar(p1Done, p1Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('part2hub')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Part 2 — Question–Response</div>
+          <div class="hub-card-desc">Questions orales · Choisir la bonne réponse</div>
+          ${hubProgBar(p2Done, p2Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+function buildPart1Hub() {
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+
+  const ltDone  = Object.keys(S.listeningTest  ? S.listeningTest.answers  : {}).length;
+  const lt2Done = Object.keys(S.listeningTest2 ? S.listeningTest2.answers : {}).length;
+  const ltTotal  = LISTENING_TEST  ? LISTENING_TEST.length  : 0;
+  const lt2Total = LISTENING_TEST2 ? LISTENING_TEST2.length : 0;
+
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">📸 PART 1 — PHOTOGRAPHS</div>
+    <div class="hub-title" style="color:${COLOR}">Photographs</div>
+    <div class="hub-subtitle">Écoute et choisis l'énoncé qui décrit le mieux la photo</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('listening')">
+        <div class="hub-card-icon">🎧</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 1</div>
+          <div class="hub-card-desc">${ltTotal} questions · Photos · Audio</div>
+          ${hubProgBar(ltDone, ltTotal, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('listening2')">
+        <div class="hub-card-icon">🎧</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 2</div>
+          <div class="hub-card-desc">${lt2Total} questions · Photos · Audio</div>
+          ${hubProgBar(lt2Done, lt2Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+function buildPart2Hub() {
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+
+  const dtDone  = Object.keys(S.directionsTest  ? S.directionsTest.answers  : {}).length;
+  const dt2Done = Object.keys(S.directionsTest2 ? S.directionsTest2.answers : {}).length;
+  const dt3Done = Object.keys(S.directionsTest3 ? S.directionsTest3.answers : {}).length;
+  const dt4Done = Object.keys(S.directionsTest4 ? S.directionsTest4.answers : {}).length;
+  const dtTotal  = DIRECTIONS_TEST  ? DIRECTIONS_TEST.length  : 0;
+  const dt2Total = DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 0;
+  const dt3Total = DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 0;
+  const dt4Total = DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 0;
+
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🗣️ PART 2 — QUESTION–RESPONSE</div>
+    <div class="hub-title" style="color:${COLOR}">Question–Response</div>
+    <div class="hub-subtitle">Écoute la question et choisis la meilleure réponse parmi trois options</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('directions')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 1</div>
+          <div class="hub-card-desc">${dtTotal} questions · Réponses orales</div>
+          ${hubProgBar(dtDone, dtTotal, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('directions2')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 2</div>
+          <div class="hub-card-desc">${dt2Total} questions · Réponses orales</div>
+          ${hubProgBar(dt2Done, dt2Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('directions3')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 3</div>
+          <div class="hub-card-desc">${dt3Total} questions · Réponses orales</div>
+          ${hubProgBar(dt3Done, dt3Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('directions4')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 4</div>
+          <div class="hub-card-desc">${dt4Total} questions · Réponses orales</div>
+          ${hubProgBar(dt4Done, dt4Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
   return wrap;
 }
 
