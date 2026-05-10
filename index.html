@@ -1026,6 +1026,7 @@ let SPEAK_PROMPTS = [];
 let GRAMMAR_RULES = [];
 let LISTENING_TEST = [];
 let LISTENING_TEST2 = [];
+let LISTENING_TEST3 = [];
 let DIRECTIONS_TEST = [];
 let DIRECTIONS_TEST2 = [];
 let DIRECTIONS_TEST3 = [];
@@ -1085,6 +1086,7 @@ let S = {
   sr: {},
   listeningTest: { cursor: 0, answers: {}, showResults: false },
   listeningTest2: { cursor: 0, answers: {}, showResults: false },
+  listeningTest3: { cursor: 0, convIdx: 0, qIdx: 0, answers: {}, showResults: false },
   directionsTest: { cursor: 0, answers: {}, showResults: false },
   directionsTest2: { cursor: 0, answers: {}, showResults: false },
   directionsTest3: { cursor: 0, answers: {}, showResults: false },
@@ -1137,6 +1139,7 @@ function _applyData(p) {
   S.mcqAnswersTake = p.mcqAnswersTake || {};
   S.listeningTest  = p.listeningTest  || { cursor:0, answers:{}, showResults:false };
   S.listeningTest2 = p.listeningTest2 || { cursor:0, answers:{}, showResults:false };
+  S.listeningTest3 = p.listeningTest3 || { convIdx:0, qIdx:0, answers:{}, showResults:false };
   S.directionsTest = p.directionsTest || { cursor:0, answers:{}, showResults:false };
   S.directionsTest2 = p.directionsTest2 || { cursor:0, answers:{}, showResults:false };
   S.directionsTest3 = p.directionsTest3 || { cursor:0, answers:{}, showResults:false };
@@ -1159,7 +1162,7 @@ function _buildPayload() {
     daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
     mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
-    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, directionsTest:S.directionsTest,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, listeningTest3:S.listeningTest3, directionsTest:S.directionsTest,
     directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
   };
 }
@@ -1182,7 +1185,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, directions, directions2, directions3, directions4] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, directions, directions2, directions3, directions4] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1190,6 +1193,7 @@ async function loadAllData() {
       fetch('speaking.json').then(r=>r.json()),
       fetch('listening.json').then(r=>r.json()),
       fetch('listening2.json').then(r=>r.json()),
+      fetch('listening3.json').then(r=>r.json()),
       fetch('directions.json').then(r=>r.json()),
       fetch('directions2.json').then(r=>r.json()),
       fetch('directions3.json').then(r=>r.json()),
@@ -1222,6 +1226,7 @@ async function loadAllData() {
     SPEAK_PROMPTS = speaking;
     LISTENING_TEST = listening;
     LISTENING_TEST2 = listening2;
+    LISTENING_TEST3 = listening3;
     DIRECTIONS_TEST = directions;
     DIRECTIONS_TEST2 = directions2;
     DIRECTIONS_TEST3 = directions3;
@@ -2790,8 +2795,10 @@ const TAB_PARENT = {
   listeninghub: 'home',
   part1hub:     'listeninghub',
   part2hub:     'listeninghub',
+  part3hub:     'listeninghub',
   listening:    'part1hub',
   listening2:   'part1hub',
+  listening3:   'part3hub',
   directions:   'part2hub',
   directions2:  'part2hub',
   directions3:  'part2hub',
@@ -2808,6 +2815,7 @@ const HUB_LABELS = {
   listeninghub: 'Listening Test',
   part1hub:     'Part 1 — Photographs',
   part2hub:     'Part 2 — Question–Response',
+  part3hub:     'Part 3 — Conversations',
 };
 
 function _setBackBarLabel(text) {
@@ -2892,8 +2900,10 @@ function render() {
   else if(S.tab==='listeninghub') el.appendChild(buildListeningHub());
   else if(S.tab==='part1hub')     el.appendChild(buildPart1Hub());
   else if(S.tab==='part2hub')     el.appendChild(buildPart2Hub());
+  else if(S.tab==='part3hub')     el.appendChild(buildPart3Hub());
   else if(S.tab==='listening')    el.appendChild(buildListeningTest());
   else if(S.tab==='listening2')   el.appendChild(buildListeningTest2());
+  else if(S.tab==='listening3')   el.appendChild(buildListeningTest3());
   else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
   else if(S.tab==='directions2')  el.appendChild(buildDirectionsTest2());
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
@@ -3455,6 +3465,9 @@ function buildListeningHub() {
                 + (DIRECTIONS_TEST2 ? DIRECTIONS_TEST2.length : 0)
                 + (DIRECTIONS_TEST3 ? DIRECTIONS_TEST3.length : 0)
                 + (DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 0);
+  const lt3 = S.listeningTest3 || {};
+  const p3Done  = Object.keys(lt3.answers || {}).length;
+  const p3Total = LISTENING_TEST3 ? LISTENING_TEST3.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
 
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🎧 TOEIC — LISTENING</div>
@@ -3476,6 +3489,15 @@ function buildListeningHub() {
           <div class="hub-card-label">Part 2 — Question–Response</div>
           <div class="hub-card-desc">Questions orales · Choisir la bonne réponse</div>
           ${hubProgBar(p2Done, p2Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('part3hub')">
+        <div class="hub-card-icon">💬</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Part 3 — Conversations</div>
+          <div class="hub-card-desc">Dialogues entre 2–3 personnes · 3 questions par conversation</div>
+          ${hubProgBar(p3Done, p3Total, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -3579,6 +3601,286 @@ function buildPart2Hub() {
       </div>
     </div>
   `;
+  return wrap;
+}
+
+function buildPart3Hub() {
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+  const lt3 = S.listeningTest3 || {};
+  const p3Done  = Object.keys(lt3.answers || {}).length;
+  const p3Total = LISTENING_TEST3 ? LISTENING_TEST3.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">💬 PART 3 — CONVERSATIONS</div>
+    <div class="hub-title" style="color:${COLOR}">Conversations</div>
+    <div class="hub-subtitle">Écoute des dialogues entre 2–3 personnes et réponds à 3 questions par conversation</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('listening3')">
+        <div class="hub-card-icon">💬</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 1 — Conversations</div>
+          <div class="hub-card-desc">${LISTENING_TEST3 ? LISTENING_TEST3.length : 0} conversations · ${p3Total} questions · Audio</div>
+          ${hubProgBar(p3Done, p3Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+// ══════════════════════════════════════════════════════════════
+// LISTENING TEST — PART 3 CONVERSATIONS
+// ══════════════════════════════════════════════════════════════
+let _lt3Audio = null;
+let _lt3Playing = false;
+
+function lt3StopAudio() {
+  if (_lt3Audio) { _lt3Audio.pause(); _lt3Audio.currentTime = 0; _lt3Audio = null; }
+  _lt3Playing = false;
+}
+
+function lt3PlayAudio(url, btnId) {
+  lt3StopAudio();
+  const btn = document.getElementById(btnId);
+  _lt3Audio = new Audio(url);
+  _lt3Playing = true;
+  if (btn) { btn.classList.add('playing'); btn.textContent = '⏹ Stop'; }
+  _lt3Audio.play().catch(()=>{});
+  _lt3Audio.onended = () => {
+    _lt3Playing = false;
+    if (btn) { btn.classList.remove('playing'); btn.textContent = '▶ Écouter'; }
+  };
+}
+
+window.lt3ToggleAudio = function(url, btnId) {
+  if (_lt3Playing) { lt3StopAudio(); const b=document.getElementById(btnId); if(b){b.classList.remove('playing');b.textContent='▶ Écouter';} }
+  else { lt3PlayAudio(url, btnId); }
+};
+
+window.lt3SelectAnswer = function(convIdx, qIdx, optIdx) {
+  if (!S.listeningTest3) S.listeningTest3 = { convIdx:0, qIdx:0, answers:{}, showResults:false };
+  const key = convIdx + '_' + qIdx;
+  if (S.listeningTest3.answers[key] !== undefined) return; // already answered
+  S.listeningTest3.answers[key] = optIdx;
+  save();
+  render();
+};
+
+window.lt3NextQ = function() {
+  if (!S.listeningTest3) return;
+  const conv = LISTENING_TEST3[S.listeningTest3.convIdx];
+  if (!conv) return;
+  if (S.listeningTest3.qIdx < conv.questions.length - 1) {
+    S.listeningTest3.qIdx++;
+  } else if (S.listeningTest3.convIdx < LISTENING_TEST3.length - 1) {
+    lt3StopAudio();
+    S.listeningTest3.convIdx++;
+    S.listeningTest3.qIdx = 0;
+  } else {
+    lt3StopAudio();
+    S.listeningTest3.showResults = true;
+  }
+  save(); render();
+};
+
+window.lt3PrevQ = function() {
+  if (!S.listeningTest3) return;
+  if (S.listeningTest3.qIdx > 0) {
+    S.listeningTest3.qIdx--;
+  } else if (S.listeningTest3.convIdx > 0) {
+    S.listeningTest3.convIdx--;
+    S.listeningTest3.qIdx = LISTENING_TEST3[S.listeningTest3.convIdx].questions.length - 1;
+  }
+  save(); render();
+};
+
+window.lt3Reset = function() {
+  lt3StopAudio();
+  S.listeningTest3 = { convIdx:0, qIdx:0, answers:{}, showResults:false };
+  save(); render();
+};
+
+function buildListeningTest3() {
+  if (!S.listeningTest3) S.listeningTest3 = { convIdx:0, qIdx:0, answers:{}, showResults:false };
+  const lt3 = S.listeningTest3;
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'lt-wrap fade-up';
+
+  if (!LISTENING_TEST3 || !LISTENING_TEST3.length) {
+    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted)">Chargement…</div>';
+    return wrap;
+  }
+
+  // Total questions count
+  const allQs = LISTENING_TEST3.reduce((a,c)=>a+(c.questions?c.questions.length:0),0);
+  const answered = Object.keys(lt3.answers).length;
+  const pct = allQs > 0 ? Math.round((answered/allQs)*100) : 0;
+
+  // Results screen
+  if (lt3.showResults) {
+    let correct = 0, total = 0;
+    let reviewHtml = '';
+    LISTENING_TEST3.forEach((conv, ci) => {
+      reviewHtml += `<div style="margin-bottom:18px;">
+        <div style="font-family:var(--mono);font-size:.55rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">
+          Conversation ${ci+1} — ${conv.context}
+        </div>`;
+      conv.questions.forEach((q, qi) => {
+        total++;
+        const key = ci+'_'+qi;
+        const ua = lt3.answers[key];
+        const ok = ua === q.ans;
+        if (ok) correct++;
+        const borderColor = ua === undefined ? 'var(--border2)' : ok ? 'rgba(45,106,79,.45)' : 'rgba(193,18,31,.45)';
+        const labelColor  = ua === undefined ? 'var(--muted)' : ok ? '#2d6a4f' : '#c1121f';
+        const labelText   = ua === undefined ? 'NON RÉPONDU' : ok ? 'CORRECT' : 'INCORRECT';
+        const letters = ['A','B','C','D'];
+        const wrongLine = (!ok && ua !== undefined)
+          ? `<div style="font-size:.72rem;color:#c1121f;margin-top:2px;">Tu as répondu : ${letters[ua]}. ${q.opts[ua]}</div>` : '';
+        const explLine = q.explanation
+          ? `<div style="font-size:.68rem;color:var(--muted);margin-top:4px;font-style:italic;">${q.explanation}</div>` : '';
+        reviewHtml += `<div style="background:var(--surface);border:1.5px solid ${borderColor};border-radius:12px;padding:12px 14px;margin-bottom:6px;">
+          <div style="font-family:var(--mono);font-size:.5rem;color:${labelColor};text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Q${qi+1} · ${labelText}</div>
+          <div style="font-size:.78rem;color:var(--text);font-weight:600;margin-bottom:2px;">${q.q}</div>
+          <div style="font-size:.75rem;color:#2d6a4f;margin-top:2px;">✓ ${letters[q.ans]}. ${q.opts[q.ans]}</div>
+          ${wrongLine}${explLine}
+        </div>`;
+      });
+      reviewHtml += '</div>';
+    });
+
+    const scoreColor = correct/total >= .8 ? '#2d6a4f' : correct/total >= .5 ? '#ea6c00' : '#c1121f';
+    wrap.innerHTML = `
+      <div class="lt-header">
+        <div class="lt-tag">💬 Part 3 — Conversations</div>
+        <div class="lt-prog-wrap">
+          <div class="lt-prog-bar"><div class="lt-prog-fill" style="width:100%"></div></div>
+          <div class="lt-prog-label">${total}/${total}</div>
+        </div>
+      </div>
+      <div style="padding:24px 16px;text-align:center;">
+        <div style="font-size:2.2rem;font-weight:800;color:${scoreColor};font-family:var(--mono);">${correct}/${total}</div>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:2px;margin-top:4px;">SCORE FINAL</div>
+        <div style="font-size:.85rem;color:var(--muted);margin-top:8px;">${Math.round(correct/total*100)}% de bonnes réponses</div>
+      </div>
+      <div style="padding:0 16px 16px;">${reviewHtml}</div>
+      <div style="padding:0 16px 32px;">
+        <button onclick="lt3Reset()" style="width:100%;padding:12px;border-radius:12px;border:none;background:${COLOR};color:#fff;font-family:var(--sans);font-weight:700;cursor:pointer;font-size:.85rem;">
+          🔄 Recommencer
+        </button>
+      </div>`;
+    return wrap;
+  }
+
+  // Question screen
+  const conv = LISTENING_TEST3[lt3.convIdx];
+  const q = conv.questions[lt3.qIdx];
+  const key = lt3.convIdx + '_' + lt3.qIdx;
+  const answered_q = lt3.answers[key];
+  const letters = ['A','B','C','D'];
+
+  // Global question number
+  let globalQ = 0;
+  for (let i = 0; i < lt3.convIdx; i++) globalQ += LISTENING_TEST3[i].questions.length;
+  globalQ += lt3.qIdx + 1;
+
+  // Audio button
+  const audioId = 'lt3-audio-btn';
+  const audioHtml = conv.audio
+    ? `<button class="lt-play-btn" id="${audioId}" onclick="lt3ToggleAudio('${conv.audio}','${audioId}')">▶ Écouter la conversation</button>`
+    : `<div style="font-size:.75rem;color:var(--muted);font-style:italic;">Audio non disponible</div>`;
+
+  // Speakers display
+  const speakersHtml = conv.speakers
+    ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">${conv.speakers.map(s=>`<span style="font-family:var(--mono);font-size:.52rem;padding:2px 8px;border-radius:20px;background:rgba(29,111,164,.1);color:${COLOR};border:1px solid rgba(29,111,164,.25);">${s}</span>`).join('')}</div>` : '';
+
+  // Graphic (table) if present
+  let graphicHtml = '';
+  if (conv.graphic && conv.graphic.type === 'table') {
+    const g = conv.graphic;
+    graphicHtml = `<div style="overflow-x:auto;margin-bottom:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:.72rem;font-family:var(--mono);">
+        <thead><tr>${g.headers.map(h=>`<th style="padding:6px 10px;background:rgba(29,111,164,.12);border:1px solid var(--border2);color:${COLOR};font-weight:700;">${h}</th>`).join('')}</tr></thead>
+        <tbody>${g.rows.map(r=>`<tr>${r.map(c=>`<td style="padding:6px 10px;border:1px solid var(--border2);text-align:center;">${c}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+  }
+
+  // Options
+  let optsHtml = '';
+  q.opts.forEach((opt, i) => {
+    let cls = 'lt-opt';
+    let icon = '';
+    if (answered_q !== undefined) {
+      if (i === q.ans) { cls += ' correct'; icon = ' ✓'; }
+      else if (i === answered_q) { cls += ' wrong'; icon = ' ✗'; }
+    } else if (answered_q === undefined) {
+      cls += ' selectable';
+    }
+    optsHtml += `<div class="${cls}" onclick="lt3SelectAnswer(${lt3.convIdx},${lt3.qIdx},${i})">`
+      + `<span class="lt-opt-letter">${letters[i]}</span>`
+      + `<span class="lt-opt-text">${opt}${icon}</span>`
+      + `</div>`;
+  });
+
+  // Feedback
+  let feedbackHtml = '';
+  if (answered_q !== undefined && q.explanation) {
+    const ok = answered_q === q.ans;
+    const bgColor = ok ? 'rgba(45,106,79,.08)' : 'rgba(193,18,31,.06)';
+    const borderColor = ok ? 'rgba(45,106,79,.3)' : 'rgba(193,18,31,.3)';
+    const icon = ok ? '✅' : '❌';
+    feedbackHtml = `<div style="margin-top:12px;padding:12px 14px;border-radius:12px;background:${bgColor};border:1px solid ${borderColor};">
+      <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px;">${icon} ${ok ? 'Bonne réponse !' : 'Incorrect'}</div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.5;">${q.explanation}</div>
+    </div>`;
+  }
+
+  const isFirst = lt3.convIdx === 0 && lt3.qIdx === 0;
+  const isLast  = lt3.convIdx === LISTENING_TEST3.length-1 && lt3.qIdx === conv.questions.length-1;
+  const prevDisabled = isFirst ? 'disabled' : '';
+  const nextLabel = answered_q !== undefined ? (isLast ? 'Voir les résultats' : 'Question suivante →') : '';
+  const nextHtml = answered_q !== undefined
+    ? `<button class="lt-btn-nav" onclick="lt3NextQ()" style="background:${COLOR};color:#fff;border-color:${COLOR};">${nextLabel}</button>`
+    : `<span></span>`;
+
+  wrap.innerHTML = `
+    <div class="lt-header">
+      <div class="lt-tag">💬 Part 3 — Conversations</div>
+      <div class="lt-prog-wrap">
+        <div class="lt-prog-bar"><div class="lt-prog-fill" style="width:${pct}%"></div></div>
+        <div class="lt-prog-label">${answered}/${allQs}</div>
+      </div>
+    </div>
+    <div class="lt-card${answered_q!==undefined ? (answered_q===q.ans?' answered-ok':' answered-fail') : ''}">
+      <div class="lt-body" style="padding:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-family:var(--mono);font-size:.52rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;">
+            Conversation ${lt3.convIdx+1}/${LISTENING_TEST3.length} · Question ${lt3.qIdx+1}/${conv.questions.length}
+          </div>
+          <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);">Q${globalQ}/${allQs}</div>
+        </div>
+        <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:6px;">${conv.context}</div>
+        ${speakersHtml}
+        ${graphicHtml}
+        <div class="lt-audio-center" style="margin-bottom:14px;">${audioHtml}</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.4;">${q.q}</div>
+        <div class="lt-opts-grid">${optsHtml}</div>
+        ${feedbackHtml}
+      </div>
+    </div>
+    <div class="lt-nav">
+      <button class="lt-btn-nav" onclick="lt3PrevQ()" ${prevDisabled}>← Précédent</button>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">Conv. ${lt3.convIdx+1} · Q${lt3.qIdx+1}</span>
+      ${nextHtml}
+    </div>
+    <div style="text-align:center;margin-top:8px;">
+      <span onclick="lt3Reset()" style="font-family:var(--mono);font-size:.56rem;color:var(--muted);cursor:pointer;text-decoration:underline;">Réinitialiser</span>
+    </div>`;
+
   return wrap;
 }
 

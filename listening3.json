@@ -1,0 +1,281 @@
+[
+  {
+    "num": 1,
+    "context": "Office equipment issues",
+    "speakers": ["Woman", "Man"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-1-1.mp3",
+    "transcript": [
+      { "speaker": "Woman", "text": "Excuse me, David. I've been trying to print these reports for the last twenty minutes, but the copier keeps jamming. Do you know what's going on with it?" },
+      { "speaker": "Man", "text": "Oh, I'm sorry about that. A technician was actually scheduled to come and fix it yesterday, but she called to cancel at the last minute. Something about an emergency at another office." },
+      { "speaker": "Woman", "text": "That's frustrating. I really need these documents for my two o'clock meeting with the sales team." },
+      { "speaker": "Man", "text": "Well, there's a working printer on the fourth floor, near the break room. Or, if you'd prefer, I can show you how to send the files directly to their laptops. That way they can view everything on screen." },
+      { "speaker": "Woman", "text": "The fourth floor sounds easier. I'll head up there now. Thanks for letting me know." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers discussing?",
+        "opts": ["A malfunctioning machine", "A software update", "A missing document", "A scheduling conflict"],
+        "ans": 0,
+        "explanation": "The conversation revolves around a copier that keeps jamming — a malfunctioning machine."
+      },
+      {
+        "q": "When was the technician scheduled to arrive?",
+        "opts": ["Earlier that morning", "The previous day", "The following week", "Two days ago"],
+        "ans": 1,
+        "explanation": "The man says the technician was scheduled to come 'yesterday' but cancelled at the last minute."
+      },
+      {
+        "q": "What will the woman probably do next?",
+        "opts": ["Contact the technician directly", "Send the files electronically", "Use a printer on another floor", "Postpone her meeting"],
+        "ans": 2,
+        "explanation": "The woman says 'The fourth floor sounds easier. I'll head up there now.' — she'll use the printer on the fourth floor."
+      }
+    ]
+  },
+  {
+    "num": 2,
+    "context": "Hiring interviews",
+    "speakers": ["Woman", "Man"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-1-2.mp3",
+    "transcript": [
+      { "speaker": "Woman", "text": "I've just finished reviewing the applications for the accounting position. I think Jennifer Marsh is our strongest candidate. She has eight years of experience and excellent references from her previous employer." },
+      { "speaker": "Man", "text": "I saw her resume too. She's certainly qualified, but I noticed she hasn't worked with our financial reporting software before. That's going to be a problem since we use it for everything here." },
+      { "speaker": "Woman", "text": "We can offer training. The basics only take a couple of weeks to learn, and someone with her background would pick it up quickly." },
+      { "speaker": "Man", "text": "That's true. And honestly, finding someone with both the experience and the exact software skills we need has been difficult." },
+      { "speaker": "Woman", "text": "Exactly. Should we schedule her for an interview next week?" },
+      { "speaker": "Man", "text": "Yes, let's do that. Can you check her availability for Tuesday or Wednesday?" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main topic of the conversation?",
+        "opts": ["Updating financial software", "Hiring a new employee", "Planning a training session", "Reviewing a company budget"],
+        "ans": 1,
+        "explanation": "The speakers are reviewing a job candidate for an accounting position — the topic is hiring."
+      },
+      {
+        "q": "What concern does the man mention about the candidate?",
+        "opts": ["Her lack of references", "Her limited availability", "Her salary expectations", "Her unfamiliarity with certain software"],
+        "ans": 3,
+        "explanation": "The man says she 'hasn't worked with our financial reporting software before', which is his main concern."
+      },
+      {
+        "q": "Why does the woman say, \"We can offer training\"?",
+        "opts": ["To address the man's concern about the candidate", "To suggest postponing the hiring decision", "To explain why training is expensive", "To recommend a different candidate"],
+        "ans": 0,
+        "explanation": "The woman says this directly in response to the man's concern about the candidate's software knowledge."
+      }
+    ]
+  },
+  {
+    "num": 3,
+    "context": "Event planning & budget cuts",
+    "speakers": ["Man A", "Woman", "Man B"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-1-3.mp3",
+    "transcript": [
+      { "speaker": "Man A", "text": "Alright, let's talk about the client reception next month. We've just received word from management that we need to cut the overall budget by fifteen percent. Any suggestions?" },
+      { "speaker": "Woman", "text": "Well, the biggest expense right now is the venue. We're paying quite a lot for that downtown hotel. What if we moved it to our own conference center instead? It's free to use and still looks professional." },
+      { "speaker": "Man B", "text": "I'm not sure about that. The hotel location is more convenient for most of our clients. They're expecting something upscale. I think we should look at the catering instead. We could switch from the sit-down dinner to a cocktail reception with lighter refreshments." },
+      { "speaker": "Man A", "text": "That's a fair point about client expectations. Let me pull up the catering quotes and see where we can make some adjustments. We might be able to keep the venue and still hit our target." },
+      { "speaker": "Woman", "text": "That works for me. Just let us know what you find." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "opts": ["Selecting a client gift", "Choosing a new venue", "Reducing event expenses", "Hiring additional staff"],
+        "ans": 2,
+        "explanation": "The main topic is how to cut the budget by 15% for a client reception — reducing event expenses."
+      },
+      {
+        "q": "What does the woman suggest?",
+        "opts": ["Reducing the guest list", "Moving to a different location", "Ordering less expensive food", "Canceling the event entirely"],
+        "ans": 1,
+        "explanation": "The woman suggests moving from the downtown hotel to their own conference center."
+      },
+      {
+        "q": "What will the man probably do next?",
+        "opts": ["Book the conference center", "Contact the hotel manager", "Send invitations to clients", "Review the catering options"],
+        "ans": 3,
+        "explanation": "Man A says 'Let me pull up the catering quotes and see where we can make some adjustments.'"
+      }
+    ]
+  },
+  {
+    "num": 4,
+    "context": "Train schedules",
+    "speakers": ["Man", "Woman"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-1-4.mp3",
+    "graphic": {
+      "type": "table",
+      "headers": ["Train ID", "Departure", "Arrival", "Price"],
+      "rows": [
+        ["Express A", "7:00 AM", "8:30 AM", "$50"],
+        ["Express B", "8:00 AM", "9:30 AM", "$50"],
+        ["Regular A", "7:15 AM", "9:15 AM", "$35"],
+        ["Regular B", "8:15 AM", "10:15 AM", "$35"]
+      ]
+    },
+    "transcript": [
+      { "speaker": "Man", "text": "Have you figured out how we're getting to the client meeting on Thursday? It starts at ten, so we can't afford to be late." },
+      { "speaker": "Woman", "text": "I've been looking at the train schedule. There are a few options, but since travel expenses have been tight lately, I'd rather not take the express service if we don't have to." },
+      { "speaker": "Man", "text": "That makes sense. As long as we arrive with enough time to spare, I'm fine with the regular train. We should probably get there at least half an hour early to set up the presentation." },
+      { "speaker": "Woman", "text": "Right. So we need to arrive before nine-thirty at the latest. Let me see... yes, there's one that works perfectly. I'll book the tickets online right now." },
+      { "speaker": "Man", "text": "Great. And could you arrange for a taxi to pick us up from the station? I don't want to waste time looking for the office building." }
+    ],
+    "questions": [
+      {
+        "q": "Why are the speakers taking a train?",
+        "opts": ["To visit a factory", "To attend a client meeting", "To inspect a new office", "To meet a job candidate"],
+        "ans": 1,
+        "explanation": "The man says 'we're getting to the client meeting on Thursday' — they're attending a client meeting."
+      },
+      {
+        "q": "Look at the graphic. Which train will the speakers most likely take?",
+        "opts": ["Express A", "Express B", "Regular A", "Regular B"],
+        "ans": 2,
+        "explanation": "They want a regular (cheaper) train that arrives before 9:30 AM. Regular A arrives at 9:15 AM — perfect."
+      },
+      {
+        "q": "What does the woman say she will do?",
+        "opts": ["Purchase the train tickets", "Print the presentation slides", "Contact the client", "Check the weather forecast"],
+        "ans": 0,
+        "explanation": "The woman says 'I'll book the tickets online right now.'"
+      }
+    ]
+  },
+  {
+    "num": 5,
+    "context": "Hotel check-in",
+    "speakers": ["Man", "Woman"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-2-1.mp3",
+    "transcript": [
+      { "speaker": "Man", "text": "Hi, I have a reservation for tonight. The name is Peterson, Michael Peterson." },
+      { "speaker": "Woman", "text": "Good evening, sir. Let me check that for you. Hmm, I'm not seeing a reservation under Peterson. Could you spell your last name for me?" },
+      { "speaker": "Man", "text": "P-E-T-E-R-S-O-N. I booked it online last week. Actually, I have the confirmation email right here on my phone if that helps." },
+      { "speaker": "Woman", "text": "Oh, that would be very helpful. Let me see... Ah, I see what happened. The booking was entered under your first name, Michael, rather than your last name. I do apologize for the confusion." },
+      { "speaker": "Man", "text": "No problem, as long as I have a room!" },
+      { "speaker": "Woman", "text": "Absolutely. You're all set in Room 412. Here's your key card. The elevators are just around the corner to your left." }
+    ],
+    "questions": [
+      {
+        "q": "Where does this conversation most likely take place?",
+        "opts": ["At a hotel", "At an airport", "At a travel agency", "At a restaurant"],
+        "ans": 0,
+        "explanation": "The man has a reservation for tonight and is given a room key card — this is clearly a hotel check-in."
+      },
+      {
+        "q": "What is the problem?",
+        "opts": ["The room is not ready", "The payment was declined", "The reservation cannot be located", "The hotel is fully booked"],
+        "ans": 2,
+        "explanation": "The receptionist cannot find the reservation under 'Peterson' at first."
+      },
+      {
+        "q": "How is the issue resolved?",
+        "opts": ["By offering a room upgrade", "By calling the manager", "By checking another hotel", "By searching under a different name"],
+        "ans": 3,
+        "explanation": "The booking was filed under the first name 'Michael' instead of the last name — found by searching differently."
+      }
+    ]
+  },
+  {
+    "num": 6,
+    "context": "Retail returns",
+    "speakers": ["Woman", "Man"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-2-2.mp3",
+    "transcript": [
+      { "speaker": "Woman", "text": "Excuse me, I'd like to return this shirt. I bought it last weekend, but when I got home I realized the color doesn't match what I needed it for." },
+      { "speaker": "Man", "text": "Of course, I can help you with that. Do you have your receipt?" },
+      { "speaker": "Woman", "text": "Unfortunately, no. I think I threw it away by accident. But I paid with my credit card, would that work instead?" },
+      { "speaker": "Man", "text": "I understand. The thing is, our store policy requires a receipt for cash refunds. However, since you have the card, I can verify the purchase in our system and offer you store credit for the full amount." },
+      { "speaker": "Woman", "text": "That's fine with me. I'll probably just pick out a different color anyway." },
+      { "speaker": "Man", "text": "Perfect. Let me just scan the item and pull up the transaction. This will only take a moment." }
+    ],
+    "questions": [
+      {
+        "q": "What does the woman want to do?",
+        "opts": ["Exchange a gift", "Return a purchase", "Report a missing item", "Apply for a store card"],
+        "ans": 1,
+        "explanation": "The woman says 'I'd like to return this shirt' — she wants to return a purchase."
+      },
+      {
+        "q": "What is the problem with the woman's request?",
+        "opts": ["She does not have proof of purchase", "She missed the return deadline", "The item is damaged", "She lost her credit card"],
+        "ans": 0,
+        "explanation": "She no longer has her receipt, which is required for a cash refund."
+      },
+      {
+        "q": "What does the man offer the woman?",
+        "opts": ["A full cash refund", "A replacement shirt", "Store credit", "A discount on future purchases"],
+        "ans": 2,
+        "explanation": "The man says he can 'offer you store credit for the full amount' since she doesn't have a receipt."
+      }
+    ]
+  },
+  {
+    "num": 7,
+    "context": "Dental appointment",
+    "speakers": ["Woman", "Man"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-2-3.mp3",
+    "transcript": [
+      { "speaker": "Woman", "text": "Good morning, Riverside Dental Clinic. How may I help you?" },
+      { "speaker": "Man", "text": "Hello, this is Thomas Wright. I have an appointment scheduled for this Thursday at two o'clock, but I'm afraid I need to reschedule. Something's come up at work." },
+      { "speaker": "Woman", "text": "I see. Let me check what we have available. Is there a particular day that works better for you?" },
+      { "speaker": "Man", "text": "Ideally sometime next week. My schedule should be much clearer by then. My manager just informed me about an important client meeting on Thursday that I can't miss." },
+      { "speaker": "Woman", "text": "Alright, I have an opening next Tuesday at nine in the morning. Would that suit you?" },
+      { "speaker": "Man", "text": "Tuesday morning works perfectly. Thank you for fitting me in." },
+      { "speaker": "Woman", "text": "You're welcome, Mr. Wright. We'll see you next Tuesday at nine. Have a good day." }
+    ],
+    "questions": [
+      {
+        "q": "Why is the man calling?",
+        "opts": ["To confirm an appointment", "To change an appointment", "To cancel an appointment", "To ask about fees"],
+        "ans": 1,
+        "explanation": "The man says he needs to 'reschedule' — he wants to change his appointment, not cancel it."
+      },
+      {
+        "q": "What does the man say about his work?",
+        "opts": ["He will be on vacation", "He has a doctor's appointment", "He is expecting a delivery", "He has a business meeting"],
+        "ans": 3,
+        "explanation": "He says his manager informed him about 'an important client meeting on Thursday that I can't miss.'"
+      },
+      {
+        "q": "When will the man see the dentist?",
+        "opts": ["Tuesday morning", "Tuesday afternoon", "Thursday morning", "Thursday afternoon"],
+        "ans": 0,
+        "explanation": "The receptionist offers 'next Tuesday at nine in the morning' and the man accepts."
+      }
+    ]
+  },
+  {
+    "num": 8,
+    "context": "Real estate viewing",
+    "speakers": ["Woman", "Man"],
+    "audio": "https://s3.eu-west-2.amazonaws.com/esl-lounge.com.student.audio.toeic/part3-2-4.mp3",
+    "transcript": [
+      { "speaker": "Woman", "text": "So this is the main office area. As you can see, it's about two thousand square feet with plenty of natural light from these floor-to-ceiling windows." },
+      { "speaker": "Man", "text": "The view is really impressive. You can see the whole city center from here. But I have to say, we're on a fairly busy street. I'm a bit concerned about the noise level during the day. Our staff need to make a lot of phone calls." },
+      { "speaker": "Woman", "text": "That's a very common concern with downtown properties. But I should mention that all the windows in this building were replaced last year with double-glazed, soundproof glass. You'd be surprised how quiet it is even during rush hour." },
+      { "speaker": "Man", "text": "Oh, that's reassuring. What about parking? Do tenants have access to the garage downstairs?" },
+      { "speaker": "Woman", "text": "Yes, the lease includes five reserved spaces in the underground garage, with the option to rent additional ones if needed." }
+    ],
+    "questions": [
+      {
+        "q": "Who most likely is the woman?",
+        "opts": ["A building inspector", "An interior designer", "A property agent", "A construction manager"],
+        "ans": 2,
+        "explanation": "The woman is showing an office space and discussing lease terms — she is a property agent."
+      },
+      {
+        "q": "What does the man like about the property?",
+        "opts": ["The parking facilities", "The view from the windows", "The size of the space", "The location of the building"],
+        "ans": 1,
+        "explanation": "The man says 'The view is really impressive. You can see the whole city center from here.'"
+      },
+      {
+        "q": "How does the woman address the man's concern about noise?",
+        "opts": ["By offering a discount on rent", "By suggesting a different property", "By arranging a noise test", "By explaining a feature of the building"],
+        "ans": 3,
+        "explanation": "She explains that the windows were replaced with double-glazed soundproof glass — a building feature."
+      }
+    ]
+  }
+]
