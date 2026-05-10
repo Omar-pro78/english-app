@@ -2826,6 +2826,7 @@ function _setBackBarLabel(text) {
 function goHome() {
   if (S.tab === 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'listening2' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if (S.tab === 'listening3' && typeof lt3StopSpeaking === 'function') lt3StopSpeaking();
   if (S.tab === 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
@@ -2841,6 +2842,7 @@ function goHome() {
 function switchTab(tab) {
   if (S.tab === 'listening' && tab !== 'listening' && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if ((S.tab === 'listening' || S.tab === 'listening2') && typeof ltStopSpeaking === 'function') ltStopSpeaking();
+  if (S.tab === 'listening3' && tab !== 'listening3' && typeof lt3StopSpeaking === 'function') lt3StopSpeaking();
   if (S.tab === 'directions' && tab !== 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && tab !== 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && tab !== 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
@@ -3631,32 +3633,133 @@ function buildPart3Hub() {
 }
 
 // ══════════════════════════════════════════════════════════════
-// LISTENING TEST — PART 3 CONVERSATIONS
 // ══════════════════════════════════════════════════════════════
-let _lt3Audio = null;
-let _lt3Playing = false;
+// LISTENING TEST — PART 3 CONVERSATIONS (TTS multi-voix)
+// Calqué sur ltSpeak / ltStopSpeaking du Part 1
+// ══════════════════════════════════════════════════════════════
+let _lt3Speaking  = false;
+let _lt3SessionId = 0;
+let _lt3Utterance = null;
 
-function lt3StopAudio() {
-  if (_lt3Audio) { _lt3Audio.pause(); _lt3Audio.currentTime = 0; _lt3Audio = null; }
-  _lt3Playing = false;
+// Choisit la meilleure voix masculine ou féminine disponible
+function _lt3PickVoice(gender) {
+  const voices = speechSynthesis.getVoices();
+  const en = voices.filter(v => v.lang.startsWith('en'));
+  if (!en.length) return null;
+  const male   = /daniel|oliver|rishi|thomas|alex|lee|arthur|george|james|fred|david/i;
+  const female = /kate|serena|karen|samantha|victoria|ava|zoe|susan|moira|tessa|emma|amy/i;
+  if (gender === 'male') {
+    return en.find(v => male.test(v.name) && !v.localService)
+        || en.find(v => male.test(v.name))
+        || en.find(v => /en-GB/i.test(v.lang) && !v.localService)
+        || en.find(v => /en-GB/i.test(v.lang))
+        || en[0];
+  } else {
+    return en.find(v => female.test(v.name) && !v.localService)
+        || en.find(v => female.test(v.name))
+        || en.find(v => /en-AU|en-US/i.test(v.lang) && !v.localService)
+        || en.find(v => /en-AU|en-US/i.test(v.lang))
+        || en[Math.min(1, en.length - 1)];
+  }
 }
 
-function lt3PlayAudio(url, btnId) {
-  lt3StopAudio();
-  const btn = document.getElementById(btnId);
-  _lt3Audio = new Audio(url);
-  _lt3Playing = true;
-  if (btn) { btn.classList.add('playing'); btn.textContent = '⏹ Stop'; }
-  _lt3Audio.play().catch(()=>{});
-  _lt3Audio.onended = () => {
-    _lt3Playing = false;
-    if (btn) { btn.classList.remove('playing'); btn.textContent = '▶ Écouter'; }
-  };
+function lt3StopSpeaking() {
+  // Invalider la session AVANT d'annuler — comme ltStopSpeaking
+  _lt3SessionId++;
+  speechSynthesis.cancel();
+  _lt3Speaking  = false;
+  _lt3Utterance = null;
+  // Ne pas appeler render() ici — le caller s'en charge
 }
 
-window.lt3ToggleAudio = function(url, btnId) {
-  if (_lt3Playing) { lt3StopAudio(); const b=document.getElementById(btnId); if(b){b.classList.remove('playing');b.textContent='▶ Écouter';} }
-  else { lt3PlayAudio(url, btnId); }
+function lt3Speak(convIdx) {
+  if (!window.speechSynthesis) { toast('🔊 Audio non supporté'); return; }
+
+  // Invalider toute session en cours
+  _lt3SessionId++;
+  const mySession = _lt3SessionId;
+  speechSynthesis.cancel();
+
+  _lt3Speaking  = true;
+  _lt3Utterance = null;
+  render(); // affiche le bouton Stop immédiatement
+
+  const conv = LISTENING_TEST3 && LISTENING_TEST3[convIdx];
+  if (!conv || !conv.transcript) { _lt3Speaking = false; render(); return; }
+
+  // Associer chaque speaker unique à une voix genrée
+  // Les speakers d'index pair → voix masculine, impair → voix féminine
+  const uniqueSpeakers = [];
+  conv.transcript.forEach(line => {
+    if (!uniqueSpeakers.includes(line.speaker)) uniqueSpeakers.push(line.speaker);
+  });
+
+  function doSpeak(voiceMap) {
+    if (mySession !== _lt3SessionId) return;
+
+    const lines = conv.transcript;
+    let idx = 0;
+
+    function speakNext() {
+      if (mySession !== _lt3SessionId) return;
+      if (idx >= lines.length) {
+        _lt3Speaking  = false;
+        _lt3Utterance = null;
+        render();
+        return;
+      }
+      const line = lines[idx];
+      const u = new SpeechSynthesisUtterance(line.text);
+      u.lang  = 'en-GB';
+      u.rate  = parseFloat(localStorage.getItem('qa_voice_rate')  || '0.85');
+      u.pitch = parseFloat(localStorage.getItem('qa_voice_pitch') || '1.05');
+      // Légère variation de pitch selon le speaker pour différencier les voix
+      const spIdx = uniqueSpeakers.indexOf(line.speaker);
+      u.pitch += spIdx * 0.12;
+      const voice = voiceMap[line.speaker];
+      if (voice) u.voice = voice;
+
+      _lt3Utterance = u;
+
+      u.onend = function() {
+        if (mySession !== _lt3SessionId) return;
+        idx++;
+        speakNext();
+      };
+      u.onerror = function(e) {
+        if (e.error === 'interrupted' || e.error === 'canceled') return;
+        if (mySession !== _lt3SessionId) return;
+        _lt3Speaking  = false;
+        _lt3Utterance = null;
+        render();
+      };
+      speechSynthesis.speak(u);
+    }
+    speakNext();
+  }
+
+  // Résolution des voix (asynchrone sur Chrome, comme _ltEnsureVoice)
+  function resolveAndSpeak() {
+    const voiceMap = {};
+    uniqueSpeakers.forEach((sp, i) => {
+      voiceMap[sp] = _lt3PickVoice(i % 2 === 0 ? 'male' : 'female');
+    });
+    doSpeak(voiceMap);
+  }
+
+  if (speechSynthesis.getVoices().length) {
+    resolveAndSpeak();
+  } else {
+    speechSynthesis.addEventListener('voiceschanged', function once() {
+      speechSynthesis.removeEventListener('voiceschanged', once);
+      resolveAndSpeak();
+    });
+  }
+}
+
+window.lt3ToggleAudio = function(convIdx) {
+  if (_lt3Speaking) { lt3StopSpeaking(); render(); }
+  else { lt3Speak(convIdx); }
 };
 
 window.lt3SelectAnswer = function(convIdx, qIdx, optIdx) {
@@ -3675,11 +3778,11 @@ window.lt3NextQ = function() {
   if (S.listeningTest3.qIdx < conv.questions.length - 1) {
     S.listeningTest3.qIdx++;
   } else if (S.listeningTest3.convIdx < LISTENING_TEST3.length - 1) {
-    lt3StopAudio();
+    lt3StopSpeaking();
     S.listeningTest3.convIdx++;
     S.listeningTest3.qIdx = 0;
   } else {
-    lt3StopAudio();
+    lt3StopSpeaking();
     S.listeningTest3.showResults = true;
   }
   save(); render();
@@ -3690,6 +3793,7 @@ window.lt3PrevQ = function() {
   if (S.listeningTest3.qIdx > 0) {
     S.listeningTest3.qIdx--;
   } else if (S.listeningTest3.convIdx > 0) {
+    lt3StopSpeaking();
     S.listeningTest3.convIdx--;
     S.listeningTest3.qIdx = LISTENING_TEST3[S.listeningTest3.convIdx].questions.length - 1;
   }
@@ -3697,7 +3801,7 @@ window.lt3PrevQ = function() {
 };
 
 window.lt3Reset = function() {
-  lt3StopAudio();
+  lt3StopSpeaking();
   S.listeningTest3 = { convIdx:0, qIdx:0, answers:{}, showResults:false };
   save(); render();
 };
@@ -3787,11 +3891,20 @@ function buildListeningTest3() {
   for (let i = 0; i < lt3.convIdx; i++) globalQ += LISTENING_TEST3[i].questions.length;
   globalQ += lt3.qIdx + 1;
 
-  // Audio button
-  const audioId = 'lt3-audio-btn';
-  const audioHtml = conv.audio
-    ? `<button class="lt-play-btn" id="${audioId}" onclick="lt3ToggleAudio('${conv.audio}','${audioId}')">▶ Écouter la conversation</button>`
-    : `<div style="font-size:.75rem;color:var(--muted);font-style:italic;">Audio non disponible</div>`;
+  // Audio buttons — même pattern que Part 1 (Stop + Réécouter)
+  const isSpeaking3 = _lt3Speaking;
+  const audioHtml = '<div style="display:flex;gap:10px;justify-content:center;">'
+    + '<button class="lt-play-btn' + (isSpeaking3 ? ' playing' : '') + '" '
+    + (isSpeaking3 ? '' : 'disabled ')
+    + 'onclick="lt3StopSpeaking();render();" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking3 ? '' : 'opacity:.35;cursor:default;')
+    + '">⏹ Stop</button>'
+    + '<button class="lt-play-btn" '
+    + (isSpeaking3 ? 'disabled ' : '')
+    + 'onclick="lt3ToggleAudio(' + lt3.convIdx + ')" style="font-size:.85rem;padding:12px 22px;'
+    + (isSpeaking3 ? 'opacity:.35;cursor:default;' : '')
+    + '">🔁 Écouter la conversation</button>'
+    + '</div>';
 
   // Speakers display
   const speakersHtml = conv.speakers
