@@ -1028,6 +1028,7 @@ let LISTENING_TEST = [];
 let LISTENING_TEST2 = [];
 let LISTENING_TEST3 = [];
 let LISTENING_TEST4 = [];
+let LISTENING_TEST5 = [];
 let DIRECTIONS_TEST = [];
 let DIRECTIONS_TEST2 = [];
 let DIRECTIONS_TEST3 = [];
@@ -1089,6 +1090,7 @@ let S = {
   listeningTest2: { cursor: 0, answers: {}, showResults: false },
   listeningTest3: { cursor: 0, convIdx: 0, qIdx: 0, answers: {}, showResults: false },
   listeningTest4: { talkIdx: 0, qIdx: 0, answers: {}, showResults: false },
+  listeningTest5: { talkIdx: 0, qIdx: 0, answers: {}, showResults: false },
   directionsTest: { cursor: 0, answers: {}, showResults: false },
   directionsTest2: { cursor: 0, answers: {}, showResults: false },
   directionsTest3: { cursor: 0, answers: {}, showResults: false },
@@ -1143,6 +1145,7 @@ function _applyData(p) {
   S.listeningTest2 = p.listeningTest2 || { cursor:0, answers:{}, showResults:false };
   S.listeningTest3 = p.listeningTest3 || { convIdx:0, qIdx:0, answers:{}, showResults:false };
   S.listeningTest4 = p.listeningTest4 || { talkIdx:0, qIdx:0, answers:{}, showResults:false };
+  S.listeningTest5 = p.listeningTest5 || { talkIdx:0, qIdx:0, answers:{}, showResults:false };
   S.directionsTest = p.directionsTest || { cursor:0, answers:{}, showResults:false };
   S.directionsTest2 = p.directionsTest2 || { cursor:0, answers:{}, showResults:false };
   S.directionsTest3 = p.directionsTest3 || { cursor:0, answers:{}, showResults:false };
@@ -1165,7 +1168,7 @@ function _buildPayload() {
     daily:S.daily, lastSession:S.lastSession, milestones:S.milestones, sr:S.sr,
     mcqAnswers:S.mcqAnswers, mcqAnswers2:S.mcqAnswers2, mcqAnswers3:S.mcqAnswers3,
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
-    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, listeningTest3:S.listeningTest3, listeningTest4:S.listeningTest4, directionsTest:S.directionsTest,
+    mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, listeningTest3:S.listeningTest3, listeningTest4:S.listeningTest4, listeningTest5:S.listeningTest5, directionsTest:S.directionsTest,
     directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
   };
 }
@@ -1188,7 +1191,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, directions, directions2, directions3, directions4] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1198,6 +1201,7 @@ async function loadAllData() {
       fetch('listening2.json').then(r=>r.json()),
       fetch('listening3.json').then(r=>r.json()),
       fetch('listening4.json').then(r=>r.json()),
+      fetch('listening5.json').then(r=>r.json()),
       fetch('directions.json').then(r=>r.json()),
       fetch('directions2.json').then(r=>r.json()),
       fetch('directions3.json').then(r=>r.json()),
@@ -1232,6 +1236,7 @@ async function loadAllData() {
     LISTENING_TEST2 = listening2;
     LISTENING_TEST3 = listening3;
     LISTENING_TEST4 = listening4;
+    LISTENING_TEST5 = listening5;
     DIRECTIONS_TEST = directions;
     DIRECTIONS_TEST2 = directions2;
     DIRECTIONS_TEST3 = directions3;
@@ -2806,6 +2811,7 @@ const TAB_PARENT = {
   listening2:   'part1hub',
   listening3:   'part3hub',
   listening4:   'part4hub',
+  listening5:   'part4hub',
   directions:   'part2hub',
   directions2:  'part2hub',
   directions3:  'part2hub',
@@ -2852,6 +2858,7 @@ function switchTab(tab) {
   if ((S.tab === 'listening' || S.tab === 'listening2') && typeof ltStopSpeaking === 'function') ltStopSpeaking();
   if (S.tab === 'listening3' && tab !== 'listening3' && typeof lt3StopSpeaking === 'function') lt3StopSpeaking();
   if (S.tab === 'listening4' && tab !== 'listening4' && typeof lt4StopSpeaking === 'function') lt4StopSpeaking();
+  if (S.tab === 'listening5' && tab !== 'listening5' && typeof lt5StopSpeaking === 'function') lt5StopSpeaking();
   if (S.tab === 'directions' && tab !== 'directions' && typeof dtStopSpeaking === 'function') dtStopSpeaking();
   if (S.tab === 'directions2' && tab !== 'directions2' && typeof dt2StopSpeaking === 'function') dt2StopSpeaking();
   if (S.tab === 'directions3' && tab !== 'directions3' && typeof dt3StopSpeaking === 'function') dt3StopSpeaking();
@@ -2917,6 +2924,7 @@ function render() {
   else if(S.tab==='listening2')   el.appendChild(buildListeningTest2());
   else if(S.tab==='listening3')   el.appendChild(buildListeningTest3());
   else if(S.tab==='listening4')   el.appendChild(buildListeningTest4());
+  else if(S.tab==='listening5')   el.appendChild(buildListeningTest5());
   else if(S.tab==='directions')   el.appendChild(buildDirectionsTest());
   else if(S.tab==='directions2')  el.appendChild(buildDirectionsTest2());
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
@@ -3662,6 +3670,9 @@ function buildPart4Hub() {
   const lt4 = S.listeningTest4 || {};
   const p4Done  = Object.keys(lt4.answers || {}).length;
   const p4Total = LISTENING_TEST4 ? LISTENING_TEST4.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
+  const lt5 = S.listeningTest5 || {};
+  const p5Done  = Object.keys(lt5.answers || {}).length;
+  const p5Total = LISTENING_TEST5 ? LISTENING_TEST5.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🎙️ PART 4 — SHORT TALKS</div>
     <div class="hub-title" style="color:${COLOR}">Short Talks</div>
@@ -3673,6 +3684,15 @@ function buildPart4Hub() {
           <div class="hub-card-label">Lot 1 — Short Talks</div>
           <div class="hub-card-desc">${LISTENING_TEST4 ? LISTENING_TEST4.length : 0} talks · ${p4Total} questions · TTS</div>
           ${hubProgBar(p4Done, p4Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('listening5')">
+        <div class="hub-card-icon">🎙️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Lot 2 — Short Talks</div>
+          <div class="hub-card-desc">${LISTENING_TEST5 ? LISTENING_TEST5.length : 0} talks · ${p5Total} questions · TTS</div>
+          ${hubProgBar(p5Done, p5Total, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -3970,6 +3990,295 @@ function buildListeningTest4() {
     </div>
     <div style="text-align:center;margin-top:8px;">
       <span onclick="lt4Reset()" style="font-family:var(--mono);font-size:.56rem;color:var(--muted);cursor:pointer;text-decoration:underline;">Réinitialiser</span>
+    </div>`;
+
+  return wrap;
+}
+
+// ══════════════════════════════════════════════════════════════
+// LISTENING TEST — PART 4 SHORT TALKS LOT 2 (TTS — un seul speaker)
+// ══════════════════════════════════════════════════════════════
+let _lt5Speaking  = false;
+let _lt5SessionId = 0;
+let _lt5Utterance = null;
+
+function lt5StopSpeaking() {
+  _lt5SessionId++;
+  speechSynthesis.cancel();
+  _lt5Speaking  = false;
+  _lt5Utterance = null;
+}
+
+function lt5Speak(talkIdx) {
+  if (!window.speechSynthesis) { toast('🔊 Audio non supporté'); return; }
+  _lt5SessionId++;
+  const mySession = _lt5SessionId;
+  speechSynthesis.cancel();
+  _lt5Speaking  = true;
+  _lt5Utterance = null;
+  render();
+
+  const talk = LISTENING_TEST5 && LISTENING_TEST5[talkIdx];
+  if (!talk || !talk.text) { _lt5Speaking = false; render(); return; }
+
+  function doSpeak(voice) {
+    if (mySession !== _lt5SessionId) return;
+    const u = new SpeechSynthesisUtterance(talk.text);
+    u.lang  = 'en-GB';
+    u.rate  = parseFloat(localStorage.getItem('qa_voice_rate')  || '0.82');
+    u.pitch = parseFloat(localStorage.getItem('qa_voice_pitch') || '1.0');
+    if (voice) u.voice = voice;
+    _lt5Utterance = u;
+    u.onend = function() {
+      if (mySession !== _lt5SessionId) return;
+      _lt5Speaking  = false;
+      _lt5Utterance = null;
+      render();
+    };
+    u.onerror = function(e) {
+      if (e.error === 'interrupted' || e.error === 'canceled') return;
+      if (mySession !== _lt5SessionId) return;
+      _lt5Speaking  = false;
+      _lt5Utterance = null;
+      render();
+    };
+    speechSynthesis.speak(u);
+  }
+
+  function resolveAndSpeak() {
+    const voices = speechSynthesis.getVoices();
+    const en = voices.filter(v => v.lang.startsWith('en'));
+    const preferred = en.find(v => /daniel|oliver|rishi|thomas|george/i.test(v.name) && !v.localService)
+                   || en.find(v => /en-GB/i.test(v.lang) && !v.localService)
+                   || en.find(v => /en-GB/i.test(v.lang))
+                   || en[0] || null;
+    doSpeak(preferred);
+  }
+
+  if (speechSynthesis.getVoices().length) { resolveAndSpeak(); }
+  else { speechSynthesis.addEventListener('voiceschanged', function once() {
+    speechSynthesis.removeEventListener('voiceschanged', once); resolveAndSpeak();
+  }); }
+}
+
+window.lt5ToggleAudio = function(talkIdx) {
+  if (_lt5Speaking) { lt5StopSpeaking(); render(); }
+  else { lt5Speak(talkIdx); }
+};
+
+window.lt5SelectAnswer = function(talkIdx, qIdx, optIdx) {
+  if (!S.listeningTest5) S.listeningTest5 = { talkIdx:0, qIdx:0, answers:{}, showResults:false };
+  const key = talkIdx + '_' + qIdx;
+  if (S.listeningTest5.answers[key] !== undefined) return;
+  S.listeningTest5.answers[key] = optIdx;
+  save(); render();
+};
+
+window.lt5NextQ = function() {
+  if (!S.listeningTest5) return;
+  const talk = LISTENING_TEST5[S.listeningTest5.talkIdx];
+  if (!talk) return;
+  if (S.listeningTest5.qIdx < talk.questions.length - 1) {
+    S.listeningTest5.qIdx++;
+  } else if (S.listeningTest5.talkIdx < LISTENING_TEST5.length - 1) {
+    lt5StopSpeaking();
+    S.listeningTest5.talkIdx++;
+    S.listeningTest5.qIdx = 0;
+  } else {
+    lt5StopSpeaking();
+    S.listeningTest5.showResults = true;
+  }
+  save(); render();
+};
+
+window.lt5PrevQ = function() {
+  if (!S.listeningTest5) return;
+  if (S.listeningTest5.qIdx > 0) {
+    S.listeningTest5.qIdx--;
+  } else if (S.listeningTest5.talkIdx > 0) {
+    lt5StopSpeaking();
+    S.listeningTest5.talkIdx--;
+    S.listeningTest5.qIdx = LISTENING_TEST5[S.listeningTest5.talkIdx].questions.length - 1;
+  }
+  save(); render();
+};
+
+window.lt5Reset = function() {
+  lt5StopSpeaking();
+  S.listeningTest5 = { talkIdx:0, qIdx:0, answers:{}, showResults:false };
+  save(); render();
+};
+
+function buildListeningTest5() {
+  if (!S.listeningTest5) S.listeningTest5 = { talkIdx:0, qIdx:0, answers:{}, showResults:false };
+  const lt5 = S.listeningTest5;
+  const COLOR = '#1d6fa4';
+  const wrap = document.createElement('div');
+  wrap.className = 'lt-wrap fade-up';
+
+  if (!LISTENING_TEST5 || !LISTENING_TEST5.length) {
+    wrap.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted)">Chargement…</div>';
+    return wrap;
+  }
+
+  const allQs   = LISTENING_TEST5.reduce((a,c)=>a+(c.questions?c.questions.length:0),0);
+  const answered = Object.keys(lt5.answers).length;
+  const pct = allQs > 0 ? Math.round((answered/allQs)*100) : 0;
+
+  // ── Results screen ──
+  if (lt5.showResults) {
+    let correct = 0, total = 0;
+    let reviewHtml = '';
+    LISTENING_TEST5.forEach((talk, ti) => {
+      reviewHtml += `<div style="margin-bottom:18px;">
+        <div style="font-family:var(--mono);font-size:.55rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">
+          Talk ${ti+1} — ${talk.context}
+        </div>`;
+      talk.questions.forEach((q, qi) => {
+        total++;
+        const key = ti+'_'+qi;
+        const ua = lt5.answers[key];
+        const ok = ua === q.ans;
+        if (ok) correct++;
+        const borderColor = ua === undefined ? 'var(--border2)' : ok ? 'rgba(45,106,79,.45)' : 'rgba(193,18,31,.45)';
+        const labelColor  = ua === undefined ? 'var(--muted)'   : ok ? '#2d6a4f' : '#c1121f';
+        const labelText   = ua === undefined ? 'NON RÉPONDU' : ok ? 'CORRECT' : 'INCORRECT';
+        const letters = ['A','B','C','D'];
+        const wrongLine = (!ok && ua !== undefined)
+          ? `<div style="font-size:.72rem;color:#c1121f;margin-top:2px;">Tu as répondu : ${letters[ua]}. ${q.opts[ua]}</div>` : '';
+        const explLine = q.explanation
+          ? `<div style="font-size:.68rem;color:var(--muted);margin-top:4px;font-style:italic;">${q.explanation}</div>` : '';
+        reviewHtml += `<div style="background:var(--surface);border:1.5px solid ${borderColor};border-radius:12px;padding:12px 14px;margin-bottom:6px;">
+          <div style="font-family:var(--mono);font-size:.5rem;color:${labelColor};text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Q${qi+1} · ${labelText}</div>
+          <div style="font-size:.78rem;color:var(--text);font-weight:600;margin-bottom:2px;">${q.q}</div>
+          <div style="font-size:.75rem;color:#2d6a4f;margin-top:2px;">✓ ${letters[q.ans]}. ${q.opts[q.ans]}</div>
+          ${wrongLine}${explLine}
+        </div>`;
+      });
+      reviewHtml += '</div>';
+    });
+    const scoreColor = correct/total >= .8 ? '#2d6a4f' : correct/total >= .5 ? '#ea6c00' : '#c1121f';
+    wrap.innerHTML = `
+      <div class="lt-header">
+        <div class="lt-tag">🎙️ Part 4 — Short Talks · Lot 2</div>
+        <div class="lt-prog-wrap">
+          <div class="lt-prog-bar"><div class="lt-prog-fill" style="width:100%"></div></div>
+          <div class="lt-prog-label">${total}/${total}</div>
+        </div>
+      </div>
+      <div style="padding:24px 16px;text-align:center;">
+        <div style="font-size:2.2rem;font-weight:800;color:${scoreColor};font-family:var(--mono);">${correct}/${total}</div>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:2px;margin-top:4px;">SCORE FINAL</div>
+        <div style="font-size:.85rem;color:var(--muted);margin-top:8px;">${Math.round(correct/total*100)}% de bonnes réponses</div>
+      </div>
+      <div style="padding:0 16px 16px;">${reviewHtml}</div>
+      <div style="padding:0 16px 32px;">
+        <button onclick="lt5Reset()" style="width:100%;padding:12px;border-radius:12px;border:none;background:${COLOR};color:#fff;font-family:var(--sans);font-weight:700;cursor:pointer;font-size:.85rem;">
+          🔄 Recommencer
+        </button>
+      </div>`;
+    return wrap;
+  }
+
+  // ── Question screen ──
+  const talk = LISTENING_TEST5[lt5.talkIdx];
+  const q    = talk.questions[lt5.qIdx];
+  const key  = lt5.talkIdx + '_' + lt5.qIdx;
+  const answered_q = lt5.answers[key];
+  const letters = ['A','B','C','D'];
+
+  let globalQ = 0;
+  for (let i = 0; i < lt5.talkIdx; i++) globalQ += LISTENING_TEST5[i].questions.length;
+  globalQ += lt5.qIdx + 1;
+
+  const typeBadge = `<span style="font-family:var(--mono);font-size:.5rem;padding:2px 8px;border-radius:20px;background:rgba(29,111,164,.1);color:${COLOR};border:1px solid rgba(29,111,164,.25);text-transform:capitalize;">${talk.type}</span>`;
+
+  let graphicHtml = '';
+  if (talk.graphic && talk.graphic.type === 'table') {
+    const g = talk.graphic;
+    graphicHtml = `<div style="overflow-x:auto;margin-bottom:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:.72rem;font-family:var(--mono);">
+        <thead><tr>${g.headers.map(h=>`<th style="padding:6px 10px;background:rgba(29,111,164,.12);border:1px solid var(--border2);color:${COLOR};font-weight:700;">${h}</th>`).join('')}</tr></thead>
+        <tbody>${g.rows.map(r=>`<tr>${r.map(c=>`<td style="padding:6px 10px;border:1px solid var(--border2);text-align:center;">${c}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+  }
+
+  const isSpeaking5 = _lt5Speaking;
+  const audioHtml = '<div style="display:flex;gap:10px;justify-content:center;">'
+    + '<button class="lt-play-btn' + (isSpeaking5 ? ' playing' : '') + '" '
+    + (isSpeaking5 ? '' : 'disabled ')
+    + 'onclick="lt5StopSpeaking();render();" style="font-size:.85rem;padding:12px 22px;' + (isSpeaking5 ? '' : 'opacity:.35;cursor:default;') + '">⏹ Stop</button>'
+    + '<button class="lt-play-btn" '
+    + (isSpeaking5 ? 'disabled ' : '')
+    + 'onclick="lt5ToggleAudio(' + lt5.talkIdx + ')" style="font-size:.85rem;padding:12px 22px;' + (isSpeaking5 ? 'opacity:.35;cursor:default;' : '') + '">🎙️ Écouter le talk</button>'
+    + '</div>';
+
+  let optsHtml = '';
+  q.opts.forEach((opt, i) => {
+    let cls = 'lt-opt';
+    let icon = '';
+    if (answered_q !== undefined) {
+      if (i === q.ans) { cls += ' correct'; icon = ' ✓'; }
+      else if (i === answered_q) { cls += ' wrong'; icon = ' ✗'; }
+    } else {
+      cls += ' selectable';
+    }
+    optsHtml += `<div class="${cls}" onclick="lt5SelectAnswer(${lt5.talkIdx},${lt5.qIdx},${i})">
+      <span class="lt-opt-letter">${letters[i]}</span>
+      <span class="lt-opt-text">${opt}${icon}</span>
+    </div>`;
+  });
+
+  let feedbackHtml = '';
+  if (answered_q !== undefined && q.explanation) {
+    const ok = answered_q === q.ans;
+    const bgColor     = ok ? 'rgba(45,106,79,.08)' : 'rgba(193,18,31,.06)';
+    const borderColor = ok ? 'rgba(45,106,79,.3)'  : 'rgba(193,18,31,.3)';
+    feedbackHtml = `<div style="margin-top:12px;padding:12px 14px;border-radius:12px;background:${bgColor};border:1px solid ${borderColor};">
+      <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px;">${ok ? '✅ Bonne réponse !' : '❌ Incorrect'}</div>
+      <div style="font-size:.73rem;color:var(--muted);line-height:1.5;">${q.explanation}</div>
+    </div>`;
+  }
+
+  const isFirst = lt5.talkIdx === 0 && lt5.qIdx === 0;
+  const isLast  = lt5.talkIdx === LISTENING_TEST5.length-1 && lt5.qIdx === talk.questions.length-1;
+  const nextHtml = answered_q !== undefined
+    ? `<button class="lt-btn-nav" onclick="lt5NextQ()" style="background:${COLOR};color:#fff;border-color:${COLOR};">${isLast ? 'Voir les résultats' : 'Question suivante →'}</button>`
+    : '<span></span>';
+
+  wrap.innerHTML = `
+    <div class="lt-header">
+      <div class="lt-tag">🎙️ Part 4 — Short Talks · Lot 2</div>
+      <div class="lt-prog-wrap">
+        <div class="lt-prog-bar"><div class="lt-prog-fill" style="width:${pct}%"></div></div>
+        <div class="lt-prog-label">${answered}/${allQs}</div>
+      </div>
+    </div>
+    <div class="lt-card${answered_q !== undefined ? (answered_q===q.ans?' answered-ok':' answered-fail') : ''}">
+      <div class="lt-body" style="padding:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div style="display:flex;align-items:center;gap:8px;">${typeBadge}
+            <span style="font-family:var(--mono);font-size:.52rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;">Talk ${lt5.talkIdx+1}/${LISTENING_TEST5.length}</span>
+          </div>
+          <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);">Q${globalQ}/${allQs}</div>
+        </div>
+        <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:10px;">${talk.context}</div>
+        ${graphicHtml}
+        <div class="lt-audio-center" style="margin-bottom:14px;">${audioHtml}</div>
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-bottom:8px;">Question ${lt5.qIdx+1} sur ${talk.questions.length}</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.4;">${q.q}</div>
+        <div class="lt-opts-grid">${optsHtml}</div>
+        ${feedbackHtml}
+      </div>
+    </div>
+    <div class="lt-nav">
+      <button class="lt-btn-nav" onclick="lt5PrevQ()" ${isFirst ? 'disabled' : ''}>← Précédent</button>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">Talk ${lt5.talkIdx+1} · Q${lt5.qIdx+1}</span>
+      ${nextHtml}
+    </div>
+    <div style="text-align:center;margin-top:8px;">
+      <span onclick="lt5Reset()" style="font-family:var(--mono);font-size:.56rem;color:var(--muted);cursor:pointer;text-decoration:underline;">Réinitialiser</span>
     </div>`;
 
   return wrap;

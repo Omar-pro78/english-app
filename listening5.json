@@ -1,0 +1,334 @@
+[
+  {
+    "num": 1,
+    "type": "announcement",
+    "context": "Conference schedule change",
+    "graphic": {
+      "type": "table",
+      "headers": ["Time", "Session", "Location"],
+      "rows": [
+        ["9:00 AM", "Keynote Address", "Room A"],
+        ["10:00 AM", "Marketing Trends", "Room B"],
+        ["11:00 AM", "Tech Innovation", "Room C"],
+        ["12:00 PM", "Lunch", "Cafeteria"]
+      ]
+    },
+    "text": "Good morning, everyone, and welcome to this year's Business Leadership Conference. I'm Rachel Torres, and I'll be coordinating today's events. I need to let you know about a schedule change. Unfortunately, the speaker for our eleven o'clock session has had his flight delayed and won't arrive until this afternoon. So we've decided to move that session to two PM. In its place, we'll have an extended coffee break and networking opportunity in the main lobby. Everything else on the schedule remains the same, so the keynote will start right on time at nine, followed by Marketing Trends at ten. Please check the updated schedule at the registration desk. Thank you for your flexibility.",
+    "questions": [
+      {
+        "q": "Who is the speaker?",
+        "opts": ["A company executive", "A keynote speaker", "An event organizer", "A hotel manager"],
+        "ans": 2,
+        "explanation": "The speaker says 'I'm Rachel Torres, and I'll be coordinating today's events' — she is an event organizer."
+      },
+      {
+        "q": "Look at the graphic. Which session has been rescheduled?",
+        "opts": ["Keynote Address", "Tech Innovation", "Marketing Trends", "Lunch"],
+        "ans": 1,
+        "explanation": "The speaker says 'the speaker for our eleven o'clock session' was delayed. The 11:00 AM slot is Tech Innovation — that session is rescheduled."
+      },
+      {
+        "q": "What caused the schedule change?",
+        "opts": ["A scheduling conflict", "A room reservation error", "A technical equipment failure", "A transportation delay"],
+        "ans": 3,
+        "explanation": "The speaker says the speaker 'has had his flight delayed' — a transportation delay caused the change."
+      }
+    ]
+  },
+  {
+    "num": 2,
+    "type": "voicemail",
+    "context": "IT department update on laptop repair",
+    "text": "Hi, this is Sarah from the IT department. I'm calling about the support ticket you submitted last week regarding your laptop battery. I wanted to give you a quick update. We've ordered a replacement battery, but unfortunately it's on back order and won't arrive until Tuesday. I know that's not ideal, especially if you have meetings or travel coming up. So in the meantime, I can set you up with a loaner laptop if you'd like. It's the same model as yours, so all your files and settings should transfer over easily. Just stop by the IT office on the third floor whenever you have a chance, and we'll get you sorted out. Give me a call back if you have any questions. Thanks.",
+    "questions": [
+      {
+        "q": "Why is the speaker calling?",
+        "opts": ["To request technical assistance", "To schedule a meeting", "To provide a status update", "To report a problem"],
+        "ans": 2,
+        "explanation": "Sarah says 'I wanted to give you a quick update' about the support ticket — she is providing a status update."
+      },
+      {
+        "q": "When will the replacement part arrive?",
+        "opts": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        "ans": 1,
+        "explanation": "The speaker says the battery 'won't arrive until Tuesday.'"
+      },
+      {
+        "q": "What does the speaker offer?",
+        "opts": ["Temporary equipment", "A full refund", "An extended warranty", "A software upgrade"],
+        "ans": 0,
+        "explanation": "Sarah says 'I can set you up with a loaner laptop' — she is offering temporary equipment."
+      }
+    ]
+  },
+  {
+    "num": 3,
+    "type": "announcement",
+    "context": "Building water supply interruption",
+    "text": "Hello, this is Tom Patterson from building management with an important notice for all tenants. Tomorrow, Wednesday, we will be performing emergency repairs on the main water line. The water supply to floors two through five will be shut off between nine AM and eleven AM. During this time, you will not have access to drinking fountains or restrooms on those floors. However, the facilities on the first floor will remain fully operational, so please plan to use those if needed. We expect the work to be completed by eleven, but we'll send another message if there are any delays. We apologize for the inconvenience and appreciate your cooperation. If you have any questions, please contact the management office.",
+    "questions": [
+      {
+        "q": "Who is the message intended for?",
+        "opts": ["Office visitors", "Delivery personnel", "Construction workers", "Building residents"],
+        "ans": 3,
+        "explanation": "Tom says 'an important notice for all tenants' — the message is intended for building residents and tenants."
+      },
+      {
+        "q": "What will happen tomorrow?",
+        "opts": ["An elevator inspection", "A fire drill", "A utility service interruption", "A security system test"],
+        "ans": 2,
+        "explanation": "The speaker says 'The water supply to floors two through five will be shut off' — a utility service interruption."
+      },
+      {
+        "q": "What does the speaker advise listeners to do?",
+        "opts": ["Contact building management", "Use a different floor's facilities", "Work from home", "Reschedule appointments"],
+        "ans": 1,
+        "explanation": "Tom says 'the facilities on the first floor will remain fully operational, so please plan to use those' — use a different floor's facilities."
+      }
+    ]
+  },
+  {
+    "num": 4,
+    "type": "advertisement",
+    "context": "Radio ad for a banking service",
+    "text": "Are you tired of waiting in long lines at your bank? At First National Bank, we believe your time is too valuable to waste. That's why we've launched our new FastBank mobile app. With FastBank, you can deposit checks, transfer funds, and pay bills from anywhere — all in under sixty seconds. And if you open a new account through the app this month, you'll receive a twenty-five dollar welcome bonus deposited directly into your account. First National Bank — banking made simple. Download FastBank today at the App Store or Google Play, or visit any of our thirty locations across the city. Offer valid through the end of the month. Terms and conditions apply.",
+    "questions": [
+      {
+        "q": "What is being advertised?",
+        "opts": ["A new bank branch", "A mobile banking application", "A credit card offer", "An investment service"],
+        "ans": 1,
+        "explanation": "The ad promotes the FastBank mobile app — a mobile banking application."
+      },
+      {
+        "q": "What incentive is offered to new customers?",
+        "opts": ["Free transfers for one year", "A reduced interest rate", "A cash welcome bonus", "Waived monthly fees"],
+        "ans": 2,
+        "explanation": "The speaker says customers who open a new account 'will receive a twenty-five dollar welcome bonus' — a cash bonus."
+      },
+      {
+        "q": "By when must customers act to get the offer?",
+        "opts": ["By Friday", "By the end of the week", "By the end of the month", "By the end of the year"],
+        "ans": 2,
+        "explanation": "The speaker says 'Offer valid through the end of the month.'"
+      }
+    ]
+  },
+  {
+    "num": 5,
+    "type": "voicemail",
+    "context": "Dentist appointment reminder",
+    "text": "Hello, this message is for James Walton. This is a reminder call from Riverside Dental Clinic. You have an appointment scheduled for this Thursday at two thirty PM with Dr. Chen. Please remember to arrive ten minutes early to complete your paperwork if it's your first visit. Also, if you need to cancel or reschedule, we ask that you give us at least twenty-four hours' notice so we can offer your slot to another patient. You can reach us at 555-0174. We look forward to seeing you. Have a great day.",
+    "questions": [
+      {
+        "q": "What is the purpose of the call?",
+        "opts": ["To confirm a payment", "To remind a patient of an appointment", "To announce a clinic closure", "To describe a new medical procedure"],
+        "ans": 1,
+        "explanation": "The caller says 'This is a reminder call' for an upcoming dental appointment."
+      },
+      {
+        "q": "What is the patient asked to do upon arrival?",
+        "opts": ["Show insurance documents", "Pay the consultation fee", "Complete paperwork", "Wait in the main hall"],
+        "ans": 2,
+        "explanation": "The speaker says 'arrive ten minutes early to complete your paperwork if it's your first visit.'"
+      },
+      {
+        "q": "What does the clinic request if the patient cannot attend?",
+        "opts": ["An email confirmation", "A twenty-four hour notice", "A doctor's certificate", "A deposit payment"],
+        "ans": 1,
+        "explanation": "The speaker says 'we ask that you give us at least twenty-four hours' notice' to cancel or reschedule."
+      }
+    ]
+  },
+  {
+    "num": 6,
+    "type": "announcement",
+    "context": "Office relocation notice",
+    "text": "Attention all staff. As many of you know, our lease at the current building expires at the end of this month. I'm pleased to confirm that our new office at 450 Harbor Boulevard will be ready for move-in starting next Monday. The facilities team will manage the physical move over the weekend, so all personal items at your desk — such as plants, family photos, and personal electronics — should be packed into the boxes provided by Thursday afternoon. Your office supplies and computer equipment will be moved by the facilities team. IT will ensure all workstations are set up and fully functional by Monday morning. Parking permits for the new location will be distributed by HR next week. Thank you for your patience during this transition.",
+    "questions": [
+      {
+        "q": "What is the announcement about?",
+        "opts": ["A new company merger", "A staff recruitment drive", "A change of office location", "A building renovation project"],
+        "ans": 2,
+        "explanation": "The speaker confirms the office is moving to 450 Harbor Boulevard — a change of office location."
+      },
+      {
+        "q": "By when must employees pack their personal items?",
+        "opts": ["By Monday", "By Wednesday", "By Thursday afternoon", "By Friday morning"],
+        "ans": 2,
+        "explanation": "The speaker says personal items 'should be packed into the boxes provided by Thursday afternoon.'"
+      },
+      {
+        "q": "What will the IT department do?",
+        "opts": ["Distribute parking permits", "Pack employees' computers", "Set up workstations at the new office", "Arrange the move schedule"],
+        "ans": 2,
+        "explanation": "The speaker says 'IT will ensure all workstations are set up and fully functional by Monday morning.'"
+      }
+    ]
+  },
+  {
+    "num": 7,
+    "type": "announcement",
+    "context": "Elevator maintenance notice",
+    "text": "Good morning, this is a message for all residents of Elmwood Towers. Please be advised that the north elevator will be out of service this Friday from seven AM until approximately four PM for its annual maintenance inspection. During this time, please use the south elevator, which will remain in full operation. We ask that you avoid scheduling any large deliveries or furniture moves for Friday, as the south elevator will have limited capacity due to increased use. The maintenance work is mandatory under city regulations and ensures the continued safe operation of the elevators. We apologize for any inconvenience. If you have questions, please contact the building supervisor at extension 201.",
+    "questions": [
+      {
+        "q": "What is the purpose of the announcement?",
+        "opts": ["To inform about a power outage", "To notify residents of elevator maintenance", "To announce building renovation", "To remind residents about parking rules"],
+        "ans": 1,
+        "explanation": "The announcement says 'the north elevator will be out of service this Friday' for a maintenance inspection."
+      },
+      {
+        "q": "What are residents asked NOT to do on Friday?",
+        "opts": ["Use the south elevator", "Contact the building supervisor", "Schedule large deliveries", "Work from home"],
+        "ans": 2,
+        "explanation": "The speaker says 'avoid scheduling any large deliveries or furniture moves for Friday.'"
+      },
+      {
+        "q": "Why is the maintenance required?",
+        "opts": ["Due to a recent malfunction", "Because of a tenant complaint", "To comply with city regulations", "As a result of a safety audit"],
+        "ans": 2,
+        "explanation": "The speaker says 'The maintenance work is mandatory under city regulations.'"
+      }
+    ]
+  },
+  {
+    "num": 8,
+    "type": "report",
+    "context": "Company revenue report presentation",
+    "graphic": {
+      "type": "table",
+      "headers": ["Quarter", "Revenue"],
+      "rows": [
+        ["Q1", "$1.2M"],
+        ["Q2", "$1.5M"],
+        ["Q3", "$0.9M"],
+        ["Q4", "$2.1M"]
+      ]
+    },
+    "text": "Good afternoon, everyone. Thank you for joining this quarterly review. I'm pleased to share that our annual revenue figures show a strong recovery following the dip we saw in the third quarter. As you can see from the data on the screen, one quarter in particular significantly outperformed the others and drove our overall success for the year. This was largely due to our holiday promotional campaign, which drove a forty percent increase in online sales compared to the previous year. Moving forward, we'll be investing more heavily in digital marketing to sustain this momentum into the first quarter of next year. Any questions before we move to the regional breakdown?",
+    "questions": [
+      {
+        "q": "What is the main topic of the talk?",
+        "opts": ["Hiring forecasts", "Annual revenue results", "A product launch", "Customer satisfaction scores"],
+        "ans": 1,
+        "explanation": "The speaker says 'I'm pleased to share that our annual revenue figures show a strong recovery' — the topic is revenue results."
+      },
+      {
+        "q": "Look at the graphic. Which quarter had the highest revenue?",
+        "opts": ["Q1", "Q2", "Q3", "Q4"],
+        "ans": 3,
+        "explanation": "Q4 shows $2.1M, which is the highest value in the table — Q4 outperformed all other quarters."
+      },
+      {
+        "q": "What contributed to the strong performance?",
+        "opts": ["A price reduction strategy", "A holiday promotional campaign", "New product releases", "An expansion into new markets"],
+        "ans": 1,
+        "explanation": "The speaker says the success 'was largely due to our holiday promotional campaign, which drove a forty percent increase in online sales.'"
+      }
+    ]
+  },
+  {
+    "num": 9,
+    "type": "advertisement",
+    "context": "Store promotion announcement",
+    "text": "Attention shoppers! This weekend only, Greenfield Home Store is holding its biggest sale of the year. All furniture is marked down by up to forty percent, and selected kitchen appliances are buy one, get one half price. Whether you're looking to refresh your living room or upgrade your kitchen, now is the perfect time to buy. Our friendly staff will be on hand to help you find exactly what you need. And for purchases over five hundred dollars, we offer free delivery within a thirty-mile radius. The sale runs from Saturday morning at nine until Sunday at closing time. Don't miss out — quantities are limited. See you at Greenfield Home Store this weekend!",
+    "questions": [
+      {
+        "q": "What type of store is advertising?",
+        "opts": ["A grocery store", "A clothing retailer", "A home furnishings store", "An electronics shop"],
+        "ans": 2,
+        "explanation": "The ad mentions furniture and kitchen appliances at Greenfield Home Store — a home furnishings store."
+      },
+      {
+        "q": "What discount applies to kitchen appliances?",
+        "opts": ["Forty percent off all items", "Buy one, get one free", "Buy one, get one half price", "Ten percent loyalty discount"],
+        "ans": 2,
+        "explanation": "The speaker says 'selected kitchen appliances are buy one, get one half price.'"
+      },
+      {
+        "q": "What benefit is offered for large purchases?",
+        "opts": ["An extended warranty", "Free home delivery", "A gift card", "Priority checkout"],
+        "ans": 1,
+        "explanation": "The speaker says 'for purchases over five hundred dollars, we offer free delivery within a thirty-mile radius.'"
+      }
+    ]
+  },
+  {
+    "num": 10,
+    "type": "talk",
+    "context": "Merger announcement to employees",
+    "text": "Good morning, everyone. I know many of you have been hearing rumors over the past few weeks, and I want to address them directly today. It is true that Thornton Industries has entered into a merger agreement with Pacifica Group. This is an exciting development for our company and represents a significant step in our long-term growth strategy. I want to reassure you that there are no planned layoffs as a result of this merger. Both companies bring complementary strengths, and our combined workforce will be essential to our success going forward. Over the next few weeks, we will be scheduling department meetings to answer your specific questions. An official company-wide message will follow by end of day. Thank you for your continued dedication.",
+    "questions": [
+      {
+        "q": "What is the speaker announcing?",
+        "opts": ["A company bankruptcy", "A business merger", "A new product line", "A change of leadership"],
+        "ans": 1,
+        "explanation": "The speaker says 'Thornton Industries has entered into a merger agreement with Pacifica Group' — announcing a business merger."
+      },
+      {
+        "q": "What does the speaker say about jobs?",
+        "opts": ["Some positions will be eliminated", "All contractors will be let go", "No layoffs are planned", "A hiring freeze is in place"],
+        "ans": 2,
+        "explanation": "The speaker says 'there are no planned layoffs as a result of this merger.'"
+      },
+      {
+        "q": "What will happen in the coming weeks?",
+        "opts": ["A company-wide restructuring", "Individual performance reviews", "Department meetings for Q&A", "Office relocations"],
+        "ans": 2,
+        "explanation": "The speaker says 'we will be scheduling department meetings to answer your specific questions.'"
+      }
+    ]
+  },
+  {
+    "num": 11,
+    "type": "talk",
+    "context": "Investment seminar introduction",
+    "text": "Welcome, and thank you all for attending this evening's financial planning seminar. My name is Robert Langley, and for the past fifteen years I've been advising individuals and families on how to build long-term financial security. Tonight, I'd like to walk you through the basics of portfolio diversification — why it matters, and how even small investors can benefit from spreading their risk across multiple asset types. We'll cover stocks, bonds, real estate investment trusts, and index funds. I'll also share some common mistakes that first-time investors make, so you can avoid them from the start. At the end of the presentation, we'll have a thirty-minute question and answer session, and my team will be available to schedule free one-on-one consultations. Let's get started.",
+    "questions": [
+      {
+        "q": "Who is the speaker?",
+        "opts": ["A bank branch manager", "A financial advisor", "A tax attorney", "A government economist"],
+        "ans": 1,
+        "explanation": "Robert says he has 'been advising individuals and families on how to build long-term financial security' — he is a financial advisor."
+      },
+      {
+        "q": "What is the main topic of the seminar?",
+        "opts": ["Tax planning strategies", "Portfolio diversification", "Real estate investment", "Retirement fund management"],
+        "ans": 1,
+        "explanation": "The speaker says 'I'd like to walk you through the basics of portfolio diversification.'"
+      },
+      {
+        "q": "What will happen at the end of the presentation?",
+        "opts": ["A networking dinner", "A product demonstration", "A Q&A session", "A written assessment"],
+        "ans": 2,
+        "explanation": "The speaker says 'we'll have a thirty-minute question and answer session' at the end."
+      }
+    ]
+  },
+  {
+    "num": 12,
+    "type": "announcement",
+    "context": "Product recall notice",
+    "text": "Attention customers. Hartwell Appliances wishes to inform you of a voluntary product recall affecting certain models of our HW-3000 series electric kettle. The affected units were manufactured between January and April of this year and may have a defect in the power cord that could pose a potential safety risk. If you purchased an HW-3000 kettle during this period, please stop using it immediately and check the model number printed on the base of the unit. If your kettle falls within the affected range — model numbers HW-3001 through HW-3045 — please return it to any Hartwell authorized retailer for a full refund or replacement. No receipt is required. For more information, please visit our website or call our customer care line at 1-800-555-0088. We sincerely apologize for any inconvenience.",
+    "questions": [
+      {
+        "q": "What is the announcement about?",
+        "opts": ["A new product launch", "A limited-time sale", "A safety recall", "A warranty extension"],
+        "ans": 2,
+        "explanation": "The speaker announces 'a voluntary product recall' due to a potential safety risk — a safety recall."
+      },
+      {
+        "q": "What should affected customers do first?",
+        "opts": ["Call the customer care line", "Visit the company website", "Stop using the product immediately", "Return the item to the store"],
+        "ans": 2,
+        "explanation": "The speaker says 'please stop using it immediately and check the model number' — stopping use is the first step."
+      },
+      {
+        "q": "What will customers receive in return?",
+        "opts": ["A store credit only", "A discount voucher", "A full refund or replacement", "A repair service"],
+        "ans": 2,
+        "explanation": "The speaker says customers can return the kettle 'for a full refund or replacement.'"
+      }
+    ]
+  }
+]
