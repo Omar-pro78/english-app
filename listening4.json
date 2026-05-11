@@ -1,0 +1,438 @@
+[
+  {
+    "num": 1,
+    "type": "announcement",
+    "context": "Airport gate change",
+    "text": "Attention all passengers on Flight 209 with service to Chicago. We have an important update regarding your departure gate. Due to a maintenance issue at Gate A4, your flight will now be departing from Gate B2. That's Gate B2 in Terminal B. Please note that boarding will begin in approximately twenty minutes, so we ask that you make your way to the new gate immediately. If you need assistance or have questions about connections, our staff will be available at the new gate. We apologize for any inconvenience this may cause and thank you for your patience.",
+    "questions": [
+      {
+        "q": "Where is the announcement taking place?",
+        "opts": ["At an airport", "At a train station", "At a bus terminal", "At a hotel lobby"],
+        "ans": 0,
+        "explanation": "The announcement mentions a flight, departure gate, and terminal — clearly an airport."
+      },
+      {
+        "q": "What is the problem?",
+        "opts": ["A flight has been canceled", "Boarding passes need to be reprinted", "There is a problem with the original departure area", "The airline has overbooked the flight"],
+        "ans": 2,
+        "explanation": "The speaker says 'Due to a maintenance issue at Gate A4' — the original gate has a problem."
+      },
+      {
+        "q": "What does the speaker ask listeners to do?",
+        "opts": ["Wait at the current location", "Go to a different gate", "Speak with a supervisor", "Check in at the counter"],
+        "ans": 1,
+        "explanation": "The speaker asks passengers to 'make your way to the new gate immediately' — Gate B2."
+      }
+    ]
+  },
+  {
+    "num": 2,
+    "type": "announcement",
+    "context": "Store closing announcement",
+    "text": "Good evening, shoppers. This is a reminder that Henderson's Department Store will be closing in fifteen minutes. If you have items you would like to purchase, please bring them to the registers at the front of the store at this time. Also, today is the final day of our winter clearance event. All winter coats are currently fifty percent off, but this offer ends when we close tonight. So if you've been thinking about picking up a new jacket, now is the time. Once again, the store will be closing in fifteen minutes. Thank you for shopping with us today.",
+    "questions": [
+      {
+        "q": "Who is the speaker addressing?",
+        "opts": ["Store employees", "Customers", "Delivery drivers", "Security personnel"],
+        "ans": 1,
+        "explanation": "The speaker says 'Good evening, shoppers' — addressing customers in the store."
+      },
+      {
+        "q": "What special offer is mentioned?",
+        "opts": ["Free gift wrapping", "Extended store hours", "A loyalty card bonus", "Reduced prices on outerwear"],
+        "ans": 3,
+        "explanation": "The speaker mentions 'All winter coats are currently fifty percent off' — reduced prices on outerwear."
+      },
+      {
+        "q": "What will happen in fifteen minutes?",
+        "opts": ["The business will close", "A new sale will begin", "The registers will move", "The fitting rooms will open"],
+        "ans": 0,
+        "explanation": "The speaker says 'the store will be closing in fifteen minutes.'"
+      }
+    ]
+  },
+  {
+    "num": 3,
+    "type": "report",
+    "context": "Traffic report",
+    "text": "Good morning, this is Lisa Chen with your seven o'clock traffic update. If you're planning to take the North Bridge into the city this morning, you'll want to find another route. There's been a three-car accident blocking two lanes, and traffic is backed up for about four miles. Emergency crews are on scene, but it's going to take some time to clear. Your best bet is to take the Harbor Tunnel instead. It's running smoothly right now with only minor delays near the toll plaza. And looking ahead to this afternoon, we're expecting some rain to move in around three o'clock, so give yourself extra travel time for the evening commute. That's your traffic, back to you in the studio.",
+    "questions": [
+      {
+        "q": "What is the main topic of the report?",
+        "opts": ["Weather conditions", "Public transportation schedules", "Road conditions", "A construction project"],
+        "ans": 2,
+        "explanation": "The report is a traffic update about an accident on the North Bridge — road conditions."
+      },
+      {
+        "q": "What does the speaker recommend?",
+        "opts": ["Using an alternative route", "Leaving work early", "Carpooling with colleagues", "Waiting for an update"],
+        "ans": 0,
+        "explanation": "The speaker says 'Your best bet is to take the Harbor Tunnel instead' — an alternative route."
+      },
+      {
+        "q": "What weather is expected later today?",
+        "opts": ["Snow", "Rain", "Fog", "High winds"],
+        "ans": 1,
+        "explanation": "The speaker says 'we're expecting some rain to move in around three o'clock.'"
+      }
+    ]
+  },
+  {
+    "num": 4,
+    "type": "talk",
+    "context": "Museum tour guide introduction",
+    "text": "Good afternoon, everyone, and welcome to the Riverside Art Museum. My name is David, and I'll be your guide for the next ninety minutes. Before we begin, just a few quick reminders. Photography is permitted throughout the museum, but please do not use your flash, as it can damage the artwork over time. Also, please refrain from touching the pieces and keep your voices down so other visitors can enjoy the exhibits. We'll be starting our tour in the Modern Art Wing, where you'll see works by some of the most influential artists of the twentieth century. From there, we'll move through the sculpture garden and end in the photography exhibition. Any questions before we get started? Great, let's go.",
+    "questions": [
+      {
+        "q": "Who is the speaker?",
+        "opts": ["A museum director", "A security guard", "An art instructor", "A tour guide"],
+        "ans": 3,
+        "explanation": "The speaker says 'I'll be your guide for the next ninety minutes' — he is a tour guide."
+      },
+      {
+        "q": "What restriction does the speaker mention?",
+        "opts": ["Food and drinks are prohibited", "Tickets must be shown at each room", "Flash photography is not allowed", "Bags must be checked at the entrance"],
+        "ans": 2,
+        "explanation": "The speaker says 'please do not use your flash, as it can damage the artwork.'"
+      },
+      {
+        "q": "Where will the group go first?",
+        "opts": ["To the gift shop", "To an art exhibit", "To the cafeteria", "To the main entrance"],
+        "ans": 1,
+        "explanation": "The speaker says 'We'll be starting our tour in the Modern Art Wing' — an art exhibit."
+      }
+    ]
+  },
+  {
+    "num": 5,
+    "type": "meeting",
+    "context": "Quarterly financial results meeting",
+    "text": "All right, everyone, let's get started. I've called this meeting to go over our financial results from last quarter and discuss some changes moving forward. First, the good news: our sales numbers exceeded expectations by about twelve percent, which is excellent work by the whole team. However, we did identify one area of concern. Our travel expenses came in significantly over budget, nearly thirty percent higher than planned. Most of this was due to last-minute international trips. So, effective immediately, we're implementing a new policy. Any international travel must now be approved in advance by a Vice President. This applies to all departments. Please make sure your teams are aware of this change. Any questions?",
+    "questions": [
+      {
+        "q": "What is the purpose of the meeting?",
+        "opts": ["To introduce new staff members", "To review company finances", "To announce a product launch", "To plan a team-building event"],
+        "ans": 1,
+        "explanation": "The speaker says 'I've called this meeting to go over our financial results from last quarter.'"
+      },
+      {
+        "q": "What problem does the speaker identify?",
+        "opts": ["Sales figures were disappointing", "A project deadline was missed", "Customer complaints increased", "Expenditures exceeded the budget"],
+        "ans": 3,
+        "explanation": "The speaker says travel expenses came in 'nearly thirty percent higher than planned' — over budget."
+      },
+      {
+        "q": "What new requirement is announced?",
+        "opts": ["Obtaining authorization for trips", "Submitting weekly reports", "Attending training sessions", "Updating contact information"],
+        "ans": 0,
+        "explanation": "The speaker says 'Any international travel must now be approved in advance by a Vice President.'"
+      }
+    ]
+  },
+  {
+    "num": 6,
+    "type": "announcement",
+    "context": "Business conference schedule change",
+    "text": "Good morning, everyone, and welcome to this year's Business Leadership Conference. I'm Rachel Torres, and I'll be coordinating today's events. I need to let you know about a schedule change. Unfortunately, the speaker for our eleven o'clock session has had his flight delayed and won't arrive until this afternoon. So we've decided to move that session to two PM. In its place, we'll have an extended coffee break and networking opportunity in the main lobby. Everything else on the schedule remains the same, so the keynote will start right on time at nine, followed by Marketing Trends at ten. Please check the updated schedule at the registration desk. Thank you for your flexibility.",
+    "graphic": {
+      "type": "table",
+      "headers": ["Time", "Session", "Location"],
+      "rows": [
+        ["9:00 AM", "Keynote Address", "Room A"],
+        ["10:00 AM", "Marketing Trends", "Room B"],
+        ["11:00 AM", "Tech Innovation", "Room C"],
+        ["12:00 PM", "Lunch", "Cafeteria"]
+      ]
+    },
+    "questions": [
+      {
+        "q": "Who is the speaker?",
+        "opts": ["A company executive", "A keynote speaker", "An event organizer", "A hotel manager"],
+        "ans": 2,
+        "explanation": "Rachel Torres says 'I'll be coordinating today's events' — she is an event organizer."
+      },
+      {
+        "q": "Look at the graphic. Which session has been rescheduled?",
+        "opts": ["Keynote Address", "Tech Innovation", "Marketing Trends", "Lunch"],
+        "ans": 1,
+        "explanation": "The 11:00 AM slot is 'Tech Innovation' in the schedule. The speaker says the 11 o'clock session was moved."
+      },
+      {
+        "q": "What caused the schedule change?",
+        "opts": ["A scheduling conflict", "A room reservation error", "A technical equipment failure", "A transportation delay"],
+        "ans": 3,
+        "explanation": "The speaker says the session's speaker 'has had his flight delayed' — a transportation delay."
+      }
+    ]
+  },
+  {
+    "num": 7,
+    "type": "voicemail",
+    "context": "IT department voicemail — laptop battery",
+    "text": "Hi, this is Sarah from the IT department. I'm calling about the support ticket you submitted last week regarding your laptop battery. I wanted to give you a quick update. We've ordered a replacement battery, but unfortunately it's on back order and won't arrive until Tuesday. I know that's not ideal, especially if you have meetings or travel coming up. So in the meantime, I can set you up with a loaner laptop if you'd like. It's the same model as yours, so all your files and settings should transfer over easily. Just stop by the IT office on the third floor whenever you have a chance, and we'll get you sorted out. Give me a call back if you have any questions. Thanks.",
+    "questions": [
+      {
+        "q": "Why is the speaker calling?",
+        "opts": ["To request technical assistance", "To schedule a meeting", "To provide a status update", "To report a problem"],
+        "ans": 2,
+        "explanation": "Sarah says 'I wanted to give you a quick update' about the replacement battery — a status update."
+      },
+      {
+        "q": "When will the replacement part arrive?",
+        "opts": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        "ans": 1,
+        "explanation": "The speaker says the replacement battery 'won't arrive until Tuesday.'"
+      },
+      {
+        "q": "What does the speaker offer?",
+        "opts": ["Temporary equipment", "A full refund", "An extended warranty", "A software upgrade"],
+        "ans": 0,
+        "explanation": "Sarah offers 'a loaner laptop' — temporary equipment to use while waiting for the battery."
+      }
+    ]
+  },
+  {
+    "num": 8,
+    "type": "voicemail",
+    "context": "Building management notice — water shutdown",
+    "text": "Hello, this is Tom Patterson from building management with an important notice for all tenants. Tomorrow, Wednesday, we will be performing emergency repairs on the main water line. The water supply to floors two through five will be shut off between nine AM and eleven AM. During this time, you will not have access to drinking fountains or restrooms on those floors. However, the facilities on the first floor will remain fully operational, so please plan to use those if needed. We expect the work to be completed by eleven, but we'll send another message if there are any delays. We apologize for the inconvenience and appreciate your cooperation. If you have any questions, please contact the management office.",
+    "questions": [
+      {
+        "q": "Who is the message intended for?",
+        "opts": ["Office visitors", "Delivery personnel", "Construction workers", "Building residents"],
+        "ans": 3,
+        "explanation": "Tom Patterson addresses 'all tenants' — the people who live or work in the building."
+      },
+      {
+        "q": "What will happen tomorrow?",
+        "opts": ["An elevator inspection", "A fire drill", "A utility service interruption", "A security system test"],
+        "ans": 2,
+        "explanation": "The water supply will be shut off — a utility service interruption."
+      },
+      {
+        "q": "What does the speaker advise listeners to do?",
+        "opts": ["Contact building management", "Use a different location", "Work from home", "Reschedule appointments"],
+        "ans": 1,
+        "explanation": "The speaker advises tenants to use 'the facilities on the first floor' — a different location."
+      }
+    ]
+  },
+  {
+    "num": 9,
+    "type": "recorded message",
+    "context": "Bank automated phone message",
+    "text": "Thank you for calling City Bank. We appreciate your patience. Please be aware that our online banking system is currently undergoing scheduled maintenance. During this time, you will not be able to access your account online or through our mobile app. We expect the system to be fully restored by six PM this evening. If you need immediate assistance with your account, please visit your nearest branch location, where our staff will be happy to help you. We apologize for any inconvenience this may cause. Thank you for choosing City Bank.",
+    "questions": [
+      {
+        "q": "What type of recording is this?",
+        "opts": ["A personal voicemail", "An automated message", "A news broadcast", "A training video"],
+        "ans": 1,
+        "explanation": "It is a pre-recorded bank message — an automated system response, not a personal message."
+      },
+      {
+        "q": "What service is currently unavailable?",
+        "opts": ["Online banking", "Telephone banking", "ATM withdrawals", "Branch services"],
+        "ans": 0,
+        "explanation": "The speaker says 'our online banking system is currently undergoing scheduled maintenance.'"
+      },
+      {
+        "q": "What are customers advised to do?",
+        "opts": ["Call back tomorrow", "Send an email", "Wait on hold", "Visit a physical location"],
+        "ans": 3,
+        "explanation": "The speaker says 'please visit your nearest branch location' — a physical location."
+      }
+    ]
+  },
+  {
+    "num": 10,
+    "type": "advertisement",
+    "context": "Delivery service advertisement — SwiftShip",
+    "text": "Are you a small business owner tired of late shipments and unhappy customers? Then it's time to try SwiftShip. We specialize in same-day delivery for businesses just like yours. Whether you're shipping documents, products, or equipment, we guarantee your package will arrive before the end of the business day. And for a limited time, new customers get their first five deliveries absolutely free. That's right — free. Visit SwiftShip dot com or call 1-800-555-SHIP to set up your business account today. SwiftShip: because your customers shouldn't have to wait.",
+    "questions": [
+      {
+        "q": "What is being advertised?",
+        "opts": ["A storage facility", "An office supply store", "A delivery service", "A packaging company"],
+        "ans": 2,
+        "explanation": "SwiftShip specializes in 'same-day delivery' — it is a delivery service."
+      },
+      {
+        "q": "What advantage does SwiftShip offer?",
+        "opts": ["Lower prices than competitors", "Fast shipping times", "International delivery options", "Eco-friendly packaging"],
+        "ans": 1,
+        "explanation": "SwiftShip guarantees packages arrive 'before the end of the business day' — fast, same-day shipping."
+      },
+      {
+        "q": "Who is the target audience for this advertisement?",
+        "opts": ["Business owners", "College students", "Home buyers", "Restaurant customers"],
+        "ans": 0,
+        "explanation": "The ad opens with 'Are you a small business owner?' — it targets business owners."
+      }
+    ]
+  },
+  {
+    "num": 11,
+    "type": "voicemail",
+    "context": "Dental office voicemail — appointment change",
+    "text": "Hello, this message is for Mr. Lee. This is Karen calling from Dr. Green's dental office. I'm calling about your appointment for a dental cleaning that was scheduled for this Thursday at two o'clock. Unfortunately, Dr. Green will be attending a dental conference in Boston that day, so he won't be in the office. We need to reschedule your appointment to another day. Could you please call us back at 555-0147 at your earliest convenience so we can find a new time that works for you? Again, that number is 555-0147. We apologize for any inconvenience. Thank you.",
+    "questions": [
+      {
+        "q": "Why is the speaker calling?",
+        "opts": ["To confirm an appointment", "To change an appointment", "To recommend a specialist", "To discuss test results"],
+        "ans": 1,
+        "explanation": "Karen says 'We need to reschedule your appointment' — she is calling to change it."
+      },
+      {
+        "q": "Why is the dentist unavailable on Thursday?",
+        "opts": ["He is on vacation", "He has a family emergency", "He is moving to a new office", "He is at a professional event"],
+        "ans": 3,
+        "explanation": "Dr. Green 'will be attending a dental conference in Boston' — a professional event."
+      },
+      {
+        "q": "What should Mr. Lee do?",
+        "opts": ["Return the phone call", "Visit the office in person", "Check his email", "Speak with another dentist"],
+        "ans": 0,
+        "explanation": "Karen asks Mr. Lee to 'call us back at 555-0147' — return the phone call."
+      }
+    ]
+  },
+  {
+    "num": 12,
+    "type": "report",
+    "context": "Traffic and weather update",
+    "text": "Good afternoon, this is Mike Reynolds with your noon traffic and weather update. If you're heading out on Highway 7 this afternoon, expect some delays. Construction crews are working on the road surface near Exit 12, and traffic is backed up for about three miles. Your best option is to take Route 9 as an alternative. Now, looking ahead to the weekend, we're expecting a significant heatwave to move into the area. Temperatures could reach the mid-nineties on Saturday and Sunday, so make sure you stay hydrated and limit your time outdoors during peak hours. That's your update, stay cool out there.",
+    "questions": [
+      {
+        "q": "What is causing traffic delays?",
+        "opts": ["An accident", "Bad weather", "Road work", "A special event"],
+        "ans": 2,
+        "explanation": "The speaker says 'Construction crews are working on the road surface near Exit 12' — road work."
+      },
+      {
+        "q": "What weather condition is forecast for the weekend?",
+        "opts": ["Heavy rain", "High temperatures", "Strong winds", "Freezing conditions"],
+        "ans": 1,
+        "explanation": "The speaker mentions 'a significant heatwave' with temperatures in the 'mid-nineties' — high temperatures."
+      },
+      {
+        "q": "What does the speaker advise listeners to do?",
+        "opts": ["Leave work early", "Take public transportation", "Cancel outdoor plans", "Drink plenty of water"],
+        "ans": 3,
+        "explanation": "The speaker says 'make sure you stay hydrated' — advising to drink plenty of water."
+      }
+    ]
+  },
+  {
+    "num": 13,
+    "type": "talk",
+    "context": "Quarterly sales figures presentation",
+    "graphic": {
+      "type": "table",
+      "headers": ["Region", "Sales"],
+      "rows": [
+        ["North", "$50,000"],
+        ["South", "$40,000"],
+        ["East", "$70,000"],
+        ["West", "$30,000"]
+      ]
+    },
+    "text": "All right, let's take a look at our quarterly sales figures. Overall, I'm pleased to report that sales are up across most of our territories. Now, if you look at the chart in front of you, you'll notice that one region significantly outperformed the others. I want to take a moment to recognize the team responsible for those top numbers. Their success is largely due to a new marketing campaign they launched in September. It focused on social media outreach and really connected with younger customers. I'd like the rest of our regional teams to study their approach and see what strategies might work in your areas as well.",
+    "questions": [
+      {
+        "q": "What is the speaker discussing?",
+        "opts": ["Hiring plans", "Sales figures", "Product development", "Customer complaints"],
+        "ans": 1,
+        "explanation": "The speaker says 'let's take a look at our quarterly sales figures.'"
+      },
+      {
+        "q": "Look at the graphic. Which region had the best performance?",
+        "opts": ["North", "South", "East", "West"],
+        "ans": 2,
+        "explanation": "The East region recorded the highest sales at $70,000 — the best performance in the chart."
+      },
+      {
+        "q": "What contributed to the region's success?",
+        "opts": ["A marketing campaign", "A price reduction", "New staff members", "Extended business hours"],
+        "ans": 0,
+        "explanation": "The speaker says their success was 'largely due to a new marketing campaign they launched in September.'"
+      }
+    ]
+  },
+  {
+    "num": 14,
+    "type": "introduction",
+    "context": "Conference guest speaker introduction",
+    "text": "Good morning, everyone. Before we begin our keynote session, I am pleased to introduce our guest speaker, Ms. Fatima Al-Fayed. Ms. Al-Fayed is a recognized expert in the field of artificial intelligence and machine learning. She has written three best-selling books on how AI is transforming the workplace, and she regularly advises Fortune 500 companies on technology strategy. Today, she'll be sharing her insights on preparing your organization for the future of work. And for those of you interested in her publications, she has kindly agreed to sign copies of her latest book in the lobby immediately following her presentation. Please join me in welcoming Ms. Al-Fayed.",
+    "questions": [
+      {
+        "q": "What is the speaker doing?",
+        "opts": ["Accepting an award", "Announcing a merger", "Closing a conference", "Introducing a guest"],
+        "ans": 3,
+        "explanation": "The speaker says 'I am pleased to introduce our guest speaker, Ms. Fatima Al-Fayed.'"
+      },
+      {
+        "q": "What is Ms. Al-Fayed's area of expertise?",
+        "opts": ["International finance", "Technology", "Healthcare management", "Environmental policy"],
+        "ans": 1,
+        "explanation": "She is described as 'a recognized expert in the field of artificial intelligence and machine learning' — technology."
+      },
+      {
+        "q": "What will happen after the presentation?",
+        "opts": ["A networking reception", "A panel discussion", "A book signing", "A factory tour"],
+        "ans": 2,
+        "explanation": "The speaker says Ms. Al-Fayed 'has kindly agreed to sign copies of her latest book in the lobby' — a book signing."
+      }
+    ]
+  },
+  {
+    "num": 15,
+    "type": "speech",
+    "context": "Retirement party speech",
+    "text": "Could I have everyone's attention, please? I'd like to say a few words about our guest of honor this evening. As many of you know, John Mitchell is retiring at the end of this month after twenty years with the company. John joined us as a junior analyst back in 2005, and over the years, he's worked his way up to become one of our most respected department heads. More importantly, he's been a mentor and a friend to so many of us in this room. His guidance has helped shape the careers of countless employees. So, John, on behalf of everyone here, we want to thank you for your dedication and wish you all the best in your retirement. And now, please join me as we present John with a small token of our appreciation.",
+    "questions": [
+      {
+        "q": "What is the occasion?",
+        "opts": ["A retirement party", "A promotion celebration", "A company anniversary", "A welcome reception"],
+        "ans": 0,
+        "explanation": "The speaker says 'John Mitchell is retiring at the end of this month' — it is a retirement party."
+      },
+      {
+        "q": "How long has John worked at the company?",
+        "opts": ["Ten years", "Fifteen years", "Twenty years", "Thirty-five years"],
+        "ans": 2,
+        "explanation": "The speaker says John is retiring 'after twenty years with the company.'"
+      },
+      {
+        "q": "What will happen next?",
+        "opts": ["A video presentation", "A gift presentation", "A group photograph", "A dinner service"],
+        "ans": 1,
+        "explanation": "The speaker says 'please join me as we present John with a small token of our appreciation' — a gift."
+      }
+    ]
+  },
+  {
+    "num": 16,
+    "type": "safety briefing",
+    "context": "Factory tour safety guidelines",
+    "text": "Good morning, and welcome to the Riverside Manufacturing plant. My name is Carlos, and I'll be leading your tour today. Before we step onto the production floor, I need to go over a few important safety guidelines. First, everyone must wear safety goggles at all times while we're in the factory. You'll find a pair in the basket by the door — please take one now. Second, please stay within the yellow lines painted on the floor. These mark the safe walking paths and keep you clear of moving equipment. Finally, if you hear the alarm sound at any point, follow me immediately to the nearest exit. Any questions? Great, let's grab those goggles and head inside.",
+    "questions": [
+      {
+        "q": "Who is the audience for this talk?",
+        "opts": ["New employees", "Visitors", "Safety inspectors", "Machine operators"],
+        "ans": 1,
+        "explanation": "Carlos says 'I'll be leading your tour today' — the audience is visitors on a factory tour."
+      },
+      {
+        "q": "What safety equipment is required?",
+        "opts": ["Hard hats", "Ear plugs", "Gloves", "Eye protection"],
+        "ans": 3,
+        "explanation": "Carlos says 'everyone must wear safety goggles at all times' — eye protection is required."
+      },
+      {
+        "q": "What does the speaker instruct listeners to do?",
+        "opts": ["Stay in designated areas", "Turn off mobile phones", "Wear closed-toe shoes", "Sign a waiver form"],
+        "ans": 0,
+        "explanation": "Carlos says 'please stay within the yellow lines' — listeners must stay in designated areas."
+      }
+    ]
+  }
+]
