@@ -26,6 +26,33 @@
   --text:#1a1a18; --muted:#6b6355;
   --mono:'IBM Plex Mono',monospace; --sans:'Syne',sans-serif;
 }
+/* ── DARK MODE ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#1a1916; --bg2:#222018; --surface:#2a2825; --surface2:#1a1916;
+    --border:#38352c; --border2:#4a4640;
+    --text:#f0ece2; --muted:#9b9385;
+  }
+  body::before{
+    background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(45,106,79,.08) 0%,transparent 55%),
+               radial-gradient(ellipse 55% 40% at 5% 90%,rgba(193,18,31,.06) 0%,transparent 55%),
+               radial-gradient(ellipse 50% 35% at 50% 50%,rgba(60,55,40,.5) 0%,transparent 60%);
+  }
+  header{background:rgba(26,25,22,.96);}
+  .home-cta{background:#2a2825;border:1.5px solid var(--border2);}
+  .home-cta-eyebrow{color:rgba(240,236,226,.4);}
+  .home-cta-label{color:var(--text);}
+  .home-cta-sub{color:var(--muted);}
+  .home-cta::after{color:rgba(240,236,226,.3);}
+  .home-cta:hover::after{color:var(--muted);}
+  .dm-cta-btn{background:var(--border2);color:var(--text);}
+  .streak-msg.hot{background:rgba(234,108,0,.15);border-color:rgba(234,108,0,.3);}
+  .streak-msg.fire{background:rgba(193,18,31,.15);border-color:rgba(193,18,31,.3);}
+  .streak-msg.cool{background:rgba(45,106,79,.12);border-color:rgba(45,106,79,.25);}
+  .milestone-card{background:#2a2825;}
+  .lt-img-wrap,.lt-photo{background:#0d0d0c;}
+}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
@@ -911,6 +938,20 @@ main{flex:1;display:flex;flex-direction:column;}
   background:#1d6fa4;color:#fff;font-family:var(--sans);font-size:.88rem;font-weight:800;
   cursor:pointer;transition:all .18s;letter-spacing:.1px;}
 .lt-validate-btn:hover{background:#155e8a;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,111,164,.35);}
+
+
+/* ── MISSION COLLAPSIBLE ── */
+.daily-mission-wrap{margin-bottom:14px;}
+.dm-toggle{display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;padding:0 2px;margin-bottom:6px;user-select:none;}
+.dm-toggle-label{font-family:var(--mono);font-size:.58rem;color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;font-weight:600;}
+.dm-toggle-arrow{font-size:.7rem;color:var(--muted);transition:transform .2s;}
+.dm-toggle-arrow.open{transform:rotate(90deg);}
+.dm-collapse{overflow:hidden;transition:max-height .28s ease, opacity .22s ease;}
+.dm-collapse.open{max-height:400px;opacity:1;}
+.dm-collapse.closed{max-height:0;opacity:0;}
+.daily-mission{margin-bottom:0;}
 
 /* ── DIRECTIONS TEST ── */
 .dt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 60px;}
@@ -3011,17 +3052,14 @@ function goBack() {
 function refreshBadges() { /* badges updated on render */ }
 
 let _keyHandler = null;
-function render() {
-  if(_keyHandler){document.removeEventListener('keydown',_keyHandler);_keyHandler=null;}
-  const el=document.getElementById('main');
-  el.innerHTML='';
+let _renderAnimating = false;
 
+function _buildContent(el) {
   // Update header stats
   document.getElementById('statOk').textContent=cntOk();
   document.getElementById('statRev').textContent=srDueCount();
   document.getElementById('statStreak').textContent=S.streak;
 
-  // Si un quiz est actif depuis n'importe quel module, on l'affiche en priorité
   if(S.quiz && S.tab !== 'review') {
     el.appendChild(buildQuiz());
   } else if(S.tab==='home')              el.appendChild(buildHome());
@@ -3058,6 +3096,41 @@ function render() {
     if(S.quiz)                    el.appendChild(buildQuiz());
     else                          el.appendChild(buildLauncher());
   }
+}
+
+function render() {
+  if(_keyHandler){document.removeEventListener('keydown',_keyHandler);_keyHandler=null;}
+  const el = document.getElementById('main');
+
+  // Transitions désactivées pendant les quiz/sessions actifs (réponses rapides)
+  const fastRender = S.tab === 'session' || (S.quiz && S.tab !== 'review');
+
+  if (fastRender || _renderAnimating) {
+    el.innerHTML = '';
+    _buildContent(el);
+    return;
+  }
+
+  // Fade-out puis fade-in
+  _renderAnimating = true;
+  el.style.transition = 'opacity .13s ease, transform .13s ease';
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(6px)';
+
+  setTimeout(() => {
+    el.innerHTML = '';
+    _buildContent(el);
+    // scroll to top on screen change
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+      setTimeout(() => {
+        el.style.transition = '';
+        _renderAnimating = false;
+      }, 150);
+    });
+  }, 130);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3411,28 +3484,17 @@ function buildHome() {
   const wrap = document.createElement('div');
   wrap.className = 'home-screen fade-up';
 
-  // ── Streak message
-  if (S.streak >= 20) {
+  // ── Streak message (compact, only strong streaks)
+  if (S.streak >= 10) {
     const msg = document.createElement('div');
-    msg.className = 'streak-msg fire';
-    msg.textContent = `🏆 ${S.streak} bonnes réponses d'affilée — tu déchires !`;
-    wrap.appendChild(msg);
-  } else if (S.streak >= 10) {
-    const msg = document.createElement('div');
-    msg.className = 'streak-msg hot';
-    msg.textContent = `🔥 Streak x${S.streak} — continue sur ta lancée !`;
-    wrap.appendChild(msg);
-  } else if (S.streak >= 5) {
-    const msg = document.createElement('div');
-    msg.className = 'streak-msg cool';
-    msg.textContent = `✨ ${S.streak} bonnes réponses — bien joué !`;
+    msg.className = 'streak-msg ' + (S.streak >= 20 ? 'fire' : 'hot');
+    msg.textContent = S.streak >= 20
+      ? `🏆 ${S.streak} bonnes réponses d'affilée — tu déchires !`
+      : `🔥 Streak x${S.streak} — continue sur ta lancée !`;
     wrap.appendChild(msg);
   }
 
-  // ── Daily mission block
-  wrap.appendChild(buildDailyMissions());
-
-  // ── Smart CTA (next step)
+  // ── Smart CTA (next step) — FIRST, toujours visible sans scroll
   const next = computeNextStep();
   const cta = document.createElement('div');
   cta.className = 'home-cta';
@@ -3447,6 +3509,31 @@ function buildHome() {
   `;
   cta.onclick = next.action ? next.action : () => switchTab(next.tab);
   wrap.appendChild(cta);
+
+  // ── Daily mission block — collapsible, fermée par défaut si mission faite
+  const missionDone = S.daily.actions >= S.daily.goal;
+  const missionOpen = !missionDone || !S._missionCollapsed;
+  const missionWrap = document.createElement('div');
+  missionWrap.className = 'daily-mission-wrap';
+  const dmToggle = document.createElement('div');
+  dmToggle.className = 'dm-toggle';
+  dmToggle.innerHTML = `
+    <span class="dm-toggle-label">Mission du jour</span>
+    <span class="dm-toggle-arrow ${missionOpen ? 'open' : ''}">›</span>
+  `;
+  const dmCollapse = document.createElement('div');
+  dmCollapse.className = 'dm-collapse ' + (missionOpen ? 'open' : 'closed');
+  dmCollapse.appendChild(buildDailyMissions());
+  dmToggle.onclick = () => {
+    const isOpen = dmCollapse.classList.contains('open');
+    dmCollapse.classList.toggle('open', !isOpen);
+    dmCollapse.classList.toggle('closed', isOpen);
+    dmToggle.querySelector('.dm-toggle-arrow').classList.toggle('open', !isOpen);
+    S._missionCollapsed = !isOpen;
+  };
+  missionWrap.appendChild(dmToggle);
+  missionWrap.appendChild(dmCollapse);
+  wrap.appendChild(missionWrap);
 
   // ── Module list title
   const title = document.createElement('div');
