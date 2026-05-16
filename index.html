@@ -49,6 +49,21 @@ header{display:flex;align-items:center;justify-content:space-between;
 .hd-stat .n{font-size:.9rem;font-weight:500;color:var(--accent);line-height:1;}
 .hd-stat .l{font-size:.44rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
 
+/* ── CROC GEEK mascot ── */
+.croc-logo-wrap{display:flex;align-items:center;gap:10px;}
+.croc-logo-svg{width:42px;height:46px;flex-shrink:0;transition:transform .3s ease;cursor:default;}
+.croc-logo-svg:hover{transform:rotate(-8deg) scale(1.12);}
+@keyframes crocBob{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes crocBlink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(0.06)}}
+.croc-logo-svg{animation:crocBob 2.8s ease-in-out infinite;}
+.croc-eye-blink{animation:crocBlink 5s ease-in-out infinite;transform-origin:center;}
+.croc-eye-blink2{animation:crocBlink 5s ease-in-out infinite .08s;transform-origin:center;}
+
+/* Mascot in finish/toast */
+.croc-mini{display:inline-block;vertical-align:middle;}
+@keyframes crocFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.croc-float{animation:crocFloat 2.4s ease-in-out infinite;}
+
 /* ── NAV ── */
 nav{display:none;} /* nav remplacé par home screen */
 
@@ -985,9 +1000,69 @@ main{flex:1;display:flex;flex-direction:column;}
 </div>
 
 <header>
-  <div class="logo-wrap">
-    <div class="logo-name">QA <em>English</em></div>
-    <div class="logo-sub">Omar · Lacoste QA Engineer</div>
+  <div class="logo-wrap croc-logo-wrap">
+    <!-- Croc Geek mascot SVG -->
+    <svg class="croc-logo-svg" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="QA English mascot">
+      <!-- Shadow -->
+      <ellipse cx="60" cy="127" rx="26" ry="4" fill="#000" opacity=".15"/>
+      <!-- Body -->
+      <rect x="30" y="62" width="60" height="50" rx="18" fill="#22c55e"/>
+      <rect x="36" y="68" width="48" height="42" rx="14" fill="#16a34a"/>
+      <!-- Belly -->
+      <rect x="43" y="74" width="34" height="32" rx="11" fill="#dcfce7"/>
+      <!-- Tail -->
+      <path d="M86 90 L110 84 L106 104 L90 100Z" fill="#16a34a"/>
+      <path d="M106 84 L116 76 L114 92 L106 98Z" fill="#15803d"/>
+      <!-- Arms -->
+      <rect x="14" y="74" width="18" height="30" rx="9" fill="#22c55e"/>
+      <rect x="88" y="74" width="18" height="30" rx="9" fill="#22c55e"/>
+      <!-- Legs -->
+      <rect x="38" y="106" width="16" height="18" rx="8" fill="#22c55e"/>
+      <rect x="66" y="106" width="16" height="18" rx="8" fill="#22c55e"/>
+      <!-- Head -->
+      <rect x="26" y="18" width="68" height="58" rx="22" fill="#22c55e"/>
+      <rect x="30" y="22" width="60" height="52" rx="18" fill="#16a34a"/>
+      <!-- Snout -->
+      <rect x="38" y="55" width="44" height="23" rx="10" fill="#15803d"/>
+      <!-- Nostrils -->
+      <ellipse cx="50" cy="62" rx="4" ry="4.5" fill="#0f4c1e"/>
+      <ellipse cx="70" cy="62" rx="4" ry="4.5" fill="#0f4c1e"/>
+      <!-- Mouth -->
+      <path d="M48 70 Q60 77 72 70" stroke="#86efac" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Teeth -->
+      <rect x="55" y="69" width="4" height="5" rx="1" fill="#fff"/>
+      <rect x="62" y="69" width="4" height="5" rx="1" fill="#fff"/>
+      <!-- Eye whites -->
+      <rect x="34" y="26" width="22" height="22" rx="7" fill="white"/>
+      <rect x="64" y="26" width="22" height="22" rx="7" fill="white"/>
+      <!-- Square glasses frames -->
+      <rect x="33" y="25" width="24" height="24" rx="5" fill="none" stroke="#111" stroke-width="3.5"/>
+      <rect x="63" y="25" width="24" height="24" rx="5" fill="none" stroke="#111" stroke-width="3.5"/>
+      <!-- Glasses bridge + arms -->
+      <line x1="57" y1="37" x2="63" y2="37" stroke="#111" stroke-width="3"/>
+      <line x1="33" y1="35" x2="24" y2="33" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="87" y1="35" x2="96" y2="33" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Pupils (with blink) -->
+      <rect x="39" y="31" width="12" height="14" rx="4" fill="#1e1e1e"/>
+      <rect x="69" y="31" width="12" height="14" rx="4" fill="#1e1e1e"/>
+      <ellipse cx="44" cy="35" rx="2.5" ry="2.5" fill="white"/>
+      <ellipse cx="74" cy="35" rx="2.5" ry="2.5" fill="white"/>
+      <!-- Blink overlays -->
+      <rect class="croc-eye-blink"  x="34" y="26" width="22" height="22" rx="7" fill="#16a34a"/>
+      <rect class="croc-eye-blink2" x="64" y="26" width="22" height="22" rx="7" fill="#16a34a"/>
+      <!-- QA badge on belly -->
+      <rect x="48" y="82" width="24" height="13" rx="5" fill="#c1121f"/>
+      <text x="60" y="92" font-size="7" font-family="monospace" font-weight="700" fill="white" text-anchor="middle">QA</text>
+      <!-- Headphones -->
+      <path d="M28 40 Q26 24 36 20" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M92 40 Q94 24 84 20" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="22" y="38" width="10" height="8" rx="4" fill="#111"/>
+      <rect x="88" y="38" width="10" height="8" rx="4" fill="#111"/>
+    </svg>
+    <div>
+      <div class="logo-name">QA <em>English</em></div>
+      <div class="logo-sub">Omar · Lacoste QA Engineer</div>
+    </div>
   </div>
   <div class="hd-stats">
     <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
@@ -3263,6 +3338,46 @@ function buildDailyMissions() {
   return div;
 }
 
+// ── Croc Geek SVG helper (inline, scalable)
+function crocSVG(w=48, extra='') {
+  return `<svg class="croc-mini croc-float ${extra}" width="${w}" height="${Math.round(w*1.08)}" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="60" cy="127" rx="26" ry="4" fill="#000" opacity=".12"/>
+    <rect x="30" y="62" width="60" height="50" rx="18" fill="#22c55e"/>
+    <rect x="36" y="68" width="48" height="42" rx="14" fill="#16a34a"/>
+    <rect x="43" y="74" width="34" height="32" rx="11" fill="#dcfce7"/>
+    <path d="M86 90 L110 84 L106 104 L90 100Z" fill="#16a34a"/>
+    <rect x="14" y="74" width="18" height="30" rx="9" fill="#22c55e"/>
+    <rect x="88" y="74" width="18" height="30" rx="9" fill="#22c55e"/>
+    <rect x="38" y="106" width="16" height="18" rx="8" fill="#22c55e"/>
+    <rect x="66" y="106" width="16" height="18" rx="8" fill="#22c55e"/>
+    <rect x="26" y="18" width="68" height="58" rx="22" fill="#22c55e"/>
+    <rect x="30" y="22" width="60" height="52" rx="18" fill="#16a34a"/>
+    <rect x="38" y="55" width="44" height="23" rx="10" fill="#15803d"/>
+    <ellipse cx="50" cy="62" rx="4" ry="4.5" fill="#0f4c1e"/>
+    <ellipse cx="70" cy="62" rx="4" ry="4.5" fill="#0f4c1e"/>
+    <path d="M48 70 Q60 77 72 70" stroke="#86efac" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <rect x="55" y="69" width="4" height="5" rx="1" fill="#fff"/>
+    <rect x="62" y="69" width="4" height="5" rx="1" fill="#fff"/>
+    <rect x="34" y="26" width="22" height="22" rx="7" fill="white"/>
+    <rect x="64" y="26" width="22" height="22" rx="7" fill="white"/>
+    <rect x="33" y="25" width="24" height="24" rx="5" fill="none" stroke="#111" stroke-width="3.5"/>
+    <rect x="63" y="25" width="24" height="24" rx="5" fill="none" stroke="#111" stroke-width="3.5"/>
+    <line x1="57" y1="37" x2="63" y2="37" stroke="#111" stroke-width="3"/>
+    <line x1="33" y1="35" x2="24" y2="33" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="87" y1="35" x2="96" y2="33" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="39" y="31" width="12" height="14" rx="4" fill="#1e1e1e"/>
+    <rect x="69" y="31" width="12" height="14" rx="4" fill="#1e1e1e"/>
+    <ellipse cx="44" cy="35" rx="2.5" ry="2.5" fill="white"/>
+    <ellipse cx="74" cy="35" rx="2.5" ry="2.5" fill="white"/>
+    <rect x="48" y="82" width="24" height="13" rx="5" fill="#c1121f"/>
+    <text x="60" y="92" font-size="7" font-family="monospace" font-weight="700" fill="white" text-anchor="middle">QA</text>
+    <path d="M28 40 Q26 24 36 20" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M92 40 Q94 24 84 20" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <rect x="22" y="38" width="10" height="8" rx="4" fill="#111"/>
+    <rect x="88" y="38" width="10" height="8" rx="4" fill="#111"/>
+  </svg>`;
+}
+
 function buildHome() {
   const rv = cntRev();
   const total = DATA.vocab.length + DATA.expr.length + PREP_CARDS.length + PHRASAL_VERBS.length + TAKE_VERBS.length;
@@ -3326,6 +3441,7 @@ function buildHome() {
       <div class="home-cta-label">${next.label}</div>
       <div class="home-cta-sub">${next.sub}</div>
     </div>
+    <div style="margin-left:auto;flex-shrink:0;">${crocSVG(36)}</div>
   `;
   cta.onclick = next.action ? next.action : () => switchTab(next.tab);
   wrap.appendChild(cta);
@@ -5308,7 +5424,7 @@ function buildLauncher() {
   }
 
   wrap.innerHTML=`
-    <div class="rl-title">🎯 Choisir une session de révision</div>
+    <div class="rl-title" style="display:flex;align-items:center;gap:10px;">${crocSVG(32)} 🎯 Choisir une session de révision</div>
     <div class="rl-list">
       <div class="rl-card" style="${srDue>0?'border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.04)':''}">
         <div class="rl-info">
@@ -7532,8 +7648,8 @@ function buildSessionRecap() {
             }).join('')}
           </div>
         </div>` : `
-        <div style="text-align:center;padding:12px;font-family:var(--mono);font-size:.72rem;color:var(--accent2);background:rgba(45,106,79,.08);border-radius:10px;margin-bottom:8px;">
-          🎉 Lot parfait — aucune erreur !
+        <div style="text-align:center;padding:12px;font-family:var(--mono);font-size:.72rem;color:var(--accent2);background:rgba(45,106,79,.08);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:10px;">
+          ${crocSVG(34)} 🎉 Lot parfait — aucune erreur !
         </div>`}
 
       <div class="sess-recap-btns">
