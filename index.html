@@ -5074,6 +5074,13 @@ function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
 if (!window._duoOpenTheme) window._duoOpenTheme = { found: -1, phrasal: -1, grammar: -1 };
 window.setDuoOpenTheme = function(section, idx) {
   window._duoOpenTheme[section] = idx;
+  // Ensure back bar points to home (render() doesn't touch it)
+  const bar = document.getElementById('backBar');
+  if (bar) {
+    bar.style.display = 'flex';
+    bar.onclick = goHome;
+    _setBackBarLabel("Retour à l'accueil");
+  }
   render();
 };
 
@@ -7299,6 +7306,7 @@ function startSession(moduleKey, startPos, skipBatch, origin) {
     answers: {},           // idx→ {chosen, correct} for MCQ / {val} for FC
     showRecap: false,
     showErrors: false,
+    origin: origin || null,
   };
 
   // Save resume position (will be updated as we go)
@@ -7698,14 +7706,14 @@ function buildSessionRecap() {
 
       <div class="sess-recap-btns">
         ${hasMore ? `
-          <button class="btn-recap prim" style="background:${color}" onclick="startSession('${moduleKey}', ${nextPos})">
+          <button class="btn-recap prim" style="background:${color}" onclick="startSession('${moduleKey}', ${nextPos}, false, sess.origin)">
             ▶ Lot suivant (${batchNum+1}/${batchTotal}) →
           </button>` : `
           <button class="btn-recap prim" style="background:${color}" disabled>
             🏆 Module terminé !
           </button>`}
         <button class="btn-recap sec" onclick="goHome()">🏠 Accueil</button>
-        <button class="btn-recap restart" onclick="startSession('${moduleKey}', 0)">↺ Recommencer depuis le début</button>
+        <button class="btn-recap restart" onclick="startSession('${moduleKey}', 0, false, sess.origin)">↺ Recommencer depuis le début</button>
       </div>
     </div>
   `;
