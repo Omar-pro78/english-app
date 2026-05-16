@@ -237,6 +237,52 @@ nav{display:none;} /* nav remplacé par home screen */
 .hub-card-prog-label{font-family:var(--mono);font-size:.5rem;color:var(--muted);white-space:nowrap;}
 .hub-card-arrow{font-size:1rem;color:var(--border2);transition:color .18s;flex-shrink:0;}
 .hub-card:hover .hub-card-arrow{color:var(--hc-color,var(--accent2));}
+
+/* ── DUOLINGO PATH ── */
+.duo-section-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 16px;position:relative;}
+.duo-path-line{width:3px;height:22px;border-radius:2px;background:var(--border2);margin:0 auto;transition:background .3s;}
+.duo-path-line.done{background:var(--duo-color);}
+.duo-node{display:flex;flex-direction:column;align-items:center;gap:0;position:relative;z-index:1;}
+.duo-node-circle{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;border:3px solid var(--border2);background:var(--surface2);
+  cursor:pointer;transition:all .22s;position:relative;}
+.duo-node-circle.done{background:var(--duo-color);border-color:var(--duo-color);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.15);}
+.duo-node-circle.active{background:var(--surface);border-color:var(--duo-color);color:var(--duo-color);
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--duo-color) 18%,transparent),0 4px 14px rgba(0,0,0,.1);
+  animation:duoPulse 2.2s ease-in-out infinite;}
+@keyframes duoPulse{0%,100%{box-shadow:0 0 0 5px color-mix(in srgb,var(--duo-color) 18%,transparent),0 4px 14px rgba(0,0,0,.1);}
+  50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--duo-color) 8%,transparent),0 4px 14px rgba(0,0,0,.1);}}
+.duo-node-circle.locked{opacity:.5;cursor:default;}
+.duo-node-circle.done:hover,.duo-node-circle.active:hover{transform:scale(1.08);}
+.duo-node-stars{display:flex;gap:2px;font-size:.62rem;min-height:14px;margin-top:3px;justify-content:center;}
+.duo-node-label{font-family:var(--mono);font-size:.58rem;color:var(--muted);text-align:center;max-width:80px;line-height:1.3;margin-top:2px;}
+.duo-node-label.active{color:var(--duo-color);font-weight:700;}
+.duo-start-btn{margin-top:7px;padding:6px 16px;border-radius:20px;border:none;
+  background:var(--duo-color);color:#fff;font-family:var(--sans);font-size:.68rem;font-weight:800;
+  cursor:pointer;letter-spacing:.3px;transition:all .18s;}
+.duo-start-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* Sublot drawer */
+.duo-sublot-drawer{background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;
+  margin:10px 0 0;padding:14px 16px;display:flex;flex-direction:column;gap:6px;width:100%;max-width:440px;}
+.duo-sublot-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .18s;}
+.duo-sublot-item:hover{border-color:var(--duo-color);background:color-mix(in srgb,var(--duo-color) 5%,var(--surface));}
+.duo-sublot-item.active-lot{border-color:var(--duo-color);background:color-mix(in srgb,var(--duo-color) 7%,var(--surface));}
+.duo-sublot-item.locked-lot{opacity:.45;cursor:default;}
+.duo-sublot-item.locked-lot:hover{border-color:var(--border);background:var(--surface2);}
+.duo-sublot-dot{width:9px;height:9px;border-radius:50%;background:var(--border2);flex-shrink:0;}
+.duo-sublot-dot.done{background:var(--duo-color);}
+.duo-sublot-dot.active{background:var(--duo-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--duo-color) 25%,transparent);}
+.duo-sublot-label{flex:1;font-size:.78rem;font-weight:600;color:var(--text);}
+.duo-sublot-label.locked-lot{color:var(--muted);}
+.duo-sublot-stars{font-size:.65rem;white-space:nowrap;}
+.duo-sublot-badge{font-family:var(--mono);font-size:.5rem;padding:2px 7px;border-radius:8px;
+  background:color-mix(in srgb,var(--duo-color) 15%,transparent);
+  color:var(--duo-color);border:1px solid color-mix(in srgb,var(--duo-color) 30%,transparent);white-space:nowrap;}
+
+/* Hub page outer layout */
+.hub-page-duo{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:24px 16px 60px;}
 .home-back{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.65rem;
   color:var(--muted);cursor:pointer;padding:12px 16px;border-bottom:1px solid var(--border);
   background:var(--bg2);transition:color .18s;}
@@ -4661,155 +4707,364 @@ function hubProgBar(done, total, color) {
     </div>`;
 }
 
+// ── DUOLINGO PATH HELPERS ────────────────────────────────────
+// starsForScore(pct) → 0,1,2,3
+function starsForScore(pct) {
+  if (pct === null || pct === undefined) return 0;
+  if (pct >= 85) return 3;
+  if (pct >= 60) return 2;
+  if (pct >= 1)  return 1;
+  return 0;
+}
+function renderStars(n, total=3) {
+  let s = '';
+  for (let i=0;i<total;i++) s += i<n ? '⭐' : '<span style="opacity:.2">⭐</span>';
+  return s;
+}
+
+// Calc session score% for a module (fc or mcq)
+function moduleScorePct(moduleKey) {
+  const cfg = SESS_CFG[moduleKey];
+  if (!cfg) return null;
+  const data = cfg.getData();
+  if (!data || !data.length) return null;
+  if (cfg.type === 'fc') {
+    const ok = data.filter((_,i)=>getS(moduleKey,i)==='ok').length;
+    return Math.round((ok/data.length)*100);
+  }
+  const ans = S[cfg.answersKey] || {};
+  const answered = Object.keys(ans).length;
+  if (!answered) return null;
+  const correct = Object.entries(ans).filter(([i,v])=>parseInt(v)===cfg.qcmData()[i].ans).length;
+  return Math.round((correct/answered)*100);
+}
+
+// Calc lot score for a batch of a module (batchSize items starting at batchStart)
+function lotScorePct(moduleKey, batchStart, batchSize) {
+  const cfg = SESS_CFG[moduleKey];
+  if (!cfg) return null;
+  const data = cfg.getData();
+  if (!data || !data.length) return null;
+  const batchEnd = Math.min(batchStart + batchSize, data.length);
+  if (cfg.type === 'fc') {
+    let ok = 0, total = 0;
+    for (let i=batchStart; i<batchEnd; i++) { total++; if (getS(moduleKey,i)==='ok') ok++; }
+    return total > 0 ? Math.round((ok/total)*100) : null;
+  }
+  const ans = S[cfg.answersKey] || {};
+  let correct = 0, answered = 0;
+  for (let i=batchStart; i<batchEnd; i++) {
+    if (ans.hasOwnProperty(i)) { answered++; if (parseInt(ans[i])===cfg.qcmData()[i].ans) correct++; }
+  }
+  return answered > 0 ? Math.round((correct/answered)*100) : null;
+}
+
+// Check if a lot (batch) has been started (any answer in it)
+function lotStarted(moduleKey, batchStart, batchSize) {
+  const cfg = SESS_CFG[moduleKey];
+  if (!cfg) return false;
+  const data = cfg.getData();
+  const batchEnd = Math.min(batchStart + batchSize, data.length);
+  if (cfg.type === 'fc') {
+    for (let i=batchStart;i<batchEnd;i++) { if (getS(moduleKey,i)) return true; }
+    return false;
+  }
+  const ans = S[cfg.answersKey] || {};
+  for (let i=batchStart;i<batchEnd;i++) { if (ans.hasOwnProperty(i)) return true; }
+  return false;
+}
+
+// Resume position for a module
+function moduleResumeLot(moduleKey) {
+  const prog = S.sessProgress[moduleKey];
+  return prog ? Math.floor((prog.pos || 0) / BATCH_SIZE) : 0;
+}
+
+// Build a Duolingo-style path for a section (list of "themes" with lots inside)
+// themes = [{label, icon, lots:[{moduleKey, label, batchStart}]}]
+function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
+  // openThemeIdx: which theme node is currently expanded (shows sublot drawer)
+  const wrap = document.createElement('div');
+  wrap.className = 'duo-section-wrap';
+  wrap.style.setProperty('--duo-color', color);
+
+  // Determine which themes are done/active/locked
+  // A theme is "done" when all its lots are started (have ≥1 answer/ok)
+  // A theme is "active" when previous theme is done (or it's the first)
+  // A theme is "locked" when previous theme is not done
+
+  function themeState(ti) {
+    const theme = themes[ti];
+    const allStarted = theme.lots.every(l => lotStarted(l.moduleKey, l.batchStart, BATCH_SIZE));
+    // For stars: average of lot stars
+    let starSum = 0, starCount = 0;
+    theme.lots.forEach(l => {
+      const pct = lotScorePct(l.moduleKey, l.batchStart, BATCH_SIZE);
+      if (pct !== null) { starSum += starsForScore(pct); starCount++; }
+    });
+    const avgStars = starCount > 0 ? Math.round(starSum/starCount) : 0;
+
+    if (allStarted) return { state:'done', stars: avgStars };
+    if (ti === 0) return { state:'active', stars: 0 };
+    // check if previous theme is done
+    const prev = themes[ti-1];
+    const prevDone = prev.lots.every(l => lotStarted(l.moduleKey, l.batchStart, BATCH_SIZE));
+    if (prevDone) return { state:'active', stars: 0 };
+    return { state:'locked', stars: 0 };
+  }
+
+  themes.forEach((theme, ti) => {
+    // Connector line (before node, except first)
+    if (ti > 0) {
+      const prevInfo = themeState(ti-1);
+      const line = document.createElement('div');
+      line.className = 'duo-path-line' + (prevInfo.state==='done' ? ' done' : '');
+      wrap.appendChild(line);
+    }
+
+    const info = themeState(ti);
+    const nodeWrap = document.createElement('div');
+    nodeWrap.className = 'duo-node';
+
+    // Circle
+    const circle = document.createElement('div');
+    circle.className = 'duo-node-circle ' + info.state;
+    circle.textContent = info.state==='locked' ? '🔒' : (info.state==='done' ? '✓' : theme.icon);
+    circle.style.fontSize = info.state==='done' ? '1.3rem' : '1.5rem';
+
+    if (info.state !== 'locked') {
+      circle.onclick = () => { openThemeSetter(openThemeIdx === ti ? -1 : ti); };
+    }
+
+    nodeWrap.appendChild(circle);
+
+    // Stars row
+    const stars = document.createElement('div');
+    stars.className = 'duo-node-stars';
+    stars.innerHTML = info.state === 'done' ? renderStars(info.stars) : '';
+    nodeWrap.appendChild(stars);
+
+    // Label
+    const lbl = document.createElement('div');
+    lbl.className = 'duo-node-label' + (info.state==='active' ? ' active' : '');
+    lbl.textContent = theme.label;
+    nodeWrap.appendChild(lbl);
+
+    // COMMENCER button (active node only, when not open)
+    if (info.state === 'active' && openThemeIdx !== ti) {
+      const btn = document.createElement('button');
+      btn.className = 'duo-start-btn';
+      btn.textContent = 'COMMENCER';
+      btn.onclick = () => openThemeSetter(ti);
+      nodeWrap.appendChild(btn);
+    }
+
+    wrap.appendChild(nodeWrap);
+
+    // Sublot drawer (open theme)
+    if (openThemeIdx === ti && info.state !== 'locked') {
+      const drawer = document.createElement('div');
+      drawer.className = 'duo-sublot-drawer';
+      drawer.style.setProperty('--duo-color', color);
+
+      // Header
+      const drawerHead = document.createElement('div');
+      drawerHead.style.cssText = 'font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;';
+      drawerHead.textContent = theme.label + ' — Lots';
+      drawer.appendChild(drawerHead);
+
+      theme.lots.forEach((lot, li) => {
+        const pct = lotScorePct(lot.moduleKey, lot.batchStart, BATCH_SIZE);
+        const started = lotStarted(lot.moduleKey, lot.batchStart, BATCH_SIZE);
+        const stars = starsForScore(pct);
+
+        // Lot unlock: first lot always available; subsequent lots available if previous started
+        const prevStarted = li === 0 || lotStarted(theme.lots[li-1].moduleKey, theme.lots[li-1].batchStart, BATCH_SIZE);
+        const isLocked = !prevStarted;
+        const isActive = !started && !isLocked;
+
+        const item = document.createElement('div');
+        item.className = 'duo-sublot-item' + (isLocked ? ' locked-lot' : '') + (isActive ? ' active-lot' : '');
+
+        const dot = document.createElement('div');
+        dot.className = 'duo-sublot-dot' + (started ? ' done' : '') + (isActive ? ' active' : '');
+        item.appendChild(dot);
+
+        const itemLabel = document.createElement('div');
+        itemLabel.className = 'duo-sublot-label' + (isLocked ? ' locked-lot' : '');
+        itemLabel.textContent = lot.label;
+        item.appendChild(itemLabel);
+
+        if (started && pct !== null) {
+          const starSpan = document.createElement('div');
+          starSpan.className = 'duo-sublot-stars';
+          starSpan.innerHTML = renderStars(stars);
+          item.appendChild(starSpan);
+        }
+
+        if (isActive) {
+          const badge = document.createElement('div');
+          badge.className = 'duo-sublot-badge';
+          badge.textContent = 'En cours';
+          item.appendChild(badge);
+        }
+
+        if (isLocked) {
+          item.innerHTML += '<span style="font-size:.8rem;opacity:.4">🔒</span>';
+        }
+
+        if (!isLocked) {
+          item.onclick = () => {
+            const origin = lot.moduleKey.startsWith('grammar') ? 'grammar-hub'
+              : (lot.moduleKey==='phrasal'||lot.moduleKey==='take') ? 'phrasal-hub'
+              : 'foundations-hub';
+            startSession(lot.moduleKey, lot.batchStart, false, origin);
+          };
+        }
+
+        drawer.appendChild(item);
+      });
+
+      wrap.appendChild(drawer);
+    }
+  });
+
+  return wrap;
+}
+
+// ── STATE for open theme indices ─────────────────────────────
+if (!window._duoOpenTheme) window._duoOpenTheme = { found: -1, phrasal: -1, grammar: -1 };
+window.setDuoOpenTheme = function(section, idx) {
+  window._duoOpenTheme[section] = idx;
+  render();
+};
+
 function buildFoundationsHub() {
   const wrap = document.createElement('div');
-  wrap.className = 'hub-page fade-up';
-  const okV = DATA.vocab.filter((_,i)=>getS('vocab',i)==='ok').length;
-  const okE = DATA.expr.filter((_,i)=>getS('expr',i)==='ok').length;
-  const okP = PREP_CARDS.filter((_,i)=>getS('prep',i)==='ok').length;
+  wrap.className = 'hub-page-duo fade-up';
   const COLOR = '#c1121f';
-  wrap.innerHTML = `
-    <div class="hub-tag" style="background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25);color:${COLOR}">📚 FOUNDATIONS</div>
+
+  // Define themes for Foundation
+  // Each lot maps to: moduleKey + batchStart (using BATCH_SIZE chunks)
+  const BS = BATCH_SIZE;
+  const vocabLots = [];
+  for (let i=0; i<DATA.vocab.length; i+=BS) {
+    const end = Math.min(i+BS, DATA.vocab.length);
+    vocabLots.push({ moduleKey:'vocab', batchStart:i, label:`Vocab Lot ${Math.floor(i/BS)+1} (${i+1}-${end})` });
+  }
+  const exprLots = [];
+  for (let i=0; i<DATA.expr.length; i+=BS) {
+    const end = Math.min(i+BS, DATA.expr.length);
+    exprLots.push({ moduleKey:'expr', batchStart:i, label:`Expr Lot ${Math.floor(i/BS)+1} (${i+1}-${end})` });
+  }
+  const prepLots = [];
+  for (let i=0; i<PREP_CARDS.length; i+=BS) {
+    const end = Math.min(i+BS, PREP_CARDS.length);
+    prepLots.push({ moduleKey:'prep', batchStart:i, label:`Prep Lot ${Math.floor(i/BS)+1} (${i+1}-${end})` });
+  }
+
+  const themes = [
+    { label: 'QA Vocabulary', icon: '📚', lots: vocabLots.slice(0,4) },
+    { label: 'Vocabulary II', icon: '🔤', lots: vocabLots.slice(4) },
+    { label: 'Expressions', icon: '💬', lots: exprLots },
+    { label: 'Prepositions', icon: '📐', lots: prepLots },
+  ].filter(t => t.lots.length > 0);
+
+  // Header
+  const header = document.createElement('div');
+  header.innerHTML = `
+    <div class="hub-tag" style="background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25);color:${COLOR};margin-bottom:6px;">📚 FOUNDATIONS</div>
     <div class="hub-title" style="color:${COLOR}">Foundations</div>
-    <div class="hub-subtitle">Core vocabulary, expressions and prepositions for QA work</div>
-    <div class="hub-grid">
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('vocab')">
-        <div class="hub-card-icon">📚</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">QA Vocabulary</div>
-          <div class="hub-card-desc">${DATA.vocab.length} words — technical & professional</div>
-          ${hubProgBar(okV, DATA.vocab.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('expr')">
-        <div class="hub-card-icon">💬</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Expressions</div>
-          <div class="hub-card-desc">${DATA.expr.length} phrases — meetings & daily use</div>
-          ${hubProgBar(okE, DATA.expr.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('prep')">
-        <div class="hub-card-icon">📐</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Prepositions</div>
-          <div class="hub-card-desc">${PREP_CARDS.length} cards — in / on / at / by...</div>
-          ${hubProgBar(okP, PREP_CARDS.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-    </div>
+    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
   `;
+  wrap.appendChild(header);
+
+  const path = buildDuoPath(
+    themes, COLOR,
+    window._duoOpenTheme.found,
+    (idx) => setDuoOpenTheme('found', idx)
+  );
+  wrap.appendChild(path);
   return wrap;
 }
 
 function buildPhrasalHub() {
   const wrap = document.createElement('div');
-  wrap.className = 'hub-page fade-up';
-  const okG = PHRASAL_VERBS.filter((_,i)=>getS('phrasal',i)==='ok').length;
-  const okT = TAKE_VERBS.filter((_,i)=>getS('take',i)==='ok').length;
-  const COLOR = '#c1121f';
-  wrap.innerHTML = `
-    <div class="hub-tag" style="background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25);color:${COLOR}">🔗 PHRASAL VERBS</div>
+  wrap.className = 'hub-page-duo fade-up';
+  const COLOR = '#ea6c00';
+  const BS = BATCH_SIZE;
+
+  const getLotsP = [];
+  for (let i=0; i<PHRASAL_VERBS.length; i+=BS) {
+    const end = Math.min(i+BS, PHRASAL_VERBS.length);
+    getLotsP.push({ moduleKey:'phrasal', batchStart:i, label:`GET Verbs — Lot ${Math.floor(i/BS)+1} (${i+1}–${end})` });
+  }
+  const takeLots = [];
+  for (let i=0; i<TAKE_VERBS.length; i+=BS) {
+    const end = Math.min(i+BS, TAKE_VERBS.length);
+    takeLots.push({ moduleKey:'take', batchStart:i, label:`TAKE Verbs — Lot ${Math.floor(i/BS)+1} (${i+1}–${end})` });
+  }
+
+  const themes = [
+    { label: 'GET Verbs', icon: '🔗', lots: getLotsP },
+    { label: 'TAKE Verbs', icon: '✈️', lots: takeLots },
+  ].filter(t => t.lots.length > 0);
+
+  const header = document.createElement('div');
+  header.innerHTML = `
+    <div class="hub-tag" style="background:rgba(234,108,0,.08);border-color:rgba(234,108,0,.25);color:${COLOR};margin-bottom:6px;">🔗 PHRASAL VERBS</div>
     <div class="hub-title" style="color:${COLOR}">Phrasal Verbs</div>
-    <div class="hub-subtitle">High-frequency particle verbs in professional context</div>
-    <div class="hub-grid">
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('phrasal')">
-        <div class="hub-card-icon">🔗</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">GET Verbs</div>
-          <div class="hub-card-desc">${PHRASAL_VERBS.length} verbs — get on, get through, get rid of...</div>
-          ${hubProgBar(okG, PHRASAL_VERBS.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('take')">
-        <div class="hub-card-icon">✈️</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">TAKE Verbs</div>
-          <div class="hub-card-desc">${TAKE_VERBS.length} verbs — take over, take into account...</div>
-          ${hubProgBar(okT, TAKE_VERBS.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-    </div>
+    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
   `;
+  wrap.appendChild(header);
+
+  const path = buildDuoPath(
+    themes, COLOR,
+    window._duoOpenTheme.phrasal,
+    (idx) => setDuoOpenTheme('phrasal', idx)
+  );
+  wrap.appendChild(path);
   return wrap;
 }
 
 function buildGrammarHub() {
   const wrap = document.createElement('div');
-  wrap.className = 'hub-page fade-up';
-  const doneG  = Object.keys(S.mcqAnswers).length;
-  const doneG2 = Object.keys(S.mcqAnswers2).length;
-  const doneG3 = Object.keys(S.mcqAnswers3).length;
-  const doneG4 = Object.keys(S.mcqAnswers4).length;
-  const doneG5 = Object.keys(S.mcqAnswers5).length;
-  const doneG6 = Object.keys(S.mcqAnswers6 || {}).length;
-  const COLOR  = '#7c3aed';
-  wrap.innerHTML = `
-    <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR}">🧠 GRAMMAR</div>
+  wrap.className = 'hub-page-duo fade-up';
+  const COLOR = '#7c3aed';
+  const BS = BATCH_SIZE;
+
+  function mcqLots(moduleKey, data) {
+    const lots = [];
+    for (let i=0; i<data.length; i+=BS) {
+      const end = Math.min(i+BS, data.length);
+      lots.push({ moduleKey, batchStart:i, label:`Lot ${Math.floor(i/BS)+1} — Q${i+1}–${end}` });
+    }
+    return lots;
+  }
+
+  const themes = [
+    { label: 'Basic Grammar', icon: '📝', lots: mcqLots('grammar', GRAMMAR_QCM) },
+    { label: 'Advanced Grammar', icon: '🧩', lots: mcqLots('grammar2', GRAMMAR2_QCM) },
+    { label: 'Need/Want/Must', icon: '⚡', lots: mcqLots('grammar3', GRAMMAR3_QCM) },
+    { label: 'Modaux', icon: '🔮', lots: mcqLots('grammar4', GRAMMAR4_QCM) },
+    { label: 'Pronoms', icon: '👤', lots: mcqLots('grammar5', GRAMMAR5_QCM) },
+    { label: 'Sentence Fill-in', icon: '✏️', lots: mcqLots('grammar6', GRAMMAR6_QCM) },
+  ].filter(t => t.lots.length > 0);
+
+  const header = document.createElement('div');
+  header.innerHTML = `
+    <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR};margin-bottom:6px;">🧠 GRAMMAR</div>
     <div class="hub-title" style="color:${COLOR}">Grammar</div>
-    <div class="hub-subtitle">Lessons and MCQ to consolidate your grammar</div>
-    <div class="hub-grid">
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar')">
-        <div class="hub-card-icon">📝</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Basic Grammar</div>
-          <div class="hub-card-desc">${GRAMMAR_QCM.length} questions — word classes, articles, tenses</div>
-          ${hubProgBar(doneG, GRAMMAR_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar2')">
-        <div class="hub-card-icon">🧩</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Advanced Grammar</div>
-          <div class="hub-card-desc">${GRAMMAR2_QCM.length} questions — context, suffixes, traps</div>
-          ${hubProgBar(doneG2, GRAMMAR2_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar3')">
-        <div class="hub-card-icon">⚡</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Need to · Want to · Have to · Must</div>
-          <div class="hub-card-desc">${GRAMMAR3_QCM.length} questions — modaux & niveaux d'obligation</div>
-          ${hubProgBar(doneG3, GRAMMAR3_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar4')">
-        <div class="hub-card-icon">🔮</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Modaux — Can · Will · Must · Should…</div>
-          <div class="hub-card-desc">${GRAMMAR4_QCM.length} questions — tous les modaux & leurs nuances</div>
-          ${hubProgBar(doneG4, GRAMMAR4_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar5')">
-        <div class="hub-card-icon">👤</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Les Pronoms — Subject · Object · Possessive…</div>
-          <div class="hub-card-desc">${GRAMMAR5_QCM.length} questions — 5 types de pronoms & prononciation</div>
-          ${hubProgBar(doneG5, GRAMMAR5_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('grammar6')">
-        <div class="hub-card-icon">✏️</div>
-        <div class="hub-card-info">
-          <div class="hub-card-label">Sentence Completion</div>
-          <div class="hub-card-desc">${GRAMMAR6_QCM.length} questions — fill-in-the-blank · structure de phrase</div>
-          ${hubProgBar(doneG6, GRAMMAR6_QCM.length, COLOR)}
-        </div>
-        <div class="hub-card-arrow">›</div>
-      </div>
-    </div>
+    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
   `;
+  wrap.appendChild(header);
+
+  const path = buildDuoPath(
+    themes, COLOR,
+    window._duoOpenTheme.grammar,
+    (idx) => setDuoOpenTheme('grammar', idx)
+  );
+  wrap.appendChild(path);
   return wrap;
 }
 
@@ -6890,6 +7145,9 @@ function startSession(moduleKey, startPos, skipBatch, origin) {
   bar.onclick = () => {
     S.session = null;
     if (_origin === 'home') { goHome(); }
+    else if (_origin === 'foundations-hub') { S.tab = 'foundations'; render(); }
+    else if (_origin === 'phrasal-hub') { S.tab = 'phrasal-hub'; render(); }
+    else if (_origin === 'grammar-hub') { S.tab = 'grammar-hub'; render(); }
     else if (_origin) { switchTab(_origin); }
     else { S.tab = moduleKey; render(); }
   };
