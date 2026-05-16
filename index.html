@@ -4855,7 +4855,6 @@ function moduleScorePct(moduleKey) {
   return Math.round((correct/answered)*100);
 }
 
-// Calc lot score for a batch of a module (batchSize items starting at batchStart)
 function lotScorePct(moduleKey, batchStart, batchSize) {
   const cfg = SESS_CFG[moduleKey];
   if (!cfg) return null;
@@ -4864,29 +4863,34 @@ function lotScorePct(moduleKey, batchStart, batchSize) {
   const batchEnd = Math.min(batchStart + batchSize, data.length);
   if (cfg.type === 'fc') {
     let ok = 0, total = 0;
-    for (let i=batchStart; i<batchEnd; i++) { total++; if (getS(moduleKey,i)==='ok') ok++; }
-    return total > 0 ? Math.round((ok/total)*100) : null;
+    for (let i = batchStart; i < batchEnd; i++) { total++; if (getS(moduleKey, i) === 'ok') ok++; }
+    return total > 0 ? Math.round((ok / total) * 100) : null;
   }
+  // MCQ
   const ans = S[cfg.answersKey] || {};
   let correct = 0, answered = 0;
-  for (let i=batchStart; i<batchEnd; i++) {
-    if (ans.hasOwnProperty(i)) { answered++; if (parseInt(ans[i])===cfg.qcmData()[i].ans) correct++; }
+  for (let i = batchStart; i < batchEnd; i++) {
+    if (ans.hasOwnProperty(i)) {
+      answered++;
+      if (parseInt(ans[i]) === cfg.qcmData()[i].ans) correct++;
+    }
   }
-  return answered > 0 ? Math.round((correct/answered)*100) : null;
+  return answered > 0 ? Math.round((correct / answered) * 100) : null;
 }
 
-// Check if a lot (batch) has been started (any answer in it)
 function lotStarted(moduleKey, batchStart, batchSize) {
   const cfg = SESS_CFG[moduleKey];
   if (!cfg) return false;
   const data = cfg.getData();
+  if (!data || !data.length) return false;
   const batchEnd = Math.min(batchStart + batchSize, data.length);
   if (cfg.type === 'fc') {
-    for (let i=batchStart;i<batchEnd;i++) { if (getS(moduleKey,i)) return true; }
+    for (let i = batchStart; i < batchEnd; i++) { if (getS(moduleKey, i)) return true; }
     return false;
   }
+  // MCQ
   const ans = S[cfg.answersKey] || {};
-  for (let i=batchStart;i<batchEnd;i++) { if (ans.hasOwnProperty(i)) return true; }
+  for (let i = batchStart; i < batchEnd; i++) { if (ans.hasOwnProperty(i)) return true; }
   return false;
 }
 
@@ -5089,9 +5093,12 @@ function buildFoundationsHub() {
   // Header
   const header = document.createElement('div');
   header.innerHTML = `
-    <div class="hub-tag" style="background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25);color:${COLOR};margin-bottom:6px;">📚 FOUNDATIONS</div>
-    <div class="hub-title" style="color:${COLOR}">Foundations</div>
-    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 20px;">
+      <div class="croc-float" style="display:flex;justify-content:center;">${crocSVG(72)}</div>
+      <div class="hub-tag" style="background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25);color:${COLOR};">📚 FOUNDATIONS</div>
+      <div class="hub-title" style="color:${COLOR};text-align:center;">Foundations</div>
+      <div class="hub-subtitle" style="text-align:center;">Tape un node pour voir ses lots — débloque le suivant en terminant l'actuel</div>
+    </div>
   `;
   wrap.appendChild(header);
 
@@ -5128,9 +5135,12 @@ function buildPhrasalHub() {
 
   const header = document.createElement('div');
   header.innerHTML = `
-    <div class="hub-tag" style="background:rgba(234,108,0,.08);border-color:rgba(234,108,0,.25);color:${COLOR};margin-bottom:6px;">🔗 PHRASAL VERBS</div>
-    <div class="hub-title" style="color:${COLOR}">Phrasal Verbs</div>
-    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 20px;">
+      <div class="croc-float" style="display:flex;justify-content:center;">${crocSVG(72)}</div>
+      <div class="hub-tag" style="background:rgba(234,108,0,.08);border-color:rgba(234,108,0,.25);color:${COLOR};">🔗 PHRASAL VERBS</div>
+      <div class="hub-title" style="color:${COLOR};text-align:center;">Phrasal Verbs</div>
+      <div class="hub-subtitle" style="text-align:center;">Tape un node pour voir ses lots — débloque le suivant en terminant l'actuel</div>
+    </div>
   `;
   wrap.appendChild(header);
 
@@ -5169,9 +5179,12 @@ function buildGrammarHub() {
 
   const header = document.createElement('div');
   header.innerHTML = `
-    <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR};margin-bottom:6px;">🧠 GRAMMAR</div>
-    <div class="hub-title" style="color:${COLOR}">Grammar</div>
-    <div class="hub-subtitle">Tap a node to see its lots — unlock the next by completing the current</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0 20px;">
+      <div class="croc-float" style="display:flex;justify-content:center;">${crocSVG(72)}</div>
+      <div class="hub-tag" style="background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:${COLOR};">🧠 GRAMMAR</div>
+      <div class="hub-title" style="color:${COLOR};text-align:center;">Grammar</div>
+      <div class="hub-subtitle" style="text-align:center;">Tape un node pour voir ses lots — débloque le suivant en terminant l'actuel</div>
+    </div>
   `;
   wrap.appendChild(header);
 
@@ -7135,14 +7148,17 @@ const BATCH_SIZE = 10;
 
 // Config per module key
 const SESS_CFG = {
-  vocab:    { type:'fc',  label:'📚 Vocabulaire IT/QA', color:'#c1121f', fillCls:'vocab-fill',   getData:()=>DATA.vocab,     answersKey:null,         qcmData:null },
-  expr:     { type:'fc',  label:'💬 Expressions clés',  color:'#2d6a4f', fillCls:'expr-fill',    getData:()=>DATA.expr,      answersKey:null,         qcmData:null },
-  prep:     { type:'fc',  label:'📐 Prépositions',       color:'#7c3aed', fillCls:'prep-fill',    getData:()=>PREP_CARDS,     answersKey:null,         qcmData:null },
-  grammar:  { type:'mcq', label:'📝 Grammaire',          color:'#b45309', fillCls:'grammar-fill', getData:()=>GRAMMAR_QCM,    answersKey:'mcqAnswers',  qcmData:()=>GRAMMAR_QCM },
-  grammar2: { type:'mcq', label:'🧩 Grammaire Avancée',  color:'#e879f9', fillCls:null,           getData:()=>GRAMMAR2_QCM,   answersKey:'mcqAnswers2', qcmData:()=>GRAMMAR2_QCM },
+  vocab:    { type:'fc',  label:'📚 Vocabulaire IT/QA',  color:'#c1121f', fillCls:'vocab-fill',   getData:()=>DATA.vocab,     answersKey:null,          qcmData:null },
+  expr:     { type:'fc',  label:'💬 Expressions clés',   color:'#2d6a4f', fillCls:'expr-fill',    getData:()=>DATA.expr,      answersKey:null,          qcmData:null },
+  prep:     { type:'fc',  label:'📐 Prépositions',        color:'#7c3aed', fillCls:'prep-fill',    getData:()=>PREP_CARDS,     answersKey:null,          qcmData:null },
+  phrasal:  { type:'fc',  label:'🔗 GET Verbs',           color:'#ea6c00', fillCls:null,           getData:()=>PHRASAL_VERBS,  answersKey:null,          qcmData:null },
+  take:     { type:'fc',  label:'✈️ TAKE Verbs',          color:'#ea6c00', fillCls:null,           getData:()=>TAKE_VERBS,     answersKey:null,          qcmData:null },
+  grammar:  { type:'mcq', label:'📝 Grammaire',           color:'#b45309', fillCls:'grammar-fill', getData:()=>GRAMMAR_QCM,    answersKey:'mcqAnswers',  qcmData:()=>GRAMMAR_QCM },
+  grammar2: { type:'mcq', label:'🧩 Grammaire Avancée',   color:'#e879f9', fillCls:null,           getData:()=>GRAMMAR2_QCM,   answersKey:'mcqAnswers2', qcmData:()=>GRAMMAR2_QCM },
   grammar3: { type:'mcq', label:'⚡ Need/Want/Have/Must', color:'#7c3aed', fillCls:null,           getData:()=>GRAMMAR3_QCM,   answersKey:'mcqAnswers3', qcmData:()=>GRAMMAR3_QCM },
-  grammar4: { type:'mcq', label:'🔮 Modaux',             color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR4_QCM,   answersKey:'mcqAnswers4', qcmData:()=>GRAMMAR4_QCM },
-  grammar5: { type:'mcq', label:'👤 Pronoms',             color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR5_QCM,   answersKey:'mcqAnswers5', qcmData:()=>GRAMMAR5_QCM },
+  grammar4: { type:'mcq', label:'🔮 Modaux',              color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR4_QCM,   answersKey:'mcqAnswers4', qcmData:()=>GRAMMAR4_QCM },
+  grammar5: { type:'mcq', label:'👤 Pronoms',              color:'#a855f7', fillCls:null,           getData:()=>GRAMMAR5_QCM,   answersKey:'mcqAnswers5', qcmData:()=>GRAMMAR5_QCM },
+  grammar6: { type:'mcq', label:'✏️ Sentence Fill-in',    color:'#0369a1', fillCls:null,           getData:()=>GRAMMAR6_QCM,   answersKey:'mcqAnswers6', qcmData:()=>GRAMMAR6_QCM },
 };
 
 // ── Build the launch screen ────────────────────────────────
@@ -7275,14 +7291,24 @@ function startSession(moduleKey, startPos, skipBatch, origin) {
   const bar = document.getElementById('backBar');
   bar.style.display = 'flex';
   const _origin = origin || null;
+
+  // Human-readable back label
+  const backLabels = {
+    'home': "← Accueil",
+    'foundations-hub': "← Foundations",
+    'phrasal-hub': "← Phrasal Verbs",
+    'grammar-hub': "← Grammar",
+  };
+  _setBackBarLabel(backLabels[_origin] || "← Retour");
+
   bar.onclick = () => {
     S.session = null;
     if (_origin === 'home') { goHome(); }
     else if (_origin === 'foundations-hub') { S.tab = 'foundations'; render(); }
-    else if (_origin === 'phrasal-hub') { S.tab = 'phrasal-hub'; render(); }
-    else if (_origin === 'grammar-hub') { S.tab = 'grammar-hub'; render(); }
+    else if (_origin === 'phrasal-hub')     { S.tab = 'phrasal-hub'; render(); }
+    else if (_origin === 'grammar-hub')     { S.tab = 'grammar-hub'; render(); }
     else if (_origin) { switchTab(_origin); }
-    else { S.tab = moduleKey; render(); }
+    else { goHome(); }
   };
   render();
 }
