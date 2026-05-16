@@ -2918,7 +2918,9 @@ function fullQueue(source) {
 // NAVIGATION
 // ═══════════════════════════════════════════════════════════
 const TAB_PARENT = {
+  foundations: 'home',
   vocab: 'foundations', expr: 'foundations', prep: 'foundations',
+  phrasalhub: 'home', grammarhub: 'home',
   phrasal: 'phrasalhub', take: 'phrasalhub',
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
@@ -4894,6 +4896,22 @@ function lotStarted(moduleKey, batchStart, batchSize) {
   return false;
 }
 
+// A lot is "completed" when all its cards/questions have been answered
+function lotCompleted(moduleKey, batchStart, batchSize) {
+  const cfg = SESS_CFG[moduleKey];
+  if (!cfg) return false;
+  const data = cfg.getData();
+  if (!data || !data.length) return false;
+  const batchEnd = Math.min(batchStart + batchSize, data.length);
+  if (cfg.type === 'fc') {
+    for (let i = batchStart; i < batchEnd; i++) { if (!getS(moduleKey, i)) return false; }
+    return true;
+  }
+  const ans = S[cfg.answersKey] || {};
+  for (let i = batchStart; i < batchEnd; i++) { if (!ans.hasOwnProperty(i)) return false; }
+  return true;
+}
+
 // Resume position for a module
 function moduleResumeLot(moduleKey) {
   const prog = S.sessProgress[moduleKey];
@@ -4909,13 +4927,13 @@ function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
   wrap.style.setProperty('--duo-color', color);
 
   // Determine which themes are done/active/locked
-  // A theme is "done" when all its lots are started (have ≥1 answer/ok)
+  // A theme is "done" when all its lots are completed
   // A theme is "active" when previous theme is done (or it's the first)
   // A theme is "locked" when previous theme is not done
 
   function themeState(ti) {
     const theme = themes[ti];
-    const allStarted = theme.lots.every(l => lotStarted(l.moduleKey, l.batchStart, BATCH_SIZE));
+    const allCompleted = theme.lots.every(l => lotCompleted(l.moduleKey, l.batchStart, BATCH_SIZE));
     // For stars: average of lot stars
     let starSum = 0, starCount = 0;
     theme.lots.forEach(l => {
@@ -4924,11 +4942,11 @@ function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
     });
     const avgStars = starCount > 0 ? Math.round(starSum/starCount) : 0;
 
-    if (allStarted) return { state:'done', stars: avgStars };
+    if (allCompleted) return { state:'done', stars: avgStars };
     if (ti === 0) return { state:'active', stars: 0 };
-    // check if previous theme is done
+    // check if previous theme is fully completed
     const prev = themes[ti-1];
-    const prevDone = prev.lots.every(l => lotStarted(l.moduleKey, l.batchStart, BATCH_SIZE));
+    const prevDone = prev.lots.every(l => lotCompleted(l.moduleKey, l.batchStart, BATCH_SIZE));
     if (prevDone) return { state:'active', stars: 0 };
     return { state:'locked', stars: 0 };
   }
@@ -4998,9 +5016,9 @@ function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
         const started = lotStarted(lot.moduleKey, lot.batchStart, BATCH_SIZE);
         const stars = starsForScore(pct);
 
-        // Lot unlock: first lot always available; subsequent lots available if previous started
-        const prevStarted = li === 0 || lotStarted(theme.lots[li-1].moduleKey, theme.lots[li-1].batchStart, BATCH_SIZE);
-        const isLocked = !prevStarted;
+        // Lot unlock: first lot always available; subsequent lots unlock only when previous is completed
+        const prevCompleted = li === 0 || lotCompleted(theme.lots[li-1].moduleKey, theme.lots[li-1].batchStart, BATCH_SIZE);
+        const isLocked = !prevCompleted;
         const isActive = !started && !isLocked;
 
         const item = document.createElement('div');
@@ -5035,9 +5053,9 @@ function buildDuoPath(themes, color, openThemeIdx, openThemeSetter) {
 
         if (!isLocked) {
           item.onclick = () => {
-            const origin = lot.moduleKey.startsWith('grammar') ? 'grammar-hub'
-              : (lot.moduleKey==='phrasal'||lot.moduleKey==='take') ? 'phrasal-hub'
-              : 'foundations-hub';
+            const origin = lot.moduleKey.startsWith('grammar') ? 'grammarhub'
+              : (lot.moduleKey==='phrasal'||lot.moduleKey==='take') ? 'phrasalhub'
+              : 'foundations';
             startSession(lot.moduleKey, lot.batchStart, false, origin);
           };
         }
@@ -7295,18 +7313,18 @@ function startSession(moduleKey, startPos, skipBatch, origin) {
   // Human-readable back label
   const backLabels = {
     'home': "← Accueil",
-    'foundations-hub': "← Foundations",
-    'phrasal-hub': "← Phrasal Verbs",
-    'grammar-hub': "← Grammar",
+    'foundations': "← Foundations",
+    'phrasalhub': "← Phrasal Verbs",
+    'grammarhub': "← Grammar",
   };
   _setBackBarLabel(backLabels[_origin] || "← Retour");
 
   bar.onclick = () => {
     S.session = null;
     if (_origin === 'home') { goHome(); }
-    else if (_origin === 'foundations-hub') { S.tab = 'foundations'; render(); }
-    else if (_origin === 'phrasal-hub')     { S.tab = 'phrasal-hub'; render(); }
-    else if (_origin === 'grammar-hub')     { S.tab = 'grammar-hub'; render(); }
+    else if (_origin === 'foundations') { S.tab = 'foundations'; render(); }
+    else if (_origin === 'phrasalhub')  { S.tab = 'phrasalhub'; render(); }
+    else if (_origin === 'grammarhub')  { S.tab = 'grammarhub'; render(); }
     else if (_origin) { switchTab(_origin); }
     else { goHome(); }
   };
