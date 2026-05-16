@@ -5298,6 +5298,15 @@ function buildLauncher() {
   const rvA=rvV+rvE+rvP;
   const wrap=document.createElement('div');
   wrap.className='review-section fade-up';
+
+  // Ensure back bar always points home from this screen
+  const bar = document.getElementById('backBar');
+  if (bar) {
+    bar.style.display = 'flex';
+    bar.onclick = goHome;
+    _setBackBarLabel("Retour à l'accueil");
+  }
+
   wrap.innerHTML=`
     <div class="rl-title">🎯 Choisir une session de révision</div>
     <div class="rl-list">
@@ -5339,10 +5348,12 @@ function buildLauncher() {
 }
 
 function startSRSession() {
-  // Launch a mini-quiz over SR-due items (write-the-English format)
   const q = srDueQueue();
   if (!q.length) { toast('Aucune carte due pour l\'instant !'); return; }
   S.quiz = { queue: q, idx: 0, results: [], answered: false, input: '', source: 'sr' };
+  S.tab = 'review';
+  const bar = document.getElementById('backBar');
+  if (bar) { bar.style.display = 'flex'; bar.onclick = goHome; _setBackBarLabel("Retour à l'accueil"); }
   render();
 }
 
@@ -5353,10 +5364,16 @@ function startQuiz(source){
   const q=revQueue(source);
   if(!q.length){toast('Rien à réviser !');return;}
   S.quiz={queue:q,idx:0,results:[],answered:false,input:'',source};
+  S.tab='review';
+  const bar=document.getElementById('backBar');
+  if(bar){bar.style.display='flex';bar.onclick=()=>{S.quiz=null;S.tab='review';render();};_setBackBarLabel('← Quiz & Review');}
   render();
 }
 function startFull(){
   S.quiz={queue:fullQueue('all'),idx:0,results:[],answered:false,input:'',source:'full'};
+  S.tab='review';
+  const bar=document.getElementById('backBar');
+  if(bar){bar.style.display='flex';bar.onclick=()=>{S.quiz=null;S.tab='review';render();};_setBackBarLabel('← Quiz & Review');}
   render();
 }
 
