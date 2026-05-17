@@ -138,12 +138,12 @@ nav{display:none;} /* nav remplacé par home screen */
 /* ── TOEIC PARENT CARD ── */
 .toeic-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;
   overflow:hidden;transition:border-color .2s;}
-.toeic-card.open{border-color:#1d6fa4;}
+.toeic-card.open{border-color:rgba(29,111,164,.6);}
 .toeic-card-header{padding:18px 20px;display:flex;align-items:center;gap:16px;
   cursor:pointer;position:relative;}
 .toeic-card-header::after{content:'›';position:absolute;right:18px;font-size:1.1rem;
   color:var(--border2);transition:all .25s;transform:rotate(0deg);}
-.toeic-card.open .toeic-card-header::after{transform:rotate(90deg);color:#1d6fa4;}
+.toeic-card.open .toeic-card-header::after{transform:rotate(90deg);color:rgba(29,111,164,.75);}
 .toeic-card-header:hover .toeic-card-header-inner{opacity:.85;}
 .toeic-sublist{display:flex;flex-direction:column;gap:0;
   max-height:0;overflow:hidden;transition:max-height .3s ease;}
@@ -151,8 +151,8 @@ nav{display:none;} /* nav remplacé par home screen */
 .toeic-subitem{display:flex;align-items:center;gap:14px;
   padding:12px 20px 12px 28px;border-top:1px solid var(--border);
   cursor:pointer;transition:background .15s;}
-.toeic-subitem:hover{background:rgba(29,111,164,.05);}
-.toeic-subitem-bar{width:2px;height:28px;border-radius:2px;flex-shrink:0;background:#1d6fa4;}
+.toeic-subitem:hover{background:rgba(29,111,164,.04);}
+.toeic-subitem-bar{width:2px;height:28px;border-radius:2px;flex-shrink:0;background:rgba(29,111,164,.5);}
 .toeic-subitem-icon{font-size:1.2rem;flex-shrink:0;width:30px;text-align:center;}
 .toeic-subitem-body{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
 .toeic-subitem-label{font-size:var(--text-base);font-weight:700;color:var(--text);line-height:1.2;}
@@ -281,9 +281,9 @@ nav{display:none;} /* nav remplacé par home screen */
 .hub-card-desc{font-size:.72rem;color:var(--muted);font-family:var(--mono);}
 /* Progress bar inside hub cards */
 .hub-card-prog-wrap{margin-top:8px;display:flex;align-items:center;gap:8px;}
-.hub-card-prog-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.hub-card-prog-fill{height:100%;border-radius:2px;transition:width .4s ease;}
-.hub-card-prog-label{font-family:var(--mono);font-size:.5rem;color:var(--muted);white-space:nowrap;}
+.hub-card-prog-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.hub-card-prog-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+.hub-card-prog-label{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);white-space:nowrap;font-weight:600;}
 .hub-card-arrow{font-size:1rem;color:var(--border2);transition:color .18s;flex-shrink:0;}
 .hub-card:hover .hub-card-arrow{color:var(--hc-color,var(--accent2));}
 
@@ -365,8 +365,8 @@ main{flex:1;display:flex;flex-direction:column;}
 
 /* ── FLASHCARD ── */
 .fc-progress-strip{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.fc-prog-bar{flex:1;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;}
-.fc-prog-fill{height:100%;border-radius:2px;transition:width .4s ease;}
+.fc-prog-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.fc-prog-fill{height:100%;border-radius:3px;transition:width .4s ease;}
 .vocab-fill  {background:linear-gradient(90deg,#c1121f,#ff4d5e);}
 .expr-fill   {background:linear-gradient(90deg,#2d6a4f,#52b788);}
 .prep-fill   {background:linear-gradient(90deg,var(--purple),#d89cff);}
@@ -730,8 +730,8 @@ main{flex:1;display:flex;flex-direction:column;}
 .sess-batch-info{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:1px;}
 .sess-batch-info strong{color:var(--text);}
 .sess-prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.sess-prog-bar{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
-.sess-prog-fill{height:100%;border-radius:3px;transition:width .35s ease;}
+.sess-prog-bar{flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden;}
+.sess-prog-fill{height:100%;border-radius:4px;transition:width .35s ease;}
 .sess-prog-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap;}
 
 /* MCQ session card */
@@ -825,8 +825,8 @@ main{flex:1;display:flex;flex-direction:column;}
   padding:3px 10px;border-radius:6px;border:1px solid rgba(29,111,164,.35);
   background:rgba(29,111,164,.08);color:#1d6fa4;}
 .lt-prog-wrap{display:flex;align-items:center;gap:8px;}
-.lt-prog-bar{width:120px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.lt-prog-fill{height:100%;background:#1d6fa4;border-radius:2px;transition:width .4s ease;}
+.lt-prog-bar{width:130px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.lt-prog-fill{height:100%;background:#1d6fa4;border-radius:3px;transition:width .4s ease;}
 .lt-prog-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
 
 .lt-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;overflow:hidden;margin-bottom:16px;transition:border-color .3s;}
@@ -947,6 +947,27 @@ main{flex:1;display:flex;flex-direction:column;}
 .lt-validate-btn:hover{background:#155e8a;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,111,164,.35);}
 
 
+
+/* ── GROUP SECTION LABELS ── */
+.home-group-label {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 4px 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.home-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
 /* ── MISSION COLLAPSIBLE ── */
 .daily-mission-wrap{margin-bottom:14px;}
 .dm-toggle{display:flex;align-items:center;justify-content:space-between;
@@ -1057,8 +1078,8 @@ main{flex:1;display:flex;flex-direction:column;}
   padding:3px 10px;border-radius:6px;border:1px solid rgba(45,106,79,.35);
   background:rgba(45,106,79,.08);color:#2d6a4f;}
 .dt-prog-wrap{display:flex;align-items:center;gap:8px;}
-.dt-prog-bar{width:120px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.dt-prog-fill{height:100%;background:#2d6a4f;border-radius:2px;transition:width .4s ease;}
+.dt-prog-bar{width:130px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.dt-prog-fill{height:100%;background:#2d6a4f;border-radius:3px;transition:width .4s ease;}
 .dt-prog-label{font-family:var(--mono);font-size:.6rem;color:var(--muted);}
 .dt-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;overflow:hidden;margin-bottom:16px;transition:border-color .3s;}
 .dt-card.answered-ok{border-color:rgba(45,106,79,.45);}
@@ -3663,7 +3684,12 @@ function buildHome() {
     return card;
   }
 
-  // ── Content group
+  // ── Groupe 1 : Contenu apprentissage (rouge)
+  const lbl1 = document.createElement('div');
+  lbl1.className = 'home-group-label';
+  lbl1.innerHTML = '<span style="color:' + COL_CONTENT + '">●</span> Vocabulaire & Verbes';
+  grid.appendChild(lbl1);
+
   grid.appendChild(makeCard({
     tab:'foundations', icon:'📚', label:'Foundations', color: COL_CONTENT,
     sub: 'QA Vocabulary · Expressions · Prepositions',
@@ -3678,12 +3704,13 @@ function buildHome() {
     progDone: okPh, progTotal: totPh,
   }));
 
-  // ── Divider
-  const div1 = document.createElement('div');
-  div1.className = 'home-divider';
-  grid.appendChild(div1);
+  // ── Groupe 2 : Grammaire (violet)
+  const lbl2 = document.createElement('div');
+  lbl2.className = 'home-group-label';
+  lbl2.style.marginTop = '6px';
+  lbl2.innerHTML = '<span style="color:' + COL_GRAMMAR + '">●</span> Grammaire';
+  grid.appendChild(lbl2);
 
-  // ── Grammar group
   grid.appendChild(makeCard({
     tab:'grammarhub', icon:'🧠', label:'Grammar', color: COL_GRAMMAR,
     sub: 'Basics · Advanced Grammar',
@@ -3691,12 +3718,13 @@ function buildHome() {
     progDone: doneGr, progTotal: totGr,
   }));
 
-  // ── Divider
-  const div2 = document.createElement('div');
-  div2.className = 'home-divider';
-  grid.appendChild(div2);
+  // ── Groupe 3 : Outils & Entraînement (vert)
+  const lbl3 = document.createElement('div');
+  lbl3.className = 'home-group-label';
+  lbl3.style.marginTop = '6px';
+  lbl3.innerHTML = '<span style="color:' + COL_ACTION + '">●</span> Entraînement';
+  grid.appendChild(lbl3);
 
-  // ── Action group
   grid.appendChild(makeCard({
     tab:'speak', icon:'🎤', label:'Speaking Practice', color: COL_ACTION,
     sub: 'Mic · Real-time grammar feedback',
