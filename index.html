@@ -989,6 +989,67 @@ main{flex:1;display:flex;flex-direction:column;}
 .skeleton-line.w80 { width:80%; }
 .skeleton-line.w55 { width:55%; }
 
+
+/* ── THEME TOGGLE BUTTON ── */
+#themeToggleBtn {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: .85rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  transition: all .18s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+#themeToggleBtn:hover { border-color: var(--accent2); color: var(--text); }
+
+/* Force dark via [data-theme=dark] */
+[data-theme="dark"] {
+  --bg:#1a1916; --bg2:#222018; --surface:#2a2825; --surface2:#1a1916;
+  --border:#38352c; --border2:#4a4640;
+  --text:#f0ece2; --muted:#9b9385;
+}
+[data-theme="dark"] body::before {
+  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(45,106,79,.08) 0%,transparent 55%),
+             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(193,18,31,.06) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(60,55,40,.5) 0%,transparent 60%);
+}
+[data-theme="dark"] header            { background: rgba(26,25,22,.96); }
+[data-theme="dark"] .home-cta         { background:#2a2825; border:1.5px solid var(--border2); }
+[data-theme="dark"] .home-cta-eyebrow { color:rgba(240,236,226,.4); }
+[data-theme="dark"] .home-cta-label   { color:var(--text); }
+[data-theme="dark"] .home-cta-sub     { color:var(--muted); }
+[data-theme="dark"] .home-cta::after  { color:rgba(240,236,226,.3); }
+[data-theme="dark"] .home-cta:hover::after { color:var(--muted); }
+[data-theme="dark"] .dm-cta-btn       { background:var(--border2); color:var(--text); }
+[data-theme="dark"] .streak-msg.hot   { background:rgba(234,108,0,.15);border-color:rgba(234,108,0,.3); }
+[data-theme="dark"] .streak-msg.fire  { background:rgba(193,18,31,.15);border-color:rgba(193,18,31,.3); }
+[data-theme="dark"] .streak-msg.cool  { background:rgba(45,106,79,.12);border-color:rgba(45,106,79,.25); }
+[data-theme="dark"] .milestone-card   { background:#2a2825; }
+[data-theme="dark"] .lt-img-wrap,
+[data-theme="dark"] .lt-photo         { background:#0d0d0c; }
+
+/* Force light via [data-theme=light] (override media query) */
+[data-theme="light"] {
+  --bg:#f5f0e8; --bg2:#ede8de; --surface:#ffffff; --surface2:#ede8de;
+  --border:#ddd6c8; --border2:#c8c0b0;
+  --text:#1a1a18; --muted:#6b6355;
+}
+[data-theme="light"] body::before {
+  background:radial-gradient(ellipse 70% 45% at 85% 5%,rgba(45,106,79,.06) 0%,transparent 55%),
+             radial-gradient(ellipse 55% 40% at 5% 90%,rgba(193,18,31,.04) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 35% at 50% 50%,rgba(200,192,176,.3) 0%,transparent 60%);
+}
+[data-theme="light"] header           { background: rgba(245,240,232,.96); }
+[data-theme="light"] .home-cta        { background:var(--text); border:none; }
+[data-theme="light"] .home-cta-label  { color:#fff; }
+[data-theme="light"] .home-cta-sub    { color:rgba(255,255,255,.6); }
+[data-theme="light"] .home-cta::after { color:rgba(255,255,255,.5); }
+[data-theme="light"] .home-cta:hover::after { color:rgba(255,255,255,.9); }
+
 /* ── DIRECTIONS TEST ── */
 .dt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 60px;}
 .dt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
@@ -1149,6 +1210,7 @@ main{flex:1;display:flex;flex-direction:column;}
       style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;
              padding:4px 8px;cursor:pointer;font-size:.75rem;color:var(--muted);
              font-family:var(--mono);transition:all .18s;flex-shrink:0;">🔊</button>
+    <button id="themeToggleBtn" title="Basculer jour/nuit" onclick="toggleTheme()">🌙</button>
     <span id="syncBadge" style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);opacity:0;transition:opacity .4s;align-self:center;"></span>
   </div>
 </header>
@@ -8407,6 +8469,35 @@ function _speakWithPrefs(txt, lang) {
 }
 // Remplace la fonction globale speak() par la version avec préférences
 window.speak = _speakWithPrefs;
+
+
+// ── THEME TOGGLE ─────────────────────────────────────────────────────────
+(function() {
+  // Déterminer le thème initial :
+  // 1. Préférence sauvegardée  2. Préférence système  3. light par défaut
+  function getSystemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const btn = document.getElementById('themeToggleBtn');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('qa_theme', theme); } catch(e) {}
+  }
+
+  window.toggleTheme = function() {
+    const current = document.documentElement.getAttribute('data-theme') || getSystemTheme();
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  };
+
+  // Init au chargement
+  (function initTheme() {
+    let saved;
+    try { saved = localStorage.getItem('qa_theme'); } catch(e) {}
+    applyTheme(saved || getSystemTheme());
+  })();
+})();
 
 _loadVoicePrefs();
 if (speechSynthesis.getVoices().length) _populateVoiceSelect();
