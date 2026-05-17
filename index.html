@@ -87,6 +87,50 @@ header{display:flex;align-items:center;justify-content:space-between;
 .hd-stat .n{font-size:.9rem;font-weight:500;color:var(--accent);line-height:1;}
 .hd-stat .l{font-size:var(--text-xs);color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
 
+
+/* ── HEADER RESPONSIVE ── */
+@media (max-width: 360px) {
+  #statRev { display: none; }
+  #statOk  { display: none; }
+}
+@media (max-width: 400px) {
+  .hd-stat { min-width: 40px; padding: 4px 7px; }
+  .hd-stat .n { font-size: .8rem; }
+}
+
+/* Stats mini-panel */
+#statsPanel {
+  display: none;
+  position: fixed;
+  top: 58px; right: 12px;
+  z-index: 200;
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+  animation: fadeInDown .15s ease;
+}
+#statsPanel.open { display: block; }
+@keyframes fadeInDown {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.stats-panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+}
+.stats-panel-row:last-child { border-bottom: none; }
+.stats-panel-label { font-size: var(--text-xs); color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+.stats-panel-val   { font-size: var(--text-md); font-weight: 700; color: var(--accent); }
+.stats-panel-val.green { color: var(--accent2); }
+.stats-panel-val.orange { color: var(--orange); }
+
 /* ── CROC GEEK mascot ── */
 .croc-logo-wrap{display:flex;align-items:center;gap:10px;}
 .croc-logo-svg{width:42px;height:46px;flex-shrink:0;transition:transform .3s ease;cursor:default;}
@@ -106,7 +150,7 @@ header{display:flex;align-items:center;justify-content:space-between;
 nav{display:none;} /* nav remplacé par home screen */
 
 /* ── HOME SCREEN ── */
-.home-screen{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:32px 16px 60px;}
+.home-screen{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:32px 16px 90px;}
 .home-title{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;text-align:center;}
 .home-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:28px;}
 
@@ -118,6 +162,7 @@ nav{display:none;} /* nav remplacé par home screen */
   color:var(--border2);transition:all .2s;}
 .home-card:hover{transform:translateX(4px);border-color:var(--card-color,var(--accent2));}
 .home-card:hover::after{color:var(--card-color,var(--accent2));right:14px;}
+.home-card:active{transform:scale(.97);transition:transform .08s;}
 
 /* Left color bar */
 .home-card-bar{width:3px;height:36px;border-radius:2px;flex-shrink:0;
@@ -269,7 +314,7 @@ nav{display:none;} /* nav remplacé par home screen */
 .mc-btn:hover{transform:translateY(-1px);opacity:.9;}
 
 /* Hub page (sub-module selector) */
-.hub-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.hub-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .hub-tag{display:inline-block;font-family:var(--mono);font-size:var(--text-xs);
   border:1px solid;border-radius:var(--radius-sm);padding:3px 9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
 .hub-title{font-size:1.1rem;font-weight:800;font-family:var(--mono);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
@@ -335,7 +380,7 @@ nav{display:none;} /* nav remplacé par home screen */
   color:var(--duo-color);border:1px solid color-mix(in srgb,var(--duo-color) 30%,transparent);white-space:nowrap;}
 
 /* Hub page outer layout */
-.hub-page-duo{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.hub-page-duo{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .home-back{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--text-xs);
   color:var(--text);cursor:pointer;
   min-height:44px;padding:10px 16px;
@@ -370,7 +415,7 @@ nav{display:none;} /* nav remplacé par home screen */
 main{flex:1;display:flex;flex-direction:column;}
 
 /* ── SHARED WRAPPER ── */
-.page{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.page{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 
 /* ── FLASHCARD ── */
 .fc-progress-strip{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
@@ -471,7 +516,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .phrasal-subbtn.active{background:rgba(249,115,22,.15);border-color:var(--orange);color:var(--orange);}
 
 /* ── COURS VIEW ── */
-.cours-view{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.cours-view{flex:1;display:flex;flex-direction:column;max-width:700px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .cours-title{font-size:1rem;font-weight:800;color:var(--purple);font-family:var(--mono);
   letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
 .cours-subtitle{font-size:.75rem;color:var(--muted);margin-bottom:22px;}
@@ -534,7 +579,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .btn-mcq-reset:hover{border-color:var(--accent);}
 
 /* ── REVIEW LAUNCHER ── */
-.review-section{flex:1;display:flex;flex-direction:column;max-width:580px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.review-section{flex:1;display:flex;flex-direction:column;max-width:580px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .rl-title{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
 .rl-list{display:flex;flex-direction:column;gap:10px;}
 .rl-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius-md);
@@ -628,7 +673,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .fade-up{animation:fadeUp .24s ease forwards;}
 
 /* ── SPEAK & IMPROVE ── */
-.speak-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.speak-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .speak-header-tag{display:inline-block;font-family:var(--mono);font-size:var(--text-xs);
   background:rgba(45,106,79,.12);border:1px solid rgba(45,106,79,.35);color:var(--accent2);
   border-radius:var(--radius-sm);padding:3px 9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
@@ -713,7 +758,7 @@ main{flex:1;display:flex;flex-direction:column;}
 }
 
 /* ── SESSION SYSTEM ── */
-.session-page{flex:1;display:flex;flex-direction:column;max-width:660px;width:100%;margin:0 auto;padding:24px 16px 60px;}
+.session-page{flex:1;display:flex;flex-direction:column;max-width:660px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 
 /* Launch screen */
 .sess-launch{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius-lg);padding:28px 24px;margin-bottom:16px;}
@@ -828,7 +873,7 @@ main{flex:1;display:flex;flex-direction:column;}
 .btn-recap.restart:hover{color:var(--text);border-color:var(--border2);}
 
 /* ── LISTENING TEST ── */
-.lt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 60px;}
+.lt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 90px;}
 .lt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
 .lt-tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:1.5px;text-transform:uppercase;
   padding:3px 10px;border-radius:var(--radius-sm);border:1px solid rgba(29,111,164,.35);
@@ -957,6 +1002,15 @@ main{flex:1;display:flex;flex-direction:column;}
 
 
 
+
+/* ── TAP FEEDBACK ── */
+* { -webkit-tap-highlight-color: transparent; }
+.home-card:active,.hub-card:active { transform:scale(.97) !important; transition:transform .08s !important; }
+.mc-btn:active,.btn-sess-start:active,.dm-cta-btn:active,
+.btn-recap:active,.lt-btn-nav:active,.dt-btn-nav:active,
+.duo-start-btn:active,.btn-audio:active { transform:scale(.96); transition:transform .08s; }
+.toeic-card-header:active,.toeic-subitem:active { background:var(--bg2); }
+
 /* ── GROUP SECTION LABELS ── */
 .home-group-label {
   font-family: var(--mono);
@@ -1081,7 +1135,7 @@ main{flex:1;display:flex;flex-direction:column;}
 [data-theme="light"] .home-cta:hover::after { color:rgba(255,255,255,.9); }
 
 /* ── DIRECTIONS TEST ── */
-.dt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 60px;}
+.dt-page{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:20px 16px 90px;}
 .dt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
 .dt-tag{font-family:var(--mono);font-size:var(--text-xs);letter-spacing:1.5px;text-transform:uppercase;
   padding:3px 10px;border-radius:var(--radius-sm);border:1px solid rgba(45,106,79,.35);
@@ -1233,17 +1287,39 @@ main{flex:1;display:flex;flex-direction:column;}
     </div>
   </div>
   <div class="hd-stats">
-    <div class="hd-stat"><span class="n" id="statOk">0</span><span class="l">Maîtrisés</span></div>
-    <div class="hd-stat"><span class="n" id="statRev">0</span><span class="l">SR dues🧠</span></div>
-    <div class="hd-stat"><span class="n" id="statStreak">0</span><span class="l">Streak🔥</span></div>
+    <div class="hd-stat" id="statOkChip" onclick="toggleStatsPanel()" title="Voir les stats" style="cursor:pointer;">
+      <span class="n" id="statOk">0</span><span class="l">Maîtrisés</span>
+    </div>
+    <div class="hd-stat" id="statRev"><span class="n" id="statRevN" style="color:var(--purple)">0</span><span class="l">SR🧠</span></div>
+    <div class="hd-stat" id="statStreakChip"><span class="n" id="statStreak" style="color:var(--orange)">0</span><span class="l">Streak🔥</span></div>
     <button id="voicePickerBtn" title="Choisir la voix" onclick="toggleVoicePicker()"
-      style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;
+      style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);
              padding:4px 8px;cursor:pointer;font-size:.75rem;color:var(--muted);
              font-family:var(--mono);transition:all .18s;flex-shrink:0;">🔊</button>
     <button id="themeToggleBtn" title="Basculer jour/nuit" onclick="toggleTheme()">🌙</button>
-    <span id="syncBadge" style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);opacity:0;transition:opacity .4s;align-self:center;"></span>
+    <span id="syncBadge" style="font-family:var(--mono);font-size:var(--text-xs);color:var(--accent2);opacity:0;transition:opacity .4s;align-self:center;"></span>
   </div>
 </header>
+
+<!-- Stats Mini Panel -->
+<div id="statsPanel">
+  <div class="stats-panel-row">
+    <span class="stats-panel-label">Maîtrisés</span>
+    <span class="stats-panel-val" id="panelOk">0</span>
+  </div>
+  <div class="stats-panel-row">
+    <span class="stats-panel-label">SR dues</span>
+    <span class="stats-panel-val" style="color:var(--purple)" id="panelSR">0</span>
+  </div>
+  <div class="stats-panel-row">
+    <span class="stats-panel-label">À revoir</span>
+    <span class="stats-panel-val" style="color:var(--orange)" id="panelRev">0</span>
+  </div>
+  <div class="stats-panel-row">
+    <span class="stats-panel-label">Streak</span>
+    <span class="stats-panel-val green" id="panelStreak">0</span>
+  </div>
+</div>
 
 <!-- Voice Picker Panel -->
 <div id="voicePanel" style="display:none;position:fixed;top:54px;right:12px;z-index:200;
@@ -3184,9 +3260,19 @@ let _renderAnimating = false;
 
 function _buildContent(el) {
   // Update header stats
-  document.getElementById('statOk').textContent=cntOk();
-  document.getElementById('statRev').textContent=srDueCount();
+  const _ok=cntOk(), _sr=srDueCount(), _rv=cntRev();
+  document.getElementById('statOk').textContent=_ok;
+  document.getElementById('statRevN').textContent=_sr;
   document.getElementById('statStreak').textContent=S.streak;
+  // Mini panel
+  const _pOk=document.getElementById('panelOk');
+  const _pSR=document.getElementById('panelSR');
+  const _pRv=document.getElementById('panelRev');
+  const _pSt=document.getElementById('panelStreak');
+  if(_pOk) _pOk.textContent=_ok;
+  if(_pSR) _pSR.textContent=_sr;
+  if(_pRv) _pRv.textContent=_rv;
+  if(_pSt) _pSt.textContent=S.streak;
 
   if(S.quiz && S.tab !== 'review') {
     el.appendChild(buildQuiz());
@@ -8523,7 +8609,23 @@ window.speak = _speakWithPrefs;
     try { localStorage.setItem('qa_theme', theme); } catch(e) {}
   }
 
-  window.toggleTheme = function() {
+  window.toggleStatsPanel = function() {
+  const panel = document.getElementById('statsPanel');
+  panel.classList.toggle('open');
+  // Close on outside click
+  if (panel.classList.contains('open')) {
+    setTimeout(() => {
+      document.addEventListener('click', function _close(e) {
+        if (!panel.contains(e.target) && e.target.id !== 'statOkChip') {
+          panel.classList.remove('open');
+          document.removeEventListener('click', _close);
+        }
+      });
+    }, 10);
+  }
+};
+
+window.toggleTheme = function() {
     const current = document.documentElement.getAttribute('data-theme') || getSystemTheme();
     applyTheme(current === 'dark' ? 'light' : 'dark');
   };
