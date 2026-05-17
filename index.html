@@ -62,6 +62,12 @@
   .streak-msg.cool{background:rgba(45,106,79,.12);border-color:rgba(45,106,79,.25);}
   .milestone-card{background:#2a2825;}
   .lt-img-wrap,.lt-photo{background:#0d0d0c;}
+  /* Hero CTA dark mode — slightly lighter than bg for contrast */
+  .hero-cta { background: #111210; }
+  .hero-cta-glow {
+    background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(45,106,79,.22) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 10% 90%, rgba(193,18,31,.15) 0%, transparent 50%);
+  }
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -150,35 +156,35 @@ header{display:flex;align-items:center;justify-content:space-between;
 nav{display:none;} /* nav remplacé par home screen */
 
 /* ── HOME SCREEN ── */
-.home-screen{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:32px 16px 90px;}
+.home-screen{flex:1;display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;padding:24px 16px 90px;}
 .home-title{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;text-align:center;}
-.home-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:28px;}
+.home-grid{display:grid;grid-template-columns:1fr;gap:7px;margin-bottom:20px;}
 
-/* Home cards — horizontal list layout */
-.home-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius-lg);
-  padding:18px 20px;display:flex;align-items:center;gap:16px;
-  cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
-.home-card::after{content:'›';position:absolute;right:18px;font-size:1.1rem;
-  color:var(--border2);transition:all .2s;}
-.home-card:hover{transform:translateX(4px);border-color:var(--card-color,var(--accent2));}
-.home-card:hover::after{color:var(--card-color,var(--accent2));right:14px;}
+/* Home cards — horizontal list layout — secondary, compact */
+.home-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:13px 16px;display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.home-card::after{content:'›';position:absolute;right:14px;font-size:1rem;
+  color:var(--border2);transition:all .18s;}
+.home-card:hover{transform:translateX(3px);border-color:var(--card-color,var(--accent2));}
+.home-card:hover::after{color:var(--card-color,var(--accent2));right:10px;}
 .home-card:active{transform:scale(.97);transition:transform .08s;}
 
 /* Left color bar */
-.home-card-bar{width:3px;height:36px;border-radius:2px;flex-shrink:0;
+.home-card-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0;
   background:var(--card-color,var(--accent2));}
 
 /* Icon */
-.home-card-icon{font-size:1.5rem;flex-shrink:0;width:36px;text-align:center;}
+.home-card-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;}
 
 /* Text block */
-.home-card-body{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;}
-.home-card-label{font-size:var(--text-base);font-weight:800;color:var(--text);line-height:1.2;}
+.home-card-body{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+.home-card-label{font-size:var(--text-sm);font-weight:700;color:var(--text);line-height:1.2;}
 .home-card-sub{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);letter-spacing:.3px;}
 
 /* Right: progress info */
-.home-card-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;margin-right:18px;}
-.home-card-count{font-family:var(--mono);font-size:var(--text-sm);font-weight:700;color:var(--card-color,var(--accent2));}
+.home-card-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;margin-right:16px;}
+.home-card-count{font-family:var(--mono);font-size:var(--text-xs);font-weight:700;color:var(--card-color,var(--accent2));}
 .home-card-prog{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);}
 
 /* Divider between content group and action group */
@@ -262,7 +268,137 @@ nav{display:none;} /* nav remplacé par home screen */
 .dm-ind-item.done{color:var(--accent2);border-color:rgba(45,106,79,.3);background:rgba(45,106,79,.07);}
 .dm-ind-icon{font-size:var(--text-xs);}
 
-/* ── NEXT STEP CTA ── */
+/* ── HERO NARRATIF ── */
+.hero-cta {
+  background: var(--text);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+.hero-cta:active { transform: scale(.98); }
+.hero-cta-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 90% 10%, rgba(45,106,79,.18) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 40% at 10% 90%, rgba(193,18,31,.12) 0%, transparent 50%);
+}
+.hero-cta-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.hero-day-badge {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-day-badge .fire { font-size: .85rem; }
+.hero-cta-module {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,.4);
+  letter-spacing: 1px;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+.hero-cta-label {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+.hero-cta-meta {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,.5);
+  margin-bottom: 16px;
+}
+.hero-cta-bottom { display: flex; align-items: center; justify-content: space-between; }
+.hero-cta-btn {
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.2);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: var(--text-base);
+  font-weight: 700;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background .18s, border-color .18s;
+  backdrop-filter: blur(4px);
+}
+.hero-cta:hover .hero-cta-btn { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.35); }
+.hero-cta-emotion {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,.38);
+  font-style: italic;
+  max-width: 48%;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* Momentum bar (remplace daily-mission dense) */
+.momentum-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.momentum-track {
+  flex: 1;
+  height: 5px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.momentum-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent2), #52b788);
+  transition: width .5s ease;
+}
+.momentum-label {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.momentum-narrative {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-style: italic;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── MODULES SECONDAIRES ── */
+.modules-label {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── NEXT STEP CTA (legacy, kept small) ── */
 .home-cta{background:var(--text);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:14px;
   cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s;position:relative;overflow:hidden;}
 .home-cta::after{content:'→';position:absolute;right:18px;font-size:1.1rem;color:rgba(255,255,255,.5);transition:all .2s;}
@@ -779,14 +915,15 @@ main{flex:1;display:flex;flex-direction:column;}
 .btn-sess-start:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
 .sess-resume-tag{font-family:var(--mono);font-size:var(--text-xs);color:var(--accent2);background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.3);border-radius:var(--radius-sm);padding:2px 8px;margin-left:8px;display:inline-block;vertical-align:middle;}
 
-/* Session card (flashcard in session mode) */
-.sess-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+/* Session card (flashcard in session mode) — FOCUS MODE */
+.sess-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .sess-batch-info{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);letter-spacing:1px;}
 .sess-batch-info strong{color:var(--text);}
-.sess-prog-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.sess-prog-bar{flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden;}
-.sess-prog-fill{height:100%;border-radius:4px;transition:width .35s ease;}
-.sess-prog-txt{font-family:var(--mono);font-size:var(--text-xs);color:var(--muted);white-space:nowrap;}
+/* Slim progress bar at top — focus mode */
+.sess-prog-wrap{margin-bottom:28px;}
+.sess-prog-bar{width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sess-prog-fill{height:100%;border-radius:2px;transition:width .35s ease;}
+.sess-prog-txt{display:none;}/* hidden in focus mode */
 
 /* MCQ session card */
 .sess-mcq-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius-lg);padding:24px 22px;margin-bottom:16px;}
@@ -1060,7 +1197,7 @@ main{flex:1;display:flex;flex-direction:column;}
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
-.skeleton-cta  { height:82px; }
+.skeleton-cta  { height:160px; border-radius:20px; }
 .skeleton-sm   { height:20px; border-radius:var(--radius-sm); width:40%; }
 .skeleton-item { height:68px; }
 .skeleton-divider { height:1px; background:var(--border); margin:2px 0; }
@@ -3690,7 +3827,6 @@ function buildHome() {
   const totGr  = GRAMMAR_QCM.length + GRAMMAR2_QCM.length + GRAMMAR3_QCM.length + GRAMMAR4_QCM.length + GRAMMAR5_QCM.length + GRAMMAR6_QCM.length;
   const doneGr = doneG + doneG2 + doneG3 + doneG4 + doneG5;
 
-  // 3 semantic colors
   const COL_CONTENT  = '#c1121f';
   const COL_GRAMMAR  = '#7c3aed';
   const COL_ACTION   = '#2d6a4f';
@@ -3698,7 +3834,7 @@ function buildHome() {
   const wrap = document.createElement('div');
   wrap.className = 'home-screen fade-up';
 
-  // ── Streak message (compact, only strong streaks)
+  // ── Streak message (only strong streaks)
   if (S.streak >= 10) {
     const msg = document.createElement('div');
     msg.className = 'streak-msg ' + (S.streak >= 20 ? 'fire' : 'hot');
@@ -3708,52 +3844,85 @@ function buildHome() {
     wrap.appendChild(msg);
   }
 
-  // ── Smart CTA (next step) — FIRST, toujours visible sans scroll
+  // ── HERO NARRATIF ─────────────────────────────────────────
   const next = computeNextStep();
-  const cta = document.createElement('div');
-  cta.className = 'home-cta';
-  cta.innerHTML = `
-    <div class="home-cta-icon">${next.icon}</div>
-    <div class="home-cta-body">
-      <div class="home-cta-eyebrow">${next.eyebrow}</div>
-      <div class="home-cta-label">${next.label}</div>
-      <div class="home-cta-sub">${next.sub}</div>
+
+  // Emotional line — context-aware
+  const hour = new Date().getHours();
+  const lots = S.daily.lotsCompleted;
+  const hoursAgo = S.lastSession ? (Date.now() - S.lastSession.ts) / 3600000 : Infinity;
+  let emotion = '';
+  if (lots === 0 && hour < 10) emotion = 'Bonne matinée pour commencer.';
+  else if (lots === 0 && hour >= 20) emotion = '5 minutes suffisent ce soir.';
+  else if (lots >= 2) emotion = 'Tu construis quelque chose de solide.';
+  else if (hoursAgo > 48) emotion = 'Bon retour — la régularité, c\'est tout.';
+  else if (S.streak >= 5) emotion = 'Le flow est là. Profites-en.';
+  else emotion = '5 minutes suffisent aujourd\'hui.';
+
+  // Lot info
+  const batchNum = (() => {
+    if (!S.lastSession) return null;
+    const prog = S.sessProgress[S.lastSession.moduleKey];
+    if (!prog) return null;
+    return Math.floor(prog.pos / BATCH_SIZE) + 1;
+  })();
+  const cfg = next.tab && SESS_CFG[next.tab] ? SESS_CFG[next.tab] : null;
+  const cfgData = cfg ? cfg.getData() : [];
+  const batchTotal = cfgData.length > 0 ? Math.ceil(cfgData.length / BATCH_SIZE) : null;
+
+  const hero = document.createElement('div');
+  hero.className = 'hero-cta';
+  hero.innerHTML = `
+    <div class="hero-cta-glow"></div>
+    <div class="hero-cta-top">
+      <div>
+        <div class="hero-day-badge">
+          ${S.streak > 0 ? `<span class="fire">🔥</span> Jour ${S.streak}` : 'Aujourd\'hui'}
+        </div>
+        <div class="hero-cta-module">${next.eyebrow || ''}</div>
+        <div class="hero-cta-label">${next.label}</div>
+        <div class="hero-cta-meta">${batchNum && batchTotal ? `Lot ${batchNum} sur ${batchTotal} · ` : ''}${next.sub || ''}</div>
+      </div>
+      <div style="flex-shrink:0;opacity:.7;margin-top:-4px;">${crocSVG(44)}</div>
     </div>
-    <div style="margin-left:auto;flex-shrink:0;">${crocSVG(36)}</div>
+    <div class="hero-cta-bottom">
+      <button class="hero-cta-btn" onclick="event.stopPropagation()">Continuer →</button>
+      <div class="hero-cta-emotion">${emotion}</div>
+    </div>
   `;
-  cta.onclick = next.action ? next.action : () => switchTab(next.tab);
-  wrap.appendChild(cta);
-
-  // ── Daily mission block — collapsible, fermée par défaut si mission faite
-  const missionDone = S.daily.actions >= S.daily.goal;
-  const missionOpen = !missionDone || !S._missionCollapsed;
-  const missionWrap = document.createElement('div');
-  missionWrap.className = 'daily-mission-wrap';
-  const dmToggle = document.createElement('div');
-  dmToggle.className = 'dm-toggle';
-  dmToggle.innerHTML = `
-    <span class="dm-toggle-label">Mission du jour</span>
-    <span class="dm-toggle-arrow ${missionOpen ? 'open' : ''}">›</span>
-  `;
-  const dmCollapse = document.createElement('div');
-  dmCollapse.className = 'dm-collapse ' + (missionOpen ? 'open' : 'closed');
-  dmCollapse.appendChild(buildDailyMissions());
-  dmToggle.onclick = () => {
-    const isOpen = dmCollapse.classList.contains('open');
-    dmCollapse.classList.toggle('open', !isOpen);
-    dmCollapse.classList.toggle('closed', isOpen);
-    dmToggle.querySelector('.dm-toggle-arrow').classList.toggle('open', !isOpen);
-    S._missionCollapsed = !isOpen;
+  hero.onclick = next.action ? next.action : () => switchTab(next.tab);
+  hero.querySelector('.hero-cta-btn').onclick = (e) => {
+    e.stopPropagation();
+    if (next.action) next.action(); else switchTab(next.tab);
   };
-  missionWrap.appendChild(dmToggle);
-  missionWrap.appendChild(dmCollapse);
-  wrap.appendChild(missionWrap);
+  wrap.appendChild(hero);
 
-  // ── Module list title
-  const title = document.createElement('div');
-  title.className = 'home-title';
-  title.textContent = 'Tous les modules';
-  wrap.appendChild(title);
+  // ── MOMENTUM BAR (remplace daily-mission dense) ───────────
+  const actions = S.daily.actions;
+  const goal = S.daily.goal;
+  const pct = Math.min(100, Math.round((actions / goal) * 100));
+  const okTotal = cntOk();
+  let momentumText = '';
+  if (pct >= 100) momentumText = `Mission du jour accomplie · ${lots} lot${lots>1?'s':''} complété${lots>1?'s':''}`;
+  else if (actions === 0) momentumText = `${okTotal} mots maîtrisés au total`;
+  else momentumText = `${actions} action${actions>1?'s':''} aujourd'hui · objectif ${goal}`;
+
+  const momentum = document.createElement('div');
+  momentum.className = 'momentum-bar';
+  momentum.innerHTML = `
+    <div class="momentum-narrative">${momentumText}</div>
+    <div class="momentum-track">
+      <div class="momentum-fill" style="width:${pct}%"></div>
+    </div>
+    <div class="momentum-label">${pct}%</div>
+  `;
+  wrap.appendChild(momentum);
+
+  // ── MODULES EN SECONDAIRE ─────────────────────────────────
+  const modulesTitle = document.createElement('div');
+  modulesTitle.className = 'modules-label';
+  modulesTitle.textContent = 'Modules';
+  wrap.appendChild(modulesTitle);
 
   const grid = document.createElement('div');
   grid.className = 'home-grid';
@@ -3762,7 +3931,7 @@ function buildHome() {
     const card = document.createElement('div');
     card.className = 'home-card';
     card.style.setProperty('--card-color', color);
-    const pct = progTotal > 0 ? Math.round((progDone / progTotal) * 100) : null;
+    const pct2 = progTotal > 0 ? Math.round((progDone / progTotal) * 100) : null;
     card.innerHTML = `
       <div class="home-card-bar"></div>
       <div class="home-card-icon">${icon}</div>
@@ -3771,23 +3940,16 @@ function buildHome() {
         <div class="home-card-sub">${sub}</div>
       </div>
       <div class="home-card-meta">
-        <div class="home-card-count">${countLabel}</div>
-        ${pct !== null ? `<div class="home-card-prog">${progDone}/${progTotal} · ${pct}%</div>` : ''}
+        <div class="home-card-count">${pct2 !== null ? pct2 + '%' : countLabel}</div>
       </div>
     `;
     card.onclick = () => switchTab(tab);
     return card;
   }
 
-  // ── Groupe 1 : Contenu apprentissage (rouge)
-  const lbl1 = document.createElement('div');
-  lbl1.className = 'home-group-label';
-  lbl1.innerHTML = '<span style="color:' + COL_CONTENT + '">●</span> Vocabulaire & Verbes';
-  grid.appendChild(lbl1);
-
   grid.appendChild(makeCard({
     tab:'foundations', icon:'📚', label:'Foundations', color: COL_CONTENT,
-    sub: 'QA Vocabulary · Expressions · Prepositions',
+    sub: 'Vocabulaire · Expressions · Prépositions',
     countLabel: totF + ' items',
     progDone: okF, progTotal: totF,
   }));
@@ -3799,35 +3961,21 @@ function buildHome() {
     progDone: okPh, progTotal: totPh,
   }));
 
-  // ── Groupe 2 : Grammaire (violet)
-  const lbl2 = document.createElement('div');
-  lbl2.className = 'home-group-label';
-  lbl2.style.marginTop = '6px';
-  lbl2.innerHTML = '<span style="color:' + COL_GRAMMAR + '">●</span> Grammaire';
-  grid.appendChild(lbl2);
-
   grid.appendChild(makeCard({
     tab:'grammarhub', icon:'🧠', label:'Grammar', color: COL_GRAMMAR,
-    sub: 'Basics · Advanced Grammar',
+    sub: 'QCM · Modaux · Pronoms · Fill-in',
     countLabel: totGr + ' Q',
     progDone: doneGr, progTotal: totGr,
   }));
 
-  // ── Groupe 3 : Outils & Entraînement (vert)
-  const lbl3 = document.createElement('div');
-  lbl3.className = 'home-group-label';
-  lbl3.style.marginTop = '6px';
-  lbl3.innerHTML = '<span style="color:' + COL_ACTION + '">●</span> Entraînement';
-  grid.appendChild(lbl3);
-
   grid.appendChild(makeCard({
-    tab:'speak', icon:'🎤', label:'Speaking Practice', color: COL_ACTION,
-    sub: 'Mic · Real-time grammar feedback',
+    tab:'speak', icon:'🎤', label:'Speaking', color: COL_ACTION,
+    sub: 'Micro · Feedback grammatical',
     countLabel: 'Oral',
     progDone: null, progTotal: 0,
   }));
 
-  // ── TOEIC parent card (expandable)
+  // ── TOEIC (légèrement atténué — moins prioritaire)
   (function() {
     const TOEIC_COLOR = '#1d6fa4';
     const ltDone = Object.keys(S.listeningTest ? S.listeningTest.answers : {}).length;
@@ -3844,37 +3992,35 @@ function buildHome() {
     const dt4Total = DIRECTIONS_TEST4 ? DIRECTIONS_TEST4.length : 10;
     const totalDone = ltDone + lt2Done + dtDone + dt2Done + dt3Done + dt4Done;
     const totalAll  = ltTotal + lt2Total + dtTotal + dt2Total + dt3Total + dt4Total;
-    const ltPct   = ltTotal > 0 ? Math.round((ltDone / ltTotal) * 100) : 0;
+    const tPct = totalAll > 0 ? Math.round((totalDone/totalAll)*100) : 0;
 
     const toeicCard = document.createElement('div');
     toeicCard.className = 'toeic-card';
+    toeicCard.style.opacity = '.8'; // légèrement atténué
 
-    // Header (parent row)
     const header = document.createElement('div');
     header.className = 'toeic-card-header';
     header.innerHTML = `
       <div class="home-card-bar" style="background:${TOEIC_COLOR}"></div>
-      <div class="home-card-icon">📝</div>
+      <div class="home-card-icon" style="font-size:1.2rem;width:28px;">📝</div>
       <div class="home-card-body">
         <div class="home-card-label">TOEIC</div>
-        <div class="home-card-sub">Listening · Reading · Full Exam</div>
+        <div class="home-card-sub">Listening · Reading</div>
       </div>
       <div class="home-card-meta" style="margin-right:18px;">
-        <div class="home-card-count" style="color:${TOEIC_COLOR};">${totalDone}/${totalAll}</div>
-        <div class="home-card-prog">${totalAll > 0 ? Math.round((totalDone/totalAll)*100) : 0}%</div>
+        <div class="home-card-count" style="color:${TOEIC_COLOR};">${tPct}%</div>
       </div>
     `;
     header.onclick = () => toeicCard.classList.toggle('open');
     toeicCard.appendChild(header);
 
-    // Sub-list container
     const sublist = document.createElement('div');
     sublist.className = 'toeic-sublist';
 
-    function makeSubItem({ icon, label, sub, countLabel, progDone, progTotal, onClick, soon }) {
+    function makeSubItem({ icon, label, sub, progDone, progTotal, onClick, soon }) {
       const item = document.createElement('div');
       item.className = 'toeic-subitem' + (soon ? ' soon' : '');
-      const pct = progTotal > 0 ? Math.round((progDone / progTotal) * 100) : null;
+      const p = progTotal > 0 ? Math.round((progDone / progTotal) * 100) : null;
       item.innerHTML = `
         <div class="toeic-subitem-bar"></div>
         <div class="toeic-subitem-icon">${icon}</div>
@@ -3885,8 +4031,7 @@ function buildHome() {
         ${soon
           ? `<div class="toeic-soon-badge">Bientôt</div>`
           : `<div class="toeic-subitem-meta">
-               <div class="toeic-subitem-count">${countLabel}</div>
-               ${pct !== null ? `<div class="toeic-subitem-prog">${progDone}/${progTotal} · ${pct}%</div>` : ''}
+               <div class="toeic-subitem-count">${p !== null ? p+'%' : '—'}</div>
              </div>`
         }
       `;
@@ -3894,14 +4039,10 @@ function buildHome() {
       return item;
     }
 
-    // Listening Test hub — seul sous-item TOEIC visible
-    const allDone = ltDone + lt2Done + dtDone + dt2Done + dt3Done + dt4Done;
-    const allTotal = ltTotal + lt2Total + dtTotal + dt2Total + dt3Total + dt4Total;
     sublist.appendChild(makeSubItem({
       icon: '🎧', label: 'Listening Test',
-      sub: 'Part 1 · Photographs — Part 2 · Question–Response',
-      countLabel: allDone + '/' + allTotal + ' Q',
-      progDone: allDone, progTotal: allTotal,
+      sub: 'Part 1 · Part 2 · Part 3',
+      progDone: totalDone, progTotal: totalAll,
       onClick: () => switchTab('listeninghub'),
     }));
 
@@ -3910,30 +4051,16 @@ function buildHome() {
   })();
 
   grid.appendChild(makeCard({
-    tab:'review', icon:'🎯', label:'Quiz & Review', color: COL_ACTION,
-    sub: srDueCount() > 0 ? `🧠 ${srDueCount()} cartes SR dues · ${rv > 0 ? rv + ' en révision' : 'Flashcard quiz mode'}` : rv > 0 ? rv + ' cards to review' : 'Flashcard quiz mode',
+    tab:'review', icon:'🎯', label:'Quiz & Révision',
+    color: COL_ACTION,
+    sub: srDueCount() > 0
+      ? `${srDueCount()} carte${srDueCount()>1?'s':''} SR à revoir`
+      : rv > 0 ? `${rv} mot${rv>1?'s':''} à consolider` : 'Flashcard quiz',
     countLabel: srDueCount() > 0 ? srDueCount() + ' dues' : rv > 0 ? rv + ' pending' : 'Ready',
     progDone: null, progTotal: 0,
   }));
 
   wrap.appendChild(grid);
-
-  // ── Stats bar
-  const stats = document.createElement('div');
-  stats.style.cssText = 'display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;';
-  [
-    { val: cntOk(),  lbl: 'Mastered',  color: COL_CONTENT },
-    { val: rv,       lbl: 'To review', color: '#b45309'   },
-    { val: total,    lbl: 'Total',     color: COL_GRAMMAR  },
-    { val: S.streak, lbl: 'Streak 🔥', color: COL_ACTION  },
-  ].forEach(s => {
-    const b = document.createElement('div');
-    b.style.cssText = 'background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:10px 18px;text-align:center;font-family:var(--mono);';
-    b.innerHTML = `<div style="font-size:1.1rem;font-weight:700;color:${s.color}">${s.val}</div>
-                   <div style="font-size:.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px">${s.lbl}</div>`;
-    stats.appendChild(b);
-  });
-  wrap.appendChild(stats);
   return wrap;
 }
 
@@ -7556,7 +7683,7 @@ function buildSessionLauncher(moduleKey) {
             <span class="sess-resume-tag">position ${resumePos}/${total}</span>
           </button>` : ''}
         <button class="btn-sess-start prim" style="background:${color};${hasResume?'opacity:.75;':''}${allDone?'':'font-size:.78rem;'}" onclick="startSession('${moduleKey}', 0)">
-          ${hasResume ? '↺ Recommencer depuis le début' : (allDone ? '🏆 Tout revu — Refaire depuis le début' : '▶ Commencer le 1er lot')}
+          ${hasResume ? '↺ Recommencer depuis le début' : (allDone ? '🏆 Tout revu — Refaire depuis le début' : '▶ Commencer')}
         </button>
         ${hasResume && resumePos < total ? `
           <button class="btn-sess-start sec" onclick="startSession('${moduleKey}', ${resumePos}, true)">
@@ -7671,15 +7798,14 @@ function buildSessionCard() {
   const batchTotal = Math.ceil(sess.totalItems / BATCH_SIZE);
 
   wrap.innerHTML = `
-    <div class="sess-header">
-      <div class="sess-batch-info">Lot <strong>${batchNum}/${batchTotal}</strong> · ${sess.label}</div>
-      <button class="btn-quit" onclick="sessionPause()">✕ Pause</button>
-    </div>
     <div class="sess-prog-wrap">
       <div class="sess-prog-bar">
         <div class="sess-prog-fill" style="width:${pct}%;background:${color}"></div>
       </div>
-      <div class="sess-prog-txt">${cardIdx+1}/${batch.length}</div>
+    </div>
+    <div class="sess-header">
+      <div class="sess-batch-info">Lot <strong>${batchNum} sur ${batchTotal}</strong></div>
+      <button class="btn-quit" onclick="sessionPause()" style="font-size:.72rem;padding:4px 10px;">✕ Pause</button>
     </div>
   `;
 
@@ -8015,7 +8141,7 @@ function buildSessionRecap() {
       <div class="sess-recap-btns">
         ${hasMore ? `
           <button class="btn-recap prim" style="background:${color}" onclick="startSession('${moduleKey}', ${nextPos}, false, sess.origin)">
-            ▶ Lot suivant (${batchNum+1}/${batchTotal}) →
+            ▶ Lot suivant (${batchNum+1}/${batchTotal})
           </button>` : `
           <button class="btn-recap prim" style="background:${color}" disabled>
             🏆 Module terminé !
