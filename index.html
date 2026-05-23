@@ -1537,6 +1537,11 @@ let DIRECTIONS_TEST2 = [];
 let DIRECTIONS_TEST3 = [];
 let DIRECTIONS_TEST4 = [];
 
+// ═══════════════════════════════════════════════════════════
+// REAL ENGLISH — Phrases de la vie quotidienne
+// ═══════════════════════════════════════════════════════════
+let REAL_ENGLISH = [];
+
 function buildPrepCards() {
   const cards = [];
   PREP_SECTIONS.forEach(sec => {
@@ -1561,7 +1566,7 @@ DATA.prep = PREP_CARDS;
 // ═══════════════════════════════════════════════════════════
 let S = {
   tab: 'home',
-  cursor: {vocab:0, expr:0, prep:0, phrasal:0, take:0},
+  cursor: {vocab:0, expr:0, prep:0, phrasal:0, take:0, real:0},
   prepView: 'cours',
   prepSection: 'sur',
   phrasalView: 'cours',
@@ -1631,7 +1636,7 @@ function _loadLocal() {
 function _applyData(p) {
   S.status         = p.status         || {};
   S.streak         = p.streak         || 0;
-  S.cursor         = p.cursor         || {vocab:0,expr:0,prep:0,phrasal:0,take:0};
+  S.cursor         = p.cursor         || {vocab:0,expr:0,prep:0,phrasal:0,take:0,real:0};
   S.sessProgress   = p.sessProgress   || {};
   S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   S.lastSession    = p.lastSession    || null;
@@ -1694,7 +1699,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1709,6 +1714,7 @@ async function loadAllData() {
       fetch('directions2.json').then(r=>r.json()),
       fetch('directions3.json').then(r=>r.json()),
       fetch('directions4.json').then(r=>r.json()),
+      fetch('real.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1744,6 +1750,8 @@ async function loadAllData() {
     DIRECTIONS_TEST2 = directions2;
     DIRECTIONS_TEST3 = directions3;
     DIRECTIONS_TEST4 = directions4;
+    // Real English
+    REAL_ENGLISH = real.map((item, i) => ({ ...item, _sec: 'real', _idx: i }));
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -3306,6 +3314,7 @@ const TAB_PARENT = {
   phrasal: 'phrasalhub', take: 'phrasalhub',
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
+  real: 'home',
   // TOEIC hierarchy
   listeninghub: 'home',
   part1hub:     'listeninghub',
@@ -3441,6 +3450,7 @@ function _buildContent(el) {
   else if(S.tab==='directions2')  el.appendChild(buildDirectionsTest2());
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
   else if(S.tab==='directions4')  el.appendChild(buildDirectionsTest4());
+  else if(S.tab==='real')         el.appendChild(buildRealEnglishSection());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -3946,6 +3956,14 @@ function buildHome() {
     card.onclick = () => switchTab(tab);
     return card;
   }
+
+  grid.appendChild(makeCard({
+    tab:'real', icon:'💬', label:'Real English', color: '#0d9488',
+    sub: 'Small talk · Réunions · Slack',
+    countLabel: REAL_ENGLISH.length + ' phrases',
+    progDone: REAL_ENGLISH.filter((_,i)=>getS('real',i)==='ok').length,
+    progTotal: REAL_ENGLISH.length,
+  }));
 
   grid.appendChild(makeCard({
     tab:'foundations', icon:'📚', label:'Foundations', color: COL_CONTENT,
@@ -5753,6 +5771,161 @@ function buildPrepSection() {
 }
 
 function setPrepView(v){S.prepView=v;render();}
+
+// ═══════════════════════════════════════════════════════════
+// REAL ENGLISH SECTION
+// ═══════════════════════════════════════════════════════════
+const REAL_CAT_LABELS = { ST: 'Small talk & social', MT: 'Meetings & calls', SL: 'Slack & async' };
+const REAL_CAT_COLORS = { ST: '#0d9488', MT: '#0891b2', SL: '#7c3aed' };
+const REAL_COLOR = '#0d9488';
+
+function buildRealEnglishSection() {
+  const data = REAL_ENGLISH;
+  const idx  = S.cursor.real || 0;
+  const item = data[idx];
+  const st   = getS('real', idx);
+  const total = data.length;
+  const pct   = Math.round(((idx + 1) / total) * 100);
+  const nOk   = data.filter((_,i) => getS('real',i) === 'ok').length;
+  const nRev  = data.filter((_,i) => getS('real',i) === 'review').length;
+  const catColor = REAL_CAT_COLORS[item.cat] || REAL_COLOR;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+
+  // Back bar
+  const bar = document.getElementById('backBar');
+  if (bar) { bar.style.display = 'flex'; bar.onclick = goHome; _setBackBarLabel('Retour à l\'accueil'); }
+
+  // Sub-nav: Flashcards | Cours
+  const rv = S.realView || 'cards';
+  wrap.innerHTML = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="phrasal-subbtn ${rv==='cards'?'active':''}"
+        style="${rv==='cards'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
+        onclick="setRealView('cards')">🃏 Flashcards (${total})</button>
+      <button class="phrasal-subbtn ${rv==='cours'?'active':''}"
+        style="${rv==='cours'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
+        onclick="setRealView('cours')">📖 Toutes les phrases</button>
+      ${nRev > 0 ? `<button class="phrasal-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="startSession('real',0,false,'home')">🎯 Réviser (${nRev})</button>` : ''}
+    </div>
+  `;
+
+  if (rv === 'cours') {
+    // Liste par catégorie
+    const div = document.createElement('div');
+    ['ST','MT','SL'].forEach(cat => {
+      const items = data.filter(d => d.cat === cat);
+      const cc = REAL_CAT_COLORS[cat];
+      const cl = REAL_CAT_LABELS[cat];
+      const section = document.createElement('div');
+      section.style.marginBottom = '24px';
+      section.innerHTML = `
+        <div style="font-family:var(--mono);font-size:.6rem;color:${cc};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px;padding:4px 10px;background:rgba(13,148,136,.07);border-left:3px solid ${cc};border-radius:0 6px 6px 0;">${cl}</div>
+      `;
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:8px;';
+        card.innerHTML = `
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+            <button class="btn-tbl-audio" style="color:${cc};flex-shrink:0;margin-top:2px" onclick="speak('${esc(item.en)}','en')">${spkSvg()}</button>
+            <div>
+              <div style="font-size:.95rem;font-weight:800;color:${cc};">${item.en}</div>
+              <div style="font-size:.78rem;color:var(--muted);font-style:italic;margin-top:2px;">${item.fr}</div>
+            </div>
+          </div>
+          <div style="font-size:.76rem;color:var(--text);background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.5;">
+            <div style="font-style:italic;color:var(--muted);">"${item.ex}"</div>
+            <div style="color:var(--muted);font-size:.72rem;margin-top:3px;">${item.exTrad}</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-top:6px;padding:0 2px;">💡 ${item.note}</div>
+        `;
+        section.appendChild(card);
+      });
+      div.appendChild(section);
+    });
+    wrap.appendChild(div);
+
+  } else {
+    // Flashcard mode
+    const badge = st === 'ok'
+      ? `<div class="card-badge badge-ok">✓ Maîtrisé</div>`
+      : st === 'review'
+        ? `<div class="card-badge badge-rev">🔄 À revoir</div>`
+        : `<div class="card-badge badge-new">Nouveau</div>`;
+
+    const fcWrap = document.createElement('div');
+    fcWrap.innerHTML = `
+      <div class="fc-progress-strip">
+        <div class="fc-prog-bar">
+          <div class="fc-prog-fill real-fill" style="width:${pct}%;background:${REAL_COLOR}"></div>
+        </div>
+        <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+      </div>
+
+      <div style="font-family:var(--mono);font-size:.55rem;color:${catColor};text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;text-align:center;">${REAL_CAT_LABELS[item.cat]}</div>
+
+      <div class="flashcard ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
+        <div class="card-stripe" style="background:linear-gradient(90deg,${catColor},${catColor}88)"></div>
+        ${badge}
+        <div class="card-body">
+          <div class="card-num" style="color:${catColor}">💬 Real English · #${idx+1}</div>
+          <div class="card-word" style="color:${catColor};font-size:1.35rem;">${item.en}</div>
+          <div class="card-extra" style="font-style:italic;">${item.fr}</div>
+          <div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);margin:8px 0;padding:8px 10px;background:var(--bg2);border-radius:8px;line-height:1.5;">💡 ${item.note}</div>
+          <div class="card-example">"${item.ex}"</div>
+          <div class="card-example-trad">${item.exTrad}</div>
+          <div class="card-audio-row">
+            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')" style="border-color:${catColor}33;color:${catColor}">${spkSvg()} Écouter</button>
+            <button class="btn-audio" onclick="speak('${esc(item.ex)}','en')">${spkSvg()} Exemple</button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="markReal(${idx},'ok')">
+            ${st==='ok' ? '✓ Maîtrisé' : '✓ Marquer maîtrisé'}
+          </button>
+          <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="markReal(${idx},'review')">
+            ${st==='review' ? '🔄 En révision' : '🔄 Mettre en révision'}
+          </button>
+        </div>
+      </div>
+
+      <div class="fc-nav">
+        <button class="btn-nav" onclick="navReal(-1)" ${idx===0?'disabled':''}>◀</button>
+        <div class="nav-center">
+          <div class="nav-pos">${idx+1} / ${total}</div>
+          <div class="nav-hint">← → clavier</div>
+        </div>
+        <button class="btn-nav" onclick="navReal(1)" ${idx===total-1?'disabled':''}>▶</button>
+      </div>
+    `;
+    wrap.appendChild(fcWrap);
+
+    _keyHandler = (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowRight') navReal(1);
+      if (e.key === 'ArrowLeft')  navReal(-1);
+    };
+    document.addEventListener('keydown', _keyHandler);
+  }
+
+  return wrap;
+}
+
+function setRealView(v) { S.realView = v; render(); }
+
+function navReal(dir) {
+  const max = REAL_ENGLISH.length - 1;
+  S.cursor.real = Math.max(0, Math.min(max, (S.cursor.real || 0) + dir));
+  save(); render();
+}
+
+function markReal(idx, val) {
+  const cur = getS('real', idx);
+  setS('real', idx, cur === val ? null : val);
+  if (val === 'ok') { S.streak++; save(); checkMilestones(null); }
+  render();
+}
 
 // ═══════════════════════════════════════════════════════════
 // PHRASAL VERBS SECTION
@@ -7608,6 +7781,7 @@ const BATCH_SIZE = 10;
 
 // Config per module key
 const SESS_CFG = {
+  real:     { type:'fc',  label:'💬 Real English',         color:'#0d9488', fillCls:'real-fill',    getData:()=>REAL_ENGLISH,   answersKey:null,          qcmData:null },
   vocab:    { type:'fc',  label:'📚 Vocabulaire IT/QA',  color:'#c1121f', fillCls:'vocab-fill',   getData:()=>DATA.vocab,     answersKey:null,          qcmData:null },
   expr:     { type:'fc',  label:'💬 Expressions clés',   color:'#2d6a4f', fillCls:'expr-fill',    getData:()=>DATA.expr,      answersKey:null,          qcmData:null },
   prep:     { type:'fc',  label:'📐 Prépositions',        color:'#7c3aed', fillCls:'prep-fill',    getData:()=>PREP_CARDS,     answersKey:null,          qcmData:null },
