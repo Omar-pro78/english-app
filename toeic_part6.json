@@ -1,0 +1,188 @@
+[
+  {
+    "id": "p6_t1",
+    "type": "memo",
+    "title": "Internal Memo — Greenfield Technologies",
+    "context": "Read the following memo and choose the best answer for each blank.",
+    "paragraphs": [
+      "TO: All Department Heads\nFROM: Sandra Whitmore, Chief Operations Officer\nDATE: March 14\nSUBJECT: Upcoming Office Relocation",
+      "As you may know, Greenfield Technologies will be [1] its main offices to the Harborview Business Center on April 3. The new location offers significantly more space and modern facilities that will [2] our growing team.",
+      "All employees are asked to pack their personal belongings by April 1. Boxes and packing materials will be [3] in the break room starting March 25. IT staff will handle the transportation of all computer equipment.",
+      "Please [4] your teams of this schedule as soon as possible. A detailed moving plan will be distributed by the facilities manager by the end of this week. Thank you for your cooperation."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "Greenfield Technologies will be [1] its main offices to the Harborview Business Center on April 3.",
+        "choices": ["relocating", "relocated", "relocation", "relocate"],
+        "answer": 0,
+        "cat": "verb_form",
+        "explanation": "Après 'will be', il faut un verbe en '-ing' pour former le futur progressif (will be + V-ing). 'relocating' est correct. 'relocated' serait le passif, 'relocation' est un nom, 'relocate' est l'infinitif."
+      },
+      {
+        "blank": 2,
+        "sentence": "The new location offers significantly more space and modern facilities that will [2] our growing team.",
+        "choices": ["accommodate", "accommodate for", "accommodate to", "be accommodated"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Accommodate' (héberger, accueillir) est transitif direct — on ne met pas de préposition après. 'accommodate our team' = convenir à notre équipe. 'be accommodated' serait passif et changerait le sens."
+      },
+      {
+        "blank": 3,
+        "sentence": "Boxes and packing materials will be [3] in the break room starting March 25.",
+        "choices": ["available", "availability", "availably", "avail"],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "Après 'be', il faut un adjectif attribut. 'available' (disponible) est l'adjectif. 'availability' est un nom, 'availably' n'est pas un mot standard, 'avail' est un verbe/nom avec un sens différent."
+      },
+      {
+        "blank": 4,
+        "sentence": "Please [4] your teams of this schedule as soon as possible.",
+        "choices": ["inform", "notify", "advise", "tell"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Inform someone of something' est la collocation correcte ici. 'Notify someone of' fonctionne aussi grammaticalement, mais 'inform' est plus naturel dans un mémo formel. 'Advise' et 'tell' ne se construisent pas avec 'of' dans ce sens."
+      }
+    ]
+  },
+  {
+    "id": "p6_t2",
+    "type": "letter",
+    "title": "Business Letter — Apex Consulting",
+    "context": "Read the following letter and choose the best answer for each blank.",
+    "paragraphs": [
+      "Dear Ms. Tanaka,",
+      "Thank you for [1] in the position of Senior Marketing Analyst at Apex Consulting. We were impressed by your background and your experience in digital strategy.",
+      "We would like to invite you to a second interview [2] will take place at our downtown office on Friday, March 22, at 2:00 P.M. During this meeting, you will have the [3] to meet with members of our leadership team and discuss the responsibilities of the role in greater detail.",
+      "Please confirm your [4] by replying to this email no later than March 19. We look forward to speaking with you again.",
+      "Sincerely,\nDavid Park\nHuman Resources Manager"
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "Thank you for [1] in the position of Senior Marketing Analyst at Apex Consulting.",
+        "choices": ["your interest", "interesting", "interested", "your interesting"],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "Après la préposition 'for', on attend un groupe nominal. 'your interest in' (votre intérêt pour) est la construction idiomatique correcte. 'interesting' est un adjectif, 'interested' est aussi adjectif et ne peut pas suivre 'for' directement ici."
+      },
+      {
+        "blank": 2,
+        "sentence": "We would like to invite you to a second interview [2] will take place at our downtown office on Friday.",
+        "choices": ["that", "which", "who", "where"],
+        "answer": 0,
+        "cat": "pronoun",
+        "explanation": "'that' et 'which' sont tous deux possibles pour les antécédents non-animés ('interview'). Cependant dans une proposition relative restrictive en anglais formel américain, 'that' est légèrement préféré. 'who' est pour les personnes, 'where' est pour les lieux."
+      },
+      {
+        "blank": 3,
+        "sentence": "During this meeting, you will have the [3] to meet with members of our leadership team.",
+        "choices": ["opportunity", "occasion", "possibility", "chance"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Have the opportunity to do something' est la collocation la plus formelle et naturelle dans une lettre professionnelle. 'Occasion' implique une cérémonie particulière. 'Possibility' et 'chance' existent mais sont moins idiomatiques dans ce contexte business formel."
+      },
+      {
+        "blank": 4,
+        "sentence": "Please confirm your [4] by replying to this email no later than March 19.",
+        "choices": ["attendance", "attends", "attend", "attending"],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "Après le possessif 'your', il faut un nom. 'attendance' (présence, participation) est le nom correct. 'attends' et 'attend' sont des verbes, 'attending' est un gérondif mais 'your attending' est moins naturel que 'your attendance' dans ce contexte formel."
+      }
+    ]
+  },
+  {
+    "id": "p6_t3",
+    "type": "notice",
+    "title": "Company Notice — Riverside Hotel",
+    "context": "Read the following notice and choose the best answer for each blank.",
+    "paragraphs": [
+      "NOTICE TO ALL GUESTS\nRiverside Hotel — Pool & Fitness Center",
+      "The pool and fitness center are [1] for maintenance from Monday, June 10 through Wednesday, June 12. We apologize for any [2] this may cause.",
+      "During this period, guests who wish to use fitness facilities are [3] to use the Maple Street Gym, located three blocks from the hotel. The hotel will provide [4] transportation to and from the gym every hour, starting at 7:00 A.M.",
+      "The pool and fitness center will reopen on Thursday, June 13, with extended hours to make up for lost time. Thank you for your understanding and patience."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "The pool and fitness center are [1] for maintenance from Monday, June 10 through Wednesday, June 12.",
+        "choices": ["closed", "closing", "close", "closure"],
+        "answer": 0,
+        "cat": "verb_form",
+        "explanation": "Avec le verbe 'are', il faut un adjectif attribut ou un participe passé. 'closed' fonctionne comme adjectif (= fermé). 'closing' impliquerait une action en cours ('are closing' = en train de fermer), 'close' est un verbe/adjectif court, 'closure' est un nom."
+      },
+      {
+        "blank": 2,
+        "sentence": "We apologize for any [2] this may cause.",
+        "choices": ["inconvenience", "inconvenient", "inconveniently", "inconveniences"],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "'Inconvenience' (désagrément) est un nom indénombrable dans ce contexte — on dit 'any inconvenience' sans article ni pluriel. C'est une formule standard dans les excuses professionnelles : 'We apologize for any inconvenience'. 'Inconvenient' est un adjectif."
+      },
+      {
+        "blank": 3,
+        "sentence": "Guests who wish to use fitness facilities are [3] to use the Maple Street Gym.",
+        "choices": ["encouraged", "suggested", "recommended", "advised"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Be encouraged to do' = être encouragé à faire. C'est la construction la plus naturelle ici. 'Suggested' et 'recommended' ne se construisent pas avec 'be + past participle + to infinitif' dans ce sens. 'Be advised to' fonctionne aussi, mais 'encouraged' est plus accueillant dans un avis hôtelier."
+      },
+      {
+        "blank": 4,
+        "sentence": "The hotel will provide [4] transportation to and from the gym every hour.",
+        "choices": ["complimentary", "free of charge", "no-cost", "gratis"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Complimentary' est l'adjectif formel utilisé dans l'industrie hôtelière pour dire 'offert gratuitement'. Il se place directement devant le nom : 'complimentary transportation'. 'Free of charge' et 'gratis' ne modifient pas un nom directement, 'no-cost' est du jargon informel."
+      }
+    ]
+  },
+  {
+    "id": "p6_t4",
+    "type": "email",
+    "title": "E-mail — Supplier Communication",
+    "context": "Read the following e-mail and choose the best answer for each blank.",
+    "paragraphs": [
+      "From: Marcus Webb <m.webb@novaprod.com>\nTo: orders@supplynow.com\nSubject: Order #4892 — Delivery Delay",
+      "Dear Supply Now Team,",
+      "I am writing [1] the delivery of our most recent order (Order #4892), which was [2] to arrive on April 5 but has not yet been received.",
+      "This delay is causing [3] disruptions to our production schedule, and we need the materials urgently. Could you please investigate the matter and let us know the [4] delivery date as soon as possible?",
+      "We would appreciate a prompt response.\n\nBest regards,\nMarcus Webb\nProcurement Manager, Nova Productions"
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "I am writing [1] the delivery of our most recent order, which was expected to arrive on April 5.",
+        "choices": ["regarding", "about", "concerning", "for"],
+        "answer": 0,
+        "cat": "preposition",
+        "explanation": "'Regarding' est la préposition formelle standard dans les e-mails professionnels pour introduire le sujet : 'I am writing regarding...'. 'About' est correct mais moins formel. 'Concerning' fonctionne aussi mais est légèrement plus lourd. 'For' ne convient pas dans ce contexte."
+      },
+      {
+        "blank": 2,
+        "sentence": "The order was [2] to arrive on April 5 but has not yet been received.",
+        "choices": ["scheduled", "planned", "expected", "supposed"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Scheduled to arrive' (prévu pour arriver, selon un planning) est la collocation la plus précise dans un contexte logistique et de livraison. 'Expected' fonctionne aussi, mais 'scheduled' suggère une date ferme sur un calendrier. 'Supposed to' est plus informel. 'Planned' est moins courant avec 'arrive'."
+      },
+      {
+        "blank": 3,
+        "sentence": "This delay is causing [3] disruptions to our production schedule.",
+        "choices": ["significant", "significance", "significantly", "signify"],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "Avant un nom ('disruptions'), il faut un adjectif. 'Significant' (significatif, important) est l'adjectif correct. 'Significance' est un nom, 'significantly' est un adverbe, 'signify' est un verbe."
+      },
+      {
+        "blank": 4,
+        "sentence": "Could you please let us know the [4] delivery date as soon as possible?",
+        "choices": ["revised", "reviewed", "reformed", "renewed"],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Revised delivery date' (nouvelle date de livraison révisée) est l'expression standard en logistique et supply chain quand une date initiale doit être modifiée. 'Reviewed' implique une analyse, 'reformed' implique un changement structurel, 'renewed' implique un renouvellement plutôt qu'une correction."
+      }
+    ]
+  }
+]
