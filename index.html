@@ -202,7 +202,7 @@ nav{display:none;} /* nav remplacé par home screen */
 .toeic-card-header:hover .toeic-card-header-inner{opacity:.85;}
 .toeic-sublist{display:flex;flex-direction:column;gap:0;
   max-height:0;overflow:hidden;transition:max-height .3s ease;}
-.toeic-card.open .toeic-sublist{max-height:120px;}
+.toeic-card.open .toeic-sublist{max-height:220px;}
 .toeic-subitem{display:flex;align-items:center;gap:14px;
   padding:12px 20px 12px 28px;border-top:1px solid var(--border);
   cursor:pointer;transition:background .15s;}
@@ -3321,9 +3321,10 @@ const TAB_PARENT = {
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
   real: 'home',
-  toeic_part5: 'listeninghub',
+  toeic_part5: 'readinghub',
   // TOEIC hierarchy
   listeninghub: 'home',
+  readinghub:   'home',
   part1hub:     'listeninghub',
   part2hub:     'listeninghub',
   part3hub:     'listeninghub',
@@ -3338,7 +3339,7 @@ const TAB_PARENT = {
   directions3:  'part2hub',
   directions4:  'part2hub',
 };
-const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review','listeninghub','part1hub','part2hub']);
+const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review','listeninghub','readinghub','part1hub','part2hub']);
 
 const HUB_LABELS = {
   foundations:  'Foundations',
@@ -3346,7 +3347,8 @@ const HUB_LABELS = {
   grammarhub:   'Grammar',
   speak:        'Speaking',
   review:       'Quiz & Review',
-  listeninghub: 'Listening Test',
+  listeninghub: 'Listening Testing',
+  readinghub:   'Section Reading',
   part1hub:     'Part 1 — Photographs',
   part2hub:     'Part 2 — Question–Response',
   part3hub:     'Part 3 — Conversations',
@@ -3444,6 +3446,7 @@ function _buildContent(el) {
   else if(S.tab==='grammar5')     el.appendChild(buildGrammar5Section());
   else if(S.tab==='grammar6')     el.appendChild(buildGrammar6Section());
   else if(S.tab==='listeninghub') el.appendChild(buildListeningHub());
+  else if(S.tab==='readinghub')   el.appendChild(buildReadingHub());
   else if(S.tab==='part1hub')     el.appendChild(buildPart1Hub());
   else if(S.tab==='part2hub')     el.appendChild(buildPart2Hub());
   else if(S.tab==='part3hub')     el.appendChild(buildPart3Hub());
@@ -4066,10 +4069,20 @@ function buildHome() {
     }
 
     sublist.appendChild(makeSubItem({
-      icon: '🎧', label: 'Listening Test',
-      sub: 'Part 1 · Part 2 · Part 3',
+      icon: '🎧', label: 'Listening Testing',
+      sub: 'Part 1 · Part 2 · Part 3 · Part 4',
       progDone: totalDone, progTotal: totalAll,
       onClick: () => switchTab('listeninghub'),
+    }));
+
+    const p5State = S.toeicPart5 || {};
+    const p5Done  = Object.keys(p5State.answers || {}).length;
+    const p5Total = TOEIC_PART5 ? TOEIC_PART5.length : 30;
+    sublist.appendChild(makeSubItem({
+      icon: '📖', label: 'Section Reading',
+      sub: 'Part 5 — Incomplete Sentences',
+      progDone: p5Done, progTotal: p5Total,
+      onClick: () => switchTab('readinghub'),
     }));
 
     toeicCard.appendChild(sublist);
@@ -4094,7 +4107,6 @@ function buildHome() {
 
 function buildListeningHub() {
   const COLOR = '#1d6fa4';
-  const COLOR_READ = '#7c3aed';
   const wrap = document.createElement('div');
   wrap.className = 'hub-page fade-up';
 
@@ -4119,19 +4131,11 @@ function buildListeningHub() {
   const p4Done  = Object.keys(lt4.answers || {}).length;
   const p4Total = LISTENING_TEST4 ? LISTENING_TEST4.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
 
-  // Part 5 progress
-  const p5State = S.toeicPart5 || {};
-  const p5Answers = p5State.answers || {};
-  const p5Done  = Object.keys(p5Answers).length;
-  const p5Total = TOEIC_PART5 ? TOEIC_PART5.length : 30;
-  const p5Score = p5State.score || 0;
-
   wrap.innerHTML = `
-    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">📝 TOEIC</div>
-    <div class="hub-title" style="color:${COLOR}">Préparation TOEIC</div>
-    <div class="hub-subtitle">Listening & Reading — entraîne-toi section par section</div>
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🎧 TOEIC — LISTENING TESTING</div>
+    <div class="hub-title" style="color:${COLOR}">Listening Testing</div>
+    <div class="hub-subtitle">Parts 1 à 4 — entraîne-toi section par section</div>
 
-    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:2px;margin:20px 0 10px;padding:4px 10px;background:rgba(29,111,164,.06);border-left:3px solid ${COLOR};border-radius:0 6px 6px 0;">🎧 Listening</div>
     <div class="hub-grid">
       <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('part1hub')">
         <div class="hub-card-icon">📸</div>
@@ -4170,15 +4174,30 @@ function buildListeningHub() {
         <div class="hub-card-arrow">›</div>
       </div>
     </div>
+  `;
+  return wrap;
+}
 
-    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR_READ};text-transform:uppercase;letter-spacing:2px;margin:20px 0 10px;padding:4px 10px;background:rgba(124,58,237,.06);border-left:3px solid ${COLOR_READ};border-radius:0 6px 6px 0;">📖 Reading</div>
+function buildReadingHub() {
+  const COLOR = '#7c3aed';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+
+  const p5State = S.toeicPart5 || {};
+  const p5Done  = Object.keys(p5State.answers || {}).length;
+  const p5Total = TOEIC_PART5 ? TOEIC_PART5.length : 30;
+
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:${COLOR}">📖 TOEIC — SECTION READING</div>
+    <div class="hub-title" style="color:${COLOR}">Section Reading</div>
+    <div class="hub-subtitle">Grammaire & vocabulaire — complète les phrases</div>
     <div class="hub-grid">
-      <div class="hub-card" style="--hc-color:${COLOR_READ}" onclick="switchTab('toeic_part5')">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('toeic_part5')">
         <div class="hub-card-icon">✍️</div>
         <div class="hub-card-info">
           <div class="hub-card-label">Part 5 — Incomplete Sentences</div>
-          <div class="hub-card-desc">30 questions · Grammaire & vocabulaire · Explication à chaque erreur</div>
-          ${hubProgBar(p5Done, p5Total, COLOR_READ)}
+          <div class="hub-card-desc">${p5Total} questions · Grammaire & vocabulaire · Explication à chaque erreur</div>
+          ${hubProgBar(p5Done, p5Total, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
