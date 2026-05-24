@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "cat": "verb_form",
+    "sentence": "The new safety regulations ------- into effect next Monday.",
+    "choices": ["will come", "came", "coming", "have come"],
+    "answer": 0,
+    "explanation": "'Next Monday' indique un futur planifié. On utilise 'will come' (futur simple). 'Came' est un passé simple, 'coming' est un participe présent sans auxiliaire, 'have come' est un présent parfait incompatible avec un marqueur futur."
+  },
+  {
+    "id": 2,
+    "cat": "vocabulary",
+    "sentence": "All employees are ------- to submit their expense reports by Friday.",
+    "choices": ["required", "acquired", "inquired", "desired"],
+    "answer": 0,
+    "explanation": "'Required to do something' = être obligé de faire quelque chose. C'est une formule standard dans les communications RH. 'Acquired' = acquis, 'inquired' = s'est renseigné, 'desired' = souhaité — aucun ne convient avec 'to submit'."
+  },
+  {
+    "id": 3,
+    "cat": "pronoun",
+    "sentence": "The board of directors made ------- decision to postpone the merger until Q3.",
+    "choices": ["its", "their", "his", "our"],
+    "answer": 0,
+    "explanation": "'Board of directors' est un nom collectif singulier en anglais américain (TOEIC). On utilise donc 'its' (pronom possessif singulier neutre). En anglais britannique 'their' serait acceptable, mais le TOEIC suit la convention américaine."
+  },
+  {
+    "id": 4,
+    "cat": "connector",
+    "sentence": "------- the project was over budget, the client was satisfied with the final outcome.",
+    "choices": ["Although", "Because", "Therefore", "Unless"],
+    "answer": 0,
+    "explanation": "'Although' introduit une concession : malgré le dépassement de budget, le client était satisfait. 'Because' introduirait une cause, 'therefore' une conséquence, 'unless' une condition négative — aucun ne correspond à la relation logique de la phrase."
+  },
+  {
+    "id": 5,
+    "cat": "preposition",
+    "sentence": "Ms. Chen has been ------- charge of the marketing department for three years.",
+    "choices": ["in", "on", "at", "by"],
+    "answer": 0,
+    "explanation": "'In charge of' est l'expression figée qui signifie 'responsable de'. C'est une collocation incontournable du TOEIC. Les autres prépositions ne s'utilisent pas avec 'charge' dans ce sens."
+  },
+  {
+    "id": 6,
+    "cat": "verb_form",
+    "sentence": "The annual report ------- by the accounting team before the deadline.",
+    "choices": ["was completed", "completed", "has completing", "will completing"],
+    "answer": 0,
+    "explanation": "La phrase est à la voix passive (sujet = rapport, qui reçoit l'action). 'Was completed' = passé passif correct. 'Completed' serait actif. 'Has completing' et 'will completing' sont grammaticalement incorrects."
+  },
+  {
+    "id": 7,
+    "cat": "vocabulary",
+    "sentence": "The company decided to ------- its operations in Southeast Asia due to rising costs.",
+    "choices": ["downsize", "upsize", "revise", "enclose"],
+    "answer": 0,
+    "explanation": "'Downsize' = réduire la taille/les effectifs d'une entreprise. Terme classique du vocabulaire RH/business TOEIC. 'Upsize' = agrandir (contraire), 'revise' = réviser/modifier, 'enclose' = joindre/inclure."
+  },
+  {
+    "id": 8,
+    "cat": "determiner",
+    "sentence": "Please send ------- updated contract to all parties involved.",
+    "choices": ["the", "a", "an", "some"],
+    "answer": 0,
+    "explanation": "'The' est utilisé ici car 'updated contract' est un élément spécifique et identifié par le contexte (on sait de quel contrat il s'agit). 'A/an' introduirait quelque chose de non spécifique, 'some' est pluriel ou indénombrable."
+  },
+  {
+    "id": 9,
+    "cat": "connector",
+    "sentence": "The store will remain open on Sunday ------- the public holiday.",
+    "choices": ["despite", "although", "however", "even if"],
+    "answer": 0,
+    "explanation": "'Despite' est suivi d'un nom ou d'un groupe nominal ('the public holiday'). 'Although' est suivi d'une proposition avec sujet + verbe. 'However' est un adverbe de liaison, pas une conjonction. 'Even if' introduit une condition."
+  },
+  {
+    "id": 10,
+    "cat": "verb_form",
+    "sentence": "We recommend ------- the contract before signing it.",
+    "choices": ["reviewing", "to review", "reviewed", "review"],
+    "answer": 0,
+    "explanation": "'Recommend' est suivi du gérondif (-ing) en anglais standard. 'Recommend doing something' est la structure correcte. 'Recommend to review' est une erreur fréquente mais incorrecte en anglais formel."
+  },
+  {
+    "id": 11,
+    "cat": "vocabulary",
+    "sentence": "The new software ------- allows employees to track their working hours automatically.",
+    "choices": ["platform", "segment", "invoice", "inventory"],
+    "answer": 0,
+    "explanation": "'Platform' désigne un système logiciel ou une infrastructure numérique — usage très courant dans le vocabulaire tech/business du TOEIC. 'Segment' = segment, 'invoice' = facture, 'inventory' = inventaire — aucun ne correspond au contexte."
+  },
+  {
+    "id": 12,
+    "cat": "preposition",
+    "sentence": "The meeting has been rescheduled ------- Tuesday to Thursday.",
+    "choices": ["from", "since", "between", "among"],
+    "answer": 0,
+    "explanation": "'From... to...' exprime un changement de point A à point B. 'Rescheduled from Tuesday to Thursday' = déplacé de mardi à jeudi. 'Since' exprime une durée depuis un point passé, 'between' et 'among' n'introduisent pas une paire de repères temporels dans ce contexte."
+  },
+  {
+    "id": 13,
+    "cat": "pronoun",
+    "sentence": "Employees should submit ------- vacation requests at least two weeks in advance.",
+    "choices": ["their", "its", "his", "our"],
+    "answer": 0,
+    "explanation": "'Employees' est un sujet pluriel indéfini. On utilise 'their' comme possessif pluriel neutre. 'Its' est singulier/neutre, 'his' est singulier masculin, 'our' inclut le locuteur ce qui ne correspond pas au contexte d'une instruction générale."
+  },
+  {
+    "id": 14,
+    "cat": "verb_form",
+    "sentence": "The CEO ------- the new policy at the quarterly meeting last week.",
+    "choices": ["announced", "announces", "has announced", "announcing"],
+    "answer": 0,
+    "explanation": "'Last week' est un marqueur de passé révolu qui impose le passé simple. 'Announced' est donc la seule forme correcte. 'Has announced' (présent parfait) est incompatible avec 'last week'."
+  },
+  {
+    "id": 15,
+    "cat": "vocabulary",
+    "sentence": "All ------- for the conference must be submitted through the online registration portal.",
+    "choices": ["applications", "appliances", "appellations", "appearances"],
+    "answer": 0,
+    "explanation": "'Applications' = candidatures ou inscriptions — terme standard pour une conférence ou un événement. 'Appliances' = appareils électroménagers, 'appellations' = appellations/dénominations, 'appearances' = apparences/comparutions."
+  },
+  {
+    "id": 16,
+    "cat": "connector",
+    "sentence": "The shipment was delayed; -------, the client received the goods on time.",
+    "choices": ["nevertheless", "furthermore", "similarly", "specifically"],
+    "answer": 0,
+    "explanation": "'Nevertheless' = néanmoins — introduit une concession après un point-virgule. Malgré le retard, la livraison est arrivée à temps. 'Furthermore' = de plus (addition), 'similarly' = de même (comparaison), 'specifically' = spécifiquement."
+  },
+  {
+    "id": 17,
+    "cat": "preposition",
+    "sentence": "The budget for the new campaign must be approved ------- the finance committee.",
+    "choices": ["by", "from", "with", "through"],
+    "answer": 0,
+    "explanation": "'Approved by' = approuvé par — voix passive avec l'agent introduit par 'by'. C'est la structure passive standard. 'From' et 'with' ne s'utilisent pas avec la voix passive pour indiquer l'agent."
+  },
+  {
+    "id": 18,
+    "cat": "vocabulary",
+    "sentence": "The manager asked his team to ------- all non-essential expenses until further notice.",
+    "choices": ["refrain from", "result in", "refer to", "rely on"],
+    "answer": 0,
+    "explanation": "'Refrain from' = s'abstenir de — suivi d'un gérondif ou nom. Ici 'refrain from (spending) all non-essential expenses'. Les autres collocations ne correspondent pas : 'result in' = aboutir à, 'refer to' = se référer à, 'rely on' = compter sur."
+  },
+  {
+    "id": 19,
+    "cat": "verb_form",
+    "sentence": "By the time the auditors arrive, the accounting team ------- all the records.",
+    "choices": ["will have reviewed", "will review", "reviewed", "are reviewing"],
+    "answer": 0,
+    "explanation": "'By the time + present' impose le futur antérieur (future perfect) dans la principale. 'Will have reviewed' = auront examiné — l'action sera terminée avant l'arrivée des auditeurs. C'est le signal classique du futur antérieur au TOEIC."
+  },
+  {
+    "id": 20,
+    "cat": "determiner",
+    "sentence": "------- of the candidates interviewed today were highly qualified.",
+    "choices": ["Several", "Much", "Every", "Each"],
+    "answer": 0,
+    "explanation": "'Several' = plusieurs — s'utilise avec un nom pluriel dénombrable ('candidates'). 'Much' s'utilise avec les indénombrables, 'Every' et 'Each' sont suivis d'un nom singulier."
+  },
+  {
+    "id": 21,
+    "cat": "vocabulary",
+    "sentence": "The company's ------- profits exceeded expectations for the third consecutive quarter.",
+    "choices": ["quarterly", "quarterly's", "quartered", "quartering"],
+    "answer": 0,
+    "explanation": "'Quarterly' = trimestriel — adjectif qualifiant 'profits'. Il n'existe pas de forme possessive 'quarterly's', 'quartered' = divisé en quartiers, 'quartering' = le fait de diviser."
+  },
+  {
+    "id": 22,
+    "cat": "connector",
+    "sentence": "------- increasing competition, the company maintained its market share.",
+    "choices": ["Despite", "Although", "Because of", "As long as"],
+    "answer": 0,
+    "explanation": "'Despite' + groupe nominal = malgré. 'Despite increasing competition' = malgré la concurrence croissante. 'Although' nécessite une proposition complète (sujet + verbe). 'Because of' indique une cause, pas une concession. 'As long as' = tant que."
+  },
+  {
+    "id": 23,
+    "cat": "preposition",
+    "sentence": "The new branch will be located ------- the corner of Fifth Avenue and Main Street.",
+    "choices": ["on", "at", "in", "by"],
+    "answer": 0,
+    "explanation": "'On the corner' est l'expression américaine standard pour indiquer un angle de rue. 'At the corner' est aussi acceptable mais 'on' est la réponse attendue dans le contexte TOEIC américain pour les adresses commerciales."
+  },
+  {
+    "id": 24,
+    "cat": "verb_form",
+    "sentence": "The training session is ------- for all new hires regardless of their department.",
+    "choices": ["mandatory", "mandate", "mandating", "mandated"],
+    "answer": 0,
+    "explanation": "'Is mandatory' = est obligatoire — adjectif attribut après 'is'. 'Mandate' est un verbe ou nom, 'mandating' est un participe présent, 'mandated' peut fonctionner mais 'mandatory' est l'adjectif le plus direct et le plus courant dans ce registre TOEIC."
+  },
+  {
+    "id": 25,
+    "cat": "vocabulary",
+    "sentence": "Please ------- receipt of this email by replying to confirm your attendance.",
+    "choices": ["acknowledge", "acquire", "accomplish", "accumulate"],
+    "answer": 0,
+    "explanation": "'Acknowledge receipt' = accuser réception — expression figée très courante dans les emails professionnels TOEIC. 'Acquire' = acquérir, 'accomplish' = accomplir, 'accumulate' = accumuler."
+  },
+  {
+    "id": 26,
+    "cat": "pronoun",
+    "sentence": "The IT department will contact ------- directly to schedule the system upgrade.",
+    "choices": ["you", "your", "yours", "yourself"],
+    "answer": 0,
+    "explanation": "'Contact you' = vous contacter — pronom objet après un verbe transitif. 'Your' est possessif, 'yours' est un pronom possessif absolu, 'yourself' est réfléchi (utilisé quand sujet et objet sont la même personne)."
+  },
+  {
+    "id": 27,
+    "cat": "vocabulary",
+    "sentence": "The factory has ------- production of the model due to a shortage of components.",
+    "choices": ["suspended", "extended", "expanded", "exceeded"],
+    "answer": 0,
+    "explanation": "'Suspended production' = suspendu la production — compatible avec 'shortage of components' (cause logique). 'Extended/expanded' = étendu/développé (sens contraire au contexte), 'exceeded' = dépassé (ne s'applique pas à la production elle-même)."
+  },
+  {
+    "id": 28,
+    "cat": "connector",
+    "sentence": "The renovation will be completed on schedule ------- the delays caused by bad weather.",
+    "choices": ["in spite of", "so that", "in order to", "provided that"],
+    "answer": 0,
+    "explanation": "'In spite of' + nom = malgré — même sens que 'despite'. 'So that' = afin que (but), 'in order to' = afin de (infinitif), 'provided that' = à condition que (condition)."
+  },
+  {
+    "id": 29,
+    "cat": "verb_form",
+    "sentence": "Applicants are encouraged ------- their portfolios along with their resume.",
+    "choices": ["to submit", "submitting", "submitted", "submit"],
+    "answer": 0,
+    "explanation": "'Encouraged to do' est la structure correcte : adjectif passif + infinitif. Comparer : 'recommend doing', 'encourage to do', 'suggest doing' — ces verbes ont chacun leur structure propre, souvent testée au TOEIC."
+  },
+  {
+    "id": 30,
+    "cat": "vocabulary",
+    "sentence": "The ------- between the two companies was finalized after months of negotiation.",
+    "choices": ["merger", "margin", "mentor", "measure"],
+    "answer": 0,
+    "explanation": "'Merger' = fusion entre deux entreprises — vocabulaire business fondamental du TOEIC. 'Margin' = marge (financière), 'mentor' = mentor (personne), 'measure' = mesure/action. Seul 'merger' correspond au contexte de négociation entre entreprises."
+  }
+]

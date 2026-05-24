@@ -1536,6 +1536,7 @@ let DIRECTIONS_TEST = [];
 let DIRECTIONS_TEST2 = [];
 let DIRECTIONS_TEST3 = [];
 let DIRECTIONS_TEST4 = [];
+let TOEIC_PART5 = [];
 
 // ═══════════════════════════════════════════════════════════
 // REAL ENGLISH — Phrases de la vie quotidienne
@@ -1638,6 +1639,7 @@ function _applyData(p) {
   S.streak         = p.streak         || 0;
   S.cursor         = p.cursor         || {vocab:0,expr:0,prep:0,phrasal:0,take:0,real:0};
   S.realQuiz       = p.realQuiz       || null;
+  S.toeicPart5     = p.toeicPart5     || { cursor: 0, answers: {}, showResults: false, mode: 'exam' };
   S.sessProgress   = p.sessProgress   || {};
   S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   S.lastSession    = p.lastSession    || null;
@@ -1700,7 +1702,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real, part5] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1716,6 +1718,7 @@ async function loadAllData() {
       fetch('directions3.json').then(r=>r.json()),
       fetch('directions4.json').then(r=>r.json()),
       fetch('real.json').then(r=>r.json()),
+      fetch('toeic_part5.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1753,6 +1756,8 @@ async function loadAllData() {
     DIRECTIONS_TEST4 = directions4;
     // Real English
     REAL_ENGLISH = real.map((item, i) => ({ ...item, _sec: 'real', _idx: i }));
+    // TOEIC Part 5
+    TOEIC_PART5 = part5;
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -3316,6 +3321,7 @@ const TAB_PARENT = {
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
   real: 'home',
+  toeic_part5: 'listeninghub',
   // TOEIC hierarchy
   listeninghub: 'home',
   part1hub:     'listeninghub',
@@ -3452,6 +3458,7 @@ function _buildContent(el) {
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
   else if(S.tab==='directions4')  el.appendChild(buildDirectionsTest4());
   else if(S.tab==='real')         el.appendChild(buildRealEnglishSection());
+  else if(S.tab==='toeic_part5')  el.appendChild(buildToeicPart5Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -4087,6 +4094,7 @@ function buildHome() {
 
 function buildListeningHub() {
   const COLOR = '#1d6fa4';
+  const COLOR_READ = '#7c3aed';
   const wrap = document.createElement('div');
   wrap.className = 'hub-page fade-up';
 
@@ -4111,10 +4119,19 @@ function buildListeningHub() {
   const p4Done  = Object.keys(lt4.answers || {}).length;
   const p4Total = LISTENING_TEST4 ? LISTENING_TEST4.reduce((a,c)=>a+(c.questions?c.questions.length:0),0) : 0;
 
+  // Part 5 progress
+  const p5State = S.toeicPart5 || {};
+  const p5Answers = p5State.answers || {};
+  const p5Done  = Object.keys(p5Answers).length;
+  const p5Total = TOEIC_PART5 ? TOEIC_PART5.length : 30;
+  const p5Score = p5State.score || 0;
+
   wrap.innerHTML = `
-    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">🎧 TOEIC — LISTENING</div>
-    <div class="hub-title" style="color:${COLOR}">Listening Test</div>
-    <div class="hub-subtitle">Entraîne-toi sur les quatre parties de l'épreuve Listening du TOEIC</div>
+    <div class="hub-tag" style="background:rgba(29,111,164,.1);border-color:rgba(29,111,164,.3);color:${COLOR}">📝 TOEIC</div>
+    <div class="hub-title" style="color:${COLOR}">Préparation TOEIC</div>
+    <div class="hub-subtitle">Listening & Reading — entraîne-toi section par section</div>
+
+    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:2px;margin:20px 0 10px;padding:4px 10px;background:rgba(29,111,164,.06);border-left:3px solid ${COLOR};border-radius:0 6px 6px 0;">🎧 Listening</div>
     <div class="hub-grid">
       <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('part1hub')">
         <div class="hub-card-icon">📸</div>
@@ -4138,7 +4155,7 @@ function buildListeningHub() {
         <div class="hub-card-icon">💬</div>
         <div class="hub-card-info">
           <div class="hub-card-label">Part 3 — Conversations</div>
-          <div class="hub-card-desc">Dialogues entre 2–3 personnes · 3 questions par conversation</div>
+          <div class="hub-card-desc">Dialogues · 3 questions par conversation</div>
           ${hubProgBar(p3Done, p3Total, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
@@ -4147,8 +4164,21 @@ function buildListeningHub() {
         <div class="hub-card-icon">🎙️</div>
         <div class="hub-card-info">
           <div class="hub-card-label">Part 4 — Short Talks</div>
-          <div class="hub-card-desc">Monologues & annonces · 3 questions par talk · TTS</div>
+          <div class="hub-card-desc">Monologues & annonces · 3 questions par talk</div>
           ${hubProgBar(p4Done, p4Total, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+
+    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR_READ};text-transform:uppercase;letter-spacing:2px;margin:20px 0 10px;padding:4px 10px;background:rgba(124,58,237,.06);border-left:3px solid ${COLOR_READ};border-radius:0 6px 6px 0;">📖 Reading</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR_READ}" onclick="switchTab('toeic_part5')">
+        <div class="hub-card-icon">✍️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Part 5 — Incomplete Sentences</div>
+          <div class="hub-card-desc">30 questions · Grammaire & vocabulaire · Explication à chaque erreur</div>
+          ${hubProgBar(p5Done, p5Total, COLOR_READ)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -6130,12 +6160,244 @@ function navReal(dir) {
   save(); render();
 }
 
-
-
 // ═══════════════════════════════════════════════════════════
-// PHRASAL VERBS SECTION
+// TOEIC PART 5 — INCOMPLETE SENTENCES
 // ═══════════════════════════════════════════════════════════
-function buildPhrasalSection() {
+const P5_CAT_LABELS = {
+  verb_form:  'Forme verbale',
+  vocabulary: 'Vocabulaire',
+  pronoun:    'Pronom / Déterminant',
+  determiner: 'Déterminant',
+  preposition:'Préposition',
+  connector:  'Connecteur logique',
+};
+const P5_COLOR = '#7c3aed';
+
+function buildToeicPart5Section() {
+  if (!S.toeicPart5) S.toeicPart5 = { cursor: 0, answers: {}, showResults: false, mode: 'exam' };
+  const ps    = S.toeicPart5;
+  const data  = TOEIC_PART5;
+  const total = data.length;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+
+  // Back bar
+  const bar = document.getElementById('backBar');
+  if (bar) { bar.style.display = 'flex'; bar.onclick = () => switchTab('listeninghub'); _setBackBarLabel('← TOEIC'); }
+
+  // ── MODE RÉSULTATS ──────────────────────────────────────
+  if (ps.showResults) {
+    const correct = Object.entries(ps.answers).filter(([i, a]) => data[i] && data[i].answer === a).length;
+    const total2  = Object.keys(ps.answers).length;
+    const pct     = total2 > 0 ? Math.round((correct / total2) * 100) : 0;
+    const scoreColor = pct >= 80 ? '#2d6a4f' : pct >= 60 ? '#b45309' : '#c1121f';
+
+    const resultsDiv = document.createElement('div');
+    resultsDiv.innerHTML = `
+      <div style="text-align:center;padding:24px 0 20px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Part 5 — Résultats</div>
+        <div style="font-size:2.8rem;font-weight:900;color:${scoreColor};line-height:1;">${correct}/${total2}</div>
+        <div style="font-size:1rem;font-weight:700;color:${scoreColor};margin-top:4px;">${pct}%</div>
+        <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-top:6px;">
+          ${pct >= 80 ? '🏆 Excellent — niveau TOEIC 700+' : pct >= 60 ? '📈 Bien — continue à t\'entraîner' : '💪 À retravailler — lis bien les explications'}
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:24px;">
+        <button onclick="S.toeicPart5.showResults=false;S.toeicPart5.cursor=0;save();render();"
+          style="flex:1;padding:11px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--text);cursor:pointer;">
+          📖 Revoir les questions
+        </button>
+        <button onclick="S.toeicPart5={cursor:0,answers:{},showResults:false,mode:'exam'};save();render();"
+          style="flex:1;padding:11px;background:${P5_COLOR};border:none;border-radius:12px;font-family:var(--sans);font-size:.8rem;font-weight:700;color:#fff;cursor:pointer;">
+          ↺ Recommencer
+        </button>
+      </div>
+    `;
+
+    // Liste toutes les questions avec statut
+    data.forEach((q, i) => {
+      const userAnswer = ps.answers[i];
+      const answered   = userAnswer !== undefined;
+      const isCorrect  = answered && userAnswer === q.answer;
+      const borderColor = !answered ? 'var(--border)' : isCorrect ? '#2d6a4f' : '#c1121f';
+      const bgColor     = !answered ? 'var(--surface)' : isCorrect ? 'rgba(45,106,79,.06)' : 'rgba(193,18,31,.05)';
+
+      const qDiv = document.createElement('div');
+      qDiv.style.cssText = `background:${bgColor};border:1.5px solid ${borderColor};border-radius:14px;padding:16px 18px;margin-bottom:10px;`;
+      qDiv.innerHTML = `
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
+          <div style="font-family:var(--mono);font-size:.55rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;">${i+1}. ${P5_CAT_LABELS[q.cat]||q.cat}</div>
+          <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${!answered?'var(--muted)':isCorrect?'#2d6a4f':'#c1121f'};flex-shrink:0;">
+            ${!answered ? '—' : isCorrect ? '✓ Correct' : '✗ Incorrect'}
+          </div>
+        </div>
+        <div style="font-size:.85rem;color:var(--text);line-height:1.55;margin-bottom:10px;font-style:italic;">"${q.sentence.replace('-------', '<span style=\'background:'+P5_COLOR+'22;border-bottom:2px solid '+P5_COLOR+';padding:0 4px;border-radius:3px;font-style:normal;font-weight:700;color:'+P5_COLOR+'\'>_______</span>')}"</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:${!isCorrect && answered ? '12px':'0'};">
+          ${q.choices.map((c,ci) => {
+            const isRight    = ci === q.answer;
+            const isChosen   = ci === userAnswer;
+            let bg = 'var(--bg2)'; let col = 'var(--muted)'; let fw = '400';
+            if (isRight)  { bg='rgba(45,106,79,.12)'; col='#2d6a4f'; fw='700'; }
+            if (isChosen && !isRight) { bg='rgba(193,18,31,.1)'; col='#c1121f'; fw='700'; }
+            return `<div style="background:${bg};border-radius:8px;padding:6px 10px;font-size:.75rem;color:${col};font-weight:${fw};line-height:1.3;">
+              ${String.fromCharCode(65+ci)}. ${c} ${isRight?'✓':''} ${isChosen&&!isRight?'✗':''}
+            </div>`;
+          }).join('')}
+        </div>
+        ${!isCorrect && answered ? `
+          <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);border-radius:8px;padding:10px 12px;margin-top:8px;">
+            <div style="font-family:var(--mono);font-size:.58rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">💡 Explication</div>
+            <div style="font-size:.75rem;color:var(--text);line-height:1.55;">${q.explanation}</div>
+          </div>
+        ` : ''}
+      `;
+      resultsDiv.appendChild(qDiv);
+    });
+
+    wrap.appendChild(resultsDiv);
+    return wrap;
+  }
+
+  // ── MODE EXAM ───────────────────────────────────────────
+  const cursor  = ps.cursor || 0;
+  const q       = data[cursor];
+  const answered = ps.answers[cursor] !== undefined;
+  const userAns  = ps.answers[cursor];
+  const isCorrect = answered && userAns === q.answer;
+  const answered_count = Object.keys(ps.answers).length;
+
+  // Progress bar
+  const progDiv = document.createElement('div');
+  progDiv.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);">Question ${cursor+1} / ${total}</div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);">${answered_count} réponses · ${Object.entries(ps.answers).filter(([i,a])=>data[i]&&data[i].answer===a).length} ✓</div>
+    </div>
+    <div style="width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:20px;">
+      <div style="height:100%;width:${Math.round(((cursor+1)/total)*100)}%;background:${P5_COLOR};border-radius:2px;transition:width .3s;"></div>
+    </div>
+  `;
+  wrap.appendChild(progDiv);
+
+  // Question card
+  const qCard = document.createElement('div');
+  qCard.style.cssText = `background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:22px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden;`;
+  const sentenceHtml = q.sentence.replace('-------',
+    `<span style='display:inline-block;background:${P5_COLOR}18;border-bottom:2px solid ${P5_COLOR};padding:0 6px;border-radius:3px;font-weight:800;color:${P5_COLOR};min-width:60px;text-align:center;'>_______</span>`
+  );
+  qCard.innerHTML = `
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,${P5_COLOR},${P5_COLOR}55);"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div style="font-family:var(--mono);font-size:.55rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:2px;">${P5_CAT_LABELS[q.cat]||q.cat}</div>
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted);">TOEIC Reading · Part 5</div>
+    </div>
+    <div style="font-size:.9rem;color:var(--text);line-height:1.65;font-style:italic;">${sentenceHtml}</div>
+  `;
+  wrap.appendChild(qCard);
+
+  // Choices
+  const choicesWrap = document.createElement('div');
+  choicesWrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin-bottom:16px;';
+
+  q.choices.forEach((choice, ci) => {
+    const isRight  = ci === q.answer;
+    const isChosen = ci === userAns;
+
+    let bg = 'var(--surface)', border = 'var(--border)', col = 'var(--text)', icon = '';
+    if (answered) {
+      if (isRight)            { bg='rgba(45,106,79,.1)'; border='#2d6a4f'; col='#2d6a4f'; icon=' ✓'; }
+      else if (isChosen)      { bg='rgba(193,18,31,.08)'; border='#c1121f'; col='#c1121f'; icon=' ✗'; }
+      else                    { col='var(--muted)'; }
+    }
+
+    const btn = document.createElement('button');
+    btn.style.cssText = `background:${bg};border:1.5px solid ${border};border-radius:12px;padding:13px 16px;text-align:left;cursor:${answered?'default':'pointer'};transition:all .15s;display:flex;align-items:center;gap:12px;width:100%;`;
+    btn.innerHTML = `
+      <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid ${answered&&isRight?'#2d6a4f':answered&&isChosen?'#c1121f':border};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono);font-size:.65rem;font-weight:700;color:${col};">
+        ${String.fromCharCode(65+ci)}
+      </div>
+      <div style="font-size:.88rem;font-weight:${answered&&(isRight||isChosen)?'700':'500'};color:${col};line-height:1.35;">${choice}${icon}</div>
+    `;
+    if (!answered) {
+      btn.onmouseenter = () => { btn.style.borderColor=P5_COLOR; btn.style.background='rgba(124,58,237,.06)'; };
+      btn.onmouseleave = () => { btn.style.borderColor='var(--border)'; btn.style.background='var(--surface)'; };
+      btn.onclick = () => {
+        ps.answers[cursor] = ci;
+        if (ci === q.answer) S.streak++;
+        save(); render();
+      };
+    }
+    choicesWrap.appendChild(btn);
+  });
+  wrap.appendChild(choicesWrap);
+
+  // Feedback + navigation
+  const footer = document.createElement('div');
+
+  if (answered && !isCorrect) {
+    footer.innerHTML += `
+      <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.25);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+        <div style="font-family:var(--mono);font-size:.58rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">💡 Explication</div>
+        <div style="font-size:.78rem;color:var(--text);line-height:1.6;">${q.explanation}</div>
+      </div>
+    `;
+  } else if (answered && isCorrect) {
+    footer.innerHTML += `
+      <div style="background:rgba(45,106,79,.08);border:1px solid rgba(45,106,79,.25);border-radius:12px;padding:10px 16px;margin-bottom:12px;font-size:.78rem;color:#2d6a4f;font-weight:600;">
+        ✓ Correct !
+      </div>
+    `;
+  }
+
+  // Nav buttons
+  const navDiv = document.createElement('div');
+  navDiv.style.cssText = 'display:flex;gap:8px;';
+
+  const prevBtn = document.createElement('button');
+  prevBtn.style.cssText = `flex:1;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;${cursor===0?'opacity:.35;cursor:not-allowed;':''}`;
+  prevBtn.textContent = '◀ Précédent';
+  prevBtn.disabled = cursor === 0;
+  prevBtn.onclick = () => { ps.cursor = cursor - 1; save(); render(); };
+
+  const nextBtn = document.createElement('button');
+  if (cursor === total - 1 && answered_count === total) {
+    nextBtn.style.cssText = `flex:2;padding:12px;background:${P5_COLOR};border:none;border-radius:12px;font-family:var(--sans);font-size:.88rem;font-weight:800;color:#fff;cursor:pointer;`;
+    nextBtn.textContent = '🏁 Voir les résultats';
+    nextBtn.onclick = () => { ps.showResults = true; save(); render(); };
+  } else if (cursor < total - 1) {
+    nextBtn.style.cssText = `flex:2;padding:12px;background:${answered?P5_COLOR:'var(--surface)'};border:${answered?'none':'1.5px solid var(--border)'};border-radius:12px;font-family:var(--sans);font-size:.88rem;font-weight:800;color:${answered?'#fff':'var(--muted)'};cursor:pointer;`;
+    nextBtn.textContent = answered ? 'Suivant →' : 'Passer →';
+    nextBtn.onclick = () => { ps.cursor = cursor + 1; save(); render(); };
+  } else {
+    nextBtn.style.cssText = `flex:2;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;font-family:var(--sans);font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;`;
+    nextBtn.textContent = `Répondu : ${answered_count}/${total}`;
+    nextBtn.onclick = () => { ps.showResults = true; save(); render(); };
+  }
+
+  navDiv.appendChild(prevBtn);
+  navDiv.appendChild(nextBtn);
+  footer.appendChild(navDiv);
+
+  // Dots navigation — toutes les questions
+  const dotsWrap = document.createElement('div');
+  dotsWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;margin-top:14px;justify-content:center;';
+  data.forEach((_, i) => {
+    const dot = document.createElement('button');
+    const isAns  = ps.answers[i] !== undefined;
+    const isOk   = isAns && ps.answers[i] === data[i].answer;
+    const isCur  = i === cursor;
+    dot.style.cssText = `width:22px;height:22px;border-radius:50%;border:1.5px solid ${isCur?P5_COLOR:isOk?'#2d6a4f':isAns?'#c1121f':'var(--border)'};background:${isCur?P5_COLOR:isOk?'rgba(45,106,79,.15)':isAns?'rgba(193,18,31,.1)':'var(--surface)'};font-family:var(--mono);font-size:.5rem;color:${isCur?'#fff':isOk?'#2d6a4f':isAns?'#c1121f':'var(--muted)'};cursor:pointer;font-weight:700;`;
+    dot.textContent = i + 1;
+    dot.onclick = () => { ps.cursor = i; save(); render(); };
+    dotsWrap.appendChild(dot);
+  });
+  footer.appendChild(dotsWrap);
+
+  wrap.appendChild(footer);
+  return wrap;
+}
+
   const sec='phrasal';
   const data=PHRASAL_VERBS;
   const idx=S.cursor.phrasal, item=data[idx], st=getS(sec,idx);
