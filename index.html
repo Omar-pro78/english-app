@@ -202,7 +202,7 @@ nav{display:none;} /* nav remplacé par home screen */
 .toeic-card-header:hover .toeic-card-header-inner{opacity:.85;}
 .toeic-sublist{display:flex;flex-direction:column;gap:0;
   max-height:0;overflow:hidden;transition:max-height .3s ease;}
-.toeic-card.open .toeic-sublist{max-height:220px;}
+.toeic-card.open .toeic-sublist{max-height:320px;}
 .toeic-subitem{display:flex;align-items:center;gap:14px;
   padding:12px 20px 12px 28px;border-top:1px solid var(--border);
   cursor:pointer;transition:background .15s;}
@@ -1538,6 +1538,8 @@ let DIRECTIONS_TEST3 = [];
 let DIRECTIONS_TEST4 = [];
 let TOEIC_PART5 = [];
 let TOEIC_PART6 = [];
+let TOEIC_PART7 = [];
+
 
 // ═══════════════════════════════════════════════════════════
 // REAL ENGLISH — Phrases de la vie quotidienne
@@ -1605,6 +1607,7 @@ let S = {
   directionsTest2: { cursor: 0, answers: {}, showResults: false },
   directionsTest3: { cursor: 0, answers: {}, showResults: false },
   directionsTest4: { cursor: 0, answers: {}, showResults: false },
+  toeicPart7: { passageIdx: 0, qIdx: 0, answers: {}, showResults: false },
 };
 
 // ── Firebase helpers ──────────────────────────────────────
@@ -1642,6 +1645,7 @@ function _applyData(p) {
   S.realQuiz       = p.realQuiz       || null;
   S.toeicPart5     = p.toeicPart5     || { cursor: 0, answers: {}, showResults: false, mode: 'exam' };
   S.toeicPart6     = p.toeicPart6     || { textIdx: 0, qIdx: 0, answers: {}, showResults: false };
+  S.toeicPart7     = p.toeicPart7     || { passageIdx: 0, qIdx: 0, answers: {}, showResults: false };
   S.sessProgress   = p.sessProgress   || {};
   S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   S.lastSession    = p.lastSession    || null;
@@ -1683,6 +1687,7 @@ function _buildPayload() {
     mcqAnswers4:S.mcqAnswers4, mcqAnswers5:S.mcqAnswers5, mcqAnswers6:S.mcqAnswers6,
     mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, listeningTest3:S.listeningTest3, listeningTest4:S.listeningTest4, listeningTest5:S.listeningTest5, directionsTest:S.directionsTest,
     directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
+    toeicPart5:S.toeicPart5, toeicPart6:S.toeicPart6, toeicPart7:S.toeicPart7,
   };
 }
 
@@ -1704,7 +1709,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real, part5, part6] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real, part5, part6, part7] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1722,6 +1727,7 @@ async function loadAllData() {
       fetch('real.json').then(r=>r.json()),
       fetch('toeic_part5.json').then(r=>r.json()),
       fetch('toeic_part6.json').then(r=>r.json()),
+      fetch('toeic_part7.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1763,6 +1769,8 @@ async function loadAllData() {
     TOEIC_PART5 = part5;
     // TOEIC Part 6
     TOEIC_PART6 = part6;
+    // TOEIC Part 7
+    TOEIC_PART7 = part7;
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -3328,6 +3336,7 @@ const TAB_PARENT = {
   real: 'home',
   toeic_part5: 'readinghub',
   toeic_part6: 'readinghub',
+  toeic_part7: 'readinghub',
   // TOEIC hierarchy
   listeninghub: 'home',
   readinghub:   'home',
@@ -3469,6 +3478,7 @@ function _buildContent(el) {
   else if(S.tab==='real')         el.appendChild(buildRealEnglishSection());
   else if(S.tab==='toeic_part5')  el.appendChild(buildToeicPart5Section());
   else if(S.tab==='toeic_part6')  el.appendChild(buildToeicPart6Section());
+  else if(S.tab==='toeic_part7')  el.appendChild(buildToeicPart7Section());
   else if(S.tab==='speak')        el.appendChild(buildSpeakSection());
   else if(S.tab==='session')      el.appendChild(buildSessionScreen());
   else if(S.tab==='review') {
@@ -4085,10 +4095,18 @@ function buildHome() {
     const p5State = S.toeicPart5 || {};
     const p5Done  = Object.keys(p5State.answers || {}).length;
     const p5Total = TOEIC_PART5 ? TOEIC_PART5.length : 30;
+    const p6State2 = S.toeicPart6 || {};
+    const p6Total2 = TOEIC_PART6 ? TOEIC_PART6.reduce((a,t)=>a+(t.questions?t.questions.length:0),0) : 16;
+    const p6Done2 = Object.keys(p6State2.answers || {}).length;
+    const p7State2 = S.toeicPart7 || {};
+    const p7Total2 = TOEIC_PART7 ? TOEIC_PART7.reduce((a,p)=>a+(p.questions?p.questions.length:0),0) : 54;
+    const p7Done2 = Object.keys(p7State2.answers || {}).length;
+    const readDone = p5Done + p6Done2 + p7Done2;
+    const readTotal = p5Total + p6Total2 + p7Total2;
     sublist.appendChild(makeSubItem({
       icon: '📖', label: 'Section Reading',
-      sub: 'Part 5 — Incomplete Sentences',
-      progDone: p5Done, progTotal: p5Total,
+      sub: 'Part 5 · Part 6 · Part 7',
+      progDone: readDone, progTotal: readTotal,
       onClick: () => switchTab('readinghub'),
     }));
 
@@ -4199,6 +4217,11 @@ function buildReadingHub() {
   const p6TotalQ = p6Texts.reduce((a,t) => a + (t.questions ? t.questions.length : 0), 0) || 16;
   const p6Done  = Object.keys(p6State.answers || {}).length;
 
+  const p7State = S.toeicPart7 || {};
+  const p7Passages = TOEIC_PART7 || [];
+  const p7TotalQ = p7Passages.reduce((a,p) => a + (p.questions ? p.questions.length : 0), 0) || 54;
+  const p7Done  = Object.keys(p7State.answers || {}).length;
+
   wrap.innerHTML = `
     <div class="hub-tag" style="background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:${COLOR}">📖 TOEIC — SECTION READING</div>
     <div class="hub-title" style="color:${COLOR}">Section Reading</div>
@@ -4219,6 +4242,15 @@ function buildReadingHub() {
           <div class="hub-card-label">Part 6 — Text Completion</div>
           <div class="hub-card-desc">${p6Texts.length} textes · ${p6TotalQ} questions · Mémos, lettres, e-mails</div>
           ${hubProgBar(p6Done, p6TotalQ, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('toeic_part7')">
+        <div class="hub-card-icon">📰</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Part 7 — Reading Comprehension</div>
+          <div class="hub-card-desc">${p7Passages.length} passages · ${p7TotalQ} questions · Documents authentiques</div>
+          ${hubProgBar(p7Done, p7TotalQ, COLOR)}
         </div>
         <div class="hub-card-arrow">›</div>
       </div>
@@ -6736,6 +6768,216 @@ function buildToeicPart6Section() {
   footer.appendChild(dotsWrap);
 
   wrap.appendChild(footer);
+  return wrap;
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// TOEIC PART 7 — READING COMPREHENSION
+// ═══════════════════════════════════════════════════════════
+function buildToeicPart7Section() {
+  if (!S.toeicPart7) S.toeicPart7 = { passageIdx: 0, qIdx: 0, answers: {}, showResults: false };
+  const pt7 = S.toeicPart7;
+  const passages = TOEIC_PART7 || [];
+  const totalQ = passages.reduce((a,p) => a + p.questions.length, 0);
+  const answeredCount = Object.keys(pt7.answers).length;
+  const COLOR = '#7c3aed';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'dt-page fade-up';
+
+  // ── RESULTS SCREEN ────────────────────────────────────────
+  if (pt7.showResults) {
+    let correct = 0;
+    passages.forEach((p, pi) => {
+      p.questions.forEach((q, qi) => {
+        const key = pi + '_' + qi;
+        if (pt7.answers[key] === q.ans) correct++;
+      });
+    });
+    const pct = Math.round((correct / totalQ) * 100);
+    const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '💪' : '📖';
+
+    let reviewHTML = '';
+    passages.forEach((p, pi) => {
+      reviewHTML += '<div style="margin-bottom:18px;">';
+      reviewHTML += '<div style="font-family:var(--mono);font-size:.58rem;color:' + COLOR + ';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Passage ' + (pi+1) + ' — ' + p.type + '</div>';
+      reviewHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:.78rem;color:var(--text);line-height:1.6;white-space:pre-line;">' + p.text + '</div>';
+      p.questions.forEach((q, qi) => {
+        const key = pi + '_' + qi;
+        const ua = pt7.answers[key];
+        const ok = ua === q.ans;
+        const bc = ok ? 'rgba(45,106,79,.3)' : 'rgba(193,18,31,.25)';
+        const lc = ok ? '#2d6a4f' : '#c1121f';
+        reviewHTML += '<div style="background:var(--surface);border:1.5px solid ' + bc + ';border-radius:10px;padding:10px 12px;margin-bottom:6px;">';
+        reviewHTML += '<div style="font-family:var(--mono);font-size:.52rem;color:' + lc + ';text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Q' + (qi+1) + ' · ' + (ok ? '✓ Correct' : '✗ Incorrect') + '</div>';
+        reviewHTML += '<div style="font-size:.75rem;color:var(--text);font-weight:600;margin-bottom:3px;">' + q.question + '</div>';
+        reviewHTML += '<div style="font-size:.72rem;color:#2d6a4f;margin-bottom:2px;">✓ ' + q.options[q.ans] + '</div>';
+        if (!ok && ua !== undefined) {
+          reviewHTML += '<div style="font-size:.7rem;color:#c1121f;">Tu as choisi : ' + (q.options[ua] || ua) + '</div>';
+        }
+        if (q.explanation) {
+          reviewHTML += '<div style="font-size:.67rem;color:var(--muted);margin-top:4px;font-style:italic;">' + q.explanation + '</div>';
+        }
+        reviewHTML += '</div>';
+      });
+      reviewHTML += '</div>';
+    });
+
+    wrap.innerHTML = '<div style="text-align:center;background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;padding:24px;margin-bottom:16px;">'
+      + '<div style="font-size:2.6rem;margin-bottom:8px;">' + emoji + '</div>'
+      + '<div style="font-size:1.8rem;font-weight:800;color:' + COLOR + ';">' + correct + ' / ' + totalQ + '</div>'
+      + '<div style="font-family:var(--mono);font-size:.7rem;color:var(--muted);margin:6px 0 12px;">Part 7 — Reading Comprehension</div>'
+      + '<div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px;"><div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,' + COLOR + ',#a855f7);border-radius:3px;"></div></div>'
+      + '<div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:' + COLOR + ';">' + pct + '%</div>'
+      + '</div>'
+      + '<button class="dt-btn-nav primary" style="width:100%;margin-bottom:10px;" onclick="S.toeicPart7={passageIdx:0,qIdx:0,answers:{},showResults:false};save();render();">🔁 Recommencer</button>'
+      + '<button class="dt-btn-nav" style="width:100%;margin-bottom:18px;" onclick="S.toeicPart7.showResults=false;S.toeicPart7.passageIdx=0;S.toeicPart7.qIdx=0;save();render();">📋 Revoir les questions</button>'
+      + '<div style="display:flex;flex-direction:column;gap:8px;">' + reviewHTML + '</div>';
+    return wrap;
+  }
+
+  // ── QUESTION SCREEN ───────────────────────────────────────
+  const pi = pt7.passageIdx;
+  const qi = pt7.qIdx;
+  const passage = passages[pi];
+  if (!passage) {
+    wrap.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Aucun passage disponible.</div>';
+    return wrap;
+  }
+  const question = passage.questions[qi];
+  const qKey = pi + '_' + qi;
+  const totalPassages = passages.length;
+  const answered = pt7.answers[qKey] !== undefined;
+  const userAns = pt7.answers[qKey];
+  const pct = totalQ > 0 ? Math.round((answeredCount / totalQ) * 100) : 0;
+
+  // Global question number
+  let globalQNum = 1;
+  for (let i = 0; i < pi; i++) globalQNum += passages[i].questions.length;
+  globalQNum += qi + 1;
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'dt-header';
+  header.innerHTML = '<div class="dt-tag" style="background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:' + COLOR + '">📰 Part 7 — ' + passage.type + '</div>'
+    + '<div class="dt-prog-wrap"><div class="dt-prog-bar"><div class="dt-prog-fill" style="width:' + pct + '%;background:' + COLOR + '"></div></div>'
+    + '<div class="dt-prog-label">' + globalQNum + ' / ' + totalQ + '</div></div>';
+  wrap.appendChild(header);
+
+  // Passage card
+  const passageCard = document.createElement('div');
+  passageCard.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:16px 18px;margin-bottom:12px;';
+  passageCard.innerHTML = '<div style="font-family:var(--mono);font-size:.52rem;color:' + COLOR + ';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Passage ' + (pi+1) + ' / ' + totalPassages + '</div>'
+    + '<div style="font-size:.78rem;color:var(--text);line-height:1.7;white-space:pre-line;">' + passage.text + '</div>';
+  wrap.appendChild(passageCard);
+
+  // Question card
+  const qCard = document.createElement('div');
+  qCard.className = 'dt-card' + (answered ? (userAns === question.ans ? ' answered-ok' : ' answered-fail') : '');
+
+  const letters = ['A','B','C','D'];
+  let optsHTML = '';
+  letters.forEach((l, idx) => {
+    if (!question.options[l]) return;
+    let cls = 'dt-opt';
+    if (answered) {
+      cls += ' disabled';
+      if (l === userAns) cls += (l === question.ans ? ' correct revealed' : ' wrong revealed');
+      else if (l === question.ans) cls += ' reveal-correct revealed';
+    }
+    optsHTML += '<div class="' + cls + '" id="p7Opt' + l + '" data-letter="' + l + '">'
+      + '<div class="dt-opt-letter">' + l + '</div>'
+      + '<div class="dt-opt-text">' + question.options[l] + '</div>'
+      + '</div>';
+  });
+
+  let feedbackHTML = '';
+  if (answered) {
+    const ok = userAns === question.ans;
+    feedbackHTML = '<div class="dt-feedback ' + (ok ? 'ok' : 'fail') + '">'
+      + (ok ? '✅ Correct ! Bonne réponse.' : '❌ Incorrect. La bonne réponse est <strong>' + question.ans + '</strong> : <em>' + question.options[question.ans] + '</em>')
+      + (question.explanation ? '<div style="font-size:.68rem;color:var(--muted);margin-top:6px;font-style:italic;">' + question.explanation + '</div>' : '')
+      + '</div>';
+  }
+
+  qCard.innerHTML = '<div class="dt-body">'
+    + '<div class="dt-qnum">Question ' + globalQNum + ' / ' + totalQ + '</div>'
+    + '<div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.5;">' + question.question + '</div>'
+    + '<div class="dt-opts" id="p7Opts">' + optsHTML + '</div>'
+    + feedbackHTML
+    + (!answered ? '<button class="dt-validate-btn" id="p7ValidateBtn" disabled>Valider ma réponse</button>' : '')
+    + '</div>';
+  wrap.appendChild(qCard);
+
+  // Wire interactions
+  if (!answered) {
+    let _pending = null;
+    letters.forEach(l => {
+      const optEl = qCard.querySelector('#p7Opt' + l);
+      if (!optEl) return;
+      optEl.addEventListener('click', function() {
+        letters.forEach(ll => { const e = qCard.querySelector('#p7Opt' + ll); if(e) e.classList.remove('pending'); });
+        optEl.classList.add('pending');
+        _pending = l;
+        qCard.querySelector('#p7ValidateBtn').disabled = false;
+      });
+    });
+    qCard.querySelector('#p7ValidateBtn').addEventListener('click', function() {
+      if (!_pending) return;
+      pt7.answers[qKey] = _pending;
+      if (_pending === question.ans) { S.streak++; trackAction(); } else { S.streak = 0; }
+      save();
+      render();
+    });
+  }
+
+  // Navigation
+  const nav = document.createElement('div');
+  nav.className = 'dt-nav';
+
+  const btnPrev = document.createElement('button');
+  btnPrev.className = 'dt-btn-nav';
+  btnPrev.textContent = '← Précédent';
+  btnPrev.disabled = (pi === 0 && qi === 0);
+  btnPrev.addEventListener('click', function() {
+    if (qi > 0) {
+      pt7.qIdx--;
+    } else if (pi > 0) {
+      pt7.passageIdx--;
+      pt7.qIdx = passages[pt7.passageIdx].questions.length - 1;
+    }
+    save(); render();
+  });
+
+  const isLastQ = pi === totalPassages - 1 && qi === passage.questions.length - 1;
+  const btnNext = document.createElement('button');
+  btnNext.className = 'dt-btn-nav primary';
+
+  if (isLastQ && answered) {
+    btnNext.textContent = '🏆 Voir les résultats';
+    btnNext.addEventListener('click', function() {
+      pt7.showResults = true;
+      save(); render();
+    });
+  } else {
+    btnNext.textContent = 'Suivant →';
+    btnNext.disabled = !answered;
+    btnNext.addEventListener('click', function() {
+      if (qi < passage.questions.length - 1) {
+        pt7.qIdx++;
+      } else if (pi < totalPassages - 1) {
+        pt7.passageIdx++;
+        pt7.qIdx = 0;
+      }
+      save(); render();
+    });
+  }
+
+  nav.appendChild(btnPrev);
+  nav.appendChild(btnNext);
+  wrap.appendChild(nav);
+
   return wrap;
 }
 

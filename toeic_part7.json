@@ -1,0 +1,686 @@
+[
+  {
+    "type": "E-mail",
+    "text": "From: Sarah Mitchell <s.mitchell@globetech.com>\nTo: All Staff\nSubject: Office Renovation Update\nDate: March 14\n\nDear Team,\n\nAs you may be aware, the third-floor office will undergo renovation beginning next Monday, March 20. The work is expected to take approximately two weeks. During this period, staff currently based on the third floor will be relocated to the conference rooms on the second floor.\n\nPlease ensure that all personal belongings and important documents are removed from your desks by Friday, March 17. Facilities Management will handle the movement of shared equipment such as printers and filing cabinets.\n\nIf you have any concerns or special requirements, please contact me directly.\n\nBest regards,\nSarah Mitchell\nOffice Manager",
+    "questions": [
+      {
+        "question": "What is the main purpose of this e-mail?",
+        "options": {
+          "A": "To announce a company restructuring",
+          "B": "To inform staff about an upcoming office renovation",
+          "C": "To request volunteers for a moving project",
+          "D": "To remind employees about a policy change"
+        },
+        "ans": "B",
+        "explanation": "The e-mail is clearly about the renovation of the third floor and what staff should do."
+      },
+      {
+        "question": "By what date should employees remove their personal belongings?",
+        "options": {
+          "A": "March 14",
+          "B": "March 17",
+          "C": "March 20",
+          "D": "March 31"
+        },
+        "ans": "B",
+        "explanation": "The e-mail states items must be removed 'by Friday, March 17'."
+      },
+      {
+        "question": "Who will move shared equipment like printers?",
+        "options": {
+          "A": "The renovation contractor",
+          "B": "Individual employees",
+          "C": "Facilities Management",
+          "D": "The IT department"
+        },
+        "ans": "C",
+        "explanation": "The e-mail explicitly states 'Facilities Management will handle the movement of shared equipment'."
+      }
+    ]
+  },
+  {
+    "type": "Advertisement",
+    "text": "CLEARVIEW WINDOW CLEANING SERVICES\n\nProfessional • Reliable • Affordable\n\nDoes your home or office need a sparkling clean? ClearView offers:\n\n• Residential and commercial window cleaning\n• Interior and exterior cleaning available\n• Fully insured and bonded technicians\n• Free estimates — no obligation\n• Senior discount: 15% off all services\n\nServing the Greater Millford area since 1998.\n\nCall us today: 1-800-555-0192\nwww.clearviewclean.com\n\nMention code SPRING25 to receive 10% off your first booking!\n\nAvailable Monday through Saturday, 8 AM – 6 PM.",
+    "questions": [
+      {
+        "question": "What kind of business is being advertised?",
+        "options": {
+          "A": "A home renovation company",
+          "B": "A window cleaning service",
+          "C": "A glass manufacturing company",
+          "D": "An interior design firm"
+        },
+        "ans": "B",
+        "explanation": "The advertisement is for ClearView Window Cleaning Services."
+      },
+      {
+        "question": "What discount is offered to senior customers?",
+        "options": {
+          "A": "10%",
+          "B": "15%",
+          "C": "20%",
+          "D": "25%"
+        },
+        "ans": "B",
+        "explanation": "The ad states 'Senior discount: 15% off all services'."
+      },
+      {
+        "question": "When is ClearView NOT available?",
+        "options": {
+          "A": "Monday morning",
+          "B": "Saturday afternoon",
+          "C": "Sunday",
+          "D": "Friday evening"
+        },
+        "ans": "C",
+        "explanation": "The ad states availability is Monday through Saturday, so Sunday is unavailable."
+      }
+    ]
+  },
+  {
+    "type": "Notice",
+    "text": "EMPLOYEE NOTICE\n\nParking Lot Maintenance — Temporary Closure\n\nThe main employee parking lot at the Harrington Avenue entrance will be closed for resurfacing from Wednesday, June 7 through Friday, June 9.\n\nDuring this period, employees are encouraged to:\n1. Use the overflow parking lot on Baker Street (a 5-minute walk from the main entrance).\n2. Utilize public transportation where possible — the company will reimburse subway and bus passes during the closure.\n3. Carpool with colleagues.\n\nThe parking lot is expected to reopen on Monday, June 12.\n\nWe apologize for any inconvenience and appreciate your cooperation.\n\n— Facilities Department",
+    "questions": [
+      {
+        "question": "Why will the parking lot be closed?",
+        "options": {
+          "A": "For security upgrades",
+          "B": "For a special company event",
+          "C": "For resurfacing work",
+          "D": "Due to flooding damage"
+        },
+        "ans": "C",
+        "explanation": "The notice clearly states the closure is for 'resurfacing'."
+      },
+      {
+        "question": "What will the company reimburse during the closure?",
+        "options": {
+          "A": "Taxi fares",
+          "B": "Bicycle rentals",
+          "C": "Public transportation passes",
+          "D": "Parking fees at nearby lots"
+        },
+        "ans": "C",
+        "explanation": "The notice says 'the company will reimburse subway and bus passes during the closure'."
+      },
+      {
+        "question": "When is the parking lot expected to reopen?",
+        "options": {
+          "A": "June 7",
+          "B": "June 9",
+          "C": "June 10",
+          "D": "June 12"
+        },
+        "ans": "D",
+        "explanation": "The notice states the lot 'is expected to reopen on Monday, June 12'."
+      },
+      {
+        "question": "Where is the alternative parking lot located?",
+        "options": {
+          "A": "On Harrington Avenue",
+          "B": "On Baker Street",
+          "C": "Next to the main entrance",
+          "D": "On Commerce Drive"
+        },
+        "ans": "B",
+        "explanation": "The notice mentions 'the overflow parking lot on Baker Street'."
+      }
+    ]
+  },
+  {
+    "type": "Article",
+    "text": "BUSINESS TRAVEL TRENDS: WHAT'S CHANGING IN CORPORATE TRAVEL\n\nCorporate travel is experiencing a significant transformation. According to a recent industry report, companies are increasingly prioritizing cost efficiency and employee well-being when booking business trips.\n\nOne notable trend is the rise of 'bleisure' travel — combining business with leisure. More than 40 percent of business travelers now extend their trips by at least one day to explore the destination. Employers generally support this practice, as it has been linked to higher employee satisfaction and reduced burnout.\n\nAnother major shift is the adoption of centralized travel management platforms. These digital tools allow HR and finance teams to monitor travel expenses in real time, enforce company travel policies, and reduce overall costs by up to 23 percent, according to industry data.\n\nDespite the growth of virtual meetings, demand for in-person corporate travel remains strong, particularly for client meetings, training sessions, and team-building events.",
+    "questions": [
+      {
+        "question": "What does the term 'bleisure' refer to?",
+        "options": {
+          "A": "Business travel on a budget",
+          "B": "Combining a business trip with leisure activities",
+          "C": "A new airline loyalty program",
+          "D": "Travel insurance for business professionals"
+        },
+        "ans": "B",
+        "explanation": "The article defines 'bleisure' as 'combining business with leisure'."
+      },
+      {
+        "question": "According to the article, by how much can travel management platforms reduce costs?",
+        "options": {
+          "A": "Up to 10 percent",
+          "B": "Up to 15 percent",
+          "C": "Up to 23 percent",
+          "D": "Up to 40 percent"
+        },
+        "ans": "C",
+        "explanation": "The article states these platforms can reduce costs 'by up to 23 percent'."
+      },
+      {
+        "question": "Which type of event still drives demand for in-person corporate travel?",
+        "options": {
+          "A": "Annual financial reporting",
+          "B": "Virtual product launches",
+          "C": "Client meetings and training sessions",
+          "D": "Online conferences"
+        },
+        "ans": "C",
+        "explanation": "The article mentions 'client meetings, training sessions, and team-building events' as reasons for continued travel demand."
+      },
+      {
+        "question": "According to the article, what percentage of business travelers extend their trips?",
+        "options": {
+          "A": "More than 23 percent",
+          "B": "More than 40 percent",
+          "C": "More than 60 percent",
+          "D": "More than 75 percent"
+        },
+        "ans": "B",
+        "explanation": "The article states 'More than 40 percent of business travelers now extend their trips by at least one day'."
+      }
+    ]
+  },
+  {
+    "type": "Letter",
+    "text": "Westfield Professional Services\n120 Commerce Drive, Suite 400\nPortland, OR 97201\n\nApril 3\n\nMs. Angela Reyes\nDirector of Operations\nBluepeak Manufacturing\n88 Industrial Parkway\nPortland, OR 97202\n\nDear Ms. Reyes,\n\nThank you for your continued partnership with Westfield Professional Services. We are writing to inform you of a change to your service contract, effective May 1.\n\nDue to increases in operating costs, we will be adjusting our monthly service fee from $2,400 to $2,650. We understand that any price adjustment requires consideration, and we are committed to ensuring that the enhanced level of service you receive fully justifies this change.\n\nTo help with the transition, we are pleased to offer a complimentary one-month service extension at your current rate, meaning the new rate will take effect on June 1 rather than May 1.\n\nIf you have any questions or wish to discuss the adjustment further, please do not hesitate to contact our accounts team at accounts@westfieldps.com.\n\nSincerely,\nDaniel Okafor\nAccount Manager, Westfield Professional Services",
+    "questions": [
+      {
+        "question": "What is the main purpose of this letter?",
+        "options": {
+          "A": "To cancel a service contract",
+          "B": "To introduce new services",
+          "C": "To announce a price increase",
+          "D": "To respond to a customer complaint"
+        },
+        "ans": "C",
+        "explanation": "The letter informs the client of an increase in the monthly service fee."
+      },
+      {
+        "question": "What is the new monthly service fee?",
+        "options": {
+          "A": "$2,100",
+          "B": "$2,400",
+          "C": "$2,600",
+          "D": "$2,650"
+        },
+        "ans": "D",
+        "explanation": "The letter states the fee will change 'from $2,400 to $2,650'."
+      },
+      {
+        "question": "When will the new rate actually take effect?",
+        "options": {
+          "A": "April 3",
+          "B": "May 1",
+          "C": "June 1",
+          "D": "July 1"
+        },
+        "ans": "C",
+        "explanation": "Due to the complimentary one-month extension, the new rate will take effect on June 1."
+      }
+    ]
+  },
+  {
+    "type": "Schedule",
+    "text": "RIVERSIDE HOTEL — CONFERENCE SERVICES\n\nAnnual Marketing Summit — Day 2 Schedule\nVenue: Grand Ballroom, Level 2\n\n08:30 – 09:00  Registration & Networking Breakfast\n09:00 – 09:15  Welcome Address — Conference Chair, Ms. Lynn Porter\n09:15 – 10:30  Keynote: Digital Marketing Trends 2025 — Dr. Henry Bates\n10:30 – 10:45  Coffee Break (Foyer, Level 2)\n10:45 – 12:00  Panel Discussion: Social Media ROI\n12:00 – 13:15  Lunch (Garden Terrace, Level 1)\n13:15 – 14:30  Workshop A: Email Campaigns — Room 204\n               Workshop B: Video Content Strategy — Room 206\n14:30 – 15:45  Workshop A (continued) / Workshop B (continued)\n15:45 – 16:00  Break\n16:00 – 16:45  Case Studies Presentation\n16:45 – 17:00  Closing Remarks\n\nNote: All registered attendees will receive a digital copy of presentations via email within 48 hours.",
+    "questions": [
+      {
+        "question": "What takes place immediately after the keynote speech?",
+        "options": {
+          "A": "Lunch break",
+          "B": "Coffee break",
+          "C": "Panel discussion",
+          "D": "Welcome address"
+        },
+        "ans": "B",
+        "explanation": "According to the schedule, the coffee break (10:30–10:45) follows the keynote (09:15–10:30)."
+      },
+      {
+        "question": "Where will the lunch be served?",
+        "options": {
+          "A": "The Grand Ballroom",
+          "B": "The Foyer on Level 2",
+          "C": "Room 204",
+          "D": "The Garden Terrace on Level 1"
+        },
+        "ans": "D",
+        "explanation": "The schedule lists lunch at the 'Garden Terrace, Level 1'."
+      },
+      {
+        "question": "How will attendees receive copies of the presentations?",
+        "options": {
+          "A": "By post within one week",
+          "B": "By email within 48 hours",
+          "C": "Via USB drives distributed at the event",
+          "D": "On the conference website after 72 hours"
+        },
+        "ans": "B",
+        "explanation": "The note states presentations will be sent 'via email within 48 hours'."
+      }
+    ]
+  },
+  {
+    "type": "Memo",
+    "text": "MEMORANDUM\n\nTO: All Department Heads\nFROM: Finance Department\nDATE: October 10\nRE: Year-End Budget Review\n\nAs we approach the end of the fiscal year, all departments are required to submit their budget variance reports by November 15. Reports should include:\n\n• A summary of actual vs. budgeted expenditures\n• Explanation of any variances exceeding 10%\n• Projected expenses for Q1 of the upcoming year\n\nPlease use the updated reporting template, which has been uploaded to the shared drive under Finance > Templates > 2024 Year-End.\n\nDepartments that fail to submit by the deadline may have their Q1 allocations delayed.\n\nFor questions, contact the Finance team at ext. 4412.",
+    "questions": [
+      {
+        "question": "What is the deadline for submitting budget variance reports?",
+        "options": {
+          "A": "October 10",
+          "B": "October 30",
+          "C": "November 15",
+          "D": "December 1"
+        },
+        "ans": "C",
+        "explanation": "The memo states reports must be submitted 'by November 15'."
+      },
+      {
+        "question": "What must departments explain in their report?",
+        "options": {
+          "A": "All individual employee expenses",
+          "B": "Variances exceeding 10%",
+          "C": "Any purchases over $500",
+          "D": "All international travel costs"
+        },
+        "ans": "B",
+        "explanation": "The memo asks for 'Explanation of any variances exceeding 10%'."
+      },
+      {
+        "question": "What may happen if a department misses the deadline?",
+        "options": {
+          "A": "The department head will be notified by phone",
+          "B": "A penalty fee will be charged",
+          "C": "Q1 budget allocations may be delayed",
+          "D": "The department will be subject to an audit"
+        },
+        "ans": "C",
+        "explanation": "The memo warns that late submissions may result in 'Q1 allocations delayed'."
+      },
+      {
+        "question": "Where can the updated reporting template be found?",
+        "options": {
+          "A": "On the company website",
+          "B": "At ext. 4412",
+          "C": "On the shared drive under Finance > Templates",
+          "D": "In the HR portal"
+        },
+        "ans": "C",
+        "explanation": "The memo states the template 'has been uploaded to the shared drive under Finance > Templates > 2024 Year-End'."
+      }
+    ]
+  },
+  {
+    "type": "Job Advertisement",
+    "text": "NOW HIRING: CUSTOMER SUPPORT SPECIALIST\nBrightPath Solutions — Remote Position\n\nAbout the Role:\nBrightPath Solutions is seeking a motivated Customer Support Specialist to join our growing team. This is a full-time remote position. The successful candidate will be responsible for handling customer inquiries, resolving complaints, and providing product guidance via phone, e-mail, and live chat.\n\nRequirements:\n• At least 2 years of customer service experience\n• Strong written and verbal communication skills\n• Proficiency in CRM software (Salesforce preferred)\n• Ability to work flexible hours, including some weekends\n\nWhat We Offer:\n• Competitive salary: $38,000–$45,000 per year\n• Health and dental insurance\n• 15 days of paid vacation\n• Professional development stipend: $500 annually\n\nTo apply, send your résumé and a cover letter to careers@brightpathsolutions.com by August 31.",
+    "questions": [
+      {
+        "question": "What type of position is being advertised?",
+        "options": {
+          "A": "Part-time in-office role",
+          "B": "Full-time remote role",
+          "C": "Contract-based freelance position",
+          "D": "Temporary seasonal position"
+        },
+        "ans": "B",
+        "explanation": "The ad states 'This is a full-time remote position'."
+      },
+      {
+        "question": "What CRM software experience is preferred?",
+        "options": {
+          "A": "HubSpot",
+          "B": "Zendesk",
+          "C": "Salesforce",
+          "D": "Microsoft Dynamics"
+        },
+        "ans": "C",
+        "explanation": "The ad mentions 'CRM software (Salesforce preferred)'."
+      },
+      {
+        "question": "How much is the annual professional development stipend?",
+        "options": {
+          "A": "$250",
+          "B": "$350",
+          "C": "$500",
+          "D": "$1,000"
+        },
+        "ans": "C",
+        "explanation": "The ad lists 'Professional development stipend: $500 annually'."
+      },
+      {
+        "question": "How many days of paid vacation are offered?",
+        "options": {
+          "A": "10 days",
+          "B": "12 days",
+          "C": "15 days",
+          "D": "20 days"
+        },
+        "ans": "C",
+        "explanation": "The ad lists '15 days of paid vacation' in the benefits section."
+      }
+    ]
+  },
+  {
+    "type": "Survey Report",
+    "text": "EMPLOYEE SATISFACTION SURVEY — SUMMARY REPORT\nConducted by: HR Department, Vantage Consulting Group\nSurvey Period: January – February\n\nA total of 248 employees participated in this year's satisfaction survey, representing 86% of the total workforce. The results indicate overall satisfaction has improved by 12% compared to last year.\n\nKey Findings:\n• 78% of employees reported being satisfied or very satisfied with their work-life balance.\n• Only 52% expressed satisfaction with current internal communication practices.\n• 91% of respondents agreed that their direct manager treats them with respect.\n• The most commonly cited concern was lack of career advancement opportunities (mentioned by 44% of respondents).\n\nRecommendations:\nBased on these findings, the HR team recommends investing in improved communication channels and creating a formal mentorship and career development program.\n\nA full report is available on the company intranet.",
+    "questions": [
+      {
+        "question": "What percentage of the workforce participated in the survey?",
+        "options": {
+          "A": "52%",
+          "B": "78%",
+          "C": "86%",
+          "D": "91%"
+        },
+        "ans": "C",
+        "explanation": "The report states that 248 employees participated, 'representing 86% of the total workforce'."
+      },
+      {
+        "question": "What was the most commonly cited concern by employees?",
+        "options": {
+          "A": "Poor work-life balance",
+          "B": "Lack of career advancement opportunities",
+          "C": "Disrespectful management",
+          "D": "Low salaries"
+        },
+        "ans": "B",
+        "explanation": "The report states 'The most commonly cited concern was lack of career advancement opportunities'."
+      },
+      {
+        "question": "What does the HR team recommend as a result of the survey?",
+        "options": {
+          "A": "Hiring additional managers",
+          "B": "Reducing working hours",
+          "C": "Investing in communication and career development",
+          "D": "Increasing employee salaries"
+        },
+        "ans": "C",
+        "explanation": "The recommendations include 'improved communication channels and creating a formal mentorship and career development program'."
+      }
+    ]
+  },
+  {
+    "type": "Policy",
+    "text": "GREENLEAF ENTERPRISES\nExpense Reimbursement Policy — Summary\n\nEffective Date: January 1\n\nEmployees may submit expense claims for work-related expenses following these guidelines:\n\n1. All claims must be submitted within 30 days of the expense being incurred.\n2. Receipts are required for all expenses over $25.\n3. Meal expenses are reimbursed up to $75 per day for domestic travel and $100 per day for international travel.\n4. Hotel stays must be approved in advance by a department manager.\n5. Personal expenses, entertainment, and alcohol are not eligible for reimbursement.\n\nTo submit a claim, complete the Expense Reimbursement Form (available on the HR portal) and attach all relevant receipts. Submit the completed form to your direct manager for approval, who will then forward it to Accounts Payable.\n\nReimbursements are processed within 10 business days of approval.",
+    "questions": [
+      {
+        "question": "Within how many days must expense claims be submitted?",
+        "options": {
+          "A": "10 days",
+          "B": "21 days",
+          "C": "30 days",
+          "D": "45 days"
+        },
+        "ans": "C",
+        "explanation": "The policy states claims must be submitted 'within 30 days of the expense being incurred'."
+      },
+      {
+        "question": "What is the daily meal reimbursement limit for domestic travel?",
+        "options": {
+          "A": "$50",
+          "B": "$75",
+          "C": "$100",
+          "D": "$125"
+        },
+        "ans": "B",
+        "explanation": "The policy states 'up to $75 per day for domestic travel'."
+      },
+      {
+        "question": "Which of the following is NOT reimbursable under this policy?",
+        "options": {
+          "A": "Taxi fares to a client meeting",
+          "B": "Hotel stays for business travel",
+          "C": "Personal entertainment expenses",
+          "D": "Meals during a business trip"
+        },
+        "ans": "C",
+        "explanation": "The policy explicitly states 'Personal expenses, entertainment, and alcohol are not eligible for reimbursement'."
+      },
+      {
+        "question": "How long does it take to process a reimbursement after approval?",
+        "options": {
+          "A": "3 business days",
+          "B": "5 business days",
+          "C": "10 business days",
+          "D": "15 business days"
+        },
+        "ans": "C",
+        "explanation": "The policy states 'Reimbursements are processed within 10 business days of approval'."
+      }
+    ]
+  },
+  {
+    "type": "Double Passage — E-mail + Reply",
+    "text": "E-MAIL 1:\nFrom: James Thornton <j.thornton@alphatec.com>\nTo: Priya Mehta <p.mehta@alphatec.com>\nSubject: Quarterly Sales Report\n\nHi Priya,\n\nCould you please send me the Q3 sales figures when you get a chance? I need them for the board presentation on Thursday afternoon. If possible, please include a regional breakdown.\n\nThanks,\nJames\n\n---\nE-MAIL 2:\nFrom: Priya Mehta <p.mehta@alphatec.com>\nTo: James Thornton <j.thornton@alphatec.com>\nSubject: RE: Quarterly Sales Report\n\nHi James,\n\nI've attached the Q3 report with full regional breakdowns. Please note that the Southeast region figures are still being verified by the local team — I'll send a corrected version by Wednesday morning at the latest.\n\nAlso, if you need the data in a different format for the presentation, just let me know.\n\nBest,\nPriya",
+    "questions": [
+      {
+        "question": "Why does James need the sales figures?",
+        "options": {
+          "A": "For a client proposal",
+          "B": "For a board presentation",
+          "C": "For an investor briefing",
+          "D": "For an internal audit"
+        },
+        "ans": "B",
+        "explanation": "James states he needs them 'for the board presentation on Thursday afternoon'."
+      },
+      {
+        "question": "What is still being verified in the report?",
+        "options": {
+          "A": "The overall total figures",
+          "B": "The Northeast region data",
+          "C": "The Southeast region figures",
+          "D": "The annual comparison data"
+        },
+        "ans": "C",
+        "explanation": "Priya mentions that 'the Southeast region figures are still being verified'."
+      },
+      {
+        "question": "By when does Priya promise to send corrected figures?",
+        "options": {
+          "A": "Tuesday evening",
+          "B": "Wednesday morning",
+          "C": "Thursday afternoon",
+          "D": "Friday morning"
+        },
+        "ans": "B",
+        "explanation": "Priya says she'll send 'a corrected version by Wednesday morning at the latest'."
+      },
+      {
+        "question": "What does Priya offer at the end of her e-mail?",
+        "options": {
+          "A": "To extend the deadline for submission",
+          "B": "To present the report herself",
+          "C": "To reformat the data if needed",
+          "D": "To include prior year comparisons"
+        },
+        "ans": "C",
+        "explanation": "Priya offers to send the data 'in a different format for the presentation'."
+      }
+    ]
+  },
+  {
+    "type": "Product Information",
+    "text": "NOVA FITNESS APP — PREMIUM PLAN\n\nUnlock the full potential of your fitness journey with Nova Fitness Premium.\n\nWhat's included:\n• Unlimited access to 500+ workout videos (all levels)\n• Personalized weekly training plans based on your goals\n• Nutrition tracking and meal plan suggestions\n• Live virtual sessions with certified personal trainers (4 sessions/month included)\n• Offline mode — download workouts to use without internet\n• Priority customer support (response within 2 hours)\n\nPricing:\n• Monthly: $14.99/month\n• Annual: $119.99/year (save 33%)\n\nFree 7-day trial available — no credit card required.\nCancel anytime. Your data is never sold to third parties.",
+    "questions": [
+      {
+        "question": "How many live virtual training sessions are included per month?",
+        "options": {
+          "A": "2",
+          "B": "4",
+          "C": "6",
+          "D": "Unlimited"
+        },
+        "ans": "B",
+        "explanation": "The plan includes '4 sessions/month' with certified personal trainers."
+      },
+      {
+        "question": "How much does the annual plan cost?",
+        "options": {
+          "A": "$99.99",
+          "B": "$119.99",
+          "C": "$139.99",
+          "D": "$179.88"
+        },
+        "ans": "B",
+        "explanation": "The annual plan is listed as '$119.99/year'."
+      },
+      {
+        "question": "What is stated about customer data?",
+        "options": {
+          "A": "It may be shared with fitness partners",
+          "B": "It is used to improve the app",
+          "C": "It is never sold to third parties",
+          "D": "It is deleted after 12 months"
+        },
+        "ans": "C",
+        "explanation": "The description explicitly states 'Your data is never sold to third parties'."
+      }
+    ]
+  },
+  {
+    "type": "Public Notice",
+    "text": "SUMMIT CITY TRANSIT AUTHORITY\nPublic Notice: Downtown Line Extension Opening\n\nThe Summit City Transit Authority (SCTA) is pleased to announce that the long-awaited Downtown Line extension will officially open to the public on September 15. The extension adds four new stations — Riverside, Commerce Park, University Hill, and Central Square — to the existing network.\n\nThe new stations will operate from 5:30 AM to 11:30 PM on weekdays and from 7:00 AM to 11:00 PM on weekends. Fares for the new stations will follow the standard zone pricing.\n\nTo celebrate the opening, all rides on the new extension will be free of charge during the first weekend — September 15 and 16.\n\nFor route maps and timetables, visit www.summitcitytransit.gov or pick up a printed guide at any existing station.",
+    "questions": [
+      {
+        "question": "How many new stations are being added to the network?",
+        "options": {
+          "A": "Two",
+          "B": "Three",
+          "C": "Four",
+          "D": "Five"
+        },
+        "ans": "C",
+        "explanation": "The notice mentions 'four new stations — Riverside, Commerce Park, University Hill, and Central Square'."
+      },
+      {
+        "question": "What is offered during the opening weekend?",
+        "options": {
+          "A": "Reduced fares for seniors",
+          "B": "Free rides on the new extension",
+          "C": "Free merchandise at stations",
+          "D": "Extended operating hours"
+        },
+        "ans": "B",
+        "explanation": "The notice states 'all rides on the new extension will be free of charge during the first weekend'."
+      },
+      {
+        "question": "When do the new stations open on weekends?",
+        "options": {
+          "A": "5:30 AM",
+          "B": "6:00 AM",
+          "C": "7:00 AM",
+          "D": "8:00 AM"
+        },
+        "ans": "C",
+        "explanation": "The notice states weekend operation begins at '7:00 AM'."
+      },
+      {
+        "question": "What are the weekday operating hours for the new stations?",
+        "options": {
+          "A": "6:00 AM to 10:30 PM",
+          "B": "5:30 AM to 11:30 PM",
+          "C": "7:00 AM to 11:00 PM",
+          "D": "8:00 AM to 12:00 AM"
+        },
+        "ans": "B",
+        "explanation": "The notice states weekday hours are '5:30 AM to 11:30 PM'."
+      }
+    ]
+  },
+  {
+    "type": "Invoice",
+    "text": "INVOICE\nPinnacle Events Group\n45 Heritage Lane, Nashville, TN 37201\n\nBilled To:\nLakeside Hotel & Conference Center\nAttn: Events Manager, Ms. Donna Park\n\nInvoice #: PEG-2024-0087\nInvoice Date: May 20\nDue Date: June 19\n\nServices Rendered — Annual Gala, May 15:\n\nItem                          Qty    Unit Price    Total\n─────────────────────────────────────────────────────────\nEvent Planning & Coordination  1     $3,500.00    $3,500.00\nAV Equipment Rental            1     $1,800.00    $1,800.00\nCatering (per head)          120       $55.00    $6,600.00\nFloral Arrangements            1     $1,200.00    $1,200.00\n─────────────────────────────────────────────────────────\nSubtotal                                         $13,100.00\nDiscount (5% loyalty)                              -$655.00\nTax (8.5%)                                       $1,054.08\nTOTAL DUE                                        $13,499.08\n\nPayment by bank transfer to: Account #8821-4477\nQuestions? Contact billing@pinnacleevents.com",
+    "questions": [
+      {
+        "question": "What event does this invoice relate to?",
+        "options": {
+          "A": "A corporate training seminar",
+          "B": "A hotel opening ceremony",
+          "C": "An annual gala",
+          "D": "A product launch event"
+        },
+        "ans": "C",
+        "explanation": "The invoice specifies 'Services Rendered — Annual Gala, May 15'."
+      },
+      {
+        "question": "How many guests attended the catered event?",
+        "options": {
+          "A": "55",
+          "B": "100",
+          "C": "120",
+          "D": "150"
+        },
+        "ans": "C",
+        "explanation": "The catering line shows 'per head' × 120."
+      },
+      {
+        "question": "What discount was applied to the invoice?",
+        "options": {
+          "A": "Early payment discount",
+          "B": "New client discount",
+          "C": "Loyalty discount",
+          "D": "Seasonal promotion discount"
+        },
+        "ans": "C",
+        "explanation": "The invoice shows a '5% loyalty' discount."
+      },
+      {
+        "question": "What is the payment due date on this invoice?",
+        "options": {
+          "A": "May 15",
+          "B": "May 20",
+          "C": "June 19",
+          "D": "June 30"
+        },
+        "ans": "C",
+        "explanation": "The invoice clearly states 'Due Date: June 19'."
+      }
+    ]
+  },
+  {
+    "type": "Triple Passage — Notice + E-mail + Form",
+    "text": "DOCUMENT 1 — NOTICE:\nAttn: All Marketing Staff\nThe Marketing Department will hold its quarterly strategy meeting on November 8 at 10:00 AM in Conference Room B. Attendance is mandatory for all senior staff. Junior staff are encouraged to attend if their schedule allows. Please prepare a brief update on your current projects (max. 5 minutes per person).\n\nDOCUMENT 2 — E-MAIL:\nFrom: Rachel Owen <r.owen@company.com>\nTo: Tom Harker <t.harker@company.com>\nSubject: November 8 Meeting\n\nHi Tom,\n\nJust a heads-up — I won't be able to make the full meeting on the 8th. I have a client call from 10:00 to 10:30, but I should be free to join around 10:35. Could you take notes for the first part and brief me afterward?\n\nAlso, I've sent my project update to you — could you present it on my behalf?\n\nThanks,\nRachel\n\nDOCUMENT 3 — MEETING ATTENDANCE FORM:\nName: Tom Harker\nDepartment: Marketing\nAttendance Confirmed: Yes\nPresenting on behalf of: Rachel Owen\nNotes taker: Yes",
+    "questions": [
+      {
+        "question": "Who is required to attend the meeting?",
+        "options": {
+          "A": "All company employees",
+          "B": "All marketing staff",
+          "C": "Senior marketing staff only",
+          "D": "Department heads across all divisions"
+        },
+        "ans": "C",
+        "explanation": "The notice states 'Attendance is mandatory for all senior staff'. Junior staff attendance is optional."
+      },
+      {
+        "question": "Why will Rachel Owen arrive late to the meeting?",
+        "options": {
+          "A": "She has a prior appointment outside the office",
+          "B": "She has a client call at 10:00 AM",
+          "C": "She is preparing her project presentation",
+          "D": "She has a conflict with another internal meeting"
+        },
+        "ans": "B",
+        "explanation": "Rachel explains she has 'a client call from 10:00 to 10:30'."
+      },
+      {
+        "question": "What has Tom Harker agreed to do at the meeting?",
+        "options": {
+          "A": "Reschedule the meeting for Rachel",
+          "B": "Present Rachel's update and take notes",
+          "C": "Lead the entire meeting",
+          "D": "Skip the first part and join at 10:35"
+        },
+        "ans": "B",
+        "explanation": "The attendance form confirms Tom is 'Presenting on behalf of: Rachel Owen' and is the 'Notes taker'."
+      },
+      {
+        "question": "What does the notice ask each person to prepare?",
+        "options": {
+          "A": "A detailed written report",
+          "B": "A brief project update of up to 5 minutes",
+          "C": "A 15-minute presentation with slides",
+          "D": "A budget summary for Q4"
+        },
+        "ans": "B",
+        "explanation": "The notice requests 'a brief update on your current projects (max. 5 minutes per person)'."
+      }
+    ]
+  }
+]
