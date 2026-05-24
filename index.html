@@ -6225,32 +6225,33 @@ function buildToeicPart5Section() {
 
       const qDiv = document.createElement('div');
       qDiv.style.cssText = `background:${bgColor};border:1.5px solid ${borderColor};border-radius:14px;padding:16px 18px;margin-bottom:10px;`;
+
+      // Build choices HTML separately to avoid nested template literal issues
+      const choicesHtml = q.choices.map((c, ci) => {
+        const isRight  = ci === q.answer;
+        const isChosen = ci === userAnswer;
+        let bg = 'var(--bg2)', col = 'var(--muted)', fw = '400';
+        if (isRight)             { bg='rgba(45,106,79,.12)'; col='#2d6a4f'; fw='700'; }
+        if (isChosen && !isRight){ bg='rgba(193,18,31,.1)';  col='#c1121f'; fw='700'; }
+        const tick = isRight ? ' ✓' : (isChosen && !isRight) ? ' ✗' : '';
+        return `<div style="background:${bg};border-radius:8px;padding:6px 10px;font-size:.75rem;color:${col};font-weight:${fw};line-height:1.3;">${String.fromCharCode(65+ci)}. ${c}${tick}</div>`;
+      }).join('');
+
+      const sentenceResult = q.sentence.replace('-------',
+        `<span style="background:${P5_COLOR}22;border-bottom:2px solid ${P5_COLOR};padding:0 4px;border-radius:3px;font-style:normal;font-weight:700;color:${P5_COLOR}">_______</span>`
+      );
+      const explanationHtml = (!isCorrect && answered)
+        ? `<div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);border-radius:8px;padding:10px 12px;margin-top:8px;"><div style="font-family:var(--mono);font-size:.58rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">💡 Explication</div><div style="font-size:.75rem;color:var(--text);line-height:1.55;">${q.explanation}</div></div>`
+        : '';
+
       qDiv.innerHTML = `
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
           <div style="font-family:var(--mono);font-size:.55rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;">${i+1}. ${P5_CAT_LABELS[q.cat]||q.cat}</div>
-          <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${!answered?'var(--muted)':isCorrect?'#2d6a4f':'#c1121f'};flex-shrink:0;">
-            ${!answered ? '—' : isCorrect ? '✓ Correct' : '✗ Incorrect'}
-          </div>
+          <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${!answered?'var(--muted)':isCorrect?'#2d6a4f':'#c1121f'};flex-shrink:0;">${!answered ? '—' : isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
         </div>
-        <div style="font-size:.85rem;color:var(--text);line-height:1.55;margin-bottom:10px;font-style:italic;">"${q.sentence.replace('-------', '<span style=\'background:'+P5_COLOR+'22;border-bottom:2px solid '+P5_COLOR+';padding:0 4px;border-radius:3px;font-style:normal;font-weight:700;color:'+P5_COLOR+'\'>_______</span>')}"</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:${!isCorrect && answered ? '12px':'0'};">
-          ${q.choices.map((c,ci) => {
-            const isRight    = ci === q.answer;
-            const isChosen   = ci === userAnswer;
-            let bg = 'var(--bg2)'; let col = 'var(--muted)'; let fw = '400';
-            if (isRight)  { bg='rgba(45,106,79,.12)'; col='#2d6a4f'; fw='700'; }
-            if (isChosen && !isRight) { bg='rgba(193,18,31,.1)'; col='#c1121f'; fw='700'; }
-            return `<div style="background:${bg};border-radius:8px;padding:6px 10px;font-size:.75rem;color:${col};font-weight:${fw};line-height:1.3;">
-              ${String.fromCharCode(65+ci)}. ${c} ${isRight?'✓':''} ${isChosen&&!isRight?'✗':''}
-            </div>`;
-          }).join('')}
-        </div>
-        ${!isCorrect && answered ? `
-          <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.2);border-radius:8px;padding:10px 12px;margin-top:8px;">
-            <div style="font-family:var(--mono);font-size:.58rem;color:${P5_COLOR};text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">💡 Explication</div>
-            <div style="font-size:.75rem;color:var(--text);line-height:1.55;">${q.explanation}</div>
-          </div>
-        ` : ''}
+        <div style="font-size:.85rem;color:var(--text);line-height:1.55;margin-bottom:10px;font-style:italic;">"${sentenceResult}"</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:${(!isCorrect && answered) ? '12px':'0'};">${choicesHtml}</div>
+        ${explanationHtml}
       `;
       resultsDiv.appendChild(qDiv);
     });
@@ -6398,6 +6399,10 @@ function buildToeicPart5Section() {
   return wrap;
 }
 
+// ═══════════════════════════════════════════════════════════
+// PHRASAL VERBS SECTION
+// ═══════════════════════════════════════════════════════════
+function buildPhrasalSection() {
   const sec='phrasal';
   const data=PHRASAL_VERBS;
   const idx=S.cursor.phrasal, item=data[idx], st=getS(sec,idx);
