@@ -1637,6 +1637,7 @@ function _applyData(p) {
   S.status         = p.status         || {};
   S.streak         = p.streak         || 0;
   S.cursor         = p.cursor         || {vocab:0,expr:0,prep:0,phrasal:0,take:0,real:0};
+  S.realQuiz       = p.realQuiz       || null;
   S.sessProgress   = p.sessProgress   || {};
   S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   S.lastSession    = p.lastSession    || null;
@@ -5779,16 +5780,148 @@ const REAL_CAT_LABELS = { ST: 'Small talk & social', MT: 'Meetings & calls', SL:
 const REAL_CAT_COLORS = { ST: '#0d9488', MT: '#0891b2', SL: '#7c3aed' };
 const REAL_COLOR = '#0d9488';
 
+// ── Real English state helpers ───────────────────────────
+// S.realQuiz = {
+//   queue   : [...indices],   // file d'attente des questions à venir
+//   history : [...indices],   // 5 dernières questions posées (anti-répétition)
+//   current : idx,            // indice REAL_ENGLISH de la question courante
+//   choices : [idx,idx,idx,idx], // indices des 4 choix (choices[0] = bonne réponse)
+//   answered: null | 'correct' | 'wrong',
+//   selectedChoice: null | idx,
+//   score   : { correct, total },
+//   canBack : [...pastStates], // pile pour revenir en arrière
+// }
+
+function _realQuizInit(forceReset) {
+  if (!S.realQuiz || forceReset) {
+    const indices = REAL_ENGLISH.map((_,i) => i);
+    // Mélange Fisher-Yates
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    S.realQuiz = {
+      queue    : indices,
+      history  : [],
+      current  : null,
+      choices  : [],
+      answered : null,
+      selectedChoice: null,
+      score    : { correct: 0, total: 0 },
+      canBack  : [],
+    };
+  }
+  if (S.realQuiz.current === null) _realQuizNext();
+}
+
+function _realQuizNext() {
+  const q = S.realQuiz;
+  if (q.queue.length === 0) {
+    // Recharge la file en excluant les 5 derniers
+    const all = REAL_ENGLISH.map((_,i) => i).filter(i => !q.history.includes(i));
+    // Mélange
+    for (let i = all.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [all[i], all[j]] = [all[j], all[i]];
+    }
+    q.queue = all;
+  }
+
+  // Prochaine question — pas dans les 5 dernières
+  let nextIdx = null;
+  for (let i = 0; i < q.queue.length; i++) {
+    if (!q.history.includes(q.queue[i])) { nextIdx = q.queue.splice(i, 1)[0]; break; }
+  }
+  if (nextIdx === null) nextIdx = q.queue.shift(); // fallback
+
+  q.current  = nextIdx;
+  q.answered = null;
+  q.selectedChoice = null;
+
+  // Générer 4 choix : la bonne réponse + 3 distracteurs
+  // Distracteurs de la même catégorie en priorité, puis globaux
+  const correct = nextIdx;
+  const sameCat = REAL_ENGLISH
+    .map((_,i) => i)
+    .filter(i => i !== correct && REAL_ENGLISH[i].cat === REAL_ENGLISH[correct].cat);
+  const others  = REAL_ENGLISH
+    .map((_,i) => i)
+    .filter(i => i !== correct && !sameCat.includes(i));
+
+  // Mélange les deux pools
+  const shuffle = arr => { for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; };
+  const pool = [...shuffle(sameCat), ...shuffle(others)];
+  const distractors = pool.slice(0, 3);
+
+  // 4 choix mélangés
+  const allChoices = shuffle([correct, ...distractors]);
+  q.choices = allChoices;
+}
+
+function _realQuizAnswer(chosenIdx) {
+  const q = S.realQuiz;
+  if (q.answered) return; // déjà répondu
+
+  // Sauvegarde l'état pour "retour"
+  q.canBack.push({
+    current: q.current,
+    choices: [...q.choices],
+    answered: q.answered,
+    selectedChoice: q.selectedChoice,
+    score: { ...q.score },
+  });
+  if (q.canBack.length > 10) q.canBack.shift();
+
+  q.selectedChoice = chosenIdx;
+  const correct = q.choices[0] !== q.current
+    ? q.choices.find((c, i) => c === q.current)
+    : q.current;
+
+  if (chosenIdx === q.current) {
+    q.answered = 'correct';
+    q.score.correct++;
+    S.streak++;
+  } else {
+    q.answered = 'wrong';
+  }
+  q.score.total++;
+
+  // Ajoute à l'historique anti-répétition (max 5)
+  q.history.push(q.current);
+  if (q.history.length > 5) q.history.shift();
+
+  save();
+  render();
+}
+
+function _realQuizBack() {
+  const q = S.realQuiz;
+  if (!q.canBack || q.canBack.length === 0) return;
+  const prev = q.canBack.pop();
+  // Remettre la question courante dans la queue
+  if (q.current !== null) q.queue.unshift(q.current);
+  q.current        = prev.current;
+  q.choices        = prev.choices;
+  q.answered       = prev.answered;
+  q.selectedChoice = prev.selectedChoice;
+  q.score          = prev.score;
+  // Retire du history
+  const hi = q.history.indexOf(prev.current);
+  if (hi !== -1) q.history.splice(hi, 1);
+  save();
+  render();
+}
+
+function _realQuizAdvance() {
+  _realQuizNext();
+  save();
+  render();
+}
+
 function buildRealEnglishSection() {
-  const data = REAL_ENGLISH;
-  const idx  = S.cursor.real || 0;
-  const item = data[idx];
-  const st   = getS('real', idx);
+  const data  = REAL_ENGLISH;
   const total = data.length;
-  const pct   = Math.round(((idx + 1) / total) * 100);
-  const nOk   = data.filter((_,i) => getS('real',i) === 'ok').length;
-  const nRev  = data.filter((_,i) => getS('real',i) === 'review').length;
-  const catColor = REAL_CAT_COLORS[item.cat] || REAL_COLOR;
+  const REAL_COLOR = '#0d9488';
 
   const wrap = document.createElement('div');
   wrap.className = 'page fade-up';
@@ -5797,22 +5930,22 @@ function buildRealEnglishSection() {
   const bar = document.getElementById('backBar');
   if (bar) { bar.style.display = 'flex'; bar.onclick = goHome; _setBackBarLabel('Retour à l\'accueil'); }
 
-  // Sub-nav: Flashcards | Cours
-  const rv = S.realView || 'cards';
-  wrap.innerHTML = `
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
-      <button class="phrasal-subbtn ${rv==='cards'?'active':''}"
-        style="${rv==='cards'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
-        onclick="setRealView('cards')">🃏 Flashcards (${total})</button>
-      <button class="phrasal-subbtn ${rv==='cours'?'active':''}"
-        style="${rv==='cours'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
-        onclick="setRealView('cours')">📖 Toutes les phrases</button>
-      ${nRev > 0 ? `<button class="phrasal-subbtn" style="color:var(--gold);border-color:rgba(245,197,24,.3)" onclick="startSession('real',0,false,'home')">🎯 Réviser (${nRev})</button>` : ''}
+  // Sub-nav : Quiz | Toutes les phrases
+  const rv = S.realView || 'quiz';
+  const navHtml = `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;">
+      <button class="phrasal-subbtn ${rv==='quiz'?'active':''}"
+        style="${rv==='quiz'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
+        onclick="setRealView('quiz')">🎯 Quiz (${total} phrases)</button>
+      <button class="phrasal-subbtn ${rv==='list'?'active':''}"
+        style="${rv==='list'?'background:rgba(13,148,136,.15);border-color:'+REAL_COLOR+';color:'+REAL_COLOR:''}"
+        onclick="setRealView('list')">📖 Toutes les phrases</button>
     </div>
   `;
+  wrap.innerHTML = navHtml;
 
-  if (rv === 'cours') {
-    // Liste par catégorie
+  // ── VUE LISTE ─────────────────────────────────────────────
+  if (rv === 'list') {
     const div = document.createElement('div');
     ['ST','MT','SL'].forEach(cat => {
       const items = data.filter(d => d.cat === cat);
@@ -5820,9 +5953,7 @@ function buildRealEnglishSection() {
       const cl = REAL_CAT_LABELS[cat];
       const section = document.createElement('div');
       section.style.marginBottom = '24px';
-      section.innerHTML = `
-        <div style="font-family:var(--mono);font-size:.6rem;color:${cc};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px;padding:4px 10px;background:rgba(13,148,136,.07);border-left:3px solid ${cc};border-radius:0 6px 6px 0;">${cl}</div>
-      `;
+      section.innerHTML = `<div style="font-family:var(--mono);font-size:.6rem;color:${cc};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px;padding:4px 10px;background:rgba(13,148,136,.07);border-left:3px solid ${cc};border-radius:0 6px 6px 0;">${cl}</div>`;
       items.forEach(item => {
         const card = document.createElement('div');
         card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:8px;';
@@ -5845,69 +5976,148 @@ function buildRealEnglishSection() {
       div.appendChild(section);
     });
     wrap.appendChild(div);
+    return wrap;
+  }
 
-  } else {
-    // Flashcard mode
-    const badge = st === 'ok'
-      ? `<div class="card-badge badge-ok">✓ Maîtrisé</div>`
-      : st === 'review'
-        ? `<div class="card-badge badge-rev">🔄 À revoir</div>`
-        : `<div class="card-badge badge-new">Nouveau</div>`;
+  // ── VUE QUIZ ──────────────────────────────────────────────
+  _realQuizInit(false);
+  const q    = S.realQuiz;
+  const item = data[q.current];
+  const catColor = REAL_CAT_COLORS[item.cat] || REAL_COLOR;
+  const answered = q.answered;
+  const correctIdx = q.current;
 
-    const fcWrap = document.createElement('div');
-    fcWrap.innerHTML = `
-      <div class="fc-progress-strip">
-        <div class="fc-prog-bar">
-          <div class="fc-prog-fill real-fill" style="width:${pct}%;background:${REAL_COLOR}"></div>
-        </div>
-        <div class="fc-prog-txt">${nOk} ✓ · ${nRev} 🔄 · ${idx+1}/${total}</div>
+  // Score badge
+  const scoreEl = document.createElement('div');
+  scoreEl.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;';
+  const pct = q.score.total > 0 ? Math.round((q.score.correct / q.score.total) * 100) : 0;
+  scoreEl.innerHTML = `
+    <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);">
+      ${q.score.total > 0
+        ? `${q.score.correct}/${q.score.total} correctes · <span style="color:${pct>=70?'#2d6a4f':'#c1121f'}">${pct}%</span>`
+        : 'Commence le quiz !'}
+    </div>
+    <button onclick="_realQuizInit(true);save();render();"
+      style="font-family:var(--mono);font-size:.6rem;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer;">
+      ↺ Recommencer
+    </button>
+  `;
+  wrap.appendChild(scoreEl);
+
+  // Carte question
+  const qCard = document.createElement('div');
+  qCard.style.cssText = `background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:22px 20px 18px;margin-bottom:16px;position:relative;overflow:hidden;`;
+
+  // Barre couleur catégorie
+  qCard.innerHTML = `
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,${catColor},${catColor}55);border-radius:16px 16px 0 0;"></div>
+    <div style="font-family:var(--mono);font-size:.55rem;color:${catColor};text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">${REAL_CAT_LABELS[item.cat]}</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:6px;line-height:1.5;">Comment dit-on en anglais :</div>
+    <div style="font-size:1.15rem;font-weight:800;color:var(--text);line-height:1.35;margin-bottom:10px;">"${item.fr}"</div>
+    <div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);font-style:italic;background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.5;">💡 ${item.note}</div>
+  `;
+  wrap.appendChild(qCard);
+
+  // 4 choix
+  const choicesWrap = document.createElement('div');
+  choicesWrap.style.cssText = 'display:flex;flex-direction:column;gap:9px;margin-bottom:20px;';
+
+  q.choices.forEach((choiceIdx) => {
+    const choice = data[choiceIdx];
+    const isCorrect = choiceIdx === correctIdx;
+    const isSelected = choiceIdx === q.selectedChoice;
+
+    let bg = 'var(--surface)';
+    let border = 'var(--border)';
+    let textColor = 'var(--text)';
+    let icon = '';
+
+    if (answered) {
+      if (isCorrect) {
+        bg = 'rgba(45,106,79,.12)'; border = '#2d6a4f'; textColor = '#2d6a4f'; icon = ' ✓';
+      } else if (isSelected && !isCorrect) {
+        bg = 'rgba(193,18,31,.1)'; border = '#c1121f'; textColor = '#c1121f'; icon = ' ✗';
+      } else {
+        bg = 'var(--surface)'; border = 'var(--border)'; textColor = 'var(--muted)';
+      }
+    }
+
+    const btn = document.createElement('button');
+    btn.style.cssText = `
+      background:${bg};border:1.5px solid ${border};border-radius:12px;
+      padding:13px 16px;text-align:left;cursor:${answered?'default':'pointer'};
+      transition:all .15s;display:flex;align-items:center;gap:10px;width:100%;
+    `;
+    btn.innerHTML = `
+      <div style="width:22px;height:22px;border-radius:50%;border:1.5px solid ${border};
+        display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        font-family:var(--mono);font-size:.6rem;color:${textColor};font-weight:700;">
+        ${answered && isCorrect ? '✓' : answered && isSelected ? '✗' : String.fromCharCode(65 + q.choices.indexOf(choiceIdx))}
       </div>
-
-      <div style="font-family:var(--mono);font-size:.55rem;color:${catColor};text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;text-align:center;">${REAL_CAT_LABELS[item.cat]}</div>
-
-      <div class="flashcard ${st==='ok'?'is-ok':''} ${st==='review'?'is-rev':''}">
-        <div class="card-stripe" style="background:linear-gradient(90deg,${catColor},${catColor}88)"></div>
-        ${badge}
-        <div class="card-body">
-          <div class="card-num" style="color:${catColor}">💬 Real English · #${idx+1}</div>
-          <div class="card-word" style="color:${catColor};font-size:1.35rem;">${item.en}</div>
-          <div class="card-extra" style="font-style:italic;">${item.fr}</div>
-          <div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);margin:8px 0;padding:8px 10px;background:var(--bg2);border-radius:8px;line-height:1.5;">💡 ${item.note}</div>
-          <div class="card-example">"${item.ex}"</div>
-          <div class="card-example-trad">${item.exTrad}</div>
-          <div class="card-audio-row">
-            <button class="btn-audio" onclick="speak('${esc(item.en)}','en')" style="border-color:${catColor}33;color:${catColor}">${spkSvg()} Écouter</button>
-            <button class="btn-audio" onclick="speak('${esc(item.ex)}','en')">${spkSvg()} Exemple</button>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button class="btn-act btn-ok ${st==='ok'?'on':''}" onclick="markReal(${idx},'ok')">
-            ${st==='ok' ? '✓ Maîtrisé' : '✓ Marquer maîtrisé'}
-          </button>
-          <button class="btn-act btn-rev ${st==='review'?'on':''}" onclick="markReal(${idx},'review')">
-            ${st==='review' ? '🔄 En révision' : '🔄 Mettre en révision'}
-          </button>
-        </div>
-      </div>
-
-      <div class="fc-nav">
-        <button class="btn-nav" onclick="navReal(-1)" ${idx===0?'disabled':''}>◀</button>
-        <div class="nav-center">
-          <div class="nav-pos">${idx+1} / ${total}</div>
-          <div class="nav-hint">← → clavier</div>
-        </div>
-        <button class="btn-nav" onclick="navReal(1)" ${idx===total-1?'disabled':''}>▶</button>
+      <div style="flex:1;">
+        <div style="font-size:.9rem;font-weight:700;color:${textColor};line-height:1.3;">${choice.en}${icon}</div>
+        ${answered ? `<div style="font-size:.72rem;color:${answered&&isCorrect?'#2d6a4f':answered&&isSelected?'#c1121f':'var(--muted)'};margin-top:2px;font-style:italic;">${choice.fr}</div>` : ''}
       </div>
     `;
-    wrap.appendChild(fcWrap);
 
-    _keyHandler = (e) => {
-      if (e.target.tagName === 'INPUT') return;
-      if (e.key === 'ArrowRight') navReal(1);
-      if (e.key === 'ArrowLeft')  navReal(-1);
-    };
-    document.addEventListener('keydown', _keyHandler);
+    if (!answered) {
+      btn.onmouseenter = () => { btn.style.borderColor = REAL_COLOR; btn.style.background = 'rgba(13,148,136,.07)'; };
+      btn.onmouseleave = () => { btn.style.borderColor = 'var(--border)'; btn.style.background = 'var(--surface)'; };
+      btn.onclick = () => _realQuizAnswer(choiceIdx);
+    }
+
+    choicesWrap.appendChild(btn);
+  });
+  wrap.appendChild(choicesWrap);
+
+  // Feedback + boutons navigation
+  const footer = document.createElement('div');
+
+  if (answered) {
+    // Feedback contextuel
+    const correctItem = data[correctIdx];
+    const isCorrectAnswer = answered === 'correct';
+    footer.innerHTML = `
+      <div style="background:${isCorrectAnswer?'rgba(45,106,79,.1)':'rgba(193,18,31,.08)'};
+        border:1px solid ${isCorrectAnswer?'rgba(45,106,79,.3)':'rgba(193,18,31,.25)'};
+        border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-size:.85rem;font-weight:700;color:${isCorrectAnswer?'#2d6a4f':'#c1121f'};margin-bottom:6px;">
+          ${isCorrectAnswer ? '✓ Correct !' : '✗ Pas tout à fait…'}
+        </div>
+        <div style="font-size:.8rem;color:var(--text);font-weight:700;margin-bottom:2px;">${correctItem.en}</div>
+        <div style="font-size:.75rem;color:var(--muted);font-style:italic;margin-bottom:8px;">${correctItem.fr}</div>
+        <div style="font-size:.73rem;color:var(--muted);font-style:italic;line-height:1.5;">
+          "${correctItem.ex}"<br>
+          <span style="font-size:.68rem;">${correctItem.exTrad}</span>
+        </div>
+        <button onclick="speak('${esc(correctItem.en)}','en')" style="margin-top:8px;font-family:var(--mono);font-size:.6rem;background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--muted);">${spkSvg()} Écouter</button>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="_realQuizBack()"
+          style="flex:1;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;font-family:var(--sans);font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;${!q.canBack||q.canBack.length===0?'opacity:.35;cursor:not-allowed;':''}">
+          ◀ Retour
+        </button>
+        <button onclick="_realQuizAdvance()"
+          style="flex:2;padding:12px;background:${REAL_COLOR};border:none;border-radius:12px;font-family:var(--sans);font-size:.88rem;font-weight:800;color:#fff;cursor:pointer;">
+          Question suivante →
+        </button>
+      </div>
+    `;
+  } else {
+    // Pas encore répondu — bouton retour seulement
+    footer.innerHTML = `
+      <div style="display:flex;gap:8px;">
+        <button onclick="_realQuizBack()"
+          style="padding:11px 18px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;${!q.canBack||q.canBack.length===0?'opacity:.35;cursor:not-allowed;':''}">
+          ◀ Retour
+        </button>
+        <div style="flex:1;font-family:var(--mono);font-size:.6rem;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;">
+          Anti-répétition · 5 questions
+        </div>
+      </div>
+    `;
   }
+  wrap.appendChild(footer);
 
   return wrap;
 }
@@ -5920,12 +6130,7 @@ function navReal(dir) {
   save(); render();
 }
 
-function markReal(idx, val) {
-  const cur = getS('real', idx);
-  setS('real', idx, cur === val ? null : val);
-  if (val === 'ok') { S.streak++; save(); checkMilestones(null); }
-  render();
-}
+
 
 // ═══════════════════════════════════════════════════════════
 // PHRASAL VERBS SECTION
