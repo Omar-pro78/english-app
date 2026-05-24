@@ -6853,7 +6853,7 @@ function buildToeicPart7Section() {
   const pct = totalQ > 0 ? Math.round((answeredCount / totalQ) * 100) : 0;
 
   // Global question number
-  let globalQNum = 1;
+  let globalQNum = 0;
   for (let i = 0; i < pi; i++) globalQNum += passages[i].questions.length;
   globalQNum += qi + 1;
 
