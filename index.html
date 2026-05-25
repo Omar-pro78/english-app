@@ -6802,7 +6802,7 @@ function buildToeicPart7Section() {
     passages.forEach((p, pi) => {
       reviewHTML += '<div style="margin-bottom:18px;">';
       reviewHTML += '<div style="font-family:var(--mono);font-size:.58rem;color:' + COLOR + ';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Passage ' + (pi+1) + ' — ' + p.type + '</div>';
-      reviewHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:.78rem;color:var(--text);line-height:1.6;white-space:pre-line;">' + p.text + '</div>';
+      reviewHTML += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:.78rem;color:var(--text);line-height:1.6;white-space:pre-line;">' + p.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
       p.questions.forEach((q, qi) => {
         const key = pi + '_' + qi;
         const ua = pt7.answers[key];
@@ -6869,7 +6869,7 @@ function buildToeicPart7Section() {
   const passageCard = document.createElement('div');
   passageCard.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;padding:16px 18px;margin-bottom:12px;';
   passageCard.innerHTML = '<div style="font-family:var(--mono);font-size:.52rem;color:' + COLOR + ';text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Passage ' + (pi+1) + ' / ' + totalPassages + '</div>'
-    + '<div style="font-size:.78rem;color:var(--text);line-height:1.7;white-space:pre-line;">' + passage.text + '</div>';
+    + '<div style="font-size:.78rem;color:var(--text);line-height:1.7;white-space:pre-line;">' + passage.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
   wrap.appendChild(passageCard);
 
   // Question card
