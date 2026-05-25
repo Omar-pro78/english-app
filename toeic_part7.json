@@ -682,5 +682,260 @@
         "explanation": "The notice requests 'a brief update on your current projects (max. 5 minutes per person)'."
       }
     ]
+  },
+  {
+    "type": "Double Passage — Quarterly Report + Internal Memo",
+    "level": "B2",
+    "text": "DOCUMENT 1 — EXCERPT FROM Q3 FINANCIAL REPORT:\n\nRevenue for Q3 reached $4.2 million, representing a 12% increase over the same period last year. However, operating costs rose disproportionately by 19%, driven primarily by expanded headcount in the sales division and a significant uptick in logistics expenditure. As a result, net profit margin contracted from 18% to 13%. Management notes that the revenue growth trajectory remains encouraging, though cost containment will be a priority heading into Q4.\n\nDOCUMENT 2 — INTERNAL MEMO:\n\nTo: Regional Sales Directors\nFrom: CFO Office\nDate: October 22\nRe: Q4 Expense Controls\n\nFollowing the release of Q3 results, the executive committee has approved a temporary freeze on discretionary spending across all departments, effective November 1. This applies to travel, entertainment, and non-essential equipment purchases. Headcount additions already in progress may continue, but new requisitions must receive CFO approval before posting. Directors are asked to identify at least two cost-saving measures within their teams and submit proposals by October 31.",
+    "questions": [
+      {
+        "question": "What can be inferred about the company's overall financial health based on both documents?",
+        "options": {
+          "A": "The company is experiencing a decline in revenues and may face insolvency.",
+          "B": "Revenue growth is positive, but profitability is under pressure due to rising costs.",
+          "C": "The sales division has underperformed relative to other departments.",
+          "D": "The company expects net profit margin to recover automatically in Q4."
+        },
+        "ans": "B",
+        "explanation": "The report confirms 12% revenue growth but also a margin contraction from 18% to 13%. The memo's expense freeze is a direct response to this cost pressure — not to a revenue problem. The other options either overstate the severity (A), misattribute performance (C), or assume recovery without basis (D)."
+      },
+      {
+        "question": "According to the memo, which of the following actions would require CFO approval?",
+        "options": {
+          "A": "Finalising the onboarding of a sales associate whose contract was signed in September",
+          "B": "Booking a client lunch for an existing key account",
+          "C": "Hiring a logistics coordinator for a newly created position",
+          "D": "Purchasing a replacement laptop for a damaged unit"
+        },
+        "ans": "C",
+        "explanation": "The memo states that headcount additions 'already in progress' may continue, but 'new requisitions must receive CFO approval before posting.' A newly created position is a new requisition. Onboarding someone already contracted (A) is in progress; a client lunch (B) and a replacement laptop (D) fall under entertainment and equipment — which are frozen outright, not subject to approval."
+      },
+      {
+        "question": "What is the most likely reason the CFO office issued the memo shortly after the Q3 report?",
+        "options": {
+          "A": "To announce that Q3 results had exceeded all financial targets",
+          "B": "To respond proactively to the margin contraction identified in the report",
+          "C": "To inform directors that the sales division would be restructured",
+          "D": "To comply with a regulatory requirement tied to quarterly reporting"
+        },
+        "ans": "B",
+        "explanation": "The timing — 'following the release of Q3 results' — and the nature of the measures (expense freeze, cost-saving proposals) directly link the memo to the margin contraction highlighted in the report. No mention is made of restructuring (C) or regulatory obligations (D), and the results did not exceed targets (A)."
+      },
+      {
+        "question": "The word 'disproportionately' in Document 1 most closely implies that:",
+        "options": {
+          "A": "Operating costs were unexpectedly lower than forecast",
+          "B": "The cost increase was larger relative to revenue growth than would be expected",
+          "C": "The company deliberately inflated its cost base to reduce taxable income",
+          "D": "Logistics expenditure alone exceeded the total revenue increase"
+        },
+        "ans": "B",
+        "explanation": "'Disproportionately' signals an imbalance — costs rose 19% while revenue grew only 12%, meaning costs grew faster relative to gains. The word carries no implication of deliberate action (C) or a specific comparison of absolute figures (D)."
+      }
+    ]
+  },
+  {
+    "type": "Article — Corporate Whistleblowing & Ethics",
+    "level": "B2/C1",
+    "text": "THE UNCOMFORTABLE COST OF SPEAKING UP\n\nCorporate whistleblowing — the act of reporting internal misconduct to authorities or the public — occupies an ambiguous space in modern business culture. While organisations routinely espouse commitments to transparency and ethical governance, the reality for employees who act on those values can be starkly different.\n\nA 2023 survey conducted by the Ethics & Compliance Initiative found that 44% of employees who had witnessed misconduct chose not to report it, citing fears of retaliation as the primary deterrent. Of those who did report, nearly one in three experienced some form of adverse professional consequence within twelve months — ranging from exclusion from key projects to outright termination.\n\nLegislation such as the EU Whistleblower Protection Directive, enacted across member states by 2023, has sought to close this gap by mandating confidential reporting channels and prohibiting employer retaliation. Critics, however, argue that legal protections are only as effective as their enforcement — and that internal cultural change remains the more fundamental, if elusive, solution.\n\nParadoxically, organisations with the most elaborate ethics programmes are not necessarily those where employees feel safest raising concerns. Research suggests that the perceived authenticity of leadership behaviour matters far more than formal policies. When senior figures are seen to act with integrity — and, crucially, to tolerate candid dissent — employees are significantly more likely to report concerns early, before minor issues escalate into reputational crises.",
+    "questions": [
+      {
+        "question": "What is the author's primary purpose in writing this article?",
+        "options": {
+          "A": "To argue that whistleblowing legislation is ineffective and should be repealed",
+          "B": "To examine the gap between organisations' stated ethics commitments and employees' actual experience",
+          "C": "To provide a step-by-step guide for employees considering reporting misconduct",
+          "D": "To celebrate the progress made by the EU Whistleblower Protection Directive"
+        },
+        "ans": "B",
+        "explanation": "The article's tone is analytical rather than prescriptive (not C) or celebratory (not D). It opens by framing whistleblowing as 'ambiguous' and proceeds to document the disconnect between corporate ethics rhetoric and the lived experience of employees who report misconduct. Option A overstates the author's position — the legislation is critiqued as insufficient, not argued against entirely."
+      },
+      {
+        "question": "What does the article imply about formal ethics programmes?",
+        "options": {
+          "A": "They are unnecessary if senior leaders model ethical behaviour",
+          "B": "Their sophistication alone does not guarantee a genuinely safe reporting culture",
+          "C": "They are more effective than legislation in protecting whistleblowers",
+          "D": "They tend to increase the rate of reported misconduct significantly"
+        },
+        "ans": "B",
+        "explanation": "The final paragraph explicitly states that organisations with 'the most elaborate ethics programmes are not necessarily those where employees feel safest raising concerns.' This implies elaborateness ≠ effectiveness. The article does not suggest programmes are unnecessary (A), directly compare them to legislation (C), or claim they increase reporting rates (D)."
+      },
+      {
+        "question": "The word 'elusive' in the third paragraph most nearly means:",
+        "options": {
+          "A": "Expensive",
+          "B": "Controversial",
+          "C": "Difficult to achieve",
+          "D": "Legally complex"
+        },
+        "ans": "C",
+        "explanation": "'Elusive' describes cultural change as something hard to attain — the author contrasts it with legal solutions, suggesting that while laws can be passed, genuine cultural transformation is harder to pin down and accomplish."
+      },
+      {
+        "question": "According to the survey data cited, approximately how many out of 100 employees who reported misconduct faced professional repercussions?",
+        "options": {
+          "A": "44",
+          "B": "56",
+          "C": "33",
+          "D": "12"
+        },
+        "ans": "C",
+        "explanation": "'Nearly one in three' of those who reported experienced adverse consequences — approximately 33 out of 100. The 44% figure refers to those who chose not to report at all, not to consequences for those who did."
+      }
+    ]
+  },
+  {
+    "type": "Triple Passage — Service Contract + E-mail + Amendment Notice",
+    "level": "C1",
+    "text": "DOCUMENT 1 — SERVICE AGREEMENT EXCERPT (Clause 7):\n\nThe Service Provider shall deliver monthly performance reports no later than the fifth business day of the following month. In the event that a report is delayed beyond this deadline without prior written notification, the Client reserves the right to apply a service credit equivalent to 5% of the monthly fee for each full week of delay, up to a maximum of 20%. This clause shall not apply where delay is attributable to circumstances beyond the Service Provider's reasonable control.\n\nDOCUMENT 2 — E-MAIL:\n\nFrom: Dana Ferreiro, Account Manager — Praxis Solutions\nTo: Marcus Webb, Procurement — Holden Group\nDate: 14 November\nSubject: October Report — Short Delay\n\nDear Marcus,\n\nI wanted to flag in advance that our October performance report will be approximately ten days late. Our lead analyst has been on medical leave since October 28, and we have been unable to source adequate interim cover at short notice. We anticipate delivering the completed report by November 25 at the latest.\n\nWe understand this causes inconvenience and appreciate your patience. Please let me know if you would like a preliminary summary in the meantime.\n\nBest regards,\nDana\n\nDOCUMENT 3 — CONTRACT AMENDMENT NOTICE (issued 1 December):\n\nWith effect from 1 January, Clause 7 of the Service Agreement is amended as follows: the service credit cap is revised from 20% to 15%, and the grace period before credits begin to accrue is extended from zero to three business days beyond the deadline. All other terms remain unchanged.",
+    "questions": [
+      {
+        "question": "Based on Documents 1 and 2, is Holden Group entitled to apply a service credit for the October report?",
+        "options": {
+          "A": "Yes, because the report will be more than one full week late",
+          "B": "No, because Dana provided prior written notification of the delay",
+          "C": "Yes, because medical leave does not constitute a force majeure event",
+          "D": "It cannot be determined without knowing the exact delivery date"
+        },
+        "ans": "B",
+        "explanation": "Clause 7 states the credit applies when delay occurs 'without prior written notification.' Dana's e-mail constitutes prior written notification, sent before the deadline. The medical leave argument (C) is therefore moot — the notification condition, not the cause, is what disqualifies the credit here."
+      },
+      {
+        "question": "Under the amended Clause 7 (Document 3), if a report is delivered four business days after the deadline with no prior notice, what credit applies?",
+        "options": {
+          "A": "5% of the monthly fee",
+          "B": "10% of the monthly fee",
+          "C": "No credit, as four days falls within the new grace period",
+          "D": "15% of the monthly fee"
+        },
+        "ans": "A",
+        "explanation": "Under the amendment, the grace period is three business days. Four days exceeds it by one day — but that does not constitute a 'full week' of delay. The original credit rate is 5% per full week of delay. Since only one day beyond the grace period has elapsed (not a full week), only 5% applies. The cap is now 15%, but that is irrelevant here."
+      },
+      {
+        "question": "What can be inferred about the relationship between Praxis Solutions and Holden Group from Dana's e-mail?",
+        "options": {
+          "A": "The relationship is adversarial, and Dana is writing to avoid financial penalties",
+          "B": "The relationship is transactional, with little expectation of goodwill",
+          "C": "The relationship is collaborative, with Dana prioritising transparent communication",
+          "D": "Holden Group has previously complained about Praxis Solutions' reporting delays"
+        },
+        "ans": "C",
+        "explanation": "Dana proactively notifies the client before the delay occurs, apologises, and offers an interim summary — none of which is contractually required. This signals a relationship built on transparency and goodwill, not merely contract compliance. There is no evidence of prior complaints (D) or adversarial dynamics (A)."
+      },
+      {
+        "question": "Which of the following statements about the amendment in Document 3 is accurate?",
+        "options": {
+          "A": "It makes it harder for clients to obtain service credits than under the original contract",
+          "B": "It increases the maximum service credit available to clients",
+          "C": "It replaces Clause 7 in its entirety with new terms",
+          "D": "It takes effect immediately upon issuance on 1 December"
+        },
+        "ans": "A",
+        "explanation": "The amendment reduces the cap from 20% to 15% (less credit available) and introduces a three-day grace period (credits accrue later). Both changes favour the Service Provider, making it harder for clients to collect credits. The clause is amended, not replaced entirely (C). It takes effect on 1 January, not 1 December (D)."
+      }
+    ]
+  },
+  {
+    "type": "Double Passage — Formal Complaint + Company Response",
+    "level": "C1",
+    "text": "DOCUMENT 1 — LETTER OF COMPLAINT:\n\nMs. Claire Okonkwo\n14 Alderton Road\nBristol, BS6 7TH\n3 March\n\nCustomer Relations Department\nVeridia Home Solutions\n\nDear Sir or Madam,\n\nI am writing to express my profound dissatisfaction with the conduct of your installation team and the subsequent handling of my complaint by your customer service department.\n\nYour engineers attended my property on 14 February to install a heat pump unit. Despite my having taken an unpaid day of leave to accommodate the appointment, the team arrived two hours and forty minutes late and departed without completing the installation, citing a parts shortage that your scheduling team had apparently been aware of since 11 February — three days prior to the appointment. I was neither contacted nor offered an alternative date.\n\nWhen I contacted your helpline, I was placed on hold for 47 minutes before speaking to an advisor who offered a £25 voucher as 'goodwill compensation.' I declined this offer as wholly inadequate given the circumstances and requested escalation to a complaints manager. It has now been nineteen days with no further contact.\n\nI am formally requesting: (1) a written explanation of why the scheduling failure occurred; (2) compensation reflecting the financial cost of my lost working day; and (3) a confirmed reinstallation date within the next ten working days.\n\nShould I not receive a satisfactory response within fourteen days, I intend to refer this matter to the relevant Ombudsman service.\n\nYours faithfully,\nClaire Okonkwo\n\nDOCUMENT 2 — COMPANY RESPONSE:\n\nDear Ms. Okonkwo,\n\nThank you for taking the time to write to us. We are sorry to hear that your recent experience did not meet the high standards we set for ourselves.\n\nHaving reviewed your case, we can confirm that a supply chain disruption affected the availability of components required for your installation. We regret that our internal communication process did not result in your being notified in advance, and we acknowledge that this should have been handled differently.\n\nWe are pleased to offer you a rescheduled installation on 22 March, subject to your confirmation. In recognition of the inconvenience caused, we would like to offer a £75 credit toward your first service invoice.\n\nWe hope this resolution demonstrates our commitment to customer satisfaction and trust that this matter can now be considered closed.\n\nYours sincerely,\nVeridia Customer Relations",
+    "questions": [
+      {
+        "question": "What is the most significant implication of the company's response, when read alongside the complaint?",
+        "options": {
+          "A": "The company has fully addressed all three of Ms. Okonkwo's stated requests",
+          "B": "The company acknowledges the scheduling failure but avoids addressing two of the three requests",
+          "C": "The company disputes Ms. Okonkwo's account of the helpline wait time",
+          "D": "The company's offer of £75 is legally binding compensation for lost income"
+        },
+        "ans": "B",
+        "explanation": "Ms. Okonkwo made three explicit requests: (1) a written explanation, (2) compensation for lost income, and (3) a reinstallation date. The company offers only (3) a new date and a £75 service credit — not a written explanation of the process failure, and not compensation specifically tied to her lost working day. The response is diplomatically worded but substantively incomplete."
+      },
+      {
+        "question": "The phrase 'trust that this matter can now be considered closed' in Document 2 most likely serves to:",
+        "options": {
+          "A": "Acknowledge that further correspondence from Ms. Okonkwo would be welcome",
+          "B": "Attempt to pre-emptively discourage further escalation without explicitly saying so",
+          "C": "Indicate that the company is legally protected from any Ombudsman referral",
+          "D": "Confirm that Ms. Okonkwo has accepted the offered resolution"
+        },
+        "ans": "B",
+        "explanation": "The phrasing is diplomatically assertive — by framing the matter as 'closed,' the company implicitly signals that it does not anticipate or welcome further correspondence. It does not constitute a legal protection (C), Ms. Okonkwo has not confirmed acceptance (D), and it is not an invitation to write again (A). This kind of rhetorical move is common in corporate responses designed to de-escalate without full concession."
+      },
+      {
+        "question": "Which detail from Document 1 most strongly supports Ms. Okonkwo's case for compensation beyond a voucher?",
+        "options": {
+          "A": "The engineers arrived two hours and forty minutes late",
+          "B": "She was placed on hold for 47 minutes",
+          "C": "The scheduling team had known about the parts shortage three days before the appointment",
+          "D": "She declined the initial £25 voucher offer"
+        },
+        "ans": "C",
+        "explanation": "The most legally and ethically significant detail is that the company had prior knowledge of the issue (since 11 February) and failed to notify her, causing a preventable loss of income. This transforms the situation from an unfortunate disruption into a foreseeable failure — strengthening her claim for meaningful compensation. The wait time (B) and late arrival (A) support her frustration but are secondary to the premeditated nature of the oversight."
+      },
+      {
+        "question": "What is Ms. Okonkwo's implicit message by mentioning the Ombudsman in her letter?",
+        "options": {
+          "A": "She has already filed a formal complaint with the Ombudsman service",
+          "B": "She is uncertain whether an Ombudsman exists for this type of dispute",
+          "C": "She is signalling awareness of her consumer rights and readiness to escalate formally",
+          "D": "She expects the Ombudsman to award her significant financial damages"
+        },
+        "ans": "C",
+        "explanation": "Referencing the Ombudsman serves a strategic function: it demonstrates that Ms. Okonkwo is an informed consumer who understands her formal recourse options, without yet triggering the process. It is a calibrated pressure signal, not a statement of action already taken (A) or uncertainty (B). The letter makes no claims about expected awards (D)."
+      }
+    ]
+  },
+  {
+    "type": "Double Passage — Research Summary + Peer Commentary",
+    "level": "C1",
+    "text": "DOCUMENT 1 — RESEARCH SUMMARY (Internal Circulation):\n\nTitle: Remote Work Productivity in Knowledge-Intensive Firms: A 14-Month Longitudinal Study\nAuthors: Dr. Y. Nakamura, Prof. S. Adeyemi\nSample: 1,840 employees across 12 firms (finance, consulting, technology sectors)\n\nKey Findings:\n— Individual task output (measured by self-reported completion rates and manager assessments) increased by an average of 11% under remote conditions compared to on-site baseline.\n— Collaborative output — defined as cross-team projects requiring synchronous coordination — declined by 17% in quality ratings during the same period.\n— Employee-reported wellbeing scores improved markedly in months 1–6, then plateaued and showed a statistically significant decline by month 14, particularly among employees without dedicated home office space.\n— The productivity gains were concentrated in employees with five or more years of experience; junior employees showed no significant output improvement and reported higher rates of role ambiguity.\n\nDOCUMENT 2 — PEER COMMENTARY (Excerpt):\n\nNakamura and Adeyemi's study is methodologically rigorous and fills a genuine gap in the longitudinal literature. However, two limitations warrant scrutiny before the findings are used to inform policy.\n\nFirst, the reliance on self-reported task completion as a primary productivity measure introduces well-documented social desirability bias — employees working from home may systematically overreport output to counter perceived assumptions about remote work. The manager assessment data, while included, is not disaggregated by sector or seniority, limiting its utility as a corrective.\n\nSecond, the sample is skewed toward high-autonomy, high-skill knowledge roles. The 11% individual productivity gain may not be generalisable to firms with more structured, process-dependent workflows. Policymakers and HR professionals should be cautious about applying these findings wholesale to sectors and roles not represented in the sample.",
+    "questions": [
+      {
+        "question": "What is the main concern the commentator raises about the study's productivity data?",
+        "options": {
+          "A": "The study period of 14 months was too short to draw reliable conclusions",
+          "B": "Self-reported data may have inflated productivity figures due to social desirability bias",
+          "C": "The manager assessments contradicted the self-reported completion rates",
+          "D": "The study failed to measure collaborative output alongside individual output"
+        },
+        "ans": "B",
+        "explanation": "The commentator's first criticism targets the self-reporting methodology directly — employees may overclaim productivity to dispel stereotypes about remote work. The manager data exists but is not broken down in a way that allows it to act as a reliable check. The study does in fact measure collaborative output (D is false), and the commentator does not claim manager assessments contradicted self-reports (C)."
+      },
+      {
+        "question": "Which finding from Document 1 would most likely concern an HR manager responsible for junior employee development?",
+        "options": {
+          "A": "Individual output increased by 11% overall under remote conditions",
+          "B": "Wellbeing scores declined significantly by month 14",
+          "C": "Junior employees showed no output improvement and higher role ambiguity",
+          "D": "Collaborative output declined by 17% in quality ratings"
+        },
+        "ans": "C",
+        "explanation": "An HR manager focused on junior development would be most alarmed by the finding that less experienced employees derived no productivity benefit and reported greater confusion about their responsibilities — suggesting remote work may impede early-career integration and professional growth. The other findings are concerning but apply more broadly or primarily to other groups."
+      },
+      {
+        "question": "The commentator's overall stance toward the Nakamura-Adeyemi study can best be described as:",
+        "options": {
+          "A": "Dismissive — the study's flaws are too significant to be of practical use",
+          "B": "Uncritically positive — the findings are validated without reservation",
+          "C": "Constructively critical — acknowledging rigour while identifying limitations that affect applicability",
+          "D": "Polemical — the commentator argues the study's conclusions are politically motivated"
+        },
+        "ans": "C",
+        "explanation": "The opening sentence of Document 2 explicitly praises the study as 'methodologically rigorous' before introducing qualified criticism. The commentator does not dismiss the study (A) or endorse it without reservation (B). The tone is measured and academic — characteristic of peer review — not polemical (D)."
+      },
+      {
+        "question": "What does the commentator imply by warning against applying findings 'wholesale' to other sectors?",
+        "options": {
+          "A": "The study is only valid for the finance sector",
+          "B": "Remote work is unlikely to be beneficial outside knowledge-intensive industries",
+          "C": "The study's conclusions should be applied selectively, based on role type and workflow structure",
+          "D": "The authors should have included manufacturing and retail firms in their sample"
+        },
+        "ans": "C",
+        "explanation": "'Wholesale' application means uncritical, blanket adoption of the findings. The commentator argues that because the sample consists of high-autonomy roles, the 11% productivity gain may not transfer to more process-dependent environments. This is a call for contextual judgment, not a rejection of the study's validity (A, B) or a methodological prescription (D)."
+      }
+    ]
   }
 ]
