@@ -14,7 +14,12 @@
       {
         "blank": 1,
         "sentence": "Greenfield Technologies will be [1] its main offices to the Harborview Business Center on April 3.",
-        "choices": ["relocating", "relocated", "relocation", "relocate"],
+        "choices": [
+          "relocating",
+          "relocated",
+          "relocation",
+          "relocate"
+        ],
         "answer": 0,
         "cat": "verb_form",
         "explanation": "Après 'will be', il faut un verbe en '-ing' pour former le futur progressif (will be + V-ing). 'relocating' est correct. 'relocated' serait le passif, 'relocation' est un nom, 'relocate' est l'infinitif."
@@ -22,7 +27,12 @@
       {
         "blank": 2,
         "sentence": "The new location offers significantly more space and modern facilities that will [2] our growing team.",
-        "choices": ["accommodate", "accommodate for", "accommodate to", "be accommodated"],
+        "choices": [
+          "accommodate",
+          "accommodate for",
+          "accommodate to",
+          "be accommodated"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Accommodate' (héberger, accueillir) est transitif direct — on ne met pas de préposition après. 'accommodate our team' = convenir à notre équipe. 'be accommodated' serait passif et changerait le sens."
@@ -30,7 +40,12 @@
       {
         "blank": 3,
         "sentence": "Boxes and packing materials will be [3] in the break room starting March 25.",
-        "choices": ["available", "availability", "availably", "avail"],
+        "choices": [
+          "available",
+          "availability",
+          "availably",
+          "avail"
+        ],
         "answer": 0,
         "cat": "word_form",
         "explanation": "Après 'be', il faut un adjectif attribut. 'available' (disponible) est l'adjectif. 'availability' est un nom, 'availably' n'est pas un mot standard, 'avail' est un verbe/nom avec un sens différent."
@@ -38,7 +53,12 @@
       {
         "blank": 4,
         "sentence": "Please [4] your teams of this schedule as soon as possible.",
-        "choices": ["inform", "notify", "advise", "tell"],
+        "choices": [
+          "inform",
+          "notify",
+          "advise",
+          "tell"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Inform someone of something' est la collocation correcte ici. 'Notify someone of' fonctionne aussi grammaticalement, mais 'inform' est plus naturel dans un mémo formel. 'Advise' et 'tell' ne se construisent pas avec 'of' dans ce sens."
@@ -61,7 +81,12 @@
       {
         "blank": 1,
         "sentence": "Thank you for [1] in the position of Senior Marketing Analyst at Apex Consulting.",
-        "choices": ["your interest", "interesting", "interested", "your interesting"],
+        "choices": [
+          "your interest",
+          "interesting",
+          "interested",
+          "your interesting"
+        ],
         "answer": 0,
         "cat": "word_form",
         "explanation": "Après la préposition 'for', on attend un groupe nominal. 'your interest in' (votre intérêt pour) est la construction idiomatique correcte. 'interesting' est un adjectif, 'interested' est aussi adjectif et ne peut pas suivre 'for' directement ici."
@@ -69,7 +94,12 @@
       {
         "blank": 2,
         "sentence": "We would like to invite you to a second interview [2] will take place at our downtown office on Friday.",
-        "choices": ["that", "which", "who", "where"],
+        "choices": [
+          "that",
+          "which",
+          "who",
+          "where"
+        ],
         "answer": 0,
         "cat": "pronoun",
         "explanation": "'that' et 'which' sont tous deux possibles pour les antécédents non-animés ('interview'). Cependant dans une proposition relative restrictive en anglais formel américain, 'that' est légèrement préféré. 'who' est pour les personnes, 'where' est pour les lieux."
@@ -77,7 +107,12 @@
       {
         "blank": 3,
         "sentence": "During this meeting, you will have the [3] to meet with members of our leadership team.",
-        "choices": ["opportunity", "occasion", "possibility", "chance"],
+        "choices": [
+          "opportunity",
+          "occasion",
+          "possibility",
+          "chance"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Have the opportunity to do something' est la collocation la plus formelle et naturelle dans une lettre professionnelle. 'Occasion' implique une cérémonie particulière. 'Possibility' et 'chance' existent mais sont moins idiomatiques dans ce contexte business formel."
@@ -85,7 +120,12 @@
       {
         "blank": 4,
         "sentence": "Please confirm your [4] by replying to this email no later than March 19.",
-        "choices": ["attendance", "attends", "attend", "attending"],
+        "choices": [
+          "attendance",
+          "attends",
+          "attend",
+          "attending"
+        ],
         "answer": 0,
         "cat": "word_form",
         "explanation": "Après le possessif 'your', il faut un nom. 'attendance' (présence, participation) est le nom correct. 'attends' et 'attend' sont des verbes, 'attending' est un gérondif mais 'your attending' est moins naturel que 'your attendance' dans ce contexte formel."
@@ -107,7 +147,12 @@
       {
         "blank": 1,
         "sentence": "The pool and fitness center are [1] for maintenance from Monday, June 10 through Wednesday, June 12.",
-        "choices": ["closed", "closing", "close", "closure"],
+        "choices": [
+          "closed",
+          "closing",
+          "close",
+          "closure"
+        ],
         "answer": 0,
         "cat": "verb_form",
         "explanation": "Avec le verbe 'are', il faut un adjectif attribut ou un participe passé. 'closed' fonctionne comme adjectif (= fermé). 'closing' impliquerait une action en cours ('are closing' = en train de fermer), 'close' est un verbe/adjectif court, 'closure' est un nom."
@@ -115,7 +160,12 @@
       {
         "blank": 2,
         "sentence": "We apologize for any [2] this may cause.",
-        "choices": ["inconvenience", "inconvenient", "inconveniently", "inconveniences"],
+        "choices": [
+          "inconvenience",
+          "inconvenient",
+          "inconveniently",
+          "inconveniences"
+        ],
         "answer": 0,
         "cat": "word_form",
         "explanation": "'Inconvenience' (désagrément) est un nom indénombrable dans ce contexte — on dit 'any inconvenience' sans article ni pluriel. C'est une formule standard dans les excuses professionnelles : 'We apologize for any inconvenience'. 'Inconvenient' est un adjectif."
@@ -123,7 +173,12 @@
       {
         "blank": 3,
         "sentence": "Guests who wish to use fitness facilities are [3] to use the Maple Street Gym.",
-        "choices": ["encouraged", "suggested", "recommended", "advised"],
+        "choices": [
+          "encouraged",
+          "suggested",
+          "recommended",
+          "advised"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Be encouraged to do' = être encouragé à faire. C'est la construction la plus naturelle ici. 'Suggested' et 'recommended' ne se construisent pas avec 'be + past participle + to infinitif' dans ce sens. 'Be advised to' fonctionne aussi, mais 'encouraged' est plus accueillant dans un avis hôtelier."
@@ -131,7 +186,12 @@
       {
         "blank": 4,
         "sentence": "The hotel will provide [4] transportation to and from the gym every hour.",
-        "choices": ["complimentary", "free of charge", "no-cost", "gratis"],
+        "choices": [
+          "complimentary",
+          "free of charge",
+          "no-cost",
+          "gratis"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Complimentary' est l'adjectif formel utilisé dans l'industrie hôtelière pour dire 'offert gratuitement'. Il se place directement devant le nom : 'complimentary transportation'. 'Free of charge' et 'gratis' ne modifient pas un nom directement, 'no-cost' est du jargon informel."
@@ -154,7 +214,12 @@
       {
         "blank": 1,
         "sentence": "I am writing [1] the delivery of our most recent order, which was expected to arrive on April 5.",
-        "choices": ["regarding", "about", "concerning", "for"],
+        "choices": [
+          "regarding",
+          "about",
+          "concerning",
+          "for"
+        ],
         "answer": 0,
         "cat": "preposition",
         "explanation": "'Regarding' est la préposition formelle standard dans les e-mails professionnels pour introduire le sujet : 'I am writing regarding...'. 'About' est correct mais moins formel. 'Concerning' fonctionne aussi mais est légèrement plus lourd. 'For' ne convient pas dans ce contexte."
@@ -162,7 +227,12 @@
       {
         "blank": 2,
         "sentence": "The order was [2] to arrive on April 5 but has not yet been received.",
-        "choices": ["scheduled", "planned", "expected", "supposed"],
+        "choices": [
+          "scheduled",
+          "planned",
+          "expected",
+          "supposed"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Scheduled to arrive' (prévu pour arriver, selon un planning) est la collocation la plus précise dans un contexte logistique et de livraison. 'Expected' fonctionne aussi, mais 'scheduled' suggère une date ferme sur un calendrier. 'Supposed to' est plus informel. 'Planned' est moins courant avec 'arrive'."
@@ -170,7 +240,12 @@
       {
         "blank": 3,
         "sentence": "This delay is causing [3] disruptions to our production schedule.",
-        "choices": ["significant", "significance", "significantly", "signify"],
+        "choices": [
+          "significant",
+          "significance",
+          "significantly",
+          "signify"
+        ],
         "answer": 0,
         "cat": "word_form",
         "explanation": "Avant un nom ('disruptions'), il faut un adjectif. 'Significant' (significatif, important) est l'adjectif correct. 'Significance' est un nom, 'significantly' est un adverbe, 'signify' est un verbe."
@@ -178,10 +253,387 @@
       {
         "blank": 4,
         "sentence": "Could you please let us know the [4] delivery date as soon as possible?",
-        "choices": ["revised", "reviewed", "reformed", "renewed"],
+        "choices": [
+          "revised",
+          "reviewed",
+          "reformed",
+          "renewed"
+        ],
         "answer": 0,
         "cat": "vocabulary",
         "explanation": "'Revised delivery date' (nouvelle date de livraison révisée) est l'expression standard en logistique et supply chain quand une date initiale doit être modifiée. 'Reviewed' implique une analyse, 'reformed' implique un changement structurel, 'renewed' implique un renouvellement plutôt qu'une correction."
+      }
+    ]
+  },
+  {
+    "id": "p6_t5",
+    "type": "report",
+    "title": "Executive Report — Meridian Capital Partners",
+    "level": "B2",
+    "context": "Read the following executive report excerpt and choose the best answer for each blank.",
+    "paragraphs": [
+      "TO: Board of Directors\nFROM: Elena Vasquez, Chief Strategy Officer\nRE: Q3 Market Expansion Review\nDATE: October 18",
+      "This report [1] the key outcomes of our Southeast Asian market entry initiative, launched in Q1 of this fiscal year. Overall performance has been [2] expectations, with revenue in the region reaching $3.2 million — 14% above target.",
+      "Despite these encouraging results, several operational challenges [3] attention. Supply chain lead times have exceeded projections by an average of eleven days, and local regulatory compliance requirements have [4] more complex than initially assessed.",
+      "The Strategy team recommends that the Board [5] an additional $800,000 toward logistics infrastructure before the end of Q4, contingent on approval from the Risk Committee. A full operational review will be [6] by the end of November."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "This report [1] the key outcomes of our Southeast Asian market entry initiative.",
+        "choices": [
+          "summarises",
+          "is summarising",
+          "has been summarised",
+          "summarised"
+        ],
+        "answer": 0,
+        "cat": "verb_form",
+        "explanation": "In formal reports, the present simple is used to describe what the document itself does ('This report summarises / outlines / examines'). The present continuous (B) implies an ongoing action, not appropriate for a static document. The passive (C) would require a different subject, and the past simple (D) is incorrect as the report is a current document."
+      },
+      {
+        "blank": 2,
+        "sentence": "Overall performance has been [2] expectations, with revenue reaching $3.2 million.",
+        "choices": [
+          "exceeding",
+          "exceeded",
+          "in excess to",
+          "above to"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Exceeding expectations' (surpassing what was anticipated) is the standard collocation. 'Has been exceeding' uses the present perfect continuous, correctly implying ongoing performance. 'Exceeded' (B) would need 'has exceeded' without 'been'. 'In excess to' and 'above to' are not standard prepositional phrases in English."
+      },
+      {
+        "blank": 3,
+        "sentence": "Several operational challenges [3] attention.",
+        "choices": [
+          "warrant",
+          "warrants",
+          "are warranting",
+          "have warranted to"
+        ],
+        "answer": 0,
+        "cat": "verb_form",
+        "explanation": "'Warrant' (to merit or justify) is a stative verb and takes the present simple. The subject is plural ('challenges'), so 'warrant' agrees correctly. 'Warrants' (B) is singular. 'Are warranting' (C) is non-standard for stative verbs. 'Have warranted to' (D) is grammatically incorrect — 'warrant' does not take 'to + infinitive'."
+      },
+      {
+        "blank": 4,
+        "sentence": "Local regulatory compliance requirements have [4] more complex than initially assessed.",
+        "choices": [
+          "proven",
+          "proved to be",
+          "been proved",
+          "turned"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Have proven more complex' is correct and idiomatic — 'prove' used intransitively means 'turn out to be'. 'Proved to be' (B) is also grammatically acceptable but slightly less concise in formal writing. 'Been proved' (C) is passive and changes meaning. 'Turned' (D) requires 'turned out to be' — without 'out' it is incomplete."
+      },
+      {
+        "blank": 5,
+        "sentence": "The Strategy team recommends that the Board [5] an additional $800,000 toward logistics infrastructure.",
+        "choices": [
+          "allocate",
+          "allocates",
+          "should allocate",
+          "allocated"
+        ],
+        "answer": 0,
+        "cat": "grammar",
+        "explanation": "After 'recommend that', English requires the subjunctive mood — the base form of the verb regardless of subject. 'The Board allocate' (not 'allocates') is the formal subjunctive. 'Should allocate' (C) is acceptable in informal usage but the subjunctive (A) is preferred in formal written English. 'Allocated' (D) is past tense and incorrect here."
+      },
+      {
+        "blank": 6,
+        "sentence": "A full operational review will be [6] by the end of November.",
+        "choices": [
+          "conducted",
+          "conducting",
+          "conduct",
+          "conductive"
+        ],
+        "answer": 0,
+        "cat": "verb_form",
+        "explanation": "'Will be conducted' is the future passive — correct here because the review is something that will be carried out (by an unspecified subject). 'Conducting' (B) would require 'will be conducting', implying an active subject. 'Conduct' (C) is the base form, incompatible with 'will be'. 'Conductive' (D) is an adjective meaning electrically conductive — entirely unrelated."
+      }
+    ]
+  },
+  {
+    "id": "p6_t6",
+    "type": "article",
+    "title": "Industry Article — The Future of Hybrid Work",
+    "level": "B2/C1",
+    "context": "Read the following article excerpt and choose the best answer for each blank.",
+    "paragraphs": [
+      "THE EVOLVING WORKPLACE: RETHINKING PRODUCTIVITY IN A HYBRID ERA",
+      "The widespread [1] of hybrid work models has forced organisations to fundamentally reconsider how productivity is measured. For decades, physical presence was treated as a [2] for engagement — an assumption that the pandemic years decisively challenged.",
+      "Research now suggests that output-based metrics, [3] task completion rates and project delivery timelines, are far more [4] indicators of employee performance than attendance records alone. However, implementing such frameworks is not without difficulty: defining measurable outputs for knowledge-intensive roles remains a persistent challenge, and managers [5] to rely on visibility as a proxy for effort.",
+      "Leading organisations are responding by investing in performance management systems that [6] qualitative peer feedback with quantifiable deliverables. This hybrid approach to measurement mirrors, perhaps fittingly, the very model of work it seeks to evaluate."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "The widespread [1] of hybrid work models has forced organisations to fundamentally reconsider how productivity is measured.",
+        "choices": [
+          "adoption",
+          "adaption",
+          "adaptation",
+          "adeption"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Adoption' means the act of taking up or accepting something new — here, organisations adopting hybrid models. 'Adaptation' (C) means adjusting or modifying something already in use — a subtle but important distinction. 'Adaption' is a less common variant of 'adaptation', not used in formal writing. 'Adeption' does not exist."
+      },
+      {
+        "blank": 2,
+        "sentence": "Physical presence was treated as a [2] for engagement.",
+        "choices": [
+          "proxy",
+          "pretext",
+          "precedent",
+          "premise"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "A 'proxy' is a substitute measure used to represent something that cannot be directly observed — here, presence stood in for engagement. A 'pretext' (B) implies a false justification. A 'precedent' (C) is a prior example that guides future decisions. A 'premise' (D) is a foundational assumption in an argument — plausible but less precise than 'proxy' in this analytical context."
+      },
+      {
+        "blank": 3,
+        "sentence": "Output-based metrics, [3] task completion rates and project delivery timelines, are far more reliable indicators.",
+        "choices": [
+          "such as",
+          "so as",
+          "likewise",
+          "in that"
+        ],
+        "answer": 0,
+        "cat": "grammar",
+        "explanation": "'Such as' introduces examples within a parenthetical phrase — the standard construction here. 'So as' (B) introduces purpose ('so as to do something') and does not introduce examples. 'Likewise' (C) is a transition adverb meaning 'similarly', not used to introduce examples. 'In that' (D) introduces a clause explaining a reason or way, not a list of examples."
+      },
+      {
+        "blank": 4,
+        "sentence": "Output-based metrics are far more [4] indicators of employee performance than attendance records.",
+        "choices": [
+          "reliable",
+          "reliant",
+          "relying",
+          "relied"
+        ],
+        "answer": 0,
+        "cat": "word_form",
+        "explanation": "'Reliable' (trustworthy, dependable) is the adjective needed to modify 'indicators'. 'Reliant' (B) means dependent on something else ('reliant on') and cannot modify 'indicators' in this way. 'Relying' (C) is a present participle/gerund. 'Relied' (D) is a past participle — grammatically possible in some constructions but not here."
+      },
+      {
+        "blank": 5,
+        "sentence": "Managers [5] to rely on visibility as a proxy for effort.",
+        "choices": [
+          "tend",
+          "are tending",
+          "have a tendency of",
+          "tend to be"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Tend to do something' is the correct collocation expressing habitual or general behaviour. 'Are tending' (B) is non-standard for this stative/habitual meaning. 'Have a tendency of' (C) is incorrect — the correct form is 'have a tendency to do'. 'Tend to be' (D) would need an adjective after 'be', not the verb 'rely'."
+      },
+      {
+        "blank": 6,
+        "sentence": "Leading organisations are investing in systems that [6] qualitative peer feedback with quantifiable deliverables.",
+        "choices": [
+          "integrate",
+          "incorporate",
+          "reconcile",
+          "amalgamate"
+        ],
+        "answer": 2,
+        "cat": "vocabulary",
+        "explanation": "'Reconcile' means to bring two apparently contradictory things into harmony — here, qualitative feedback and quantitative data are different in nature, and the system reconciles them. 'Integrate' (A) and 'incorporate' (B) imply combining elements but without the nuance of resolving tension between contrasting types. 'Amalgamate' (D) implies a full merger, typically used for organisations, not methodological frameworks."
+      }
+    ]
+  },
+  {
+    "id": "p6_t7",
+    "type": "legal_notice",
+    "title": "Legal Notice — Software Licence Amendment",
+    "level": "C1",
+    "context": "Read the following legal notice and choose the best answer for each blank.",
+    "paragraphs": [
+      "NOTICE OF AMENDMENT TO END-USER LICENCE AGREEMENT\nEffective Date: 1 September\nIssued by: Syntara Software Inc.",
+      "This notice [1] that the End-User Licence Agreement (EULA) governing your use of Syntara products will be amended with effect from the date stated above. By continuing to use any Syntara product after this date, you [2] to be bound by the revised terms.",
+      "The principal amendments concern data retention policies and cross-border data transfer provisions. Under the revised agreement, Syntara [3] the right to retain anonymised usage data for a period not [4] thirty-six months, solely for the purposes of product improvement and security monitoring.",
+      "Users who do not wish to be subject to the revised terms may terminate their licence in [5] with the cancellation procedure outlined in Section 12 of the EULA. Failure to do so will [6] as acceptance of the amended agreement in its entirety."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "This notice [1] that the End-User Licence Agreement will be amended.",
+        "choices": [
+          "serves to advise",
+          "serves advising",
+          "is serving to advise",
+          "has served advising"
+        ],
+        "answer": 0,
+        "cat": "grammar",
+        "explanation": "'Serves to advise' means 'functions as notification that' — a formal legal construction using 'serve to + infinitive'. 'Serves advising' (B) is grammatically incorrect — 'serve' in this sense takes 'to + infinitive', not a gerund. 'Is serving to advise' (C) is non-standard for a formal, static document. 'Has served advising' (D) is both grammatically and semantically incorrect."
+      },
+      {
+        "blank": 2,
+        "sentence": "By continuing to use any Syntara product after this date, you [2] to be bound by the revised terms.",
+        "choices": [
+          "are deemed",
+          "are considered to be",
+          "will be regarding",
+          "are taken"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Are deemed to be bound' is the standard legal formulation — 'deem' means to officially regard or classify someone as something. 'Are considered to be' (B) is close in meaning but less precise in legal register; 'deemed' carries stronger legal force. 'Will be regarding' (C) is grammatically incorrect. 'Are taken' (D) is incomplete — 'taken to be' is possible but uncommon in this legal context."
+      },
+      {
+        "blank": 3,
+        "sentence": "Syntara [3] the right to retain anonymised usage data for a period not exceeding thirty-six months.",
+        "choices": [
+          "reserves",
+          "retains",
+          "maintains",
+          "preserves"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Reserves the right to do something' is the fixed legal collocation meaning the company explicitly keeps this entitlement. 'Retains' (B) collocates with 'retains data' but not 'retains the right' in standard legal English — 'retains the right' is possible but less conventional than 'reserves'. 'Maintains' (C) and 'preserves' (D) do not collocate idiomatically with 'right' in legal contexts."
+      },
+      {
+        "blank": 4,
+        "sentence": "Syntara reserves the right to retain anonymised usage data for a period not [4] thirty-six months.",
+        "choices": [
+          "exceeding",
+          "in excess of",
+          "over",
+          "beyond"
+        ],
+        "answer": 0,
+        "cat": "grammar",
+        "explanation": "'Not exceeding' is the precise legal construction meaning 'up to but not more than'. It directly modifies 'period' as a participial phrase: 'a period not exceeding X months'. 'In excess of' (B) is a prepositional phrase and would need restructuring: 'not in excess of' is valid but less compact. 'Over' (C) and 'beyond' (D) are informal and not standard in this legal context."
+      },
+      {
+        "blank": 5,
+        "sentence": "Users who do not wish to be subject to the revised terms may terminate their licence in [5] with the cancellation procedure outlined in Section 12.",
+        "choices": [
+          "accordance",
+          "compliance",
+          "conformity",
+          "line"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'In accordance with' (conformément à) is the dominant legal and contractual phrase for following a procedure or rule. 'In compliance with' (B) is also correct and common, but typically refers to regulations and standards rather than internal procedures. 'In conformity with' (C) exists but is rare in modern legal English. 'In line with' (D) is informal and not appropriate in a legal notice."
+      },
+      {
+        "blank": 6,
+        "sentence": "Failure to do so will [6] as acceptance of the amended agreement in its entirety.",
+        "choices": [
+          "constitute",
+          "be constituted",
+          "construe",
+          "be construed"
+        ],
+        "answer": 3,
+        "cat": "vocabulary",
+        "explanation": "'Be construed as' means 'be interpreted or understood as' — the standard legal phrase when a behaviour is taken to signify agreement or acceptance. 'Constitute' (A) means 'to form or make up' — 'will constitute acceptance' is also valid legally, but 'be construed as' is more precise when implying an interpretation of intent. 'Be constituted' (B) is passive of a different meaning. 'Construe' (C) in active voice would need a different subject ('a court may construe this as...')."
+      }
+    ]
+  },
+  {
+    "id": "p6_t8",
+    "type": "memo",
+    "title": "Internal Memo — Restructuring Communication",
+    "level": "C1",
+    "context": "Read the following internal memo and choose the best answer for each blank.",
+    "paragraphs": [
+      "TO: All Staff\nFROM: Office of the CEO\nDATE: 7 April\nSUBJECT: Organisational Restructuring — Important Update",
+      "Following an extensive strategic review, the Board of Directors has [1] a restructuring of the company's operational divisions, effective 1 June. This decision, while not taken [2], reflects the need to align our structure with the demands of a rapidly evolving market.",
+      "Under the new framework, the Customer Solutions and Technical Services divisions will be [3] into a single unified department, provisionally [4] the 'Integrated Client Services' division. This consolidation is [5] to generate operational efficiencies and improve cross-functional collaboration.",
+      "Further details regarding reporting lines, role impacts, and transition timelines will be communicated on a department-by-department [6] over the coming weeks. Employees with immediate concerns are encouraged to speak with their line managers or contact HR directly."
+    ],
+    "questions": [
+      {
+        "blank": 1,
+        "sentence": "The Board of Directors has [1] a restructuring of the company's operational divisions.",
+        "choices": [
+          "sanctioned",
+          "greenlit",
+          "passed",
+          "enacted"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Sanctioned' means formally approved or authorised — the appropriate register for a board-level decision in a formal memo. 'Greenlit' (B) is informal jargon, inappropriate in a formal communication. 'Passed' (C) typically applies to legislation or motions in a voting body, not company decisions. 'Enacted' (D) also relates to legislation, not corporate governance decisions."
+      },
+      {
+        "blank": 2,
+        "sentence": "This decision, while not taken [2], reflects the need to align our structure with the demands of a rapidly evolving market.",
+        "choices": [
+          "lightly",
+          "easily",
+          "simply",
+          "plainly"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Not taken lightly' is a fixed idiomatic expression meaning 'considered very carefully' — widely used in formal communications to acknowledge the gravity of a difficult decision. None of the other options form a standard idiom in this context: 'not taken easily' is understandable but not idiomatic, 'simply' and 'plainly' change the meaning entirely."
+      },
+      {
+        "blank": 3,
+        "sentence": "The Customer Solutions and Technical Services divisions will be [3] into a single unified department.",
+        "choices": [
+          "merged",
+          "combined",
+          "consolidated",
+          "integrated"
+        ],
+        "answer": 2,
+        "cat": "vocabulary",
+        "explanation": "All four options are plausible, but 'consolidated' is the most precise in a corporate restructuring context — it specifically refers to combining separate units into a stronger, more efficient whole, often implying elimination of redundancy. 'Merged' (A) implies two equal entities joining. 'Combined' (B) is generic. 'Integrated' (D) often implies linking systems or processes, and is used later in the memo as the division's name, making repetition awkward."
+      },
+      {
+        "blank": 4,
+        "sentence": "The unified department, provisionally [4] the 'Integrated Client Services' division.",
+        "choices": [
+          "designated",
+          "labelled",
+          "dubbed",
+          "entitled"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'Designated' means officially assigned a name or role — the formal term in corporate and administrative language. 'Labelled' (B) is correct but carries a slightly informal or categorising connotation. 'Dubbed' (C) is informal and often implies a nickname rather than an official name. 'Entitled' (D) typically refers to people's rights or to naming a book/document, not to naming a department."
+      },
+      {
+        "blank": 5,
+        "sentence": "This consolidation is [5] to generate operational efficiencies and improve cross-functional collaboration.",
+        "choices": [
+          "anticipated",
+          "expected",
+          "projected",
+          "designed"
+        ],
+        "answer": 3,
+        "cat": "vocabulary",
+        "explanation": "'Designed to' means intentionally structured or planned to achieve a specific outcome — it implies deliberate intent behind the restructuring. 'Anticipated' (A) and 'expected' (B) suggest prediction rather than design. 'Projected' (C) implies a forecast based on data. Since this is a planned corporate decision — not a forecast — 'designed to' most accurately reflects the purposeful nature of the action."
+      },
+      {
+        "blank": 6,
+        "sentence": "Further details will be communicated on a department-by-department [6] over the coming weeks.",
+        "choices": [
+          "basis",
+          "level",
+          "scale",
+          "manner"
+        ],
+        "answer": 0,
+        "cat": "vocabulary",
+        "explanation": "'On a [adjective]-by-[adjective] basis' is a fixed English collocation: 'on a case-by-case basis', 'on a department-by-department basis'. 'Basis' is the only correct noun in this construction. 'Level' (B) would require 'at a department level'. 'Scale' (C) does not fit this construction. 'Manner' (D) is semantically close but is not part of this fixed phrase."
       }
     ]
   }
