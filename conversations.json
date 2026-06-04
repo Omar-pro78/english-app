@@ -1,0 +1,150 @@
+[
+  {
+    "id": "greet1",
+    "category": "Salutations",
+    "situation": "Première rencontre",
+    "dialog": [
+      { "speaker": "A", "text": "Hi, how are you?", "audio": "" },
+      { "speaker": "B", "text": "I'm fine, thank you. And you?", "audio": "" },
+      { "speaker": "A", "text": "Nice to meet you.", "audio": "" },
+      { "speaker": "B", "text": "Nice to meet you too.", "audio": "" }
+    ],
+    "variants": ["I'm good, thanks!", "Not bad, and you?", "Pretty good!"],
+    "translation": {
+      "Hi, how are you?": "Bonjour, comment vas-tu ?",
+      "I'm fine, thank you. And you?": "Je vais bien, merci. Et toi ?",
+      "Nice to meet you.": "Ravi de te rencontrer.",
+      "Nice to meet you too.": "Moi aussi."
+    },
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "What does \"Nice to meet you\" mean?",
+        "options": ["Au revoir", "Ravi de te rencontrer", "Comment vas-tu ?", "Bonne journée"],
+        "ans": 1
+      },
+      {
+        "type": "guided",
+        "prompt": "How are you?",
+        "options": ["I'm fine, thank you.", "Nice to meet you.", "Goodbye!", "See you later."],
+        "ans": 0
+      },
+      {
+        "type": "scramble",
+        "sentence": "I'm fine, thank you.",
+        "words": ["fine", "I'm", "thank", "you."]
+      }
+    ]
+  },
+  {
+    "id": "work1",
+    "category": "Travail",
+    "situation": "Arriver au bureau",
+    "dialog": [
+      { "speaker": "A", "text": "Good morning! Ready for the meeting?", "audio": "" },
+      { "speaker": "B", "text": "Almost! Just finishing my coffee.", "audio": "" },
+      { "speaker": "A", "text": "No rush, it starts in ten minutes.", "audio": "" },
+      { "speaker": "B", "text": "Perfect, I'll be right there.", "audio": "" }
+    ],
+    "variants": ["I'll be there in a sec.", "Just give me a moment.", "On my way!"],
+    "translation": {
+      "Good morning! Ready for the meeting?": "Bonjour ! Prêt pour la réunion ?",
+      "Almost! Just finishing my coffee.": "Presque ! Je finis juste mon café.",
+      "No rush, it starts in ten minutes.": "Pas de presse, ça commence dans dix minutes.",
+      "Perfect, I'll be right there.": "Parfait, j'arrive tout de suite."
+    },
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "What does \"No rush\" mean?",
+        "options": ["Dépêche-toi", "Pas de presse", "En retard", "Bonne idée"],
+        "ans": 1
+      },
+      {
+        "type": "guided",
+        "prompt": "Ready for the meeting?",
+        "options": ["Almost! Just finishing my coffee.", "Good morning!", "See you later.", "Nice to meet you."],
+        "ans": 0
+      },
+      {
+        "type": "scramble",
+        "sentence": "I'll be right there.",
+        "words": ["be", "I'll", "right", "there."]
+      }
+    ]
+  },
+  {
+    "id": "resto1",
+    "category": "Restaurant",
+    "situation": "Commander au restaurant",
+    "dialog": [
+      { "speaker": "A", "text": "Are you ready to order?", "audio": "" },
+      { "speaker": "B", "text": "Yes, I'll have the pasta please.", "audio": "" },
+      { "speaker": "A", "text": "And to drink?", "audio": "" },
+      { "speaker": "B", "text": "Just water, thank you.", "audio": "" }
+    ],
+    "variants": ["I'd like the pasta.", "Can I get the pasta?", "The pasta for me, please."],
+    "translation": {
+      "Are you ready to order?": "Vous êtes prêt à commander ?",
+      "Yes, I'll have the pasta please.": "Oui, je prendrai les pâtes s'il vous plaît.",
+      "And to drink?": "Et à boire ?",
+      "Just water, thank you.": "Juste de l'eau, merci."
+    },
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "What does \"Are you ready to order?\" mean?",
+        "options": ["Avez-vous une table ?", "Vous êtes prêt à commander ?", "C'est bon ?", "Bon appétit"],
+        "ans": 1
+      },
+      {
+        "type": "guided",
+        "prompt": "And to drink?",
+        "options": ["Just water, thank you.", "I'll have the pasta.", "Are you ready?", "Nice to meet you."],
+        "ans": 0
+      },
+      {
+        "type": "scramble",
+        "sentence": "I'll have the pasta please.",
+        "words": ["have", "I'll", "the", "pasta", "please."]
+      }
+    ]
+  },
+  {
+    "id": "travel1",
+    "category": "Voyage",
+    "situation": "À l'aéroport",
+    "dialog": [
+      { "speaker": "A", "text": "Can I see your passport please?", "audio": "" },
+      { "speaker": "B", "text": "Of course, here you go.", "audio": "" },
+      { "speaker": "A", "text": "How long are you staying?", "audio": "" },
+      { "speaker": "B", "text": "Just a week, for business.", "audio": "" }
+    ],
+    "variants": ["Here it is.", "Sure, no problem.", "Of course."],
+    "translation": {
+      "Can I see your passport please?": "Puis-je voir votre passeport s'il vous plaît ?",
+      "Of course, here you go.": "Bien sûr, voilà.",
+      "How long are you staying?": "Combien de temps restez-vous ?",
+      "Just a week, for business.": "Juste une semaine, pour affaires."
+    },
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "What does \"How long are you staying?\" mean?",
+        "options": ["Où allez-vous ?", "Combien de temps restez-vous ?", "Avez-vous des bagages ?", "Bon voyage !"],
+        "ans": 1
+      },
+      {
+        "type": "guided",
+        "prompt": "How long are you staying?",
+        "options": ["Just a week, for business.", "Of course, here you go.", "Can I see your passport?", "Nice to meet you."],
+        "ans": 0
+      },
+      {
+        "type": "scramble",
+        "sentence": "Just a week, for business.",
+        "words": ["a", "Just", "week,", "for", "business."]
+      }
+    ]
+  }
+]

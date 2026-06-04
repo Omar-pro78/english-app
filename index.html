@@ -1647,6 +1647,7 @@ function _applyData(p) {
   S.toeicPart5     = p.toeicPart5     || { cursor: 0, answers: {}, showResults: false, mode: 'exam' };
   S.toeicPart6     = p.toeicPart6     || { textIdx: 0, qIdx: 0, answers: {}, showResults: false };
   S.toeicPart7     = p.toeicPart7     || { passageIdx: 0, qIdx: 0, answers: {}, showResults: false };
+  S.convState      = p.convState      || {};
   S.sessProgress   = p.sessProgress   || {};
   S.daily          = p.daily          || { date:'', actions:0, goal:10, lotsCompleted:0, reviewedToday:0 };
   S.lastSession    = p.lastSession    || null;
@@ -1689,6 +1690,7 @@ function _buildPayload() {
     mcqAnswersTake:S.mcqAnswersTake, listeningTest:S.listeningTest, listeningTest2:S.listeningTest2, listeningTest3:S.listeningTest3, listeningTest4:S.listeningTest4, listeningTest5:S.listeningTest5, directionsTest:S.directionsTest,
     directionsTest2:S.directionsTest2, directionsTest3:S.directionsTest3, directionsTest4:S.directionsTest4,
     toeicPart5:S.toeicPart5, toeicPart6:S.toeicPart6, toeicPart7:S.toeicPart7,
+    convState: S.convState,
   };
 }
 
@@ -1710,7 +1712,7 @@ async function _saveFirestore() {
 
 async function loadAllData() {
   try {
-    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real, part5, part6, part7] = await Promise.all([
+    const [vocab, prep, phrasal, grammar, speaking, listening, listening2, listening3, listening4, listening5, directions, directions2, directions3, directions4, real, part5, part6, part7, conversations] = await Promise.all([
       fetch('vocab.json').then(r=>r.json()),
       fetch('prep.json').then(r=>r.json()),
       fetch('phrasal.json').then(r=>r.json()),
@@ -1729,6 +1731,7 @@ async function loadAllData() {
       fetch('toeic_part5.json').then(r=>r.json()),
       fetch('toeic_part6.json').then(r=>r.json()),
       fetch('toeic_part7.json').then(r=>r.json()),
+      fetch('conversations.json').then(r=>r.json()),
     ]);
     DATA = vocab;
     // Add _sec/_idx metadata to phrasal/take (needed by session system)
@@ -1772,6 +1775,8 @@ async function loadAllData() {
     TOEIC_PART6 = part6;
     // TOEIC Part 7
     TOEIC_PART7 = part7;
+    // Daily Conversations
+    CONVERSATIONS = conversations;
     // Inject _sec/_idx into vocab/expr for session system
     DATA.vocab = DATA.vocab.map((item,i)=>({...item,_sec:'vocab',_idx:i}));
     DATA.expr = DATA.expr.map((item,i)=>({...item,_sec:'expr',_idx:i}));
@@ -3334,7 +3339,9 @@ const TAB_PARENT = {
   phrasal: 'phrasalhub', take: 'phrasalhub',
   grammar: 'grammarhub', grammar2: 'grammarhub', grammar3: 'grammarhub',
   grammar4: 'grammarhub', grammar5: 'grammarhub', grammar6: 'grammarhub',
-  real: 'home',
+  real: 'everydayhub',
+  everydayhub: 'home',
+  conversations: 'everydayhub',
   toeic_part5: 'readinghub',
   toeic_part6: 'readinghub',
   toeic_part7: 'readinghub',
@@ -3355,10 +3362,11 @@ const TAB_PARENT = {
   directions3:  'part2hub',
   directions4:  'part2hub',
 };
-const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review','listeninghub','readinghub','part1hub','part2hub']);
+const HUB_TABS = new Set(['foundations','phrasalhub','grammarhub','speak','review','listeninghub','readinghub','part1hub','part2hub','everydayhub']);
 
 const HUB_LABELS = {
-  foundations:  'Foundations',
+  everydayhub:  'Everyday English',
+  conversations: 'Daily Conversations',
   phrasalhub:   'Phrasal Verbs',
   grammarhub:   'Grammar',
   speak:        'Speaking',
@@ -3477,6 +3485,8 @@ function _buildContent(el) {
   else if(S.tab==='directions3')  el.appendChild(buildDirectionsTest3());
   else if(S.tab==='directions4')  el.appendChild(buildDirectionsTest4());
   else if(S.tab==='real')         el.appendChild(buildRealEnglishSection());
+  else if(S.tab==='everydayhub') el.appendChild(buildEverydayHub());
+  else if(S.tab==='conversations') el.appendChild(buildConversationsSection());
   else if(S.tab==='toeic_part5')  el.appendChild(buildToeicPart5Section());
   else if(S.tab==='toeic_part6')  el.appendChild(buildToeicPart6Section());
   else if(S.tab==='toeic_part7')  el.appendChild(buildToeicPart7Section());
@@ -3987,9 +3997,9 @@ function buildHome() {
   }
 
   grid.appendChild(makeCard({
-    tab:'real', icon:'💬', label:'Real English', color: '#0d9488',
-    sub: 'Small talk · Réunions · Slack',
-    countLabel: REAL_ENGLISH.length + ' phrases',
+    tab:'everydayhub', icon:'🌍', label:'Everyday English', color: '#0d9488',
+    sub: 'Real English · Daily Conversations',
+    countLabel: 'Nouveau',
     progDone: REAL_ENGLISH.filter((_,i)=>getS('real',i)==='ok').length,
     progTotal: REAL_ENGLISH.length,
   }));
@@ -5881,7 +5891,6 @@ function setPrepView(v){S.prepView=v;render();}
 // ═══════════════════════════════════════════════════════════
 const REAL_CAT_LABELS = { ST: 'Small talk & social', MT: 'Meetings & calls', SL: 'Slack & async' };
 const REAL_CAT_COLORS = { ST: '#0d9488', MT: '#0891b2', SL: '#7c3aed' };
-const REAL_COLOR = '#0d9488';
 
 // ── Real English state helpers ───────────────────────────
 // S.realQuiz = {
@@ -6020,6 +6029,506 @@ function _realQuizAdvance() {
   save();
   render();
 }
+
+// ═══════════════════════════════════════════════════════════
+// EVERYDAY ENGLISH — DONNÉES
+// ═══════════════════════════════════════════════════════════
+let CONVERSATIONS = [];
+
+const CONV_CAT_COLOR = '#10b981';
+
+// state conversations
+if (!S.convState) S.convState = {};
+// convState[id] = { exIdx: 0, answers: {}, done: false }
+
+function getConvState(id) {
+  if (!S.convState[id]) S.convState[id] = { exIdx: 0, answers: {}, done: false };
+  return S.convState[id];
+}
+
+// ── BUILD EVERYDAY HUB ──────────────────────────────────────
+function buildEverydayHub() {
+  const COLOR = '#10b981';
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-page fade-up';
+
+  const realDone = REAL_ENGLISH.filter((_,i)=>getS('real',i)==='ok').length;
+  const realTotal = REAL_ENGLISH.length;
+  const convDone = CONVERSATIONS.filter(c => getConvState(c.id).done).length;
+  const convTotal = CONVERSATIONS.length;
+
+  wrap.innerHTML = `
+    <div class="hub-tag" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:${COLOR}">🌍 EVERYDAY ENGLISH</div>
+    <div class="hub-title" style="color:${COLOR}">Everyday English</div>
+    <div class="hub-subtitle">Apprends l'anglais du quotidien — situations réelles, dialogues naturels</div>
+    <div class="hub-grid">
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('real')">
+        <div class="hub-card-icon">💬</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Real English</div>
+          <div class="hub-card-desc">Small talk · Réunions · Slack · Expressions pro</div>
+          ${hubProgBar(realDone, realTotal, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+      <div class="hub-card" style="--hc-color:${COLOR}" onclick="switchTab('conversations')">
+        <div class="hub-card-icon">🗣️</div>
+        <div class="hub-card-info">
+          <div class="hub-card-label">Daily Conversations</div>
+          <div class="hub-card-desc">Dialogues réels · Salutations · Travail · Voyage · Restaurant</div>
+          ${hubProgBar(convDone, convTotal, COLOR)}
+        </div>
+        <div class="hub-card-arrow">›</div>
+      </div>
+    </div>
+  `;
+  return wrap;
+}
+
+// ── BUILD CONVERSATIONS SECTION ─────────────────────────────
+let _convCat = null;   // catégorie filtrée
+let _convId  = null;   // conversation ouverte
+let _convTab = 'dialog'; // 'dialog' | 'exercises' | 'results'
+
+function buildConversationsSection() {
+  const COLOR = CONV_CAT_COLOR;
+  const wrap = document.createElement('div');
+  wrap.className = 'page fade-up';
+  wrap.style.maxWidth = '640px';
+  wrap.style.margin = '0 auto';
+  wrap.style.padding = '24px 16px 90px';
+
+  // Si une conv est ouverte
+  if (_convId) {
+    const conv = CONVERSATIONS.find(c => c.id === _convId);
+    if (conv) {
+      wrap.appendChild(_buildConvDetail(conv, COLOR));
+      return wrap;
+    }
+  }
+
+  // ── HEADER ──
+  const header = document.createElement('div');
+  header.innerHTML = `
+    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:6px;">🗣️ DAILY CONVERSATIONS</div>
+    <div style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:4px;">Dialogues du quotidien</div>
+    <div style="font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-bottom:20px;">Apprends quoi dire et quoi répondre dans les vraies situations</div>
+  `;
+  wrap.appendChild(header);
+
+  // ── FILTRES CATÉGORIES ──
+  const filterDiv = document.createElement('div');
+  filterDiv.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;';
+  const allBtn = document.createElement('button');
+  allBtn.className = 'phrasal-subbtn' + (_convCat === null ? ' active' : '');
+  allBtn.style = _convCat === null ? `background:rgba(16,185,129,.15);border-color:${COLOR};color:${COLOR}` : '';
+  allBtn.textContent = '🌍 Toutes';
+  allBtn.onclick = () => { _convCat = null; render(); };
+  filterDiv.appendChild(allBtn);
+  const CONV_CATEGORIES = [...new Set(CONVERSATIONS.map(c => c.category))];
+  CONV_CATEGORIES.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'phrasal-subbtn' + (_convCat === cat ? ' active' : '');
+    btn.style = _convCat === cat ? `background:rgba(16,185,129,.15);border-color:${COLOR};color:${COLOR}` : '';
+    btn.textContent = cat;
+    btn.onclick = () => { _convCat = cat; render(); };
+    filterDiv.appendChild(btn);
+  });
+  wrap.appendChild(filterDiv);
+
+  // ── LISTE DES CONVERSATIONS ──
+  const list = document.createElement('div');
+  list.style.cssText = 'display:flex;flex-direction:column;gap:12px;';
+  const filtered = _convCat ? CONVERSATIONS.filter(c => c.category === _convCat) : CONVERSATIONS;
+
+  filtered.forEach(conv => {
+    const st = getConvState(conv.id);
+    const exDone = Object.keys(st.answers).length;
+    const exTotal = conv.exercises.length;
+    const pct = exTotal > 0 ? Math.round((exDone / exTotal) * 100) : 0;
+
+    const card = document.createElement('div');
+    card.style.cssText = `background:var(--surface);border:1.5px solid var(--border2);border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s,transform .1s;`;
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;">${conv.category}</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--text);">${conv.situation}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${st.done ? `<span style="font-size:.7rem;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:${COLOR};border-radius:20px;padding:2px 8px;font-family:var(--mono);">✓ Done</span>` : pct > 0 ? `<span style="font-family:var(--mono);font-size:.75rem;color:${COLOR};font-weight:700;">${pct}%</span>` : ''}
+          <span style="color:var(--muted);font-size:1.2rem;">›</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${conv.dialog.slice(0,2).map(l=>`<span style="font-size:.75rem;color:var(--muted);font-family:var(--mono);">"${l.text.substring(0,30)}${l.text.length>30?'…':''}"</span>`).join('')}
+      </div>
+      ${exTotal > 0 ? `<div style="margin-top:10px;background:var(--border2);border-radius:4px;height:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${COLOR};border-radius:4px;transition:width .3s;"></div></div>` : ''}
+    `;
+    card.onmouseenter = () => { card.style.borderColor = COLOR; card.style.transform = 'translateY(-1px)'; };
+    card.onmouseleave = () => { card.style.borderColor = 'var(--border2)'; card.style.transform = ''; };
+    card.onclick = () => { _convId = conv.id; _convTab = 'dialog'; render(); };
+    list.appendChild(card);
+  });
+
+  wrap.appendChild(list);
+  return wrap;
+}
+
+function _buildConvDetail(conv, COLOR) {
+  const wrap = document.createElement('div');
+
+  // ── BACK BUTTON ──
+  const back = document.createElement('button');
+  back.className = 'phrasal-subbtn';
+  back.style.marginBottom = '18px';
+  back.innerHTML = '← Retour';
+  back.onclick = () => { _convId = null; render(); };
+  wrap.appendChild(back);
+
+  // ── HEADER ──
+  const hdr = document.createElement('div');
+  hdr.innerHTML = `
+    <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;">${conv.category} — ${conv.situation}</div>
+    <div style="font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:16px;">${conv.situation}</div>
+  `;
+  wrap.appendChild(hdr);
+
+  // ── TABS ──
+  const tabBar = document.createElement('div');
+  tabBar.style.cssText = 'display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;';
+  [['dialog','💬 Dialogue'],['exercises','🎯 Exercices'],['results','📊 Résultats']].forEach(([key,label]) => {
+    const btn = document.createElement('button');
+    btn.className = 'phrasal-subbtn' + (_convTab === key ? ' active' : '');
+    btn.style = _convTab === key ? `background:rgba(16,185,129,.15);border-color:${COLOR};color:${COLOR}` : '';
+    btn.textContent = label;
+    btn.onclick = () => { _convTab = key; render(); };
+    tabBar.appendChild(btn);
+  });
+  wrap.appendChild(tabBar);
+
+  if (_convTab === 'dialog') wrap.appendChild(_buildConvDialog(conv, COLOR));
+  else if (_convTab === 'exercises') wrap.appendChild(_buildConvExercises(conv, COLOR));
+  else wrap.appendChild(_buildConvResults(conv, COLOR));
+
+  return wrap;
+}
+
+function _buildConvDialog(conv, COLOR) {
+  const wrap = document.createElement('div');
+
+  // ── DIALOGUE ──
+  const dialogDiv = document.createElement('div');
+  dialogDiv.style.cssText = 'display:flex;flex-direction:column;gap:10px;margin-bottom:24px;';
+
+  conv.dialog.forEach(line => {
+    const isA = line.speaker === 'A';
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex;flex-direction:column;align-items:${isA ? 'flex-start':'flex-end'};gap:4px;`;
+
+    const bubble = document.createElement('div');
+    bubble.style.cssText = `max-width:85%;background:${isA ? 'var(--surface)' : `rgba(16,185,129,.12)`};border:1.5px solid ${isA ? 'var(--border2)' : `rgba(16,185,129,.35)`};border-radius:${isA ? '4px 14px 14px 14px':'14px 4px 14px 14px'};padding:10px 14px;`;
+
+    const speaker = document.createElement('div');
+    speaker.style.cssText = `font-family:var(--mono);font-size:.6rem;color:${COLOR};font-weight:700;margin-bottom:4px;`;
+    speaker.textContent = isA ? '👤 Person A' : '🙋 Person B';
+
+    const text = document.createElement('div');
+    text.style.cssText = 'font-size:.9rem;color:var(--text);font-weight:500;line-height:1.4;';
+    text.textContent = line.text;
+
+    const translation = conv.translation?.[line.text];
+    const transl = document.createElement('div');
+    transl.style.cssText = 'font-size:.75rem;color:var(--muted);font-style:italic;margin-top:3px;';
+    transl.textContent = translation || '';
+
+    // Bouton audio
+    const audioRow = document.createElement('div');
+    audioRow.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:5px;';
+
+    if (line.audio) {
+      const playBtn = document.createElement('button');
+      playBtn.className = 'btn-audio';
+      playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Écouter`;
+      playBtn.onclick = () => { new Audio(line.audio).play(); };
+      audioRow.appendChild(playBtn);
+    } else {
+      const ttsBtn = document.createElement('button');
+      ttsBtn.className = 'btn-audio';
+      ttsBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Écouter`;
+      ttsBtn.onclick = () => {
+        const u = new SpeechSynthesisUtterance(line.text);
+        u.lang = 'en-GB'; u.rate = 1.0;
+        const voices = speechSynthesis.getVoices();
+        const v = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
+                || voices.find(v => v.lang.startsWith('en')) || null;
+        if (v) u.voice = v;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      };
+      audioRow.appendChild(ttsBtn);
+    }
+
+    bubble.appendChild(speaker);
+    bubble.appendChild(text);
+    bubble.appendChild(transl);
+    bubble.appendChild(audioRow);
+    row.appendChild(bubble);
+    dialogDiv.appendChild(row);
+  });
+
+  wrap.appendChild(dialogDiv);
+
+  // ── VARIANTES ──
+  if (conv.variants?.length) {
+    const vDiv = document.createElement('div');
+    vDiv.style.cssText = 'background:var(--surface);border:1.5px solid var(--border2);border-radius:10px;padding:14px 16px;margin-bottom:20px;';
+    vDiv.innerHTML = `
+      <div style="font-family:var(--mono);font-size:.6rem;color:${COLOR};text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px;">💡 Variantes possibles</div>
+      ${conv.variants.map(v=>`<div style="font-size:.85rem;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border2);">→ ${v}</div>`).join('')}
+    `;
+    wrap.appendChild(vDiv);
+  }
+
+  // ── CTA vers exercices ──
+  const cta = document.createElement('button');
+  cta.className = 'btn-launch bg-green';
+  cta.style.cssText = 'width:100%;margin-top:8px;';
+  cta.textContent = '🎯 Faire les exercices →';
+  cta.onclick = () => { _convTab = 'exercises'; render(); };
+  wrap.appendChild(cta);
+
+  return wrap;
+}
+
+function _buildConvExercises(conv, COLOR) {
+  const wrap = document.createElement('div');
+  const st = getConvState(conv.id);
+  const exIdx = st.exIdx || 0;
+
+  if (exIdx >= conv.exercises.length) {
+    // Tous les exercices faits
+    st.done = true;
+    saveToFirestore();
+    wrap.appendChild(_buildConvResults(conv, COLOR));
+    return wrap;
+  }
+
+  const ex = conv.exercises[exIdx];
+  const total = conv.exercises.length;
+
+  // Progress
+  const progDiv = document.createElement('div');
+  progDiv.innerHTML = `
+    <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:6px;">
+      <span>Exercice ${exIdx+1} / ${total}</span>
+      <span>${Math.round((exIdx/total)*100)}%</span>
+    </div>
+    <div style="background:var(--border2);border-radius:4px;height:4px;margin-bottom:20px;"><div style="height:100%;width:${Math.round((exIdx/total)*100)}%;background:${COLOR};border-radius:4px;"></div></div>
+  `;
+  wrap.appendChild(progDiv);
+
+  // ── MCQ ──
+  if (ex.type === 'mcq') {
+    const already = st.answers[exIdx];
+    const qDiv = document.createElement('div');
+    qDiv.innerHTML = `<div style="font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:16px;">❓ ${ex.question}</div>`;
+    const opts = document.createElement('div');
+    opts.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    ex.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.style.cssText = `text-align:left;padding:12px 16px;border-radius:10px;font-size:.88rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border2);background:var(--surface);color:var(--text);transition:all .15s;`;
+      btn.textContent = opt;
+      if (already !== undefined) {
+        if (oi === ex.ans) btn.style.cssText += `border-color:${COLOR};background:rgba(16,185,129,.1);color:${COLOR};`;
+        else if (oi === already) btn.style.cssText += 'border-color:#c1121f;background:rgba(193,18,31,.08);color:#c1121f;';
+      } else {
+        btn.onmouseenter = () => { btn.style.borderColor = COLOR; btn.style.background = 'rgba(16,185,129,.07)'; };
+        btn.onmouseleave = () => { btn.style.borderColor = 'var(--border2)'; btn.style.background = 'var(--surface)'; };
+        btn.onclick = () => {
+          st.answers[exIdx] = oi;
+          saveToFirestore();
+          render();
+        };
+      }
+      opts.appendChild(btn);
+    });
+    qDiv.appendChild(opts);
+    if (already !== undefined) {
+      const fb = document.createElement('div');
+      fb.style.cssText = `margin-top:14px;padding:10px 14px;border-radius:8px;font-size:.82rem;font-weight:600;${already===ex.ans?`background:rgba(16,185,129,.1);color:${COLOR};`:'background:rgba(193,18,31,.08);color:#c1121f;'}`;
+      fb.textContent = already === ex.ans ? '✅ Bonne réponse !' : `❌ La bonne réponse était : "${ex.options[ex.ans]}"`;
+      qDiv.appendChild(fb);
+      const next = document.createElement('button');
+      next.className = 'btn-launch bg-green';
+      next.style.cssText = 'width:100%;margin-top:14px;';
+      next.textContent = exIdx < total-1 ? 'Exercice suivant →' : '📊 Voir les résultats →';
+      next.onclick = () => { st.exIdx = exIdx + 1; render(); };
+      qDiv.appendChild(next);
+    }
+    wrap.appendChild(qDiv);
+  }
+
+  // ── GUIDED ──
+  else if (ex.type === 'guided') {
+    const already = st.answers[exIdx];
+    const qDiv = document.createElement('div');
+    qDiv.innerHTML = `
+      <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:8px;">💬 Quelle est la bonne réponse ?</div>
+      <div style="font-size:1rem;font-weight:700;color:${COLOR};margin-bottom:16px;padding:12px 16px;background:rgba(16,185,129,.07);border-radius:8px;border-left:3px solid ${COLOR};">"${ex.prompt}"</div>
+    `;
+    const opts = document.createElement('div');
+    opts.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    ex.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.style.cssText = `text-align:left;padding:12px 16px;border-radius:10px;font-size:.88rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border2);background:var(--surface);color:var(--text);transition:all .15s;`;
+      btn.textContent = opt;
+      if (already !== undefined) {
+        if (oi === ex.ans) btn.style.cssText += `border-color:${COLOR};background:rgba(16,185,129,.1);color:${COLOR};`;
+        else if (oi === already) btn.style.cssText += 'border-color:#c1121f;background:rgba(193,18,31,.08);color:#c1121f;';
+      } else {
+        btn.onmouseenter = () => { btn.style.borderColor = COLOR; btn.style.background = 'rgba(16,185,129,.07)'; };
+        btn.onmouseleave = () => { btn.style.borderColor = 'var(--border2)'; btn.style.background = 'var(--surface)'; };
+        btn.onclick = () => { st.answers[exIdx] = oi; saveToFirestore(); render(); };
+      }
+      opts.appendChild(btn);
+    });
+    qDiv.appendChild(opts);
+    if (already !== undefined) {
+      const fb = document.createElement('div');
+      fb.style.cssText = `margin-top:14px;padding:10px 14px;border-radius:8px;font-size:.82rem;font-weight:600;${already===ex.ans?`background:rgba(16,185,129,.1);color:${COLOR};`:'background:rgba(193,18,31,.08);color:#c1121f;'}`;
+      fb.textContent = already === ex.ans ? '✅ Bonne réponse !' : `❌ La bonne réponse était : "${ex.options[ex.ans]}"`;
+      qDiv.appendChild(fb);
+      const next = document.createElement('button');
+      next.className = 'btn-launch bg-green';
+      next.style.cssText = 'width:100%;margin-top:14px;';
+      next.textContent = exIdx < total-1 ? 'Exercice suivant →' : '📊 Voir les résultats →';
+      next.onclick = () => { st.exIdx = exIdx + 1; render(); };
+      qDiv.appendChild(next);
+    }
+    wrap.appendChild(qDiv);
+  }
+
+  // ── SCRAMBLE ──
+  else if (ex.type === 'scramble') {
+    if (!st._scramble) {
+      st._scramble = { selected: [], remaining: [...ex.words].sort(() => Math.random() - .5) };
+    }
+    const sc = st._scramble;
+    const already = st.answers[exIdx];
+
+    const qDiv = document.createElement('div');
+    qDiv.innerHTML = `
+      <div style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-bottom:8px;">🔀 Remets les mots dans l'ordre</div>
+    `;
+
+    // Zone réponse
+    const ansZone = document.createElement('div');
+    ansZone.style.cssText = `min-height:44px;background:var(--surface);border:1.5px dashed ${COLOR};border-radius:10px;padding:8px 12px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;`;
+    if (sc.selected.length === 0) {
+      ansZone.innerHTML = `<span style="color:var(--muted);font-size:.8rem;font-style:italic;">Clique sur les mots pour former la phrase…</span>`;
+    }
+    sc.selected.forEach((w, wi) => {
+      const chip = document.createElement('span');
+      chip.style.cssText = `padding:4px 10px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);border-radius:20px;font-size:.85rem;color:${COLOR};cursor:pointer;font-weight:600;`;
+      chip.textContent = w;
+      if (!already) {
+        chip.onclick = () => {
+          sc.remaining.push(sc.selected.splice(wi, 1)[0]);
+          render();
+        };
+      }
+      ansZone.appendChild(chip);
+    });
+    qDiv.appendChild(ansZone);
+
+    // Mots disponibles
+    const wordsDiv = document.createElement('div');
+    wordsDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;';
+    sc.remaining.forEach((w, wi) => {
+      const chip = document.createElement('span');
+      chip.style.cssText = `padding:4px 10px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:20px;font-size:.85rem;color:var(--text);cursor:pointer;font-weight:600;transition:all .1s;`;
+      chip.textContent = w;
+      if (!already) {
+        chip.onmouseenter = () => { chip.style.borderColor = COLOR; chip.style.color = COLOR; };
+        chip.onmouseleave = () => { chip.style.borderColor = 'var(--border2)'; chip.style.color = 'var(--text)'; };
+        chip.onclick = () => {
+          sc.selected.push(sc.remaining.splice(wi, 1)[0]);
+          render();
+        };
+      }
+      wordsDiv.appendChild(chip);
+    });
+    qDiv.appendChild(wordsDiv);
+
+    if (!already && sc.selected.length === ex.words.length) {
+      const checkBtn = document.createElement('button');
+      checkBtn.className = 'btn-launch bg-green';
+      checkBtn.style.cssText = 'width:100%;margin-bottom:8px;';
+      checkBtn.textContent = '✅ Vérifier';
+      checkBtn.onclick = () => {
+        const attempt = sc.selected.join(' ');
+        const correct = attempt === ex.sentence ? 1 : 0;
+        st.answers[exIdx] = correct;
+        saveToFirestore();
+        render();
+      };
+      qDiv.appendChild(checkBtn);
+    }
+
+    if (already !== undefined) {
+      const correct = already === 1;
+      const fb = document.createElement('div');
+      fb.style.cssText = `margin-top:6px;padding:10px 14px;border-radius:8px;font-size:.82rem;font-weight:600;${correct?`background:rgba(16,185,129,.1);color:${COLOR};`:'background:rgba(193,18,31,.08);color:#c1121f;'}`;
+      fb.innerHTML = correct ? '✅ Parfait !' : `❌ La bonne réponse était : <strong>${ex.sentence}</strong>`;
+      qDiv.appendChild(fb);
+      const next = document.createElement('button');
+      next.className = 'btn-launch bg-green';
+      next.style.cssText = 'width:100%;margin-top:12px;';
+      next.textContent = exIdx < total-1 ? 'Exercice suivant →' : '📊 Voir les résultats →';
+      next.onclick = () => { st.exIdx = exIdx + 1; render(); };
+      qDiv.appendChild(next);
+    }
+
+    wrap.appendChild(qDiv);
+  }
+
+  return wrap;
+}
+
+function _buildConvResults(conv, COLOR) {
+  const wrap = document.createElement('div');
+  const st = getConvState(conv.id);
+  const total = conv.exercises.length;
+  const correct = conv.exercises.filter((ex, i) => {
+    const a = st.answers[i];
+    if (ex.type === 'scramble') return a === 1;
+    return a === ex.ans;
+  }).length;
+  const pct = Math.round((correct / total) * 100);
+
+  wrap.innerHTML = `
+    <div style="text-align:center;padding:30px 0 20px;">
+      <div style="font-size:2.5rem;margin-bottom:8px;">${pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📚'}</div>
+      <div style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:4px;">${correct} / ${total} correct${correct>1?'s':''}</div>
+      <div style="font-family:var(--mono);font-size:.7rem;color:${COLOR};font-weight:700;">${pct}% — ${pct>=80?'Excellent !':pct>=50?'Bien joué !':'Continue à t\'entraîner !'}</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-direction:column;margin-top:10px;">
+      <button class="btn-launch bg-green" onclick="_convId='${conv.id}';_convTab='dialog';render();">🔁 Revoir le dialogue</button>
+      <button class="btn-launch" style="background:var(--surface);border:1.5px solid var(--border2);color:var(--text);" onclick="_resetConv('${conv.id}');">🔄 Refaire les exercices</button>
+      <button class="btn-launch" style="background:var(--surface);border:1.5px solid var(--border2);color:var(--text);" onclick="_convId=null;render();">← Retour aux conversations</button>
+    </div>
+  `;
+  return wrap;
+}
+
+function _resetConv(id) {
+  S.convState[id] = { exIdx: 0, answers: {}, done: false };
+  _convTab = 'exercises';
+  saveToFirestore();
+  render();
+}
+
 
 function buildRealEnglishSection() {
   const data  = REAL_ENGLISH;
