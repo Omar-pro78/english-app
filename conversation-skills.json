@@ -1,0 +1,632 @@
+[
+  {
+    "id": "cs-intro",
+    "theme": "Se présenter",
+    "icon": "👋",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "My name is … / I'm …",
+      "I work as a … at …",
+      "I'm studying … at …",
+      "Nice to meet you / Pleased to meet you",
+      "I've been [doing X] for [Y] years"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Onboarding — premier jour dans l'équipe",
+        "lines": [
+          { "speaker": "A", "text": "Hi everyone, I'm Omar. I've just joined the QA team.", "fr": "Bonjour à tous, je suis Omar. Je viens de rejoindre l'équipe QA." },
+          { "speaker": "B", "text": "Welcome, Omar! I'm Sarah, the lead developer. How long have you been working in QA?", "fr": "Bienvenue Omar ! Je suis Sarah, la développeuse principale. Depuis combien de temps travailles-tu en QA ?" },
+          { "speaker": "A", "text": "About three years, mostly in e-commerce. Really glad to be here.", "fr": "Environ trois ans, surtout dans l'e-commerce. Très content d'être là." }
+        ],
+        "variants": ["I'm thrilled to join the team.", "I'm looking forward to working with all of you."]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Première séance — se présenter à la classe",
+        "lines": [
+          { "speaker": "A", "text": "Hi, I'm Léa. I'm in my second year of a business degree.", "fr": "Bonjour, je suis Léa. Je suis en deuxième année de licence en gestion." },
+          { "speaker": "B", "text": "Great, Léa! And what made you choose this course?", "fr": "Super, Léa ! Qu'est-ce qui t'a amené à choisir cette formation ?" },
+          { "speaker": "A", "text": "I'm interested in marketing and I'd like to work abroad eventually.", "fr": "Je m'intéresse au marketing et j'aimerais travailler à l'étranger un jour." }
+        ],
+        "variants": ["I've always been passionate about…", "This field really interests me because…"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Soirée — rencontrer quelqu'un pour la première fois",
+        "lines": [
+          { "speaker": "A", "text": "Hey, I don't think we've met. I'm Marco.", "fr": "Salut, je crois qu'on ne s'est pas encore rencontrés. Je suis Marco." },
+          { "speaker": "B", "text": "Hi Marco, I'm Yuki! Are you a friend of Thomas?", "fr": "Salut Marco, je suis Yuki ! Tu es un ami de Thomas ?" },
+          { "speaker": "A", "text": "Yes, we went to university together. What about you?", "fr": "Oui, on a fait l'université ensemble. Et toi ?" }
+        ],
+        "variants": ["We haven't been introduced yet.", "I don't believe we've met before."]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "Someone says 'Nice to meet you.' What's the natural reply?",
+        "opts": ["Yes, I meet you too.", "Nice to meet you too!", "I am also nice.", "Same meeting."],
+        "ans": 1,
+        "exp": "\"Nice to meet you too!\" (ou \"You too!\") est la réponse standard et naturelle."
+      },
+      {
+        "type": "guided",
+        "prompt": "Tu arrives le premier jour dans une nouvelle entreprise. Présente-toi en 2 phrases : ton prénom, ton poste et combien d'années d'expérience tu as.",
+        "hint": "My name is … I work as a … I have … years of experience.",
+        "example": "My name is Omar. I work as a QA engineer. I have three years of experience in e-commerce."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre pour former une phrase correcte.",
+        "words": ["years", "been", "I've", "working", "QA", "in", "for", "three"],
+        "answer": "I've been working in QA for three years"
+      }
+    ]
+  },
+  {
+    "id": "cs-smalltalk",
+    "theme": "Small talk",
+    "icon": "☕",
+    "contexts": ["🏢 Pro", "🌍 Général"],
+    "keyPhrases": [
+      "How's it going? / How are things?",
+      "Not bad, thanks. And you?",
+      "What did you get up to this weekend?",
+      "Did you catch the game last night?",
+      "Any plans for the holidays?"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Cuisine du bureau — pause-café",
+        "lines": [
+          { "speaker": "A", "text": "Morning! How's it going?", "fr": "Bonjour ! Comment ça se passe ?" },
+          { "speaker": "B", "text": "Pretty good, thanks! Bit tired — long sprint last week.", "fr": "Plutôt bien, merci ! Un peu fatigué — long sprint la semaine dernière." },
+          { "speaker": "A", "text": "Tell me about it. At least the weekend is close!", "fr": "Je te comprends. Au moins le week-end approche !" }
+        ],
+        "variants": ["Same here!", "I feel you.", "Couldn't agree more."]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Salle d'attente — échanger avec un inconnu",
+        "lines": [
+          { "speaker": "A", "text": "Is this queue always this long?", "fr": "La file est toujours aussi longue ici ?" },
+          { "speaker": "B", "text": "Ha, seems like it! At least the weather is nice today.", "fr": "Apparemment ! Au moins il fait beau aujourd'hui." },
+          { "speaker": "A", "text": "True! Let's hope it lasts through the weekend.", "fr": "C'est vrai ! Espérons que ça dure jusqu'au week-end." }
+        ],
+        "variants": ["Yeah, it's been lovely lately.", "Fingers crossed for the weekend!"]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "A colleague says 'How's it going?' You're a bit tired. What's a natural reply?",
+        "opts": ["I am not feeling well, I have a fever.", "Not bad, a bit tired. You?", "Going is fine.", "How is it going to you?"],
+        "ans": 1,
+        "exp": "\"Not bad, a bit tired. You?\" est conversationnel et poli. Renvoyer la question montre de l'intérêt."
+      },
+      {
+        "type": "guided",
+        "prompt": "Un collègue te demande 'What did you get up to this weekend?' Réponds en 2 phrases naturelles.",
+        "hint": "I … / We … + a detail",
+        "example": "I went hiking with some friends on Saturday. On Sunday I just relaxed at home — much needed!"
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["plans", "Any", "for", "holidays", "the", "you", "do", "have"],
+        "answer": "Do you have any plans for the holidays"
+      }
+    ]
+  },
+  {
+    "id": "cs-ask-repeat",
+    "theme": "Demander de répéter ou clarifier",
+    "icon": "🔁",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "Sorry, could you say that again?",
+      "I didn't quite catch that.",
+      "Could you speak a bit more slowly, please?",
+      "What do you mean by …?",
+      "Just to clarify — do you mean …?"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Réunion d'équipe — quelqu'un parle vite",
+        "lines": [
+          { "speaker": "A", "text": "So the deployment window is from 10 to 11 PM CET on Friday.", "fr": "Donc la fenêtre de déploiement est de 22h à 23h CET le vendredi." },
+          { "speaker": "B", "text": "Sorry, I didn't quite catch that — could you repeat the time?", "fr": "Désolé, je n'ai pas bien compris — tu peux répéter l'heure ?" },
+          { "speaker": "A", "text": "Of course! 10 to 11 PM, Central European Time.", "fr": "Bien sûr ! De 22h à 23h, heure d'Europe centrale." }
+        ],
+        "variants": ["Could you say that one more time?", "Sorry, I missed that — can you go back?"]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Cours — ne pas comprendre une consigne",
+        "lines": [
+          { "speaker": "A", "text": "For the assignment, I need you to analyse the primary sources.", "fr": "Pour le devoir, je vous demande d'analyser les sources primaires." },
+          { "speaker": "B", "text": "What do you mean by primary sources, exactly?", "fr": "Qu'est-ce que vous entendez exactement par sources primaires ?" },
+          { "speaker": "A", "text": "Original texts — newspapers, letters, official documents from that period.", "fr": "Les textes originaux — journaux, lettres, documents officiels de l'époque." }
+        ],
+        "variants": ["Could you clarify what you mean by…?", "I'm not sure I follow — could you give an example?"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Au téléphone — mauvaise connexion",
+        "lines": [
+          { "speaker": "A", "text": "I'll meet you at the corner of Oak Street and—", "fr": "Je te retrouve au coin de Oak Street et—" },
+          { "speaker": "B", "text": "Sorry, you're breaking up. Could you speak a bit more slowly?", "fr": "Désolé, ça coupe. Tu peux parler un peu plus lentement ?" },
+          { "speaker": "A", "text": "Sure! Oak Street and Maple Avenue — there's a café on the corner.", "fr": "Bien sûr ! Oak Street et Maple Avenue — il y a un café au coin." }
+        ],
+        "variants": ["You're cutting out — can you repeat?", "I lost you for a second, could you say that again?"]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You didn't understand a word someone used. What's the most polite way to ask?",
+        "opts": ["What? I don't understand.", "What do you mean by that word, exactly?", "You speak too fast.", "Repeat please now."],
+        "ans": 1,
+        "exp": "\"What do you mean by…?\" est poli et précis. Évite les formulations abruptes comme \"What?\" sans explication."
+      },
+      {
+        "type": "guided",
+        "prompt": "Un collègue utilise le mot 'bandwidth' en parlant de disponibilité d'équipe. Tu ne comprends pas ce sens. Demande-lui de clarifier.",
+        "hint": "Sorry, I'm not sure I follow — what do you mean by …?",
+        "example": "Sorry, I'm not sure I follow — when you say 'bandwidth', do you mean the team's availability?"
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["you", "slowly", "speak", "Could", "bit", "a", "more", "please"],
+        "answer": "Could you speak a bit more slowly please"
+      }
+    ]
+  },
+  {
+    "id": "cs-opinion",
+    "theme": "Donner son avis",
+    "icon": "💡",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "In my opinion / In my view …",
+      "I think / I believe / I feel that …",
+      "From my perspective …",
+      "Personally, I'd say …",
+      "I'm not entirely sure, but …"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Réunion — décider d'une approche technique",
+        "lines": [
+          { "speaker": "A", "text": "Should we go with manual testing or automate this flow?", "fr": "On devrait faire des tests manuels ou automatiser ce flux ?" },
+          { "speaker": "B", "text": "Personally, I'd say automate it — we run this scenario every sprint.", "fr": "Personnellement, j'automatiserais — on lance ce scénario à chaque sprint." },
+          { "speaker": "A", "text": "Good point. That would save us a lot of time in the long run.", "fr": "Bonne remarque. Ça nous ferait gagner beaucoup de temps à long terme." }
+        ],
+        "variants": ["From my perspective, it makes more sense to…", "I strongly feel that we should…"]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Débat en classe — partager une opinion",
+        "lines": [
+          { "speaker": "A", "text": "Do you think social media does more harm than good?", "fr": "Tu penses que les réseaux sociaux font plus de mal que de bien ?" },
+          { "speaker": "B", "text": "In my view, it depends on how you use it. For networking, it's great.", "fr": "À mon avis, ça dépend de comment on les utilise. Pour le réseau, c'est super." },
+          { "speaker": "A", "text": "That's fair. Though I think the addiction factor is often underestimated.", "fr": "C'est juste. Bien que je pense que le facteur d'addiction est souvent sous-estimé." }
+        ],
+        "variants": ["I'd argue that…", "To my mind, the key issue is…"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Entre amis — choisir un film",
+        "lines": [
+          { "speaker": "A", "text": "What do you think about watching a thriller tonight?", "fr": "Qu'est-ce que tu penses de regarder un thriller ce soir ?" },
+          { "speaker": "B", "text": "I'm not totally against it, but I feel like a comedy more.", "fr": "Je ne suis pas totalement contre, mais j'ai plus envie d'une comédie." },
+          { "speaker": "A", "text": "Fair enough — any suggestions?", "fr": "Très bien — tu as des suggestions ?" }
+        ],
+        "variants": ["That's one way to look at it.", "I see your point, but I'd rather…"]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You want to share your view politely without sounding too direct. Which phrase is best?",
+        "opts": ["You are wrong about this.", "In my opinion, this approach has some risks.", "I say this is bad.", "My opinion is the correct one."],
+        "ans": 1,
+        "exp": "\"In my opinion\" signale clairement que c'est votre point de vue personnel, ce qui est plus poli et plus ouvert au dialogue."
+      },
+      {
+        "type": "guided",
+        "prompt": "Ton équipe débat entre deux outils : Jira ou Notion pour gérer les bugs. Donne ton opinion avec une justification.",
+        "hint": "Personally, I'd say … because …",
+        "example": "Personally, I'd say Jira is better for bug tracking because it integrates directly with our CI pipeline and the ticketing system is more structured."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["perspective", "my", "From", "approach", "best", "this", "the", "is"],
+        "answer": "From my perspective this is the best approach"
+      }
+    ]
+  },
+  {
+    "id": "cs-agree-disagree",
+    "theme": "Accepter / Refuser poliment",
+    "icon": "🤝",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "I totally agree with you.",
+      "That's a good point — I see where you're coming from.",
+      "I'm afraid I have to disagree.",
+      "I see your point, but …",
+      "With all due respect, I think there's another way to look at this."
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Code review — désaccord sur une approche",
+        "lines": [
+          { "speaker": "A", "text": "I think we should skip the regression tests to meet the deadline.", "fr": "Je pense qu'on devrait sauter les tests de régression pour tenir le délai." },
+          { "speaker": "B", "text": "I see your point, but I'm afraid I have to disagree — skipping them is risky.", "fr": "Je comprends ton point, mais je ne suis pas d'accord — c'est risqué de les sauter." },
+          { "speaker": "A", "text": "Fair enough. Let's find a way to run the critical ones at least.", "fr": "C'est juste. Trouvons comment lancer au moins les critiques." }
+        ],
+        "variants": ["I don't think that's the best idea because…", "I'd push back on that a little…"]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Groupe de travail — désaccord sur la structure d'un rapport",
+        "lines": [
+          { "speaker": "A", "text": "I think we should put the conclusion first to grab the reader's attention.", "fr": "Je pense qu'on devrait mettre la conclusion en premier pour capter l'attention." },
+          { "speaker": "B", "text": "With all due respect, that's quite unconventional. Markers might not like it.", "fr": "Avec tout le respect que je te dois, c'est assez inhabituel. Les correcteurs pourraient ne pas aimer." },
+          { "speaker": "A", "text": "You have a point. Let's stick to the standard structure then.", "fr": "Tu as raison. Gardons la structure standard alors." }
+        ],
+        "variants": ["I'm not so sure about that.", "I'd suggest a different approach…"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Entre amis — choisir un restaurant",
+        "lines": [
+          { "speaker": "A", "text": "Let's go to that new sushi place — everyone's talking about it!", "fr": "Allons dans ce nouveau restaurant de sushi — tout le monde en parle !" },
+          { "speaker": "B", "text": "I totally agree, but it's a bit out of our budget tonight.", "fr": "Je suis tout à fait d'accord, mais c'est un peu au-dessus de notre budget ce soir." },
+          { "speaker": "A", "text": "True. How about we save it for a special occasion?", "fr": "C'est vrai. Et si on le gardait pour une occasion spéciale ?" }
+        ],
+        "variants": ["Absolutely!", "That sounds like a plan!", "I'm on board with that."]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "Your colleague has a different opinion. You want to disagree politely. Which phrase works best?",
+        "opts": ["No, you are wrong.", "I see your point, but I think there's another way to look at this.", "That is a bad idea.", "I am not agreeing with you."],
+        "ans": 1,
+        "exp": "\"I see your point, but…\" reconnaît l'opinion de l'autre avant d'exprimer un désaccord — c'est poli et professionnel."
+      },
+      {
+        "type": "guided",
+        "prompt": "Un collègue propose de tester uniquement sur Chrome pour gagner du temps. Tu n'es pas d'accord. Exprime ton désaccord poliment et donne une raison.",
+        "hint": "I see your point, but … because …",
+        "example": "I see your point, but I'm afraid I have to disagree — about 15% of our users are on Safari, and we'd risk missing critical cross-browser bugs."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["due", "With", "all", "respect", "I", "disagree", "have", "to", "afraid", "I'm"],
+        "answer": "With all due respect I'm afraid I have to disagree"
+      }
+    ]
+  },
+  {
+    "id": "cs-suggestions",
+    "theme": "Faire des suggestions",
+    "icon": "🗺️",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "Why don't we …?",
+      "What if we …?",
+      "How about …ing?",
+      "Have you considered …?",
+      "It might be worth trying …"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Rétrospective — améliorer le process QA",
+        "lines": [
+          { "speaker": "A", "text": "We keep finding the same bugs in production. What should we change?", "fr": "On retrouve toujours les mêmes bugs en production. Qu'est-ce qu'on devrait changer ?" },
+          { "speaker": "B", "text": "What if we added a dedicated smoke test before each release?", "fr": "Et si on ajoutait un smoke test dédié avant chaque release ?" },
+          { "speaker": "A", "text": "I like that. It might also be worth reviewing our test coverage data.", "fr": "J'aime ça. Ça vaudrait aussi la peine de revoir nos données de couverture de tests." }
+        ],
+        "variants": ["Have you thought about…?", "One option could be to…"]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Projet de groupe — organiser le travail",
+        "lines": [
+          { "speaker": "A", "text": "We only have two weeks to finish the project. Where do we start?", "fr": "On n'a que deux semaines pour finir le projet. Par où on commence ?" },
+          { "speaker": "B", "text": "How about splitting the research and writing parts between us?", "fr": "Et si on se répartissait la recherche et la rédaction ?" },
+          { "speaker": "A", "text": "Good idea. I could handle the research if you start the outline.", "fr": "Bonne idée. Je pourrais m'occuper de la recherche si tu commences le plan." }
+        ],
+        "variants": ["Why don't we divide the tasks?", "It might make sense to…"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Planifier le week-end entre amis",
+        "lines": [
+          { "speaker": "A", "text": "We haven't decided what to do Saturday. Any ideas?", "fr": "On n'a pas encore décidé quoi faire samedi. Des idées ?" },
+          { "speaker": "B", "text": "Why don't we rent bikes and explore the park? Weather is supposed to be great.", "fr": "Pourquoi on ne louerait pas des vélos pour explorer le parc ? Il paraît que la météo sera super." },
+          { "speaker": "A", "text": "That sounds perfect! Let's do that.", "fr": "Ça a l'air parfait ! Allons-y." }
+        ],
+        "variants": ["That's a brilliant idea!", "Count me in!", "I'm up for that."]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You want to propose an idea in a meeting. Which phrase sounds most natural?",
+        "opts": ["Do the thing I say.", "What if we ran a quick pilot first to test the idea?", "I suggest you all do this.", "Why not doing my suggestion?"],
+        "ans": 1,
+        "exp": "\"What if we…?\" est une suggestion ouverte et non imposée — elle invite les autres à réagir."
+      },
+      {
+        "type": "guided",
+        "prompt": "Les tests manuels prennent trop de temps dans votre équipe. Fais une suggestion d'amélioration lors d'une réunion.",
+        "hint": "It might be worth … / Have you considered …ing?",
+        "example": "Have you considered automating the login and checkout flows first? They're the most repetitive — it might be worth the initial investment."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["if", "What", "earlier", "meeting", "we", "the", "moved"],
+        "answer": "What if we moved the meeting earlier"
+      }
+    ]
+  },
+  {
+    "id": "cs-phone-email",
+    "theme": "Téléphone et email",
+    "icon": "📞",
+    "contexts": ["🏢 Pro", "🌍 Général"],
+    "keyPhrases": [
+      "Could I speak to … please?",
+      "I'm calling regarding …",
+      "Could you put me through to …?",
+      "I'm writing to follow up on …",
+      "Please don't hesitate to contact me if …"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Appel pro — signaler un problème urgent",
+        "lines": [
+          { "speaker": "A", "text": "Hi, this is Omar from the QA team. I'm calling regarding the production issue.", "fr": "Bonjour, c'est Omar de l'équipe QA. J'appelle au sujet du problème en production." },
+          { "speaker": "B", "text": "Hi Omar. What's the situation?", "fr": "Bonjour Omar. Quelle est la situation ?" },
+          { "speaker": "A", "text": "The checkout flow is down for all users. We need someone on it right away.", "fr": "Le flux de paiement est en panne pour tous les utilisateurs. Il faut quelqu'un dessus immédiatement." }
+        ],
+        "variants": ["I'm reaching out about…", "I wanted to touch base regarding…"]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Appel — prendre un rendez-vous",
+        "lines": [
+          { "speaker": "A", "text": "Hello, I'd like to book an appointment with Dr. Arnaud, please.", "fr": "Bonjour, je voudrais prendre rendez-vous avec le Dr Arnaud, s'il vous plaît." },
+          { "speaker": "B", "text": "Of course. Could I take your name and contact number?", "fr": "Bien sûr. Puis-je avoir votre nom et votre numéro de téléphone ?" },
+          { "speaker": "A", "text": "Sure, it's Omar Benali. My number is 06 12 34 56 78.", "fr": "Bien sûr, c'est Omar Benali. Mon numéro est le 06 12 34 56 78." }
+        ],
+        "variants": ["I'd like to make an appointment for…", "Is … available on …?"]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You're calling a company and want to be transferred. What do you say?",
+        "opts": ["Give me the sales team.", "Could you put me through to the sales team, please?", "I want sales now.", "Transfer me to sales."],
+        "ans": 1,
+        "exp": "\"Could you put me through to…?\" est la formulation professionnelle standard pour demander un transfert d'appel."
+      },
+      {
+        "type": "guided",
+        "prompt": "Tu dois écrire un email de relance à un développeur qui n'a pas répondu à ton rapport de bug depuis 3 jours.",
+        "hint": "I'm writing to follow up on … / I'd appreciate an update on …",
+        "example": "Hi James,\n\nI'm writing to follow up on the bug report I sent on Monday (ticket #JIRA-421). I'd appreciate an update when you get a chance.\n\nThanks,\nOmar"
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["hesitate", "don't", "Please", "contact", "me", "to", "any", "if", "you", "have", "questions"],
+        "answer": "Please don't hesitate to contact me if you have any questions"
+      }
+    ]
+  },
+  {
+    "id": "cs-problems",
+    "theme": "Parler de problèmes et solutions",
+    "icon": "🔧",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "We're having an issue with …",
+      "The problem seems to be …",
+      "One option would be to …",
+      "We could try … as a workaround.",
+      "I think we need to escalate this."
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Stand-up — bloquer sur un bug",
+        "lines": [
+          { "speaker": "A", "text": "I'm blocked on ticket 312 — the API keeps returning a 500 error.", "fr": "Je suis bloqué sur le ticket 312 — l'API renvoie constamment une erreur 500." },
+          { "speaker": "B", "text": "The problem seems to be on the backend. Did you check the server logs?", "fr": "Le problème semble venir du back-end. Tu as vérifié les logs serveur ?" },
+          { "speaker": "A", "text": "Not yet. I'll dig into them now — and escalate if I can't find anything.", "fr": "Pas encore. Je vais les analyser maintenant — et escalader si je ne trouve rien." }
+        ],
+        "variants": ["We might need to loop in the DevOps team.", "Let's schedule a call to investigate."]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Projet de groupe — un membre ne rend pas son travail",
+        "lines": [
+          { "speaker": "A", "text": "We have a problem — Tom hasn't submitted his part yet.", "fr": "On a un problème — Tom n'a pas encore rendu sa partie." },
+          { "speaker": "B", "text": "We could try redistributing his section between us as a workaround.", "fr": "On pourrait essayer de se répartir sa partie entre nous comme solution de secours." },
+          { "speaker": "A", "text": "Good idea. We should also inform the professor just in case.", "fr": "Bonne idée. On devrait aussi informer le professeur au cas où." }
+        ],
+        "variants": ["We need to find a solution fast.", "Let's address this before it becomes a bigger issue."]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Voyage — problème à l'hôtel",
+        "lines": [
+          { "speaker": "A", "text": "Hi, we're having an issue with our room — the air conditioning isn't working.", "fr": "Bonjour, on a un problème dans notre chambre — la climatisation ne fonctionne pas." },
+          { "speaker": "B", "text": "I'm very sorry about that. One option would be to move you to another room.", "fr": "Je suis vraiment désolé. Une option serait de vous déplacer dans une autre chambre." },
+          { "speaker": "A", "text": "That would be great, thank you!", "fr": "Ce serait super, merci !" }
+        ],
+        "variants": ["We'd appreciate a quick resolution.", "Is there anything you can do?"]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You can't fix a critical bug on your own. What's the right phrase to use?",
+        "opts": ["This is impossible, I give up.", "I think we need to escalate this to the senior dev.", "The bug is not my problem.", "Escalate this immediately, someone!"],
+        "ans": 1,
+        "exp": "\"I think we need to escalate this\" est professionnel — ça communique le besoin d'aide sans paniquer."
+      },
+      {
+        "type": "guided",
+        "prompt": "Un test critique échoue en staging et tu ne comprends pas pourquoi. Explique le problème à ton lead lors du stand-up.",
+        "hint": "I'm blocked on … / The problem seems to be … / I'll … if I can't …",
+        "example": "I'm blocked on the payment flow test — it keeps failing at step 3 and the error message isn't clear. The problem seems to be on the API side. I'll check the network logs and escalate to the backend team if I can't find anything by noon."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["we", "think", "escalate", "this", "I", "need", "to"],
+        "answer": "I think we need to escalate this"
+      }
+    ]
+  },
+  {
+    "id": "cs-interrupt-floor",
+    "theme": "Prendre la parole et interrompre poliment",
+    "icon": "🎙️",
+    "contexts": ["🏢 Pro", "🎓 Scolaire"],
+    "keyPhrases": [
+      "Sorry to interrupt, but …",
+      "Could I just add something here?",
+      "If I may, I'd like to point out that …",
+      "Before we move on, can I just say …?",
+      "That's a great point — can I build on that?"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Réunion — ajouter un point important",
+        "lines": [
+          { "speaker": "A", "text": "And so the release is planned for next Thursday—", "fr": "Donc la release est prévue pour jeudi prochain—" },
+          { "speaker": "B", "text": "Sorry to interrupt, but the environments won't be ready until Friday.", "fr": "Désolé d'interrompre, mais les environnements ne seront pas prêts avant vendredi." },
+          { "speaker": "A", "text": "Oh, good catch! Let's push the release to Friday then.", "fr": "Oh, bonne remarque ! Décalons alors la release à vendredi." }
+        ],
+        "variants": ["Could I just flag something before we continue?", "One thing I wanted to mention quickly…"]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Présentation — poser une question",
+        "lines": [
+          { "speaker": "A", "text": "And the results clearly show that engagement increased by 40%—", "fr": "Et les résultats montrent clairement que l'engagement a augmenté de 40%—" },
+          { "speaker": "B", "text": "If I may, could you clarify how you measured engagement?", "fr": "Si vous le permettez, pourriez-vous préciser comment vous avez mesuré l'engagement ?" },
+          { "speaker": "A", "text": "Of course — we tracked time on page and click-through rates.", "fr": "Bien sûr — on a suivi le temps passé sur la page et les taux de clics." }
+        ],
+        "variants": ["Before you go on, could you explain…?", "I have a quick question on that point."]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "Your colleague is talking but you have important information to add. What's the best way to interrupt?",
+        "opts": ["Stop! I need to say something.", "Sorry to interrupt, but I just wanted to flag something important.", "Be quiet, I'm speaking now.", "Wait wait wait, listen to me!"],
+        "ans": 1,
+        "exp": "\"Sorry to interrupt, but…\" reconnaît que tu interromps et montre du respect, ce qui est essentiel en contexte professionnel."
+      },
+      {
+        "type": "guided",
+        "prompt": "Durant une réunion, ton équipe discute d'une solution que tu sais déjà avoir été testée et abandonnée. Interviens poliment pour le signaler.",
+        "hint": "Sorry to interrupt, but … / Before we move on, can I just say …?",
+        "example": "Sorry to interrupt, but before we move on, I just wanted to mention that we actually tried this approach in Q1 and ran into scalability issues. It might be worth reviewing that before we commit."
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["here", "just", "Could", "add", "I", "something"],
+        "answer": "Could I just add something here"
+      }
+    ]
+  },
+  {
+    "id": "cs-end-conversation",
+    "theme": "Terminer une conversation",
+    "icon": "🏁",
+    "contexts": ["🏢 Pro", "🎓 Scolaire", "🌍 Général"],
+    "keyPhrases": [
+      "It was great talking to you.",
+      "I'd better let you go.",
+      "Let's catch up soon.",
+      "I'll follow up by email.",
+      "Have a great rest of your day!"
+    ],
+    "dialogs": [
+      {
+        "context": "🏢 Pro",
+        "situation": "Fin d'un call — clôturer proprement",
+        "lines": [
+          { "speaker": "A", "text": "I think we've covered everything. Any last questions?", "fr": "Je crois qu'on a tout couvert. Des dernières questions ?" },
+          { "speaker": "B", "text": "No, all good. I'll follow up by email with the action points.", "fr": "Non, tout va bien. Je ferai un suivi par email avec les points d'action." },
+          { "speaker": "A", "text": "Perfect. It was great talking to you — have a great afternoon!", "fr": "Parfait. C'était super d'échanger avec toi — passe un bon après-midi !" }
+        ],
+        "variants": ["Let's touch base next week.", "I'll send you a summary later today."]
+      },
+      {
+        "context": "🎓 Scolaire",
+        "situation": "Après un cours — dire au revoir à un camarade",
+        "lines": [
+          { "speaker": "A", "text": "I have to run — I've got another class in five minutes.", "fr": "Je dois y aller — j'ai un autre cours dans cinq minutes." },
+          { "speaker": "B", "text": "No worries! Good luck with the assignment.", "fr": "Pas de souci ! Bonne chance pour le devoir." },
+          { "speaker": "A", "text": "Thanks! You too — let's catch up later.", "fr": "Merci ! Toi aussi — on se retrouve plus tard." }
+        ],
+        "variants": ["See you in class!", "Talk soon!", "I'll text you later."]
+      },
+      {
+        "context": "🌍 Général",
+        "situation": "Au téléphone — conclure un appel personnel",
+        "lines": [
+          { "speaker": "A", "text": "Anyway, I'd better let you go — you must be busy.", "fr": "Bref, je vais te laisser — tu dois être occupé." },
+          { "speaker": "B", "text": "Yeah, a bit! Really good to catch up though.", "fr": "Oui, un peu ! C'était vraiment bien de se retrouver." },
+          { "speaker": "A", "text": "Absolutely! Let's not leave it so long next time. Take care!", "fr": "Absolument ! Attendons moins longtemps la prochaine fois. Prends soin de toi !" }
+        ],
+        "variants": ["It was lovely hearing from you.", "Don't be a stranger!", "Take care — speak soon."]
+      }
+    ],
+    "exercises": [
+      {
+        "type": "mcq",
+        "question": "You want to end a business call professionally. Which is the best closing?",
+        "opts": ["OK, bye.", "I'll follow up by email — it was great talking to you. Have a great day!", "I am closing this call now.", "End of conversation."],
+        "ans": 1,
+        "exp": "Une clôture pro résume la prochaine action (follow up) et se termine par une formule chaleureuse — c'est mémorable et positif."
+      },
+      {
+        "type": "guided",
+        "prompt": "Tu viens de finir une réunion de planification de sprint. Conclus la réunion : résume la prochaine étape et dis au revoir à l'équipe.",
+        "hint": "I'll … / Let's … / It was great …",
+        "example": "Alright, I think we've covered everything. I'll send out the sprint board by end of day. Great session everyone — let's touch base on Friday. Have a good one!"
+      },
+      {
+        "type": "scramble",
+        "instruction": "Remets les mots dans l'ordre.",
+        "words": ["talking", "great", "It", "was", "you", "to"],
+        "answer": "It was great talking to you"
+      }
+    ]
+  }
+]
