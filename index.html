@@ -1399,6 +1399,15 @@ main{flex:1;display:flex;flex-direction:column;}
 .pe-feedback{font-family:var(--sans);font-size:.8rem;font-weight:700;margin-bottom:14px;}
 .pe-feedback.ok{color:#2d6a4f;}
 .pe-feedback.ko{color:#c1121f;}
+.pe-item-list{display:flex;flex-direction:column;gap:8px;margin-top:18px;}
+.pe-item-card{display:flex;align-items:center;gap:12px;background:var(--surface);
+  border:1.5px solid var(--border2);border-left:4px solid var(--pe-c);border-radius:var(--radius-md);
+  padding:11px 14px;cursor:pointer;transition:all .15s;}
+.pe-item-card:hover{border-color:var(--pe-c);transform:translateX(2px);}
+.pe-item-status{font-size:.85rem;width:18px;text-align:center;color:var(--muted);}
+.pe-item-card.done .pe-item-status{color:#2d6a4f;}
+.pe-item-card.fail .pe-item-status{color:#c1121f;}
+.pe-item-en{font-size:.82rem;color:var(--text);font-weight:600;}
 </style>
 
 </head>
@@ -9594,7 +9603,12 @@ function peGoCategories() {
   render();
 }
 function peOpenCategory(catKey) {
-  S.proEnglish = { view: 'phrase', cat: catKey, idx: 0, fromReview: false };
+  S.proEnglish = { view: 'catlist', cat: catKey, idx: 0, fromReview: false };
+  peResetEphemeral();
+  render();
+}
+function peOpenPhrase(catKey, idx) {
+  S.proEnglish = { view: 'phrase', cat: catKey, idx, fromReview: false };
   peResetEphemeral();
   render();
 }
@@ -9707,14 +9721,47 @@ function peNextPhrase() {
     render();
   } else {
     toast('Catégorie terminée 🎉');
-    peGoCategories();
+    peOpenCategory(S.proEnglish.cat);
   }
 }
 
 function buildProEnglishSection() {
   const view = S.proEnglish.view;
   if (view === 'categories') return buildProEnglishCategories();
+  if (view === 'catlist') return buildProEnglishCatList();
   return buildProEnglishPhrase();
+}
+
+function buildProEnglishCatList() {
+  const catKey = S.proEnglish.cat;
+  const cat = PRO_ENGLISH[catKey];
+  const wrap = document.createElement('div');
+  wrap.className = 'speak-page fade-up';
+
+  if (!cat) { peGoCategories(); return wrap; }
+
+  const items = cat.items.map((it, i) => {
+    const done = !!S.proEnglishDone[it.id];
+    const inFail = S.proEnglishFails[it.id] !== undefined;
+    const statusIcon = inFail ? '🔁' : done ? '✓' : '○';
+    const statusCls = inFail ? 'fail' : done ? 'done' : '';
+    return `
+      <div class="pe-item-card ${statusCls}" style="--pe-c:${cat.color}" onclick="peOpenPhrase('${catKey}',${i})">
+        <div class="pe-item-status">${statusIcon}</div>
+        <div class="pe-item-en">${it.en}</div>
+      </div>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="pe-top-row">
+      <button class="pe-back-btn" onclick="peGoCategories()">← Catégories</button>
+    </div>
+    <div class="speak-header-tag">${cat.icon} ${cat.label.toUpperCase()}</div>
+    <div class="speak-title">${cat.label}</div>
+    <div class="speak-subtitle">Choisis une phrase à travailler.</div>
+    <div class="pe-item-list">${items}</div>
+  `;
+  return wrap;
 }
 
 function buildProEnglishCategories() {
@@ -9765,11 +9812,12 @@ function buildProEnglishPhrase() {
   const inReview = S.proEnglish.view === 'review';
   const cat = PRO_ENGLISH[item._cat] || PRO_ENGLISH[S.proEnglish.cat];
   const step = peStep();
-  const backFn = 'peGoCategories()';
+  const backFn = inReview ? 'peGoCategories()' : `peOpenCategory('${S.proEnglish.cat}')`;
+  const backLabel = inReview ? '← Catégories' : `← ${cat.label}`;
 
   wrap.innerHTML = `
     <div class="pe-top-row">
-      <button class="pe-back-btn" onclick="${backFn}">← Catégories</button>
+      <button class="pe-back-btn" onclick="${backFn}">${backLabel}</button>
       <div class="pe-step-pill">Étape ${step}/2</div>
     </div>
     <div class="pe-progress-track"><div class="pe-progress-fill" style="width:${step===1?'50':'100'}%;background:${cat.color}"></div></div>
