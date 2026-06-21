@@ -1,0 +1,103 @@
+{
+  "smalltalk": {
+    "label": "Small talk / quotidien",
+    "icon": "🗣️",
+    "color": "#0d9488",
+    "items": [
+      { "id": "st_01", "en": "How was your weekend?", "fr": "Comment s'est passé ton week-end ?", "blanks": ["weekend"], "blankOptions": { "weekend": ["weekend", "work", "trip", "morning"] } },
+      { "id": "st_02", "en": "I'm good, thanks. And you?", "fr": "Je vais bien, merci. Et toi ?", "blanks": ["good"], "blankOptions": { "good": ["good", "tired", "busy", "late"] } },
+      { "id": "st_03", "en": "Did you have a nice trip?", "fr": "Tu as fait bon voyage ?", "blanks": ["trip"], "blankOptions": { "trip": ["trip", "flight", "day", "rest"] } },
+      { "id": "st_04", "en": "What do you do for a living?", "fr": "Qu'est-ce que tu fais dans la vie ?", "blanks": ["living"], "blankOptions": { "living": ["living", "work", "job", "fun"] } },
+      { "id": "st_05", "en": "It's nice to finally meet you in person.", "fr": "C'est sympa de te rencontrer enfin en personne.", "blanks": ["finally", "person"], "blankOptions": { "finally": ["finally", "never", "rarely"], "person": ["person", "real", "office"] } },
+      { "id": "st_06", "en": "Sorry, I'm running a bit late.", "fr": "Désolé, je suis un peu en retard.", "blanks": ["late"], "blankOptions": { "late": ["late", "early", "busy", "lost"] } },
+      { "id": "st_07", "en": "No worries, take your time.", "fr": "Pas de souci, prends ton temps.", "blanks": ["worries"], "blankOptions": { "worries": ["worries", "problem", "rush", "stress"] } },
+      { "id": "st_08", "en": "Long time no see!", "fr": "Ça fait longtemps !", "blanks": ["see"], "blankOptions": { "see": ["see", "talk", "chat", "meet"] } },
+      { "id": "st_09", "en": "What's new with you?", "fr": "Quoi de neuf de ton côté ?", "blanks": ["new"], "blankOptions": { "new": ["new", "next", "good", "wrong"] } },
+      { "id": "st_10", "en": "I really need a coffee right now.", "fr": "J'ai vraiment besoin d'un café là maintenant.", "blanks": ["coffee"], "blankOptions": { "coffee": ["coffee", "break", "nap", "drink"] } },
+      { "id": "st_11", "en": "Have a great rest of your day.", "fr": "Passe une bonne fin de journée.", "blanks": ["rest"], "blankOptions": { "rest": ["rest", "end", "part", "bit"] } },
+      { "id": "st_12", "en": "Let's catch up soon.", "fr": "On se refait un point bientôt.", "blanks": ["catch"], "blankOptions": { "catch": ["catch", "meet", "talk", "look"] } }
+    ]
+  },
+  "meetings": {
+    "label": "Réunions",
+    "icon": "💼",
+    "color": "#0891b2",
+    "items": [
+      { "id": "mt_01", "en": "Let's get started, shall we?", "fr": "On commence, vous êtes d'accord ?", "blanks": ["started"], "blankOptions": { "started": ["started", "going", "moving", "talking"] } },
+      { "id": "mt_02", "en": "Thanks everyone for joining today.", "fr": "Merci à tous d'être présents aujourd'hui.", "blanks": ["joining"], "blankOptions": { "joining": ["joining", "coming", "attending", "waiting"] } },
+      { "id": "mt_03", "en": "Let's go through the agenda quickly.", "fr": "Passons rapidement en revue l'ordre du jour.", "blanks": ["agenda"], "blankOptions": { "agenda": ["agenda", "plan", "list", "topic"] } },
+      { "id": "mt_04", "en": "Can you walk us through the next steps?", "fr": "Tu peux nous détailler les prochaines étapes ?", "blanks": ["walk", "steps"], "blankOptions": { "walk": ["walk", "talk", "lead", "run"], "steps": ["steps", "actions", "tasks", "plans"] } },
+      { "id": "mt_05", "en": "I'd like to add something here.", "fr": "J'aimerais ajouter quelque chose ici.", "blanks": ["add"], "blankOptions": { "add": ["add", "say", "ask", "note"] } },
+      { "id": "mt_06", "en": "Sorry to interrupt, but can I ask a question?", "fr": "Désolé de t'interrompre, mais je peux poser une question ?", "blanks": ["interrupt"], "blankOptions": { "interrupt": ["interrupt", "stop", "cut", "break"] } },
+      { "id": "mt_07", "en": "I see your point, but I have a different view.", "fr": "Je comprends ton point de vue, mais j'ai un avis différent.", "blanks": ["point", "view"], "blankOptions": { "point": ["point", "idea", "side", "plan"], "view": ["view", "opinion", "take", "angle"] } },
+      { "id": "mt_08", "en": "Let's table this and move on.", "fr": "Mettons ça de côté et passons à la suite.", "blanks": ["table"], "blankOptions": { "table": ["table", "park", "drop", "close"] } },
+      { "id": "mt_09", "en": "Can we circle back to this later?", "fr": "On peut revenir là-dessus plus tard ?", "blanks": ["circle"], "blankOptions": { "circle": ["circle", "come", "get", "go"] } },
+      { "id": "mt_10", "en": "Who's taking the minutes for this meeting?", "fr": "Qui prend le compte-rendu de cette réunion ?", "blanks": ["minutes"], "blankOptions": { "minutes": ["minutes", "notes", "report", "summary"] } },
+      { "id": "mt_11", "en": "Let's align on the priorities before we wrap up.", "fr": "Mettons-nous d'accord sur les priorités avant de conclure.", "blanks": ["align", "wrap"], "blankOptions": { "align": ["align", "agree", "focus", "decide"], "wrap": ["wrap", "close", "finish", "end"] } },
+      { "id": "mt_12", "en": "Can everyone see my screen?", "fr": "Tout le monde voit mon écran ?", "blanks": ["screen"], "blankOptions": { "screen": ["screen", "slide", "page", "view"] } },
+      { "id": "mt_13", "en": "Let's take this offline.", "fr": "On en discute en dehors de cette réunion.", "blanks": ["offline"], "blankOptions": { "offline": ["offline", "later", "outside", "privately"] } },
+      { "id": "mt_14", "en": "Who owns this action item?", "fr": "Qui est responsable de cette action ?", "blanks": ["owns"], "blankOptions": { "owns": ["owns", "has", "leads", "does"] } },
+      { "id": "mt_15", "en": "I'll send a follow-up email after the call.", "fr": "J'enverrai un email de suivi après l'appel.", "blanks": ["follow-up"], "blankOptions": { "follow-up": ["follow-up", "summary", "recap", "quick"] } },
+      { "id": "mt_16", "en": "Does that work for everyone?", "fr": "Ça convient à tout le monde ?", "blanks": ["work"], "blankOptions": { "work": ["work", "fit", "suit", "go"] } },
+      { "id": "mt_17", "en": "Let's keep this short, we're running out of time.", "fr": "Restons brefs, on n'a plus beaucoup de temps.", "blanks": ["short", "time"], "blankOptions": { "short": ["short", "quick", "brief", "fast"], "time": ["time", "minutes", "room", "space"] } },
+      { "id": "mt_18", "en": "I'll loop in the rest of the team.", "fr": "Je vais mettre le reste de l'équipe au courant.", "blanks": ["loop"], "blankOptions": { "loop": ["loop", "bring", "tell", "call"] } }
+    ]
+  },
+  "presentations": {
+    "label": "Présentations",
+    "icon": "🎤",
+    "color": "#7c3aed",
+    "items": [
+      { "id": "pr_01", "en": "Today I'm going to talk about our Q3 results.", "fr": "Aujourd'hui, je vais vous parler de nos résultats du T3.", "blanks": ["talk"], "blankOptions": { "talk": ["talk", "speak", "present", "go"] } },
+      { "id": "pr_02", "en": "Let me give you a quick overview first.", "fr": "Laissez-moi d'abord vous donner un aperçu rapide.", "blanks": ["overview"], "blankOptions": { "overview": ["overview", "summary", "view", "idea"] } },
+      { "id": "pr_03", "en": "As you can see on this slide...", "fr": "Comme vous pouvez le voir sur cette diapositive...", "blanks": ["slide"], "blankOptions": { "slide": ["slide", "screen", "chart", "page"] } },
+      { "id": "pr_04", "en": "Let's move on to the next point.", "fr": "Passons au point suivant.", "blanks": ["move"], "blankOptions": { "move": ["move", "go", "jump", "get"] } },
+      { "id": "pr_05", "en": "To sum up, here are the key takeaways.", "fr": "Pour résumer, voici les points clés à retenir.", "blanks": ["sum", "takeaways"], "blankOptions": { "sum": ["sum", "wrap", "close", "finish"], "takeaways": ["takeaways", "points", "ideas", "facts"] } },
+      { "id": "pr_06", "en": "I'll be happy to take questions at the end.", "fr": "Je répondrai volontiers aux questions à la fin.", "blanks": ["questions"], "blankOptions": { "questions": ["questions", "comments", "remarks", "feedback"] } },
+      { "id": "pr_07", "en": "Feel free to interrupt me if anything is unclear.", "fr": "N'hésitez pas à m'interrompre si quelque chose n'est pas clair.", "blanks": ["interrupt", "unclear"], "blankOptions": { "interrupt": ["interrupt", "stop", "ask", "tell"], "unclear": ["unclear", "wrong", "missing", "confusing"] } },
+      { "id": "pr_08", "en": "This chart shows the growth over the last year.", "fr": "Ce graphique montre la croissance sur l'année écoulée.", "blanks": ["chart", "growth"], "blankOptions": { "chart": ["chart", "table", "slide", "image"], "growth": ["growth", "increase", "change", "drop"] } },
+      { "id": "pr_09", "en": "Let's dive a bit deeper into this topic.", "fr": "Approfondissons un peu ce sujet.", "blanks": ["dive", "deeper"], "blankOptions": { "dive": ["dive", "go", "look", "get"], "deeper": ["deeper", "further", "closer", "more"] } },
+      { "id": "pr_10", "en": "Thank you all for your attention.", "fr": "Merci à tous pour votre attention.", "blanks": ["attention"], "blankOptions": { "attention": ["attention", "time", "patience", "presence"] } },
+      { "id": "pr_11", "en": "Any questions before we wrap up?", "fr": "Des questions avant qu'on termine ?", "blanks": ["wrap"], "blankOptions": { "wrap": ["wrap", "stop", "close", "end"] } },
+      { "id": "pr_12", "en": "I'd like to highlight one important point.", "fr": "J'aimerais souligner un point important.", "blanks": ["highlight"], "blankOptions": { "highlight": ["highlight", "show", "mention", "repeat"] } },
+      { "id": "pr_13", "en": "Let's take a step back for a moment.", "fr": "Prenons un peu de recul un instant.", "blanks": ["step", "back"], "blankOptions": { "step": ["step", "look", "break", "pause"], "back": ["back", "away", "out", "down"] } },
+      { "id": "pr_14", "en": "I'm running low on time, so I'll go quickly.", "fr": "Je manque de temps, donc je vais aller vite.", "blanks": ["running", "low"], "blankOptions": { "running": ["running", "getting", "going", "falling"], "low": ["low", "short", "out", "behind"] } }
+    ]
+  },
+  "email": {
+    "label": "Email pro",
+    "icon": "📧",
+    "color": "#b45309",
+    "items": [
+      { "id": "em_01", "en": "I hope this email finds you well.", "fr": "J'espère que vous allez bien.", "blanks": ["finds"], "blankOptions": { "finds": ["finds", "reaches", "meets", "gets"] } },
+      { "id": "em_02", "en": "I'm writing to follow up on our last conversation.", "fr": "Je vous écris pour faire suite à notre dernière conversation.", "blanks": ["follow"], "blankOptions": { "follow": ["follow", "catch", "check", "look"] } },
+      { "id": "em_03", "en": "Please find attached the report you requested.", "fr": "Veuillez trouver ci-joint le rapport que vous avez demandé.", "blanks": ["attached", "requested"], "blankOptions": { "attached": ["attached", "below", "here", "included"], "requested": ["requested", "asked", "wanted", "needed"] } },
+      { "id": "em_04", "en": "Let me know if you have any questions.", "fr": "N'hésitez pas si vous avez des questions.", "blanks": ["questions"], "blankOptions": { "questions": ["questions", "concerns", "doubts", "issues"] } },
+      { "id": "em_05", "en": "Could you please confirm by end of day?", "fr": "Pourriez-vous confirmer avant la fin de journée ?", "blanks": ["confirm"], "blankOptions": { "confirm": ["confirm", "reply", "answer", "check"] } },
+      { "id": "em_06", "en": "Just a gentle reminder about the deadline.", "fr": "Juste un petit rappel concernant la date limite.", "blanks": ["gentle", "deadline"], "blankOptions": { "gentle": ["gentle", "quick", "small", "friendly"], "deadline": ["deadline", "date", "due", "time"] } },
+      { "id": "em_07", "en": "Looking forward to hearing from you.", "fr": "Dans l'attente de votre retour.", "blanks": ["hearing"], "blankOptions": { "hearing": ["hearing", "getting", "seeing", "having"] } },
+      { "id": "em_08", "en": "Apologies for the delay in my response.", "fr": "Désolé pour le retard de ma réponse.", "blanks": ["delay"], "blankOptions": { "delay": ["delay", "wait", "time", "lateness"] } },
+      { "id": "em_09", "en": "Thanks in advance for your help.", "fr": "Merci d'avance pour votre aide.", "blanks": ["advance"], "blankOptions": { "advance": ["advance", "ahead", "before", "early"] } },
+      { "id": "em_10", "en": "Please don't hesitate to reach out.", "fr": "N'hésitez pas à me contacter.", "blanks": ["hesitate", "reach"], "blankOptions": { "hesitate": ["hesitate", "wait", "stop", "fail"], "reach": ["reach", "call", "write", "ask"] } },
+      { "id": "em_11", "en": "I'm copying the team on this thread.", "fr": "Je mets l'équipe en copie sur ce fil.", "blanks": ["copying", "thread"], "blankOptions": { "copying": ["copying", "adding", "putting", "cc'ing"], "thread": ["thread", "email", "chain", "message"] } },
+      { "id": "em_12", "en": "Best regards.", "fr": "Cordialement.", "blanks": ["regards"], "blankOptions": { "regards": ["regards", "wishes", "thanks", "luck"] } }
+    ]
+  },
+  "networking": {
+    "label": "Networking / informel pro",
+    "icon": "🤝",
+    "color": "#c1121f",
+    "items": [
+      { "id": "nw_01", "en": "Mind if I join you?", "fr": "Ça te dérange si je me joins à vous ?", "blanks": ["mind"], "blankOptions": { "mind": ["mind", "care", "matter", "wonder"] } },
+      { "id": "nw_02", "en": "What brings you here today?", "fr": "Qu'est-ce qui t'amène ici aujourd'hui ?", "blanks": ["brings"], "blankOptions": { "brings": ["brings", "takes", "gets", "leads"] } },
+      { "id": "nw_03", "en": "Let me introduce you to a colleague of mine.", "fr": "Laisse-moi te présenter un de mes collègues.", "blanks": ["introduce", "colleague"], "blankOptions": { "introduce": ["introduce", "show", "bring", "present"], "colleague": ["colleague", "friend", "teammate", "manager"] } },
+      { "id": "nw_04", "en": "We should grab a coffee sometime.", "fr": "On devrait se prendre un café à l'occasion.", "blanks": ["grab"], "blankOptions": { "grab": ["grab", "take", "get", "have"] } },
+      { "id": "nw_05", "en": "Here's my card, feel free to reach out.", "fr": "Voici ma carte, n'hésite pas à me contacter.", "blanks": ["card"], "blankOptions": { "card": ["card", "number", "contact", "email"] } },
+      { "id": "nw_06", "en": "How do you two know each other?", "fr": "Comment vous vous connaissez tous les deux ?", "blanks": ["know"], "blankOptions": { "know": ["know", "meet", "find", "see"] } },
+      { "id": "nw_07", "en": "It was great chatting with you.", "fr": "C'était sympa de discuter avec toi.", "blanks": ["chatting"], "blankOptions": { "chatting": ["chatting", "talking", "meeting", "working"] } },
+      { "id": "nw_08", "en": "Let's stay in touch.", "fr": "Restons en contact.", "blanks": ["touch"], "blankOptions": { "touch": ["touch", "contact", "line", "loop"] } },
+      { "id": "nw_09", "en": "I'd love to pick your brain about this.", "fr": "J'aimerais beaucoup avoir ton avis là-dessus.", "blanks": ["pick", "brain"], "blankOptions": { "pick": ["pick", "use", "ask", "get"], "brain": ["brain", "mind", "opinion", "thoughts"] } },
+      { "id": "nw_10", "en": "Are you free for a quick chat next week?", "fr": "Tu es libre pour un petit échange la semaine prochaine ?", "blanks": ["free", "chat"], "blankOptions": { "free": ["free", "available", "around", "open"], "chat": ["chat", "call", "talk", "meeting"] } }
+    ]
+  }
+}
