@@ -4,18 +4,435 @@
     "icon": "🗣️",
     "color": "#0d9488",
     "items": [
-      { "id": "st_01", "en": "I hope you managed to unwind a bit over the weekend.", "fr": "J'espère que tu as réussi à te détendre un peu ce week-end.", "blanks": ["unwind"], "blankOptions": { "unwind": ["unwind", "relax", "settle", "recharge"] } },
-      { "id": "st_02", "en": "I've been completely swamped with work lately.", "fr": "J'ai été complètement débordé de travail ces derniers temps.", "blanks": ["swamped"], "blankOptions": { "swamped": ["swamped", "buried", "loaded", "stuck"] } },
-      { "id": "st_03", "en": "How are you settling into the new role?", "fr": "Comment tu t'adaptes à ton nouveau poste ?", "blanks": ["settling"], "blankOptions": { "settling": ["settling", "fitting", "adjusting", "getting"] } },
-      { "id": "st_04", "en": "I really appreciate you taking the time to chat.", "fr": "J'apprécie vraiment que tu prennes le temps de discuter.", "blanks": ["appreciate"], "blankOptions": { "appreciate": ["appreciate", "value", "thank", "enjoy"] } },
-      { "id": "st_05", "en": "Things have been a bit hectic on my end.", "fr": "Ça a été un peu mouvementé de mon côté.", "blanks": ["hectic"], "blankOptions": { "hectic": ["hectic", "tight", "heavy", "rough"] } },
-      { "id": "st_06", "en": "It's been ages since we last had a proper conversation.", "fr": "Ça fait une éternité qu'on n'a pas eu une vraie conversation.", "blanks": ["ages", "proper"], "blankOptions": { "ages": ["ages", "years", "months", "weeks"], "proper": ["proper", "real", "good", "long"] } },
-      { "id": "st_07", "en": "I'm still getting used to the time difference.", "fr": "Je m'habitue encore au décalage horaire.", "blanks": ["difference"], "blankOptions": { "difference": ["difference", "change", "shift", "gap"] } },
-      { "id": "st_08", "en": "I owe you a coffee for all your help last week.", "fr": "Je te dois un café pour toute ton aide la semaine dernière.", "blanks": ["owe"], "blankOptions": { "owe": ["owe", "want", "need", "give"] } },
-      { "id": "st_09", "en": "Work's been keeping me on my toes lately.", "fr": "Le travail me tient en haleine ces derniers temps.", "blanks": ["toes"], "blankOptions": { "toes": ["toes", "feet", "edge", "watch"] } },
-      { "id": "st_10", "en": "I'm trying to strike a better work-life balance these days.", "fr": "J'essaie de trouver un meilleur équilibre vie pro/perso en ce moment.", "blanks": ["strike"], "blankOptions": { "strike": ["strike", "find", "keep", "build"] } },
-      { "id": "st_11", "en": "Let's not lose touch this time, seriously.", "fr": "Ne perdons pas contact cette fois-ci, sérieusement.", "blanks": ["touch"], "blankOptions": { "touch": ["touch", "contact", "track", "line"] } },
-      { "id": "st_12", "en": "I'd love to hear how things have been going on your end.", "fr": "J'aimerais bien savoir comment ça se passe de ton côté.", "blanks": ["going"], "blankOptions": { "going": ["going", "doing", "looking", "running"] } }
+      {
+        "id": "st_01",
+        "en": "I hope you managed to unwind a bit over the weekend.",
+        "fr": "J'espère que tu as réussi à te détendre un peu ce week-end.",
+        "blanks": [
+          "unwind"
+        ],
+        "blankOptions": {
+          "unwind": [
+            "unwind",
+            "relax",
+            "settle",
+            "recharge"
+          ]
+        }
+      },
+      {
+        "id": "st_02",
+        "en": "I've been completely swamped with work lately.",
+        "fr": "J'ai été complètement débordé de travail ces derniers temps.",
+        "blanks": [
+          "swamped"
+        ],
+        "blankOptions": {
+          "swamped": [
+            "swamped",
+            "buried",
+            "loaded",
+            "stuck"
+          ]
+        }
+      },
+      {
+        "id": "st_03",
+        "en": "How are you settling into the new role?",
+        "fr": "Comment tu t'adaptes à ton nouveau poste ?",
+        "blanks": [
+          "settling"
+        ],
+        "blankOptions": {
+          "settling": [
+            "settling",
+            "fitting",
+            "adjusting",
+            "getting"
+          ]
+        }
+      },
+      {
+        "id": "st_04",
+        "en": "I really appreciate you taking the time to chat.",
+        "fr": "J'apprécie vraiment que tu prennes le temps de discuter.",
+        "blanks": [
+          "appreciate"
+        ],
+        "blankOptions": {
+          "appreciate": [
+            "appreciate",
+            "value",
+            "thank",
+            "enjoy"
+          ]
+        }
+      },
+      {
+        "id": "st_05",
+        "en": "Things have been a bit hectic on my end.",
+        "fr": "Ça a été un peu mouvementé de mon côté.",
+        "blanks": [
+          "hectic"
+        ],
+        "blankOptions": {
+          "hectic": [
+            "hectic",
+            "tight",
+            "heavy",
+            "rough"
+          ]
+        }
+      },
+      {
+        "id": "st_06",
+        "en": "It's been ages since we last had a proper conversation.",
+        "fr": "Ça fait une éternité qu'on n'a pas eu une vraie conversation.",
+        "blanks": [
+          "ages",
+          "proper"
+        ],
+        "blankOptions": {
+          "ages": [
+            "ages",
+            "years",
+            "months",
+            "weeks"
+          ],
+          "proper": [
+            "proper",
+            "real",
+            "good",
+            "long"
+          ]
+        }
+      },
+      {
+        "id": "st_07",
+        "en": "I'm still getting used to the time difference.",
+        "fr": "Je m'habitue encore au décalage horaire.",
+        "blanks": [
+          "difference"
+        ],
+        "blankOptions": {
+          "difference": [
+            "difference",
+            "change",
+            "shift",
+            "gap"
+          ]
+        }
+      },
+      {
+        "id": "st_08",
+        "en": "I owe you a coffee for all your help last week.",
+        "fr": "Je te dois un café pour toute ton aide la semaine dernière.",
+        "blanks": [
+          "owe"
+        ],
+        "blankOptions": {
+          "owe": [
+            "owe",
+            "want",
+            "need",
+            "give"
+          ]
+        }
+      },
+      {
+        "id": "st_09",
+        "en": "Work's been keeping me on my toes lately.",
+        "fr": "Le travail me tient en haleine ces derniers temps.",
+        "blanks": [
+          "toes"
+        ],
+        "blankOptions": {
+          "toes": [
+            "toes",
+            "feet",
+            "edge",
+            "watch"
+          ]
+        }
+      },
+      {
+        "id": "st_10",
+        "en": "I'm trying to strike a better work-life balance these days.",
+        "fr": "J'essaie de trouver un meilleur équilibre vie pro/perso en ce moment.",
+        "blanks": [
+          "strike"
+        ],
+        "blankOptions": {
+          "strike": [
+            "strike",
+            "find",
+            "keep",
+            "build"
+          ]
+        }
+      },
+      {
+        "id": "st_11",
+        "en": "Let's not lose touch this time, seriously.",
+        "fr": "Ne perdons pas contact cette fois-ci, sérieusement.",
+        "blanks": [
+          "touch"
+        ],
+        "blankOptions": {
+          "touch": [
+            "touch",
+            "contact",
+            "track",
+            "line"
+          ]
+        }
+      },
+      {
+        "id": "st_12",
+        "en": "I'd love to hear how things have been going on your end.",
+        "fr": "J'aimerais bien savoir comment ça se passe de ton côté.",
+        "blanks": [
+          "going"
+        ],
+        "blankOptions": {
+          "going": [
+            "going",
+            "doing",
+            "looking",
+            "running"
+          ]
+        }
+      },
+      {
+        "id": "st_13",
+        "en": "Had I known you were in town, I would have made time to catch up.",
+        "fr": "Si j'avais su que tu étais en ville, j'aurais pris le temps de te voir.",
+        "blanks": [
+          "known",
+          "made"
+        ],
+        "blankOptions": {
+          "known": [
+            "known",
+            "realized",
+            "guessed",
+            "learned"
+          ],
+          "made": [
+            "made",
+            "found",
+            "kept",
+            "saved"
+          ]
+        }
+      },
+      {
+        "id": "st_14",
+        "en": "If it weren't for the time difference, we'd talk far more often.",
+        "fr": "Sans le décalage horaire, on se parlerait bien plus souvent.",
+        "blanks": [
+          "weren't",
+          "often"
+        ],
+        "blankOptions": {
+          "weren't": [
+            "weren't",
+            "wasn't",
+            "isn't",
+            "hadn't"
+          ],
+          "often": [
+            "often",
+            "more",
+            "easily",
+            "regularly"
+          ]
+        }
+      },
+      {
+        "id": "st_15",
+        "en": "I can't help but feel like time just slips away these days.",
+        "fr": "Je ne peux m'empêcher de sentir que le temps file ces derniers temps.",
+        "blanks": [
+          "help",
+          "slips"
+        ],
+        "blankOptions": {
+          "help": [
+            "help",
+            "stop",
+            "avoid",
+            "resist"
+          ],
+          "slips": [
+            "slips",
+            "flies",
+            "runs",
+            "passes"
+          ]
+        }
+      },
+      {
+        "id": "st_16",
+        "en": "Now that things have calmed down a bit, I finally have time to breathe.",
+        "fr": "Maintenant que les choses se sont un peu calmées, j'ai enfin le temps de souffler.",
+        "blanks": [
+          "calmed",
+          "breathe"
+        ],
+        "blankOptions": {
+          "calmed": [
+            "calmed",
+            "settled",
+            "slowed",
+            "eased"
+          ],
+          "breathe": [
+            "breathe",
+            "rest",
+            "relax",
+            "think"
+          ]
+        }
+      },
+      {
+        "id": "st_17",
+        "en": "I've been meaning to reach out, but life just got in the way.",
+        "fr": "J'avais l'intention de te contacter, mais la vie s'en est mêlée.",
+        "blanks": [
+          "meaning",
+          "way"
+        ],
+        "blankOptions": {
+          "meaning": [
+            "meaning",
+            "planning",
+            "wanting",
+            "trying"
+          ],
+          "way": [
+            "way",
+            "between",
+            "front",
+            "path"
+          ]
+        }
+      },
+      {
+        "id": "st_18",
+        "en": "Looking back, I really should have taken more time off this year.",
+        "fr": "Avec le recul, j'aurais vraiment dû prendre plus de congés cette année.",
+        "blanks": [
+          "Looking",
+          "taken"
+        ],
+        "blankOptions": {
+          "Looking": [
+            "Looking",
+            "Thinking",
+            "Reflecting",
+            "Glancing"
+          ],
+          "taken": [
+            "taken",
+            "had",
+            "booked",
+            "gotten"
+          ]
+        }
+      },
+      {
+        "id": "st_19",
+        "en": "The older I get, the more I value a quiet weekend at home.",
+        "fr": "Plus je vieillis, plus j'apprécie un week-end tranquille à la maison.",
+        "blanks": [
+          "older",
+          "value"
+        ],
+        "blankOptions": {
+          "older": [
+            "older",
+            "busier",
+            "wiser",
+            "calmer"
+          ],
+          "value": [
+            "value",
+            "appreciate",
+            "enjoy",
+            "treasure"
+          ]
+        }
+      },
+      {
+        "id": "st_20",
+        "en": "Knowing you, I'm sure you've already got the whole week planned out.",
+        "fr": "Te connaissant, je suis sûr que tu as déjà planifié toute ta semaine.",
+        "blanks": [
+          "Knowing",
+          "planned"
+        ],
+        "blankOptions": {
+          "Knowing": [
+            "Knowing",
+            "Trusting",
+            "Seeing",
+            "Hearing"
+          ],
+          "planned": [
+            "planned",
+            "mapped",
+            "sorted",
+            "worked"
+          ]
+        }
+      },
+      {
+        "id": "st_21",
+        "en": "What with everything going on, I haven't had a moment to myself.",
+        "fr": "Avec tout ce qui se passe, je n'ai pas eu un moment à moi.",
+        "blanks": [
+          "What",
+          "moment"
+        ],
+        "blankOptions": {
+          "What": [
+            "What",
+            "So",
+            "Given",
+            "With"
+          ],
+          "moment": [
+            "moment",
+            "minute",
+            "second",
+            "break"
+          ]
+        }
+      },
+      {
+        "id": "st_22",
+        "en": "It's funny how we always end up talking about work, isn't it?",
+        "fr": "C'est marrant comme on finit toujours par parler du travail, non ?",
+        "blanks": [
+          "end",
+          "isn't"
+        ],
+        "blankOptions": {
+          "end": [
+            "end",
+            "wind",
+            "come",
+            "get"
+          ],
+          "isn't": [
+            "isn't",
+            "wasn't",
+            "doesn't",
+            "won't"
+          ]
+        }
+      }
     ]
   },
   "meetings": {
@@ -23,24 +440,552 @@
     "icon": "💼",
     "color": "#0891b2",
     "items": [
-      { "id": "mt_01", "en": "Let's dive straight into the agenda, shall we?", "fr": "Plongeons directement dans l'ordre du jour, vous êtes d'accord ?", "blanks": ["dive"], "blankOptions": { "dive": ["dive", "jump", "get", "go"] } },
-      { "id": "mt_02", "en": "I'd like to flag a potential risk before we proceed.", "fr": "J'aimerais signaler un risque potentiel avant qu'on continue.", "blanks": ["flag"], "blankOptions": { "flag": ["flag", "raise", "note", "mention"] } },
-      { "id": "mt_03", "en": "Could you elaborate on that point a bit further?", "fr": "Pourrais-tu développer ce point un peu plus ?", "blanks": ["elaborate"], "blankOptions": { "elaborate": ["elaborate", "expand", "build", "comment"] } },
-      { "id": "mt_04", "en": "I'm not entirely convinced this approach will scale.", "fr": "Je ne suis pas totalement convaincu que cette approche tienne la charge.", "blanks": ["convinced", "scale"], "blankOptions": { "convinced": ["convinced", "sure", "certain", "confident"], "scale": ["scale", "work", "hold", "last"] } },
-      { "id": "mt_05", "en": "Let's park this discussion and revisit it next week.", "fr": "Mettons cette discussion de côté et reprenons-la la semaine prochaine.", "blanks": ["park", "revisit"], "blankOptions": { "park": ["park", "drop", "close", "skip"], "revisit": ["revisit", "resume", "reopen", "redo"] } },
-      { "id": "mt_06", "en": "We need to nail down the timeline before we close this out.", "fr": "Il faut qu'on fixe précisément le calendrier avant de clore ce point.", "blanks": ["nail"], "blankOptions": { "nail": ["nail", "lock", "set", "pin"] } },
-      { "id": "mt_07", "en": "I'd push back on that assumption, if I may.", "fr": "Je remettrais en question cette hypothèse, si je peux me permettre.", "blanks": ["push"], "blankOptions": { "push": ["push", "go", "hold", "fall"] } },
-      { "id": "mt_08", "en": "Let's make sure we're all on the same page going forward.", "fr": "Assurons-nous d'être tous alignés pour la suite.", "blanks": ["page"], "blankOptions": { "page": ["page", "line", "track", "side"] } },
-      { "id": "mt_09", "en": "Can we get a sanity check on these numbers?", "fr": "On peut vérifier que ces chiffres tiennent la route ?", "blanks": ["sanity"], "blankOptions": { "sanity": ["sanity", "quick", "double", "final"] } },
-      { "id": "mt_10", "en": "I think we're getting into the weeds here.", "fr": "Je pense qu'on rentre trop dans les détails là.", "blanks": ["weeds"], "blankOptions": { "weeds": ["weeds", "details", "depths", "noise"] } },
-      { "id": "mt_11", "en": "Let's circle back once we have more data.", "fr": "Revenons là-dessus une fois qu'on aura plus de données.", "blanks": ["circle"], "blankOptions": { "circle": ["circle", "come", "get", "loop"] } },
-      { "id": "mt_12", "en": "I'll take the action item to follow up with the vendor.", "fr": "Je prends en charge l'action de relancer le prestataire.", "blanks": ["vendor"], "blankOptions": { "vendor": ["vendor", "client", "partner", "supplier"] } },
-      { "id": "mt_13", "en": "We're running the risk of overcommitting this sprint.", "fr": "On court le risque de trop s'engager sur ce sprint.", "blanks": ["overcommitting"], "blankOptions": { "overcommitting": ["overcommitting", "overloading", "overbooking", "overpromising"] } },
-      { "id": "mt_14", "en": "Let's table the budget discussion for now.", "fr": "Mettons de côté la discussion budget pour l'instant.", "blanks": ["table"], "blankOptions": { "table": ["table", "pause", "hold", "drop"] } },
-      { "id": "mt_15", "en": "I want to make sure we're not missing any blockers.", "fr": "Je veux m'assurer qu'on ne passe à côté d'aucun blocage.", "blanks": ["blockers"], "blankOptions": { "blockers": ["blockers", "issues", "risks", "gaps"] } },
-      { "id": "mt_16", "en": "Let's keep this meeting tight, we have a packed agenda.", "fr": "Restons efficaces sur cette réunion, l'ordre du jour est chargé.", "blanks": ["tight", "packed"], "blankOptions": { "tight": ["tight", "short", "fast", "lean"], "packed": ["packed", "full", "busy", "heavy"] } },
-      { "id": "mt_17", "en": "I'll loop back with the stakeholders before we finalize.", "fr": "Je vais reprendre contact avec les parties prenantes avant qu'on finalise.", "blanks": ["stakeholders", "finalize"], "blankOptions": { "stakeholders": ["stakeholders", "managers", "leads", "sponsors"], "finalize": ["finalize", "decide", "confirm", "close"] } },
-      { "id": "mt_18", "en": "Let's hold off on a final decision until we have buy-in.", "fr": "Attendons avant de prendre une décision finale jusqu'à avoir l'adhésion de tous.", "blanks": ["hold"], "blankOptions": { "hold": ["hold", "wait", "stay", "stop"] } }
+      {
+        "id": "mt_01",
+        "en": "Let's dive straight into the agenda, shall we?",
+        "fr": "Plongeons directement dans l'ordre du jour, vous êtes d'accord ?",
+        "blanks": [
+          "dive"
+        ],
+        "blankOptions": {
+          "dive": [
+            "dive",
+            "jump",
+            "get",
+            "go"
+          ]
+        }
+      },
+      {
+        "id": "mt_02",
+        "en": "I'd like to flag a potential risk before we proceed.",
+        "fr": "J'aimerais signaler un risque potentiel avant qu'on continue.",
+        "blanks": [
+          "flag"
+        ],
+        "blankOptions": {
+          "flag": [
+            "flag",
+            "raise",
+            "note",
+            "mention"
+          ]
+        }
+      },
+      {
+        "id": "mt_03",
+        "en": "Could you elaborate on that point a bit further?",
+        "fr": "Pourrais-tu développer ce point un peu plus ?",
+        "blanks": [
+          "elaborate"
+        ],
+        "blankOptions": {
+          "elaborate": [
+            "elaborate",
+            "expand",
+            "build",
+            "comment"
+          ]
+        }
+      },
+      {
+        "id": "mt_04",
+        "en": "I'm not entirely convinced this approach will scale.",
+        "fr": "Je ne suis pas totalement convaincu que cette approche tienne la charge.",
+        "blanks": [
+          "convinced",
+          "scale"
+        ],
+        "blankOptions": {
+          "convinced": [
+            "convinced",
+            "sure",
+            "certain",
+            "confident"
+          ],
+          "scale": [
+            "scale",
+            "work",
+            "hold",
+            "last"
+          ]
+        }
+      },
+      {
+        "id": "mt_05",
+        "en": "Let's park this discussion and revisit it next week.",
+        "fr": "Mettons cette discussion de côté et reprenons-la la semaine prochaine.",
+        "blanks": [
+          "park",
+          "revisit"
+        ],
+        "blankOptions": {
+          "park": [
+            "park",
+            "drop",
+            "close",
+            "skip"
+          ],
+          "revisit": [
+            "revisit",
+            "resume",
+            "reopen",
+            "redo"
+          ]
+        }
+      },
+      {
+        "id": "mt_06",
+        "en": "We need to nail down the timeline before we close this out.",
+        "fr": "Il faut qu'on fixe précisément le calendrier avant de clore ce point.",
+        "blanks": [
+          "nail"
+        ],
+        "blankOptions": {
+          "nail": [
+            "nail",
+            "lock",
+            "set",
+            "pin"
+          ]
+        }
+      },
+      {
+        "id": "mt_07",
+        "en": "I'd push back on that assumption, if I may.",
+        "fr": "Je remettrais en question cette hypothèse, si je peux me permettre.",
+        "blanks": [
+          "push"
+        ],
+        "blankOptions": {
+          "push": [
+            "push",
+            "go",
+            "hold",
+            "fall"
+          ]
+        }
+      },
+      {
+        "id": "mt_08",
+        "en": "Let's make sure we're all on the same page going forward.",
+        "fr": "Assurons-nous d'être tous alignés pour la suite.",
+        "blanks": [
+          "page"
+        ],
+        "blankOptions": {
+          "page": [
+            "page",
+            "line",
+            "track",
+            "side"
+          ]
+        }
+      },
+      {
+        "id": "mt_09",
+        "en": "Can we get a sanity check on these numbers?",
+        "fr": "On peut vérifier que ces chiffres tiennent la route ?",
+        "blanks": [
+          "sanity"
+        ],
+        "blankOptions": {
+          "sanity": [
+            "sanity",
+            "quick",
+            "double",
+            "final"
+          ]
+        }
+      },
+      {
+        "id": "mt_10",
+        "en": "I think we're getting into the weeds here.",
+        "fr": "Je pense qu'on rentre trop dans les détails là.",
+        "blanks": [
+          "weeds"
+        ],
+        "blankOptions": {
+          "weeds": [
+            "weeds",
+            "details",
+            "depths",
+            "noise"
+          ]
+        }
+      },
+      {
+        "id": "mt_11",
+        "en": "Let's circle back once we have more data.",
+        "fr": "Revenons là-dessus une fois qu'on aura plus de données.",
+        "blanks": [
+          "circle"
+        ],
+        "blankOptions": {
+          "circle": [
+            "circle",
+            "come",
+            "get",
+            "loop"
+          ]
+        }
+      },
+      {
+        "id": "mt_12",
+        "en": "I'll take the action item to follow up with the vendor.",
+        "fr": "Je prends en charge l'action de relancer le prestataire.",
+        "blanks": [
+          "vendor"
+        ],
+        "blankOptions": {
+          "vendor": [
+            "vendor",
+            "client",
+            "partner",
+            "supplier"
+          ]
+        }
+      },
+      {
+        "id": "mt_13",
+        "en": "We're running the risk of overcommitting this sprint.",
+        "fr": "On court le risque de trop s'engager sur ce sprint.",
+        "blanks": [
+          "overcommitting"
+        ],
+        "blankOptions": {
+          "overcommitting": [
+            "overcommitting",
+            "overloading",
+            "overbooking",
+            "overpromising"
+          ]
+        }
+      },
+      {
+        "id": "mt_14",
+        "en": "Let's table the budget discussion for now.",
+        "fr": "Mettons de côté la discussion budget pour l'instant.",
+        "blanks": [
+          "table"
+        ],
+        "blankOptions": {
+          "table": [
+            "table",
+            "pause",
+            "hold",
+            "drop"
+          ]
+        }
+      },
+      {
+        "id": "mt_15",
+        "en": "I want to make sure we're not missing any blockers.",
+        "fr": "Je veux m'assurer qu'on ne passe à côté d'aucun blocage.",
+        "blanks": [
+          "blockers"
+        ],
+        "blankOptions": {
+          "blockers": [
+            "blockers",
+            "issues",
+            "risks",
+            "gaps"
+          ]
+        }
+      },
+      {
+        "id": "mt_16",
+        "en": "Let's keep this meeting tight, we have a packed agenda.",
+        "fr": "Restons efficaces sur cette réunion, l'ordre du jour est chargé.",
+        "blanks": [
+          "tight",
+          "packed"
+        ],
+        "blankOptions": {
+          "tight": [
+            "tight",
+            "short",
+            "fast",
+            "lean"
+          ],
+          "packed": [
+            "packed",
+            "full",
+            "busy",
+            "heavy"
+          ]
+        }
+      },
+      {
+        "id": "mt_17",
+        "en": "I'll loop back with the stakeholders before we finalize.",
+        "fr": "Je vais reprendre contact avec les parties prenantes avant qu'on finalise.",
+        "blanks": [
+          "stakeholders",
+          "finalize"
+        ],
+        "blankOptions": {
+          "stakeholders": [
+            "stakeholders",
+            "managers",
+            "leads",
+            "sponsors"
+          ],
+          "finalize": [
+            "finalize",
+            "decide",
+            "confirm",
+            "close"
+          ]
+        }
+      },
+      {
+        "id": "mt_18",
+        "en": "Let's hold off on a final decision until we have buy-in.",
+        "fr": "Attendons avant de prendre une décision finale jusqu'à avoir l'adhésion de tous.",
+        "blanks": [
+          "hold"
+        ],
+        "blankOptions": {
+          "hold": [
+            "hold",
+            "wait",
+            "stay",
+            "stop"
+          ]
+        }
+      },
+      {
+        "id": "mt_19",
+        "en": "Were it not for the deadline, I'd suggest we slow this down.",
+        "fr": "Sans cette date limite, je suggérerais qu'on ralentisse un peu.",
+        "blanks": [
+          "Were",
+          "slow"
+        ],
+        "blankOptions": {
+          "Were": [
+            "Were",
+            "Was",
+            "If",
+            "Had"
+          ],
+          "slow": [
+            "slow",
+            "calm",
+            "tone",
+            "scale"
+          ]
+        }
+      },
+      {
+        "id": "mt_20",
+        "en": "Having reviewed the data, I'm inclined to rethink our approach entirely.",
+        "fr": "Après avoir examiné les données, je suis enclin à repenser totalement notre approche.",
+        "blanks": [
+          "Having",
+          "rethink"
+        ],
+        "blankOptions": {
+          "Having": [
+            "Having",
+            "After",
+            "Once",
+            "Upon"
+          ],
+          "rethink": [
+            "rethink",
+            "reconsider",
+            "revise",
+            "reshape"
+          ]
+        }
+      },
+      {
+        "id": "mt_21",
+        "en": "Should any blockers come up, please escalate them straight away.",
+        "fr": "Si des blocages surviennent, merci de les remonter immédiatement.",
+        "blanks": [
+          "Should",
+          "escalate"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "When",
+            "Were"
+          ],
+          "escalate": [
+            "escalate",
+            "flag",
+            "report",
+            "raise"
+          ]
+        }
+      },
+      {
+        "id": "mt_22",
+        "en": "The sooner we lock in the scope, the smoother this rollout will be.",
+        "fr": "Plus vite on fige le périmètre, plus le déploiement sera fluide.",
+        "blanks": [
+          "sooner",
+          "smoother"
+        ],
+        "blankOptions": {
+          "sooner": [
+            "sooner",
+            "faster",
+            "earlier",
+            "quicker"
+          ],
+          "smoother": [
+            "smoother",
+            "easier",
+            "cleaner",
+            "safer"
+          ]
+        }
+      },
+      {
+        "id": "mt_23",
+        "en": "I'd rather we addressed this head-on than swept it under the rug.",
+        "fr": "Je préfère qu'on traite ça de front plutôt que de l'ignorer.",
+        "blanks": [
+          "addressed",
+          "swept"
+        ],
+        "blankOptions": {
+          "addressed": [
+            "addressed",
+            "tackled",
+            "handled",
+            "faced"
+          ],
+          "swept": [
+            "swept",
+            "pushed",
+            "brushed",
+            "left"
+          ]
+        }
+      },
+      {
+        "id": "mt_24",
+        "en": "Given how tight the timeline is, I doubt we'll have room for changes.",
+        "fr": "Vu à quel point le calendrier est serré, je doute qu'on ait de la marge pour des changements.",
+        "blanks": [
+          "Given",
+          "room"
+        ],
+        "blankOptions": {
+          "Given": [
+            "Given",
+            "Considering",
+            "Knowing",
+            "Seeing"
+          ],
+          "room": [
+            "room",
+            "space",
+            "time",
+            "margin"
+          ]
+        }
+      },
+      {
+        "id": "mt_25",
+        "en": "Not only did we miss the deadline, but the budget also overran.",
+        "fr": "Non seulement on a raté la date limite, mais le budget a aussi dépassé.",
+        "blanks": [
+          "Not",
+          "overran"
+        ],
+        "blankOptions": {
+          "Not": [
+            "Not",
+            "No",
+            "Hardly",
+            "Never"
+          ],
+          "overran": [
+            "overran",
+            "exceeded",
+            "blew",
+            "ran"
+          ]
+        }
+      },
+      {
+        "id": "mt_26",
+        "en": "It's worth bearing in mind that the client hasn't signed off yet.",
+        "fr": "Il faut garder en tête que le client n'a pas encore validé.",
+        "blanks": [
+          "bearing",
+          "signed"
+        ],
+        "blankOptions": {
+          "bearing": [
+            "bearing",
+            "keeping",
+            "having",
+            "holding"
+          ],
+          "signed": [
+            "signed",
+            "approved",
+            "confirmed",
+            "agreed"
+          ]
+        }
+      },
+      {
+        "id": "mt_27",
+        "en": "Rather than rushing this through, I'd suggest we build in a buffer.",
+        "fr": "Plutôt que de précipiter les choses, je suggère qu'on prévoie une marge.",
+        "blanks": [
+          "Rather",
+          "buffer"
+        ],
+        "blankOptions": {
+          "Rather": [
+            "Rather",
+            "Instead",
+            "Sooner",
+            "Better"
+          ],
+          "buffer": [
+            "buffer",
+            "cushion",
+            "margin",
+            "gap"
+          ]
+        }
+      },
+      {
+        "id": "mt_28",
+        "en": "The way I see it, we still have a few open questions to settle.",
+        "fr": "À mon sens, il reste encore quelques questions ouvertes à régler.",
+        "blanks": [
+          "see",
+          "settle"
+        ],
+        "blankOptions": {
+          "see": [
+            "see",
+            "view",
+            "read",
+            "take"
+          ],
+          "settle": [
+            "settle",
+            "resolve",
+            "close",
+            "clear"
+          ]
+        }
+      }
     ]
   },
   "presentations": {
@@ -48,20 +993,474 @@
     "icon": "🎤",
     "color": "#7c3aed",
     "items": [
-      { "id": "pr_01", "en": "Let me set the stage before diving into the details.", "fr": "Laissez-moi planter le décor avant d'entrer dans les détails.", "blanks": ["stage"], "blankOptions": { "stage": ["stage", "scene", "tone", "context"] } },
-      { "id": "pr_02", "en": "I'll keep this brief and get straight to the point.", "fr": "Je vais faire court et aller droit au but.", "blanks": ["brief"], "blankOptions": { "brief": ["brief", "short", "quick", "tight"] } },
-      { "id": "pr_03", "en": "This slide illustrates the key drivers behind the growth.", "fr": "Cette diapositive illustre les principaux facteurs de la croissance.", "blanks": ["drivers"], "blankOptions": { "drivers": ["drivers", "factors", "causes", "reasons"] } },
-      { "id": "pr_04", "en": "Let's unpack this a little further.", "fr": "Approfondissons un peu ce point.", "blanks": ["unpack"], "blankOptions": { "unpack": ["unpack", "explore", "break", "review"] } },
-      { "id": "pr_05", "en": "To put this into perspective, consider the following.", "fr": "Pour remettre les choses en perspective, considérez ceci.", "blanks": ["perspective"], "blankOptions": { "perspective": ["perspective", "context", "focus", "view"] } },
-      { "id": "pr_06", "en": "I'd like to draw your attention to this particular trend.", "fr": "J'aimerais attirer votre attention sur cette tendance en particulier.", "blanks": ["draw", "particular"], "blankOptions": { "draw": ["draw", "bring", "call", "turn"], "particular": ["particular", "specific", "given", "certain"] } },
-      { "id": "pr_07", "en": "Let's take a closer look at the underlying assumptions.", "fr": "Examinons de plus près les hypothèses sous-jacentes.", "blanks": ["underlying"], "blankOptions": { "underlying": ["underlying", "hidden", "core", "basic"] } },
-      { "id": "pr_08", "en": "I'll leave plenty of room for questions at the end.", "fr": "Je laisserai largement de la place aux questions à la fin.", "blanks": ["room"], "blankOptions": { "room": ["room", "time", "space", "place"] } },
-      { "id": "pr_09", "en": "Let me walk you through the rationale behind this decision.", "fr": "Laissez-moi vous expliquer la logique derrière cette décision.", "blanks": ["rationale"], "blankOptions": { "rationale": ["rationale", "reasoning", "logic", "thinking"] } },
-      { "id": "pr_10", "en": "I'll wrap up with a few closing thoughts.", "fr": "Je conclurai avec quelques réflexions finales.", "blanks": ["wrap", "closing"], "blankOptions": { "wrap": ["wrap", "finish", "end", "close"], "closing": ["closing", "final", "last", "parting"] } },
-      { "id": "pr_11", "en": "Happy to take any questions, no matter how tricky.", "fr": "Je suis ravi de répondre à toute question, aussi délicate soit-elle.", "blanks": ["tricky"], "blankOptions": { "tricky": ["tricky", "tough", "hard", "complex"] } },
-      { "id": "pr_12", "en": "This is where things get particularly interesting.", "fr": "C'est là que les choses deviennent particulièrement intéressantes.", "blanks": ["particularly"], "blankOptions": { "particularly": ["particularly", "especially", "really", "genuinely"] } },
-      { "id": "pr_13", "en": "Let's move on before we run out of time.", "fr": "Passons à la suite avant de manquer de temps.", "blanks": ["run"], "blankOptions": { "run": ["run", "fall", "go", "fade"] } },
-      { "id": "pr_14", "en": "I'll spare you the technical details for now.", "fr": "Je vous épargne les détails techniques pour l'instant.", "blanks": ["spare"], "blankOptions": { "spare": ["spare", "skip", "save", "leave"] } }
+      {
+        "id": "pr_01",
+        "en": "Let me set the stage before diving into the details.",
+        "fr": "Laissez-moi planter le décor avant d'entrer dans les détails.",
+        "blanks": [
+          "stage"
+        ],
+        "blankOptions": {
+          "stage": [
+            "stage",
+            "scene",
+            "tone",
+            "context"
+          ]
+        }
+      },
+      {
+        "id": "pr_02",
+        "en": "I'll keep this brief and get straight to the point.",
+        "fr": "Je vais faire court et aller droit au but.",
+        "blanks": [
+          "brief"
+        ],
+        "blankOptions": {
+          "brief": [
+            "brief",
+            "short",
+            "quick",
+            "tight"
+          ]
+        }
+      },
+      {
+        "id": "pr_03",
+        "en": "This slide illustrates the key drivers behind the growth.",
+        "fr": "Cette diapositive illustre les principaux facteurs de la croissance.",
+        "blanks": [
+          "drivers"
+        ],
+        "blankOptions": {
+          "drivers": [
+            "drivers",
+            "factors",
+            "causes",
+            "reasons"
+          ]
+        }
+      },
+      {
+        "id": "pr_04",
+        "en": "Let's unpack this a little further.",
+        "fr": "Approfondissons un peu ce point.",
+        "blanks": [
+          "unpack"
+        ],
+        "blankOptions": {
+          "unpack": [
+            "unpack",
+            "explore",
+            "break",
+            "review"
+          ]
+        }
+      },
+      {
+        "id": "pr_05",
+        "en": "To put this into perspective, consider the following.",
+        "fr": "Pour remettre les choses en perspective, considérez ceci.",
+        "blanks": [
+          "perspective"
+        ],
+        "blankOptions": {
+          "perspective": [
+            "perspective",
+            "context",
+            "focus",
+            "view"
+          ]
+        }
+      },
+      {
+        "id": "pr_06",
+        "en": "I'd like to draw your attention to this particular trend.",
+        "fr": "J'aimerais attirer votre attention sur cette tendance en particulier.",
+        "blanks": [
+          "draw",
+          "particular"
+        ],
+        "blankOptions": {
+          "draw": [
+            "draw",
+            "bring",
+            "call",
+            "turn"
+          ],
+          "particular": [
+            "particular",
+            "specific",
+            "given",
+            "certain"
+          ]
+        }
+      },
+      {
+        "id": "pr_07",
+        "en": "Let's take a closer look at the underlying assumptions.",
+        "fr": "Examinons de plus près les hypothèses sous-jacentes.",
+        "blanks": [
+          "underlying"
+        ],
+        "blankOptions": {
+          "underlying": [
+            "underlying",
+            "hidden",
+            "core",
+            "basic"
+          ]
+        }
+      },
+      {
+        "id": "pr_08",
+        "en": "I'll leave plenty of room for questions at the end.",
+        "fr": "Je laisserai largement de la place aux questions à la fin.",
+        "blanks": [
+          "room"
+        ],
+        "blankOptions": {
+          "room": [
+            "room",
+            "time",
+            "space",
+            "place"
+          ]
+        }
+      },
+      {
+        "id": "pr_09",
+        "en": "Let me walk you through the rationale behind this decision.",
+        "fr": "Laissez-moi vous expliquer la logique derrière cette décision.",
+        "blanks": [
+          "rationale"
+        ],
+        "blankOptions": {
+          "rationale": [
+            "rationale",
+            "reasoning",
+            "logic",
+            "thinking"
+          ]
+        }
+      },
+      {
+        "id": "pr_10",
+        "en": "I'll wrap up with a few closing thoughts.",
+        "fr": "Je conclurai avec quelques réflexions finales.",
+        "blanks": [
+          "wrap",
+          "closing"
+        ],
+        "blankOptions": {
+          "wrap": [
+            "wrap",
+            "finish",
+            "end",
+            "close"
+          ],
+          "closing": [
+            "closing",
+            "final",
+            "last",
+            "parting"
+          ]
+        }
+      },
+      {
+        "id": "pr_11",
+        "en": "Happy to take any questions, no matter how tricky.",
+        "fr": "Je suis ravi de répondre à toute question, aussi délicate soit-elle.",
+        "blanks": [
+          "tricky"
+        ],
+        "blankOptions": {
+          "tricky": [
+            "tricky",
+            "tough",
+            "hard",
+            "complex"
+          ]
+        }
+      },
+      {
+        "id": "pr_12",
+        "en": "This is where things get particularly interesting.",
+        "fr": "C'est là que les choses deviennent particulièrement intéressantes.",
+        "blanks": [
+          "particularly"
+        ],
+        "blankOptions": {
+          "particularly": [
+            "particularly",
+            "especially",
+            "really",
+            "genuinely"
+          ]
+        }
+      },
+      {
+        "id": "pr_13",
+        "en": "Let's move on before we run out of time.",
+        "fr": "Passons à la suite avant de manquer de temps.",
+        "blanks": [
+          "run"
+        ],
+        "blankOptions": {
+          "run": [
+            "run",
+            "fall",
+            "go",
+            "fade"
+          ]
+        }
+      },
+      {
+        "id": "pr_14",
+        "en": "I'll spare you the technical details for now.",
+        "fr": "Je vous épargne les détails techniques pour l'instant.",
+        "blanks": [
+          "spare"
+        ],
+        "blankOptions": {
+          "spare": [
+            "spare",
+            "skip",
+            "save",
+            "leave"
+          ]
+        }
+      },
+      {
+        "id": "pr_15",
+        "en": "Were I to summarize this in one sentence, growth is clearly slowing.",
+        "fr": "Si je devais résumer cela en une phrase, la croissance ralentit clairement.",
+        "blanks": [
+          "Were",
+          "slowing"
+        ],
+        "blankOptions": {
+          "Were": [
+            "Were",
+            "If",
+            "Should",
+            "Had"
+          ],
+          "slowing": [
+            "slowing",
+            "dropping",
+            "fading",
+            "stalling"
+          ]
+        }
+      },
+      {
+        "id": "pr_16",
+        "en": "Far from being a setback, this actually opens up new opportunities.",
+        "fr": "Loin d'être un revers, cela ouvre en réalité de nouvelles opportunités.",
+        "blanks": [
+          "Far",
+          "opens"
+        ],
+        "blankOptions": {
+          "Far": [
+            "Far",
+            "Rather",
+            "Quite",
+            "Less"
+          ],
+          "opens": [
+            "opens",
+            "creates",
+            "reveals",
+            "brings"
+          ]
+        }
+      },
+      {
+        "id": "pr_17",
+        "en": "What we're seeing here is a trend that's likely to accelerate.",
+        "fr": "Ce qu'on observe ici est une tendance qui devrait s'accélérer.",
+        "blanks": [
+          "seeing",
+          "accelerate"
+        ],
+        "blankOptions": {
+          "seeing": [
+            "seeing",
+            "noticing",
+            "tracking",
+            "spotting"
+          ],
+          "accelerate": [
+            "accelerate",
+            "intensify",
+            "grow",
+            "continue"
+          ]
+        }
+      },
+      {
+        "id": "pr_18",
+        "en": "Should you have any doubts, I'd encourage you to raise them now.",
+        "fr": "Si vous avez des doutes, je vous encourage à les soulever maintenant.",
+        "blanks": [
+          "Should",
+          "raise"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "When",
+            "Were"
+          ],
+          "raise": [
+            "raise",
+            "voice",
+            "share",
+            "mention"
+          ]
+        }
+      },
+      {
+        "id": "pr_19",
+        "en": "It's not so much the numbers themselves, but what they imply.",
+        "fr": "Ce n'est pas tant les chiffres en eux-mêmes, mais ce qu'ils sous-entendent.",
+        "blanks": [
+          "much",
+          "imply"
+        ],
+        "blankOptions": {
+          "much": [
+            "much",
+            "really",
+            "purely",
+            "simply"
+          ],
+          "imply": [
+            "imply",
+            "suggest",
+            "reveal",
+            "mean"
+          ]
+        }
+      },
+      {
+        "id": "pr_20",
+        "en": "Having said that, I think the upside still outweighs the risk.",
+        "fr": "Cela dit, je pense que les avantages l'emportent encore sur le risque.",
+        "blanks": [
+          "Having",
+          "outweighs"
+        ],
+        "blankOptions": {
+          "Having": [
+            "Having",
+            "That",
+            "Still",
+            "Even"
+          ],
+          "outweighs": [
+            "outweighs",
+            "beats",
+            "exceeds",
+            "tops"
+          ]
+        }
+      },
+      {
+        "id": "pr_21",
+        "en": "The more data we gather, the clearer this picture becomes.",
+        "fr": "Plus on rassemble de données, plus cette situation devient claire.",
+        "blanks": [
+          "more",
+          "clearer"
+        ],
+        "blankOptions": {
+          "more": [
+            "more",
+            "further",
+            "additional",
+            "extra"
+          ],
+          "clearer": [
+            "clearer",
+            "sharper",
+            "stronger",
+            "better"
+          ]
+        }
+      },
+      {
+        "id": "pr_22",
+        "en": "Little did we expect such a sharp turnaround this quarter.",
+        "fr": "On ne s'attendait pas du tout à un tel revirement ce trimestre.",
+        "blanks": [
+          "Little",
+          "turnaround"
+        ],
+        "blankOptions": {
+          "Little": [
+            "Little",
+            "Hardly",
+            "Rarely",
+            "Never"
+          ],
+          "turnaround": [
+            "turnaround",
+            "shift",
+            "rebound",
+            "change"
+          ]
+        }
+      },
+      {
+        "id": "pr_23",
+        "en": "Bearing in mind the constraints, I believe this is our best option.",
+        "fr": "Compte tenu des contraintes, je pense que c'est notre meilleure option.",
+        "blanks": [
+          "Bearing",
+          "constraints"
+        ],
+        "blankOptions": {
+          "Bearing": [
+            "Bearing",
+            "Given",
+            "Mindful",
+            "Aware"
+          ],
+          "constraints": [
+            "constraints",
+            "limits",
+            "restrictions",
+            "limitations"
+          ]
+        }
+      },
+      {
+        "id": "pr_24",
+        "en": "I'll let the figures speak for themselves on this one.",
+        "fr": "Je vais laisser les chiffres parler d'eux-mêmes sur ce point.",
+        "blanks": [
+          "let",
+          "speak"
+        ],
+        "blankOptions": {
+          "let": [
+            "let",
+            "have",
+            "make",
+            "leave"
+          ],
+          "speak": [
+            "speak",
+            "talk",
+            "stand",
+            "do"
+          ]
+        }
+      }
     ]
   },
   "email": {
@@ -69,18 +1468,449 @@
     "icon": "📧",
     "color": "#b45309",
     "items": [
-      { "id": "em_01", "en": "I trust this email finds you well.", "fr": "J'espère que ce message vous trouve en bonne santé.", "blanks": ["trust"], "blankOptions": { "trust": ["trust", "hope", "wish", "believe"] } },
-      { "id": "em_02", "en": "I'm reaching out to follow up on our earlier discussion.", "fr": "Je me permets de vous recontacter suite à notre précédente discussion.", "blanks": ["reaching"], "blankOptions": { "reaching": ["reaching", "writing", "getting", "following"] } },
-      { "id": "em_03", "en": "Please don't hesitate to flag any concerns.", "fr": "N'hésitez pas à signaler toute préoccupation.", "blanks": ["flag", "concerns"], "blankOptions": { "flag": ["flag", "raise", "share", "note"], "concerns": ["concerns", "issues", "doubts", "questions"] } },
-      { "id": "em_04", "en": "I'd appreciate your input on this matter.", "fr": "J'apprécierais votre avis sur ce sujet.", "blanks": ["input", "matter"], "blankOptions": { "input": ["input", "feedback", "view", "thoughts"], "matter": ["matter", "topic", "issue", "point"] } },
-      { "id": "em_05", "en": "I apologize for any inconvenience this may have caused.", "fr": "Je m'excuse pour la gêne que cela a pu occasionner.", "blanks": ["inconvenience"], "blankOptions": { "inconvenience": ["inconvenience", "trouble", "delay", "confusion"] } },
-      { "id": "em_06", "en": "Could you kindly confirm receipt of this email?", "fr": "Pourriez-vous confirmer la bonne réception de cet email ?", "blanks": ["receipt"], "blankOptions": { "receipt": ["receipt", "delivery", "reading", "arrival"] } },
-      { "id": "em_07", "en": "I look forward to your prompt response.", "fr": "Dans l'attente de votre réponse rapide.", "blanks": ["prompt"], "blankOptions": { "prompt": ["prompt", "quick", "early", "swift"] } },
-      { "id": "em_08", "en": "I wanted to touch base before the deadline.", "fr": "Je voulais faire un point avant la date limite.", "blanks": ["touch"], "blankOptions": { "touch": ["touch", "check", "catch", "follow"] } },
-      { "id": "em_09", "en": "Thank you for your patience while we sort this out.", "fr": "Merci pour votre patience pendant qu'on règle ça.", "blanks": ["patience", "sort"], "blankOptions": { "patience": ["patience", "understanding", "support", "time"], "sort": ["sort", "work", "figure", "fix"] } },
-      { "id": "em_10", "en": "I'm cc'ing the relevant stakeholders for visibility.", "fr": "Je mets en copie les parties prenantes concernées pour information.", "blanks": ["visibility"], "blankOptions": { "visibility": ["visibility", "awareness", "reference", "tracking"] } },
-      { "id": "em_11", "en": "Please find below a quick summary of our call.", "fr": "Veuillez trouver ci-dessous un résumé rapide de notre appel.", "blanks": ["summary"], "blankOptions": { "summary": ["summary", "recap", "overview", "rundown"] } },
-      { "id": "em_12", "en": "Kind regards.", "fr": "Cordialement.", "blanks": ["regards"], "blankOptions": { "regards": ["regards", "wishes", "thanks", "luck"] } }
+      {
+        "id": "em_01",
+        "en": "I trust this email finds you well.",
+        "fr": "J'espère que ce message vous trouve en bonne santé.",
+        "blanks": [
+          "trust"
+        ],
+        "blankOptions": {
+          "trust": [
+            "trust",
+            "hope",
+            "wish",
+            "believe"
+          ]
+        }
+      },
+      {
+        "id": "em_02",
+        "en": "I'm reaching out to follow up on our earlier discussion.",
+        "fr": "Je me permets de vous recontacter suite à notre précédente discussion.",
+        "blanks": [
+          "reaching"
+        ],
+        "blankOptions": {
+          "reaching": [
+            "reaching",
+            "writing",
+            "getting",
+            "following"
+          ]
+        }
+      },
+      {
+        "id": "em_03",
+        "en": "Please don't hesitate to flag any concerns.",
+        "fr": "N'hésitez pas à signaler toute préoccupation.",
+        "blanks": [
+          "flag",
+          "concerns"
+        ],
+        "blankOptions": {
+          "flag": [
+            "flag",
+            "raise",
+            "share",
+            "note"
+          ],
+          "concerns": [
+            "concerns",
+            "issues",
+            "doubts",
+            "questions"
+          ]
+        }
+      },
+      {
+        "id": "em_04",
+        "en": "I'd appreciate your input on this matter.",
+        "fr": "J'apprécierais votre avis sur ce sujet.",
+        "blanks": [
+          "input",
+          "matter"
+        ],
+        "blankOptions": {
+          "input": [
+            "input",
+            "feedback",
+            "view",
+            "thoughts"
+          ],
+          "matter": [
+            "matter",
+            "topic",
+            "issue",
+            "point"
+          ]
+        }
+      },
+      {
+        "id": "em_05",
+        "en": "I apologize for any inconvenience this may have caused.",
+        "fr": "Je m'excuse pour la gêne que cela a pu occasionner.",
+        "blanks": [
+          "inconvenience"
+        ],
+        "blankOptions": {
+          "inconvenience": [
+            "inconvenience",
+            "trouble",
+            "delay",
+            "confusion"
+          ]
+        }
+      },
+      {
+        "id": "em_06",
+        "en": "Could you kindly confirm receipt of this email?",
+        "fr": "Pourriez-vous confirmer la bonne réception de cet email ?",
+        "blanks": [
+          "receipt"
+        ],
+        "blankOptions": {
+          "receipt": [
+            "receipt",
+            "delivery",
+            "reading",
+            "arrival"
+          ]
+        }
+      },
+      {
+        "id": "em_07",
+        "en": "I look forward to your prompt response.",
+        "fr": "Dans l'attente de votre réponse rapide.",
+        "blanks": [
+          "prompt"
+        ],
+        "blankOptions": {
+          "prompt": [
+            "prompt",
+            "quick",
+            "early",
+            "swift"
+          ]
+        }
+      },
+      {
+        "id": "em_08",
+        "en": "I wanted to touch base before the deadline.",
+        "fr": "Je voulais faire un point avant la date limite.",
+        "blanks": [
+          "touch"
+        ],
+        "blankOptions": {
+          "touch": [
+            "touch",
+            "check",
+            "catch",
+            "follow"
+          ]
+        }
+      },
+      {
+        "id": "em_09",
+        "en": "Thank you for your patience while we sort this out.",
+        "fr": "Merci pour votre patience pendant qu'on règle ça.",
+        "blanks": [
+          "patience",
+          "sort"
+        ],
+        "blankOptions": {
+          "patience": [
+            "patience",
+            "understanding",
+            "support",
+            "time"
+          ],
+          "sort": [
+            "sort",
+            "work",
+            "figure",
+            "fix"
+          ]
+        }
+      },
+      {
+        "id": "em_10",
+        "en": "I'm cc'ing the relevant stakeholders for visibility.",
+        "fr": "Je mets en copie les parties prenantes concernées pour information.",
+        "blanks": [
+          "visibility"
+        ],
+        "blankOptions": {
+          "visibility": [
+            "visibility",
+            "awareness",
+            "reference",
+            "tracking"
+          ]
+        }
+      },
+      {
+        "id": "em_11",
+        "en": "Please find below a quick summary of our call.",
+        "fr": "Veuillez trouver ci-dessous un résumé rapide de notre appel.",
+        "blanks": [
+          "summary"
+        ],
+        "blankOptions": {
+          "summary": [
+            "summary",
+            "recap",
+            "overview",
+            "rundown"
+          ]
+        }
+      },
+      {
+        "id": "em_12",
+        "en": "Kind regards.",
+        "fr": "Cordialement.",
+        "blanks": [
+          "regards"
+        ],
+        "blankOptions": {
+          "regards": [
+            "regards",
+            "wishes",
+            "thanks",
+            "luck"
+          ]
+        }
+      },
+      {
+        "id": "em_13",
+        "en": "Should you require any further information, please don't hesitate to ask.",
+        "fr": "Si vous avez besoin de plus d'informations, n'hésitez pas à demander.",
+        "blanks": [
+          "Should",
+          "require"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "When",
+            "Were"
+          ],
+          "require": [
+            "require",
+            "need",
+            "want",
+            "lack"
+          ]
+        }
+      },
+      {
+        "id": "em_14",
+        "en": "I'd be grateful if you could get back to me at your earliest convenience.",
+        "fr": "Je vous serais reconnaissant de bien vouloir me répondre dès que possible.",
+        "blanks": [
+          "grateful",
+          "convenience"
+        ],
+        "blankOptions": {
+          "grateful": [
+            "grateful",
+            "thankful",
+            "obliged",
+            "pleased"
+          ],
+          "convenience": [
+            "convenience",
+            "opportunity",
+            "leisure",
+            "ease"
+          ]
+        }
+      },
+      {
+        "id": "em_15",
+        "en": "Further to our conversation, I'm attaching the revised proposal.",
+        "fr": "Suite à notre conversation, je joins la proposition révisée.",
+        "blanks": [
+          "Further",
+          "revised"
+        ],
+        "blankOptions": {
+          "Further": [
+            "Further",
+            "Following",
+            "Pursuant",
+            "Subsequent"
+          ],
+          "revised": [
+            "revised",
+            "updated",
+            "amended",
+            "final"
+          ]
+        }
+      },
+      {
+        "id": "em_16",
+        "en": "Should there be any discrepancies, please let me know right away.",
+        "fr": "S'il y a des écarts, merci de me le signaler immédiatement.",
+        "blanks": [
+          "Should",
+          "discrepancies"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "Were",
+            "When"
+          ],
+          "discrepancies": [
+            "discrepancies",
+            "errors",
+            "differences",
+            "issues"
+          ]
+        }
+      },
+      {
+        "id": "em_17",
+        "en": "I trust the above clarifies things, but do reach out if not.",
+        "fr": "J'espère que ce qui précède clarifie les choses, mais n'hésitez pas sinon.",
+        "blanks": [
+          "trust",
+          "clarifies"
+        ],
+        "blankOptions": {
+          "trust": [
+            "trust",
+            "hope",
+            "believe",
+            "expect"
+          ],
+          "clarifies": [
+            "clarifies",
+            "explains",
+            "covers",
+            "settles"
+          ]
+        }
+      },
+      {
+        "id": "em_18",
+        "en": "In light of recent developments, we may need to revisit the timeline.",
+        "fr": "Au vu des derniers développements, il faudra peut-être revoir le calendrier.",
+        "blanks": [
+          "light",
+          "revisit"
+        ],
+        "blankOptions": {
+          "light": [
+            "light",
+            "view",
+            "terms",
+            "case"
+          ],
+          "revisit": [
+            "revisit",
+            "adjust",
+            "rework",
+            "rethink"
+          ]
+        }
+      },
+      {
+        "id": "em_19",
+        "en": "Please be advised that the deadline has been moved up by a week.",
+        "fr": "Veuillez noter que la date limite a été avancée d'une semaine.",
+        "blanks": [
+          "advised",
+          "moved"
+        ],
+        "blankOptions": {
+          "advised": [
+            "advised",
+            "informed",
+            "notified",
+            "warned"
+          ],
+          "moved": [
+            "moved",
+            "pushed",
+            "brought",
+            "shifted"
+          ]
+        }
+      },
+      {
+        "id": "em_20",
+        "en": "Should you need anything in the meantime, I'm just an email away.",
+        "fr": "Si vous avez besoin de quoi que ce soit d'ici là, je suis joignable par email.",
+        "blanks": [
+          "Should",
+          "meantime"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "Were",
+            "When"
+          ],
+          "meantime": [
+            "meantime",
+            "interim",
+            "process",
+            "while"
+          ]
+        }
+      },
+      {
+        "id": "em_21",
+        "en": "I'd like to take this opportunity to thank you for your continued support.",
+        "fr": "Je profite de l'occasion pour vous remercier de votre soutien continu.",
+        "blanks": [
+          "opportunity",
+          "continued"
+        ],
+        "blankOptions": {
+          "opportunity": [
+            "opportunity",
+            "moment",
+            "chance",
+            "occasion"
+          ],
+          "continued": [
+            "continued",
+            "ongoing",
+            "constant",
+            "steady"
+          ]
+        }
+      },
+      {
+        "id": "em_22",
+        "en": "Having gone over your notes, I think we're broadly aligned.",
+        "fr": "Après avoir relu vos notes, je pense qu'on est globalement alignés.",
+        "blanks": [
+          "gone",
+          "aligned"
+        ],
+        "blankOptions": {
+          "gone": [
+            "gone",
+            "looked",
+            "read",
+            "been"
+          ],
+          "aligned": [
+            "aligned",
+            "agreed",
+            "synced",
+            "matched"
+          ]
+        }
+      }
     ]
   },
   "networking": {
@@ -88,16 +1918,410 @@
     "icon": "🤝",
     "color": "#c1121f",
     "items": [
-      { "id": "nw_01", "en": "It's a pleasure to finally put a face to the name.", "fr": "C'est un plaisir de mettre enfin un visage sur ce nom.", "blanks": ["pleasure", "face"], "blankOptions": { "pleasure": ["pleasure", "treat", "honor", "joy"], "face": ["face", "name", "voice", "image"] } },
-      { "id": "nw_02", "en": "I'd love to pick your brain on this topic sometime.", "fr": "J'aimerais beaucoup avoir ton avis sur ce sujet à l'occasion.", "blanks": ["pick", "brain"], "blankOptions": { "pick": ["pick", "use", "ask", "get"], "brain": ["brain", "mind", "thoughts", "opinion"] } },
-      { "id": "nw_03", "en": "What line of work are you in?", "fr": "Tu travailles dans quel domaine ?", "blanks": ["line"], "blankOptions": { "line": ["line", "field", "type", "area"] } },
-      { "id": "nw_04", "en": "I'll send you a connection request on LinkedIn.", "fr": "Je vais t'envoyer une invitation sur LinkedIn.", "blanks": ["connection"], "blankOptions": { "connection": ["connection", "contact", "invite", "link"] } },
-      { "id": "nw_05", "en": "Let's exchange contacts before we head out.", "fr": "Échangeons nos contacts avant de partir.", "blanks": ["exchange"], "blankOptions": { "exchange": ["exchange", "swap", "share", "trade"] } },
-      { "id": "nw_06", "en": "I really admire the work your team has been doing.", "fr": "J'admire vraiment le travail que ton équipe accomplit.", "blanks": ["admire"], "blankOptions": { "admire": ["admire", "respect", "value", "appreciate"] } },
-      { "id": "nw_07", "en": "I'd be happy to make an introduction if that's useful.", "fr": "Je serais ravi de faire les présentations si ça peut être utile.", "blanks": ["introduction"], "blankOptions": { "introduction": ["introduction", "intro", "connection", "referral"] } },
-      { "id": "nw_08", "en": "Let's set up a call to explore this further.", "fr": "Organisons un appel pour approfondir le sujet.", "blanks": ["explore"], "blankOptions": { "explore": ["explore", "discuss", "review", "cover"] } },
-      { "id": "nw_09", "en": "It was a pleasure crossing paths with you.", "fr": "Ce fut un plaisir de croiser ta route.", "blanks": ["crossing"], "blankOptions": { "crossing": ["crossing", "meeting", "finding", "sharing"] } },
-      { "id": "nw_10", "en": "Feel free to reach out whenever it's convenient.", "fr": "N'hésite pas à me contacter quand cela t'arrange.", "blanks": ["convenient"], "blankOptions": { "convenient": ["convenient", "suitable", "possible", "easy"] } }
+      {
+        "id": "nw_01",
+        "en": "It's a pleasure to finally put a face to the name.",
+        "fr": "C'est un plaisir de mettre enfin un visage sur ce nom.",
+        "blanks": [
+          "pleasure",
+          "face"
+        ],
+        "blankOptions": {
+          "pleasure": [
+            "pleasure",
+            "treat",
+            "honor",
+            "joy"
+          ],
+          "face": [
+            "face",
+            "name",
+            "voice",
+            "image"
+          ]
+        }
+      },
+      {
+        "id": "nw_02",
+        "en": "I'd love to pick your brain on this topic sometime.",
+        "fr": "J'aimerais beaucoup avoir ton avis sur ce sujet à l'occasion.",
+        "blanks": [
+          "pick",
+          "brain"
+        ],
+        "blankOptions": {
+          "pick": [
+            "pick",
+            "use",
+            "ask",
+            "get"
+          ],
+          "brain": [
+            "brain",
+            "mind",
+            "thoughts",
+            "opinion"
+          ]
+        }
+      },
+      {
+        "id": "nw_03",
+        "en": "What line of work are you in?",
+        "fr": "Tu travailles dans quel domaine ?",
+        "blanks": [
+          "line"
+        ],
+        "blankOptions": {
+          "line": [
+            "line",
+            "field",
+            "type",
+            "area"
+          ]
+        }
+      },
+      {
+        "id": "nw_04",
+        "en": "I'll send you a connection request on LinkedIn.",
+        "fr": "Je vais t'envoyer une invitation sur LinkedIn.",
+        "blanks": [
+          "connection"
+        ],
+        "blankOptions": {
+          "connection": [
+            "connection",
+            "contact",
+            "invite",
+            "link"
+          ]
+        }
+      },
+      {
+        "id": "nw_05",
+        "en": "Let's exchange contacts before we head out.",
+        "fr": "Échangeons nos contacts avant de partir.",
+        "blanks": [
+          "exchange"
+        ],
+        "blankOptions": {
+          "exchange": [
+            "exchange",
+            "swap",
+            "share",
+            "trade"
+          ]
+        }
+      },
+      {
+        "id": "nw_06",
+        "en": "I really admire the work your team has been doing.",
+        "fr": "J'admire vraiment le travail que ton équipe accomplit.",
+        "blanks": [
+          "admire"
+        ],
+        "blankOptions": {
+          "admire": [
+            "admire",
+            "respect",
+            "value",
+            "appreciate"
+          ]
+        }
+      },
+      {
+        "id": "nw_07",
+        "en": "I'd be happy to make an introduction if that's useful.",
+        "fr": "Je serais ravi de faire les présentations si ça peut être utile.",
+        "blanks": [
+          "introduction"
+        ],
+        "blankOptions": {
+          "introduction": [
+            "introduction",
+            "intro",
+            "connection",
+            "referral"
+          ]
+        }
+      },
+      {
+        "id": "nw_08",
+        "en": "Let's set up a call to explore this further.",
+        "fr": "Organisons un appel pour approfondir le sujet.",
+        "blanks": [
+          "explore"
+        ],
+        "blankOptions": {
+          "explore": [
+            "explore",
+            "discuss",
+            "review",
+            "cover"
+          ]
+        }
+      },
+      {
+        "id": "nw_09",
+        "en": "It was a pleasure crossing paths with you.",
+        "fr": "Ce fut un plaisir de croiser ta route.",
+        "blanks": [
+          "crossing"
+        ],
+        "blankOptions": {
+          "crossing": [
+            "crossing",
+            "meeting",
+            "finding",
+            "sharing"
+          ]
+        }
+      },
+      {
+        "id": "nw_10",
+        "en": "Feel free to reach out whenever it's convenient.",
+        "fr": "N'hésite pas à me contacter quand cela t'arrange.",
+        "blanks": [
+          "convenient"
+        ],
+        "blankOptions": {
+          "convenient": [
+            "convenient",
+            "suitable",
+            "possible",
+            "easy"
+          ]
+        }
+      },
+      {
+        "id": "nw_11",
+        "en": "Were it not for this conference, our paths probably wouldn't have crossed.",
+        "fr": "Sans cette conférence, nos chemins ne se seraient probablement pas croisés.",
+        "blanks": [
+          "Were",
+          "crossed"
+        ],
+        "blankOptions": {
+          "Were": [
+            "Were",
+            "Was",
+            "If",
+            "Had"
+          ],
+          "crossed": [
+            "crossed",
+            "met",
+            "joined",
+            "linked"
+          ]
+        }
+      },
+      {
+        "id": "nw_12",
+        "en": "I can't tell you how refreshing it is to talk to someone outside the bubble.",
+        "fr": "Je ne peux pas te dire à quel point c'est rafraîchissant de parler à quelqu'un hors de la bulle.",
+        "blanks": [
+          "refreshing",
+          "bubble"
+        ],
+        "blankOptions": {
+          "refreshing": [
+            "refreshing",
+            "rare",
+            "nice",
+            "pleasant"
+          ],
+          "bubble": [
+            "bubble",
+            "circle",
+            "loop",
+            "field"
+          ]
+        }
+      },
+      {
+        "id": "nw_13",
+        "en": "Funnily enough, I was just thinking about reaching out to you.",
+        "fr": "Drôlement, je pensais justement à te contacter.",
+        "blanks": [
+          "Funnily",
+          "reaching"
+        ],
+        "blankOptions": {
+          "Funnily": [
+            "Funnily",
+            "Oddly",
+            "Strangely",
+            "Curiously"
+          ],
+          "reaching": [
+            "reaching",
+            "writing",
+            "getting",
+            "going"
+          ]
+        }
+      },
+      {
+        "id": "nw_14",
+        "en": "Should our paths cross again, I'd love to continue this conversation.",
+        "fr": "Si nos chemins se recroisent, j'aimerais beaucoup poursuivre cette conversation.",
+        "blanks": [
+          "Should",
+          "continue"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "Were",
+            "When"
+          ],
+          "continue": [
+            "continue",
+            "carry",
+            "pick",
+            "resume"
+          ]
+        }
+      },
+      {
+        "id": "nw_15",
+        "en": "Little did I know we'd end up working in the same field.",
+        "fr": "Je ne me doutais pas qu'on finirait par travailler dans le même domaine.",
+        "blanks": [
+          "Little",
+          "field"
+        ],
+        "blankOptions": {
+          "Little": [
+            "Little",
+            "Hardly",
+            "Never",
+            "Rarely"
+          ],
+          "field": [
+            "field",
+            "industry",
+            "sector",
+            "area"
+          ]
+        }
+      },
+      {
+        "id": "nw_16",
+        "en": "What brought you into this industry in the first place?",
+        "fr": "Qu'est-ce qui t'a amené dans ce secteur à la base ?",
+        "blanks": [
+          "brought",
+          "place"
+        ],
+        "blankOptions": {
+          "brought": [
+            "brought",
+            "drew",
+            "led",
+            "pushed"
+          ],
+          "place": [
+            "place",
+            "instance",
+            "spot",
+            "scene"
+          ]
+        }
+      },
+      {
+        "id": "nw_17",
+        "en": "I'd be remiss not to mention how impressive your last project was.",
+        "fr": "Ce serait une erreur de ne pas mentionner à quel point ton dernier projet était impressionnant.",
+        "blanks": [
+          "remiss",
+          "impressive"
+        ],
+        "blankOptions": {
+          "remiss": [
+            "remiss",
+            "wrong",
+            "careless",
+            "rude"
+          ],
+          "impressive": [
+            "impressive",
+            "remarkable",
+            "striking",
+            "solid"
+          ]
+        }
+      },
+      {
+        "id": "nw_18",
+        "en": "Given our shared interests, I think we could really learn from each other.",
+        "fr": "Vu nos intérêts communs, je pense qu'on pourrait vraiment apprendre l'un de l'autre.",
+        "blanks": [
+          "Given",
+          "shared"
+        ],
+        "blankOptions": {
+          "Given": [
+            "Given",
+            "Considering",
+            "With",
+            "Seeing"
+          ],
+          "shared": [
+            "shared",
+            "common",
+            "mutual",
+            "similar"
+          ]
+        }
+      },
+      {
+        "id": "nw_19",
+        "en": "It's rare to meet someone who's just as passionate about this as I am.",
+        "fr": "C'est rare de rencontrer quelqu'un d'aussi passionné que moi par ce sujet.",
+        "blanks": [
+          "rare",
+          "passionate"
+        ],
+        "blankOptions": {
+          "rare": [
+            "rare",
+            "unusual",
+            "uncommon",
+            "refreshing"
+          ],
+          "passionate": [
+            "passionate",
+            "enthusiastic",
+            "invested",
+            "keen"
+          ]
+        }
+      },
+      {
+        "id": "nw_20",
+        "en": "Should you ever need an extra pair of hands, count me in.",
+        "fr": "Si jamais tu as besoin d'une paire de mains supplémentaire, compte sur moi.",
+        "blanks": [
+          "Should",
+          "count"
+        ],
+        "blankOptions": {
+          "Should": [
+            "Should",
+            "If",
+            "Were",
+            "When"
+          ],
+          "count": [
+            "count",
+            "include",
+            "rely",
+            "bring"
+          ]
+        }
+      }
     ]
   }
 }
