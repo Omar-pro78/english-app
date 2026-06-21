@@ -9765,11 +9765,11 @@ function buildProEnglishPhrase() {
   const inReview = S.proEnglish.view === 'review';
   const cat = PRO_ENGLISH[item._cat] || PRO_ENGLISH[S.proEnglish.cat];
   const step = peStep();
-  const backFn = inReview ? 'peGoCategories()' : `peOpenCategory('${S.proEnglish.cat}')`;
+  const backFn = 'peGoCategories()';
 
   wrap.innerHTML = `
     <div class="pe-top-row">
-      <button class="pe-back-btn" onclick="${backFn}">← ${inReview ? 'Catégories' : cat.label}</button>
+      <button class="pe-back-btn" onclick="${backFn}">← Catégories</button>
       <div class="pe-step-pill">Étape ${step}/2</div>
     </div>
     <div class="pe-progress-track"><div class="pe-progress-fill" style="width:${step===1?'50':'100'}%;background:${cat.color}"></div></div>
